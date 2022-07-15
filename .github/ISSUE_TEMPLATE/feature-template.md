@@ -2,7 +2,7 @@
 name: Feature Template
 about: 기능 구현 작성 템플릿
 title: '[{fe|be}/feat] 구현할 기능 제목'
-labels: ''
+labels: '🌐 FE, 🤖 BE, ✨ feature'
 assignees: ''
 ---
 

@@ -2,7 +2,7 @@
 name: Bug Template
 about: 버그 템플릿
 title: '[{fe|be}/bug] 발생한 버그 제목'
-labels: ''
+labels: '🌐 FE, 🤖 BE, 🐛 bug'
 assignees: ''
 ---
 

@@ -2,7 +2,7 @@
 name: Refactor Template
 about: 리팩토링할 기능 템플릿
 title: '[{fe|be}/refactor] 개선할 기능 제목'
-labels: ''
+labels: '🌐 FE, 🤖 BE, ♻️ refactor'
 assignees: ''
 ---
 
