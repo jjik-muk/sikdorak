@@ -4,13 +4,17 @@ import static io.restassured.RestAssured.given;
 
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
+
+import java.time.LocalDate;
 import java.util.stream.Stream;
 import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,18 +29,15 @@ import org.springframework.http.MediaType;
  */
 public class ReviewAccecptanceTest extends InitAcceptanceTest {
 
-	@Autowired
-	StoreRepository storeRepository;
-
 	@Test
 	@DisplayName("리뷰 생성 요청이 정상적인 경우라면 리뷰 생성 후 정상 상태 코드를 반환한다")
 	void create_review_success() {
-		Store saveStore = storeRepository.save(new Store());
 		JSONObject requestBody = new JSONObject();
 		requestBody.put("reviewContent", "찐맛집입니다.");
-		requestBody.put("storeId", saveStore.getId());
+		requestBody.put("storeId", savedStore.getId());
 		requestBody.put("reviewScore", 4);
 		requestBody.put("reviewVisibility", "public");
+		requestBody.put("visitedDate", "2022-01-01");
 		requestBody.put("tags", new String[]{"맛집", "꿀맛"});
 		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
 
@@ -44,6 +45,7 @@ public class ReviewAccecptanceTest extends InitAcceptanceTest {
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
 			.body(requestBody)
+			.log().all()
 
 			.when()
 			.post("/api/reviews")
@@ -58,9 +60,10 @@ public class ReviewAccecptanceTest extends InitAcceptanceTest {
 	void create_review_content_invalid_failed(String content, int expectedStatusCode) {
 		JSONObject requestBody = new JSONObject();
 		requestBody.put("reviewContent", content);
-		requestBody.put("storeId", 1);
+		requestBody.put("storeId", savedStore.getId());
 		requestBody.put("reviewScore", 4);
 		requestBody.put("reviewVisibility", "public");
+		requestBody.put("visitedDate", "2022-01-01");
 		requestBody.put("tags", new String[]{"맛집", "꿀맛"});
 		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
 
@@ -85,6 +88,7 @@ public class ReviewAccecptanceTest extends InitAcceptanceTest {
 		requestBody.put("storeId", storeId);
 		requestBody.put("reviewScore", 4);
 		requestBody.put("reviewVisibility", "public");
+		requestBody.put("visitedDate", "2022-01-01");
 		requestBody.put("tags", new String[]{"맛집", "꿀맛"});
 		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
 
@@ -101,14 +105,46 @@ public class ReviewAccecptanceTest extends InitAcceptanceTest {
 
 	}
 
+	@ParameterizedTest
+	@CsvSource({
+			"9999-12-31, 400",
+			"02-01, 400"
+	})
+	@DisplayName("리뷰 생성 요청에서 방문일이 유효하지 않은 경우 에러 상태코드를 반환한다")
+	// (미래 날짜, 유효하지 않은 날짜 형식)
+	void create_review_visitedDate_invalid_failed(String localDate, int expectedStatusCode) {
+		JSONObject requestBody = new JSONObject();
+		requestBody.put("reviewContent", "찐맛집입니다.");
+		requestBody.put("storeId", savedStore.getId());
+		requestBody.put("reviewScore", 4);
+		requestBody.put("reviewVisibility", "public");
+		requestBody.put("visitedDate", localDate);
+		requestBody.put("tags", new String[]{"맛집", "꿀맛"});
+		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
+
+		given()
+				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.header("Content-type", "application/json")
+				.body(requestBody)
+
+				// 2022-02-01
+
+				.when()
+				.post("/api/reviews")
+
+				.then()
+				.statusCode(expectedStatusCode);
+
+	}
+
 	private static Stream<Arguments> provideContentForIsNullAndEmptyAnd500char() {
 		String content = "a";
 		return Stream.of(
 			Arguments.of(null, HttpStatus.BAD_REQUEST.value()),
 			Arguments.of("", HttpStatus.BAD_REQUEST.value()),
 			Arguments.of(" ", HttpStatus.BAD_REQUEST.value()),
-			Arguments.of("\\t", HttpStatus.BAD_REQUEST.value()),
-			Arguments.of("\\n", HttpStatus.BAD_REQUEST.value()),
+			Arguments.of("\t", HttpStatus.BAD_REQUEST.value()),
+			Arguments.of("\n", HttpStatus.BAD_REQUEST.value()),
 			Arguments.of(content.repeat(500), HttpStatus.BAD_REQUEST.value())
 		);
 	}
