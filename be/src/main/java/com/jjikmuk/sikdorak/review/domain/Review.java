@@ -22,7 +22,8 @@ public class Review {
 	@Embedded
 	private ReviewContent reviewContent;
 
-	private String reviewScore;
+	@Embedded
+	private ReviewScore reviewScore;
 
 	private String reviewVisibility;
 

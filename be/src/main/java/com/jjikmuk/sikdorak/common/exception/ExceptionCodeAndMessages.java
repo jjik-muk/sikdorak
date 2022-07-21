@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.common.exception;
 
 import com.jjikmuk.sikdorak.common.CodeAndMessages;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
+import com.jjikmuk.sikdorak.review.exception.InvalidReviewScoreException;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -11,7 +12,8 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NOT_FOUND_ERROR_CODE("F-G001", "에러 코드를 찾을 수 없습니다.", NotFoundErrorCodeException.class),
 
     // Review
-    INVALID_REVIEW_CONTENT("F-R001", "유효하지 않은 리뷰 컨텐츠 입니다.", InvalidReviewContentException.class);
+    INVALID_REVIEW_CONTENT("F-R001", "유효하지 않은 리뷰 컨텐츠 입니다.", InvalidReviewContentException.class),
+    INVALID_REVIEW_SCORE("F-R002", "유효하지 않은 리뷰 평점 입니다.",InvalidReviewScoreException .class);
 
     private final String code;
 
