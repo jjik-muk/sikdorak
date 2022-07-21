@@ -22,16 +22,14 @@ public class Review {
 	@Embedded
 	private ReviewContent reviewContent;
 
-	@Embedded
-	private ReviewScore reviewScore;
+	private String reviewScore;
 
 	private String reviewVisibility;
 
 	private LocalDate visitedDate;
 
-	private List<String> tags;
-
-	private List<String> images;
+//	private List<String> tags;
+//	private List<String> images;
 
 
 

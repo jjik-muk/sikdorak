@@ -6,10 +6,12 @@ import javax.persistence.Embeddable;
 
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class ReviewContent {
 
 	private static final int LIMIT_LENGTH = 500;
