@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,11 +27,17 @@ public class Review {
 	@Embedded
 	private ReviewScore reviewScore;
 
-	private String reviewVisibility;
+	@Enumerated(EnumType.STRING)
+	private ReviewVisibility reviewVisibility;
 
 	private LocalDate visitedDate;
 
-//	private List<String> tags;
+	public Review(Long id) {
+		this.id = id;
+		ReviewVisibility.valueOf("asdf");
+	}
+
+	//	private List<String> tags;
 //	private List<String> images;
 
 
