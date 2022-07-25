@@ -36,8 +36,9 @@ public class Review {
 	@Embedded
 	private ReviewVisitedDate visitedDate;
 
-	@Transient
-	private List<String> tags;
+	@Embedded
+	private Tags tags;
+//	private List<String> tags;
 
 	@Transient
 	private List<String> images;
@@ -51,7 +52,7 @@ public class Review {
 		this.reviewScore = new ReviewScore(reviewScore);
 		this.reviewVisibility = ReviewVisibility.create(reviewVisibility);
 		this.visitedDate = new ReviewVisitedDate(visitedDate);
-		this.tags = tags;
+		this.tags = new Tags(tags);
 		this.images = images;
 	}
 

@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public abstract class SikdorakRuntimeException extends RuntimeException {
 
-    private final ExceptionCodeAndMessages codeAndMessages = ExceptionCodeAndMessages.findByExceptionClass(this.getClass());
+    private final ExceptionCodeAndMessages codeAndMessages = ExceptionCodeAndMessages.findByExceptionClass(getClass());
 
     public SikdorakRuntimeException() {
     }
@@ -14,6 +14,7 @@ public abstract class SikdorakRuntimeException extends RuntimeException {
     public SikdorakRuntimeException(Throwable cause) {
         super(cause);
     }
+
 
     public abstract HttpStatus getHttpStatus();
 }
