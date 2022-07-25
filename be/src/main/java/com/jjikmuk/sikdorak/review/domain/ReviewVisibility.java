@@ -8,7 +8,7 @@ public enum ReviewVisibility {
     public static ReviewVisibility create(String visibility) {
         try {
             return valueOf(visibility.toUpperCase());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             throw new InvalidReviewVisibilityException(e);
         }
     }

@@ -1,10 +1,6 @@
 package com.jjikmuk.sikdorak.acceptance;
 
-import static io.restassured.RestAssured.given;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
+import com.jjikmuk.sikdorak.common.exception.ExceptionCodeAndMessages;
 import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,10 +8,18 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  *  [x] 요청 텍스트가 유효하지 않은 경우(null, empty, 500자 넘는 경우)
@@ -23,7 +27,7 @@ import org.springframework.http.MediaType;
  *  [x] 요청 방문일이 유효하지 않은 경우(미래 날짜, 유효하지 않은 날짜 형식)
  *  [x] 요청 평점이 유효하지 않은 경우(1,2,3,4,5 가 아닌 경우)
  *  [x] 요청 태그들이 유효하지 않은 경우(공백 포함, 한글 영어 숫자 이외의 값, 50자 초과, 개수 30개 초과)
- *  [ ] 요청 공개 범위가 유효하지 않은 경우(public, protected, private 이외의 값, null, empty)
+ *  [x] 요청 공개 범위가 유효하지 않은 경우(public, protected, private 이외의 값, null, empty)
  */
 public class ReviewAccecptanceTest extends InitAcceptanceTest {
 
@@ -164,7 +168,6 @@ public class ReviewAccecptanceTest extends InitAcceptanceTest {
 	@NullSource
 	@MethodSource("provideReviewTagsForIsNullAndWhiteSpaceAndInvalidValues")
 	@DisplayName("리뷰 생성 요청에서 태그들이 유효하지 않은 경우 에러 상태코드를 반환한다")
-	//  *  [ ] 요청 태그들이 유효하지 않은 경우(공백 포함, 한글 영어 숫자 이외의 값, 50자 초과, 개수 30개 초과)
 	void create_review_reviewTags_invalid_failed(List<String> reviewTags) {
 		JSONObject requestBody = new JSONObject();
 		requestBody.put("reviewContent", "찐맛집입니다.");
@@ -185,6 +188,35 @@ public class ReviewAccecptanceTest extends InitAcceptanceTest {
 
 			.then()
 			.statusCode(HttpStatus.BAD_REQUEST.value());
+	}
+
+	@ParameterizedTest
+	@NullAndEmptySource
+	@ValueSource(strings = {"ppublic", "hello", "world"})
+	@DisplayName("리뷰 생성 요청에서 공개 범위가 유효하지 않은 경우 에러 상태코드를 반환한다")
+	void create_review_reviewVisibility_invalid_failed(String visibility) {
+		JSONObject requestBody = new JSONObject();
+		requestBody.put("reviewContent", "찐맛집입니다.");
+		requestBody.put("storeId", savedStore.getId());
+		requestBody.put("reviewScore", 3);
+		requestBody.put("reviewVisibility", visibility);
+		requestBody.put("visitedDate", "2022-01-01");
+		requestBody.put("tags", new String[]{"맛집", "꿀맛"});
+		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
+
+		given()
+				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.header("Content-type", "application/json")
+				.body(requestBody)
+				.log().all()
+
+				.when()
+				.post("/api/reviews")
+
+				.then()
+				.log().all()
+				.statusCode(HttpStatus.BAD_REQUEST.value())
+				.body("code", equalTo(ExceptionCodeAndMessages.INVALID_REVIEW_VISIBILITY.getCode()));
 	}
 
 	private static Stream<Arguments> provideContentForIsNullAndEmptyAnd500char() {
