@@ -5,6 +5,7 @@ import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewScoreException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisibilityException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisitedDateException;
+import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -17,7 +18,10 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     INVALID_REVIEW_CONTENT("F-R001", "유효하지 않은 리뷰 컨텐츠 입니다.", InvalidReviewContentException.class),
     INVALID_REVIEW_SCORE("F-R002", "유효하지 않은 리뷰 평점 입니다.", InvalidReviewScoreException.class),
     INVALID_REVIEW_VISIBILITY("F-R003", "유효하지 않은 리뷰 공개 범위 입니다.", InvalidReviewVisibilityException .class),
-    INVALID_REVIEW_VISITEDDATE("F-R004", "유효하지 않은 방문일자 입니다.", InvalidReviewVisitedDateException.class);
+    INVALID_REVIEW_VISITEDDATE("F-R004", "유효하지 않은 방문일자 입니다.", InvalidReviewVisitedDateException.class),
+
+    // Store
+    NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", StoreNotFoundException.class);
 
     private final String code;
 

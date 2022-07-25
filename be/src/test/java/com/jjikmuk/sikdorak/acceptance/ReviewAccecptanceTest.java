@@ -22,7 +22,7 @@ import org.springframework.http.MediaType;
 /**
  *  [x] 요청 텍스트가 유효하지 않은 경우(null, empty, 500자 넘는 경우)
  *  [x] 요청 식당 id가 유효하지 않은 경우(null, 0, -1, 등록되지 않은 값)
- *  [ ] 요청 방문일이 유효하지 않은 경우(미래 날짜, 유효하지 않은 날짜 형식)
+ *  [x] 요청 방문일이 유효하지 않은 경우(미래 날짜, 유효하지 않은 날짜 형식)
  *  [ ] 요청 평점이 유효하지 않은 경우(1,2,3,4,5 가 아닌 경우)
  *  [ ] 요청 태그들이 유효하지 않은 경우(공백 포함, 한글 영어 숫자 이외의 값, 50자 초과, 개수 30개 초과)
  *  [ ] 요청 공개 범위가 유효하지 않은 경우(public, protected, private 이외의 값, null, empty)
@@ -145,7 +145,7 @@ public class ReviewAccecptanceTest extends InitAcceptanceTest {
 			Arguments.of(" ", HttpStatus.BAD_REQUEST.value()),
 			Arguments.of("\t", HttpStatus.BAD_REQUEST.value()),
 			Arguments.of("\n", HttpStatus.BAD_REQUEST.value()),
-			Arguments.of(content.repeat(500), HttpStatus.BAD_REQUEST.value())
+			Arguments.of(content.repeat(501), HttpStatus.BAD_REQUEST.value())
 		);
 	}
 
@@ -153,10 +153,10 @@ public class ReviewAccecptanceTest extends InitAcceptanceTest {
 		long unregisteredStoreId = Long.MAX_VALUE;
 
 		return Stream.of(
-			Arguments.of(null, HttpStatus.BAD_REQUEST.value()),
-			Arguments.of(0L, HttpStatus.BAD_REQUEST.value()),
-			Arguments.of(-1L, HttpStatus.BAD_REQUEST.value()),
-			Arguments.of(unregisteredStoreId, HttpStatus.BAD_REQUEST.value())
+			Arguments.of(null, HttpStatus.NOT_FOUND.value()),
+			Arguments.of(0L, HttpStatus.NOT_FOUND.value()),
+			Arguments.of(-1L, HttpStatus.NOT_FOUND.value()),
+			Arguments.of(unregisteredStoreId, HttpStatus.NOT_FOUND.value())
 		);
 	}
 }
