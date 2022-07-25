@@ -5,6 +5,7 @@ import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewScoreException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisibilityException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisitedDateException;
+import com.jjikmuk.sikdorak.review.exception.InvalidTagException;
 import com.jjikmuk.sikdorak.review.exception.InvalidTagsException;
 import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     INVALID_REVIEW_VISIBILITY("F-R003", "유효하지 않은 리뷰 공개 범위 입니다.", InvalidReviewVisibilityException .class),
     INVALID_REVIEW_VISITEDDATE("F-R004", "유효하지 않은 방문일자 입니다.", InvalidReviewVisitedDateException.class),
     INVALID_REVIEW_TAGS("F-R005", "유효하지 않은 태그들 입니다.", InvalidTagsException.class),
+    INVALID_REVIEW_TAG("F-R006", "유효하지 않은 태그 입니다.", InvalidTagException.class),
 
     // Store
     NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", StoreNotFoundException.class);
