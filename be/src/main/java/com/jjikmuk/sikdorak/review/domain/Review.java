@@ -1,5 +1,6 @@
 package com.jjikmuk.sikdorak.review.domain;
 
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -41,22 +42,22 @@ public class Review {
 	@Transient
 	private List<String> images;
 
-	public Review(Long id, Long storeId, ReviewContent reviewContent,
-		ReviewScore reviewScore, ReviewVisibility reviewVisibility,
-		ReviewVisitedDate visitedDate, List<String> tags, List<String> images) {
+	public Review(Long id, Long storeId, String reviewContent, Float reviewScore,
+		String reviewVisibility,
+		LocalDate visitedDate, List<String> tags, List<String> images) {
 		this.id = id;
 		this.storeId = storeId;
-		this.reviewContent = reviewContent;
-		this.reviewScore = reviewScore;
-		this.reviewVisibility = reviewVisibility;
-		this.visitedDate = visitedDate;
+		this.reviewContent = new ReviewContent(reviewContent);
+		this.reviewScore = new ReviewScore(reviewScore);
+		this.reviewVisibility = ReviewVisibility.create(reviewVisibility);
+		this.visitedDate = new ReviewVisitedDate(visitedDate);
 		this.tags = tags;
 		this.images = images;
 	}
 
-	public Review(Long storeId, ReviewContent reviewContent,
-		ReviewScore reviewScore, ReviewVisibility reviewVisibility,
-		ReviewVisitedDate visitedDate, List<String> tags, List<String> images) {
+
+	public Review(Long storeId, String reviewContent, Float reviewScore, String reviewVisibility,
+		LocalDate visitedDate, List<String> tags, List<String> images) {
 		this(null, storeId, reviewContent, reviewScore, reviewVisibility, visitedDate, tags,
 			images);
 	}
