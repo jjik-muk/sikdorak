@@ -1,5 +1,10 @@
 package com.jjikmuk.sikdorak.acceptance;
 
+import static io.restassured.RestAssured.given;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,10 +16,6 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-
-import java.util.stream.Stream;
-
-import static io.restassured.RestAssured.given;
 
 /**
  *  [x] 요청 텍스트가 유효하지 않은 경우(null, empty, 500자 넘는 경우)
@@ -159,6 +160,33 @@ public class ReviewAccecptanceTest extends InitAcceptanceTest {
 				.statusCode(HttpStatus.BAD_REQUEST.value());
 	}
 
+	@ParameterizedTest
+	@NullSource
+	@MethodSource("provideReviewTagsForIsNullAndWhiteSpaceAndInvalidValues")
+	@DisplayName("리뷰 생성 요청에서 태그들이 유효하지 않은 경우 에러 상태코드를 반환한다")
+	//  *  [ ] 요청 태그들이 유효하지 않은 경우(공백 포함, 한글 영어 숫자 이외의 값, 50자 초과, 개수 30개 초과)
+	void create_review_reviewTags_invalid_failed(List<String> reviewTags) {
+		JSONObject requestBody = new JSONObject();
+		requestBody.put("reviewContent", "찐맛집입니다.");
+		requestBody.put("storeId", savedStore.getId());
+		requestBody.put("reviewScore", 3);
+		requestBody.put("reviewVisibility", "public");
+		requestBody.put("visitedDate", "2022-01-01");
+		requestBody.put("tags", reviewTags);
+		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
+
+		given()
+			.accept(MediaType.APPLICATION_JSON_VALUE)
+			.header("Content-type", "application/json")
+			.body(requestBody)
+
+			.when()
+			.post("/api/reviews")
+
+			.then()
+			.statusCode(HttpStatus.BAD_REQUEST.value());
+	}
+
 	private static Stream<Arguments> provideContentForIsNullAndEmptyAnd500char() {
 		String content = "a";
 		return Stream.of(
@@ -181,4 +209,26 @@ public class ReviewAccecptanceTest extends InitAcceptanceTest {
 			Arguments.of(unregisteredStoreId, HttpStatus.NOT_FOUND.value())
 		);
 	}
+
+	private static Stream<Arguments> provideReviewTagsForIsNullAndWhiteSpaceAndInvalidValues() {
+		String tempChar = "a";
+		List<String> limitTags = new ArrayList<>();
+
+		for (int i = 0; i < 32; i++) {
+			limitTags.add("tag" + i);
+		}
+
+		return Stream.of(
+			Arguments.of(List.of("맛집", "")),
+			Arguments.of(List.of("맛집", "중간   공백")),
+			Arguments.of(List.of("맛집", "중간\\t공백")),
+			Arguments.of(List.of("맛집", "중간\\n공백")),
+			Arguments.of(List.of("맛집", "특수문자#")),
+			Arguments.of(List.of("맛집", "특수문자!")),
+			Arguments.of(List.of("맛집", "특수문자*")),
+			Arguments.of(List.of("맛집", tempChar.repeat(51))),
+			Arguments.of(List.of(limitTags))
+		);
+	}
+
 }
