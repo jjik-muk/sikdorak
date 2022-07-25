@@ -1,20 +1,26 @@
 package com.jjikmuk.sikdorak.review.domain;
 
 import com.jjikmuk.sikdorak.review.exception.InvalidTagsException;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Embeddable
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Tags {
 
     private static final int LIMIT_SIZE = 30;
 
+    @ElementCollection
+    @CollectionTable(
+            name = "review_tags",
+            joinColumns = @JoinColumn(name = "review_id")
+    )
     private Set<Tag> tags;
 
     public Tags(List<String> tags) {

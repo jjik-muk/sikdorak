@@ -22,7 +22,7 @@ import org.springframework.http.MediaType;
  *  [x] 요청 식당 id가 유효하지 않은 경우(null, 0, -1, 등록되지 않은 값)
  *  [x] 요청 방문일이 유효하지 않은 경우(미래 날짜, 유효하지 않은 날짜 형식)
  *  [x] 요청 평점이 유효하지 않은 경우(1,2,3,4,5 가 아닌 경우)
- *  [ ] 요청 태그들이 유효하지 않은 경우(공백 포함, 한글 영어 숫자 이외의 값, 50자 초과, 개수 30개 초과)
+ *  [x] 요청 태그들이 유효하지 않은 경우(공백 포함, 한글 영어 숫자 이외의 값, 50자 초과, 개수 30개 초과)
  *  [ ] 요청 공개 범위가 유효하지 않은 경우(public, protected, private 이외의 값, null, empty)
  */
 public class ReviewAccecptanceTest extends InitAcceptanceTest {
@@ -221,8 +221,8 @@ public class ReviewAccecptanceTest extends InitAcceptanceTest {
 		return Stream.of(
 			Arguments.of(List.of("맛집", "")),
 			Arguments.of(List.of("맛집", "중간   공백")),
-			Arguments.of(List.of("맛집", "중간\\t공백")),
-			Arguments.of(List.of("맛집", "중간\\n공백")),
+			Arguments.of(List.of("맛집", "중간\t공백")),
+			Arguments.of(List.of("맛집", "중간\n공백")),
 			Arguments.of(List.of("맛집", "특수문자#")),
 			Arguments.of(List.of("맛집", "특수문자!")),
 			Arguments.of(List.of("맛집", "특수문자*")),

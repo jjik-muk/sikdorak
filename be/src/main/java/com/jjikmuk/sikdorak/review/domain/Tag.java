@@ -1,52 +1,44 @@
 package com.jjikmuk.sikdorak.review.domain;
 
 import com.jjikmuk.sikdorak.review.exception.InvalidTagException;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Embeddable
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode(of = "text")
 public class Tag {
 
-	public static final int LIMIT_LENGTH = 50;
-	private final String tag;
+    public static final int LIMIT_LENGTH = 50;
+    @Column(name = "tag_text")
+    private String text;
 
-	public Tag(String tag) {
+    public Tag(String text) {
 
-		if (Objects.isNull(tag) ||
-			tag.isBlank() ||
-			tag.length() > LIMIT_LENGTH ||
-			hasSymbols(tag)) {
-			throw new InvalidTagException();
-		}
+        if (Objects.isNull(text) ||
+                text.isBlank() ||
+                text.length() > LIMIT_LENGTH ||
+                hasSymbols(text)) {
+            throw new InvalidTagException();
+        }
 
-		this.tag = tag.toLowerCase(Locale.ROOT);
-	}
+        this.text = text.toLowerCase(Locale.ROOT);
+    }
 
-	private boolean hasSymbols(String tag) {
-		Pattern compile = Pattern.compile("[\\s!@#$%^&*\\+\\-(),.?\":{}|<>]");
-		Matcher matcher = compile.matcher(tag);
-		return matcher.find();
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		Tag tag1 = (Tag) o;
-		return tag.equals(tag1.tag);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(tag);
-	}
-
-	public String getText() {
-		return tag;
-	}
+    private boolean hasSymbols(String tag) {
+        Pattern compile = Pattern.compile("[\\s!@#$%^&*\\+\\-(),.?\":{}|<>]");
+        Matcher matcher = compile.matcher(tag);
+        return matcher.find();
+    }
+    public String getText() {
+        return text;
+    }
 }

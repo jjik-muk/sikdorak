@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.review.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -37,7 +38,8 @@ public class Review {
 	private ReviewVisitedDate visitedDate;
 
 	@Embedded
-	private Tags tags;
+	private Tags tags = new Tags();
+
 //	private List<String> tags;
 
 	@Transient
