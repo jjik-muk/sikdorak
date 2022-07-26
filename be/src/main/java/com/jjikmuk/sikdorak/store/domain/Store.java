@@ -1,5 +1,6 @@
 package com.jjikmuk.sikdorak.store.domain;
 
+import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
 import lombok.Getter;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 
-public class Store {
+public class Store extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

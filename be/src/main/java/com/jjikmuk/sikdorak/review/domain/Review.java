@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.review.domain;
 
+import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
-public class Review {
+public class Review extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +39,6 @@ public class Review {
 
 	@Embedded
 	private Tags tags = new Tags();
-
-//	private List<String> tags;
 
 	@Transient
 	private List<String> images;
