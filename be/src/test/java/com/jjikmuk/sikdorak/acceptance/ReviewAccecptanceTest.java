@@ -27,7 +27,8 @@ import static org.hamcrest.Matchers.equalTo;
  *  [x] 요청 평점이 유효하지 않은 경우(1,2,3,4,5 가 아닌 경우)
  *  [x] 요청 태그들이 유효하지 않은 경우(공백 포함, 한글 영어 숫자 이외의 값, 50자 초과, 개수 30개 초과)
  *  [x] 요청 공개 범위가 유효하지 않은 경우(public, protected, private 이외의 값, null, empty)
- *  [ ]
+ *  TODO
+ *  [ ] 요청 이미지가 유효하지 않은 경우(유효하지 않은 image 경로 (유효하지 않은 URL포맷, 관리하고 있는 s3 주소))
  */
 public class ReviewAccecptanceTest extends InitAcceptanceTest {
 
