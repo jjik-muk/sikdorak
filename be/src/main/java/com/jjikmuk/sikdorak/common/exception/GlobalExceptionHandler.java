@@ -1,7 +1,6 @@
 package com.jjikmuk.sikdorak.common.exception;
 
-import com.jjikmuk.sikdorak.common.BaseResponse;
-import org.springframework.http.ResponseEntity;
+import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -9,13 +8,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(SikdorakRuntimeException.class)
-    public ResponseEntity<BaseResponse> handle(SikdorakRuntimeException exception) {
-        ExceptionCodeAndMessages codeAndMessages = exception.getCodeAndMessages();
-
-        return new ResponseEntity<>(
-                new BaseResponse<>(codeAndMessages.getCode(), codeAndMessages.getMessage(), null),
-                exception.getHttpStatus()
-        );
+    public CommonResponseEntity<Void> handle(SikdorakRuntimeException exception) {
+        return new CommonResponseEntity<>(exception.getCodeAndMessages(), null, exception.getHttpStatus());
     }
 
 }
