@@ -1,0 +1,4 @@
+[submodule "config"]
+	path = config
+	url = https://github.com/jjik-muk/sikdorak-submodules.git
+	branch = main
