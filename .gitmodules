@@ -1,4 +1,8 @@
-[submodule "config"]
-	path = config
+[submodule "be/config"]
+	path = be/config
 	url = https://github.com/jjik-muk/sikdorak-submodules.git
+	branch = main
+
+path = be/config
+	url = git@github.com:jjik-muk/sikdorak-submodules.git
 	branch = main
