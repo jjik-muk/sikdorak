@@ -1,0 +1,47 @@
+package com.jjikmuk.sikdorak.common.exception;
+
+import com.jjikmuk.sikdorak.common.CodeAndMessages;
+import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
+import com.jjikmuk.sikdorak.review.exception.InvalidReviewScoreException;
+import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisibilityException;
+import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisitedDateException;
+import com.jjikmuk.sikdorak.review.exception.InvalidTagException;
+import com.jjikmuk.sikdorak.review.exception.InvalidTagsException;
+import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
+import lombok.Getter;
+
+import java.util.Arrays;
+
+@Getter
+public enum ExceptionCodeAndMessages implements CodeAndMessages {
+    NOT_FOUND_ERROR_CODE("F-G001", "에러 코드를 찾을 수 없습니다.", NotFoundErrorCodeException.class),
+
+    // Review
+    INVALID_REVIEW_CONTENT("F-R001", "유효하지 않은 리뷰 컨텐츠 입니다.", InvalidReviewContentException.class),
+    INVALID_REVIEW_SCORE("F-R002", "유효하지 않은 리뷰 평점 입니다.", InvalidReviewScoreException.class),
+    INVALID_REVIEW_VISIBILITY("F-R003", "유효하지 않은 리뷰 공개 범위 입니다.", InvalidReviewVisibilityException .class),
+    INVALID_REVIEW_VISITEDDATE("F-R004", "유효하지 않은 방문일자 입니다.", InvalidReviewVisitedDateException.class),
+    INVALID_REVIEW_TAGS("F-R005", "유효하지 않은 태그들 입니다.", InvalidTagsException.class),
+    INVALID_REVIEW_TAG("F-R006", "유효하지 않은 태그 입니다.", InvalidTagException.class),
+
+    // Store
+    NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", StoreNotFoundException.class);
+
+    private final String code;
+
+    private final String message;
+    private final Class<? extends Exception> type;
+
+    ExceptionCodeAndMessages(String code, String message, Class<? extends Exception> type) {
+        this.code = code;
+        this.message = message;
+        this.type = type;
+    }
+
+    public static ExceptionCodeAndMessages findByExceptionClass(Class<? extends Exception> type) {
+        return Arrays.stream(values())
+                .filter(codeAndMessage -> codeAndMessage.type.equals(type))
+                .findAny()
+                .orElseThrow(NotFoundErrorCodeException::new);
+    }
+}
