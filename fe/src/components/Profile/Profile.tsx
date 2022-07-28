@@ -1,4 +1,4 @@
-import { Nickname, Picture, Wrap } from './Profile.style';
+import { Nickname, Picture, Wrap } from './Profile.styled';
 
 const DEFAULT_IMG_URL = 'https://flyclipart.com/thumb2/profile-user-png-icon-free-download-196388.png';
 
