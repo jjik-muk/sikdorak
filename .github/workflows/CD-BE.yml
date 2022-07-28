@@ -47,6 +47,7 @@ jobs:
         run: ./gradlew build
       
   be-deploy:
+    needs: be-build-test
     name: Deploy SpringBoot to Heroku
     runs-on: ubuntu-20.04
 
