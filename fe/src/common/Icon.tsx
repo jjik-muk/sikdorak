@@ -1,9 +1,13 @@
 import SIZE from 'constants/size';
+import { ReactComponent as DownArrow } from 'assets/DownArrow.svg';
 import { ReactComponent as Photo } from 'assets/Photo.svg';
 import { ReactComponent as Star } from 'assets/Star.svg';
+import { ReactComponent as UpArrow } from 'assets/UpArrow.svg';
 
 const iconComponents = {
   Photo,
+  DownArrow,
+  UpArrow,
   Star,
 };
 
