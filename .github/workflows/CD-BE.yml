@@ -3,16 +3,14 @@ name: CI - BE
 on:
   push:
     branches:
-      - BE-dev
-  pull_request:
-    branches:
-      - BE-dev
+      - BE-deploy
+
 permissions:
   contents: read
 
 jobs:
-  be-test:
-    name: Test SpringBoot
+  be-build-test:
+    name: Build Test SpringBoot
     runs-on: ubuntu-20.04
     defaults:
       run:
@@ -46,9 +44,26 @@ jobs:
         run: chmod +x gradlew
 
       - name: Test with Gradle
-        run: ./gradlew test
+        run: ./gradlew build
       
-      # 참고 : https://github.com/marketplace/actions/discord-webhook-notify
+  be-deploy:
+    name: Deploy SpringBoot to Heroku
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: setup repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBMODULES_ACCESS_TOKEN }}
+          submodules: recursive
+      - name: deploy heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          appdir: "be"
+
       - name: Noti Discord - Test Success
         uses: rjstone/discord-webhook-notify@v1
         if: success()
@@ -70,3 +85,4 @@ jobs:
           severity: warn
           details: Test Cancelled!
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+  
