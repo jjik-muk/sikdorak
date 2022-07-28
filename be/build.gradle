@@ -34,7 +34,7 @@ repositories {
 }
 
 openapi3 {
-	setServer("http://localhost:8080")
+	setServer("https://sikdorak.herokuapp.com/")
 	title = "Sikdorak Service API"
 	description = "An API providing greetings to users."
 	version = "1.0.0"
