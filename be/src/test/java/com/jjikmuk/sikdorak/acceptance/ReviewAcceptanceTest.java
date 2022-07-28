@@ -12,13 +12,18 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.restdocs.snippet.Snippet;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static com.epages.restdocs.apispec.RestAssuredRestDocumentationWrapper.document;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 
 /**
  *  [x] 요청 텍스트가 유효하지 않은 경우(null, empty, 500자 넘는 경우)
@@ -30,7 +35,17 @@ import static org.hamcrest.Matchers.equalTo;
  *  TODO
  *  [ ] 요청 이미지가 유효하지 않은 경우(유효하지 않은 image 경로 (유효하지 않은 URL포맷, 관리하고 있는 s3 주소))
  */
-public class ReviewAccecptanceTest extends InitAcceptanceTest {
+public class ReviewAcceptanceTest extends InitAcceptanceTest {
+
+	private static final Snippet REVIEW_INSERT_REQUEST = requestFields(
+			fieldWithPath("reviewContent").type(JsonFieldType.STRING).description("리뷰 내용"),
+			fieldWithPath("storeId").type(JsonFieldType.NUMBER).description("가게 아이디"),
+			fieldWithPath("reviewScore").type(JsonFieldType.NUMBER).description(""),
+			fieldWithPath("reviewVisibility").type(JsonFieldType.STRING).description(""),
+			fieldWithPath("visitedDate").type(JsonFieldType.STRING).description(""),
+			fieldWithPath("tags").type(JsonFieldType.ARRAY).description(""),
+			fieldWithPath("images").type(JsonFieldType.ARRAY).description("")
+	);
 
 	@Test
 	@DisplayName("리뷰 생성 요청이 정상적인 경우라면 리뷰 생성 후 정상 상태 코드를 반환한다")
@@ -44,16 +59,16 @@ public class ReviewAccecptanceTest extends InitAcceptanceTest {
 		requestBody.put("tags", new String[]{"맛집", "꿀맛"});
 		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
 
-		given()
+		given(this.spec)
+			.filter(document(DEFAULT_RESTDOC_PATH, REVIEW_INSERT_REQUEST))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
 			.body(requestBody)
-			.log().all()
 
-			.when()
+		.when()
 			.post("/api/reviews")
 
-			.then()
+		.then()
 			.statusCode(HttpStatus.CREATED.value());
 	}
 
@@ -75,7 +90,7 @@ public class ReviewAccecptanceTest extends InitAcceptanceTest {
 			.header("Content-type", "application/json")
 			.body(requestBody)
 
-			.when()
+		.when()
 			.post("/api/reviews")
 
 			.then()
