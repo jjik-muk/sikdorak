@@ -1,21 +1,11 @@
-// import Login from './pages/Login/Login';
-
-import StarRating from 'components/StarRating/StarRating';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <Login />
-//     </div>
-//   );
-// }
-
-// export default App;
+import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
+import Login from './pages/Login/Login';
 
 function App() {
   return (
     <div className="App">
-      <StarRating />
+      <Login />
+      <ReviewWrite />
     </div>
   );
 }
