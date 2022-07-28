@@ -6,4 +6,5 @@ export const ImgUploadWrapper = styled.div`
   * {
     margin-top: 10px;
   }
+  margin: auto auto;
 `;

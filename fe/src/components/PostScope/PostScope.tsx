@@ -1,5 +1,6 @@
 import Icon from 'common/Icon';
 import Modal from 'common/Modal/Modal';
+import BoxContainer from 'components/BoxContainer/BoxContainer';
 import { useState } from 'react';
 import {
   Circle,
@@ -28,22 +29,24 @@ export default function PostScope() {
     setCurrentScope(nextScope);
   };
   return (
-    <Wrap>
-      <PostScopeWrapper onClick={handleSetModal}>
-        <div>게시물 공개 범위</div>
-        <Icon icon={isOpenModal ? 'UpArrow' : 'DownArrow'} />
-      </PostScopeWrapper>
-      {isOpenModal && (
-        <Modal height="150px">
-          <ScopeWrapper>
-            <div>{currentScope === 'all' ? '전체 공개' : '친구 공개'}</div>
-            <ScopeButtonWrapper scope={currentScope} onClick={handleSetScope}>
-              <Circle />
-            </ScopeButtonWrapper>
-          </ScopeWrapper>
-          <ScopeDescriptionArea>{scope[currentScope]}</ScopeDescriptionArea>
-        </Modal>
-      )}
-    </Wrap>
+    <BoxContainer>
+      <Wrap>
+        <PostScopeWrapper onClick={handleSetModal}>
+          <div>게시물 공개 범위</div>
+          <Icon icon={isOpenModal ? 'UpArrow' : 'DownArrow'} />
+        </PostScopeWrapper>
+        {isOpenModal && (
+          <Modal height="150px">
+            <ScopeWrapper>
+              <div>{currentScope === 'all' ? '전체 공개' : '친구 공개'}</div>
+              <ScopeButtonWrapper scope={currentScope} onClick={handleSetScope}>
+                <Circle />
+              </ScopeButtonWrapper>
+            </ScopeWrapper>
+            <ScopeDescriptionArea>{scope[currentScope]}</ScopeDescriptionArea>
+          </Modal>
+        )}
+      </Wrap>
+    </BoxContainer>
   );
 }

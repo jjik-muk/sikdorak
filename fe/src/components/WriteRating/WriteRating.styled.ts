@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Wrap = styled.div`
   display: flex;
-  gap: 175px;
+  justify-content: space-between;
 `;
 
 const Text = styled.div`

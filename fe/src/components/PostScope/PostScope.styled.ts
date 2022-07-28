@@ -8,7 +8,6 @@ export const Wrap = styled.div`
 export const PostScopeWrapper = styled.div`
   ${() => flexLayoutMixin('row', 'space-between', 'center')};
   width: 100%;
-  padding: 10px;
   font-size: 15px;
   border-color: #d4d4d4;
   :focus {

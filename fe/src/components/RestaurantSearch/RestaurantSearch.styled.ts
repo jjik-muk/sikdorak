@@ -10,9 +10,9 @@ export const RestaurantSearchWrapper = styled.input.attrs<RestaurantSearchWrappe
   placeholder: '식당을 검색해주세요.',
 })`
   width: 100%;
-  padding: 10px;
+  padding: 10px 0;
   font-size: 15px;
-  border-color: #d4d4d4;
+  border: 0;
   :focus {
     outline: none;
   }
