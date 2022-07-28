@@ -1,6 +1,6 @@
-import Icon from 'common/Icon';
+import StarIcon from 'components/StarIcon/StarIcon';
 import { useState } from 'react';
-import { Wrap } from './StarRating.style';
+import { Wrap } from './StarRating.styled';
 
 const YELLOW = '#f1c40f';
 
@@ -10,21 +10,19 @@ function StarRating() {
   return (
     <Wrap>
       {[...Array(rating)].map((_, i) => (
-        <Icon
-          icon="Star"
-          fill={YELLOW}
+        <StarIcon
           onClick={() => {
             handleRating(i + 1);
           }}
+          fill={YELLOW}
         />
       ))}
       {[...Array(5 - rating)].map((_, i) => (
-        <Icon
-          icon="Star"
-          fill="none"
+        <StarIcon
           onClick={() => {
             handleRating(i + 1 + rating);
           }}
+          fill="none"
         />
       ))}
     </Wrap>
