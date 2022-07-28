@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Wrap } from './Textarea.style';
+import { Wrap } from './Textarea.styled';
 
 function Textarea() {
   const [value, setValue] = useState('');

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Wrap = styled.input`
   width: 340px;
@@ -7,8 +7,4 @@ export const Wrap = styled.input`
   font-size: 16px;
   border-radius: 16px;
   padding: 16px 24px;
-
-  // TODO: reset CSS 적용한 후 삭제
-  border: 0;
-  box-sizing: border-box;
 `;
