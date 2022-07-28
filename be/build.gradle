@@ -19,6 +19,10 @@ group = 'com.jjikmuk'
 version = '0.0.1'
 sourceCompatibility = '17'
 
+jar {
+	enabled = false
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -69,7 +73,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-//-- Git submodule 관련 task -------------------------------------------------------
+//-- Git submodule 관련 task ------------------------------------------------------
 task copyGitSubmodule(type: Copy) {
 	from './config'
 	include '*.yml'
