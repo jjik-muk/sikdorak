@@ -19,6 +19,10 @@ group = 'com.jjikmuk'
 version = '0.0.1'
 sourceCompatibility = '17'
 
+jar {
+	enabled = false
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -30,7 +34,7 @@ repositories {
 }
 
 openapi3 {
-	setServer("http://localhost:8080")
+	setServer("https://sikdorak.herokuapp.com/")
 	title = "Sikdorak Service API"
 	description = "An API providing greetings to users."
 	version = "1.0.0"
@@ -69,7 +73,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-//-- Git submodule 관련 task -------------------------------------------------------
+//-- Git submodule 관련 task ------------------------------------------------------
 task copyGitSubmodule(type: Copy) {
 	from './config'
 	include '*.yml'
