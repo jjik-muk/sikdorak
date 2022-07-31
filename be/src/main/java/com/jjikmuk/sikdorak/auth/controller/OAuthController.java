@@ -1,10 +1,14 @@
 package com.jjikmuk.sikdorak.auth.controller;
 
+import com.jjikmuk.sikdorak.auth.controller.dto.response.JwtTokenResponse;
 import com.jjikmuk.sikdorak.auth.service.OAuthService;
+import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
+import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -21,9 +25,8 @@ public class OAuthController {
     }
 
     @GetMapping("/api/oauth/callback")
-    public ResponseEntity<Void> loginCallback() {
-
-        return ResponseEntity.ok().build();
+    public CommonResponseEntity<JwtTokenResponse> loginCallback(@RequestParam String code) {
+        return new CommonResponseEntity<>(ResponseCodeAndMessages.LOGIN_SUCCESS, oAuthService.login(code), HttpStatus.OK);
 
     }
 }

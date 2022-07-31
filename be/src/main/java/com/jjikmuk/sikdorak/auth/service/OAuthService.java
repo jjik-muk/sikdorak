@@ -1,14 +1,14 @@
 package com.jjikmuk.sikdorak.auth.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.jjikmuk.sikdorak.auth.controller.dto.response.JwtTokenResponse;
 
-@RequiredArgsConstructor
-@Service
-public class OAuthService{
-    private final OAuthProvider oAuthProvider;
+public interface OAuthService {
 
-    public String getLoginPageUrl() {
-        return oAuthProvider.getLoginPageUrl();
+    String getLoginPageUrl();
+
+    JwtTokenResponse login(String code);
+
+    default void createToken() {
+
     }
 }
