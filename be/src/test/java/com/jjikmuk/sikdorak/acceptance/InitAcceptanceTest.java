@@ -43,6 +43,7 @@ public class InitAcceptanceTest {
 	@BeforeEach
 	void setUpRestDocs(RestDocumentationContextProvider restDocumentation) {
 		this.spec = new RequestSpecBuilder()
+				.setPort(port)
 				.addFilter(documentationConfiguration(restDocumentation)
 						.operationPreprocessors()
 						.withRequestDefaults(prettyPrint())
