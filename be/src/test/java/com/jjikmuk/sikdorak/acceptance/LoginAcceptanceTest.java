@@ -19,7 +19,7 @@ public class LoginAcceptanceTest extends InitAcceptanceTest {
                 .get("/api/oauth/login")
                 .then()
                 .statusCode(HttpStatus.MOVED_PERMANENTLY.value())
-                .header("Location", "https://kauth.kakao.com/oauth/authorize");
+                .header("Location", startsWith("https://kauth.kakao.com/oauth/authorize"));
     }
 
     @Test
