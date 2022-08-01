@@ -1,31 +1,35 @@
 package com.jjikmuk.sikdorak.user.domain;
 
+import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
 @Entity
-public class User {
+@NoArgsConstructor
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private Long id;
 
-    private Long kakaoUniqueId;
+    @Column(name = "unique_id")
+    private Long uniqueId;
+
+    @Embedded
     private Nickname nickname;
 
     @Embedded
     private ProfileImage profileImage;
 
-    public User(Long kakaoUniqueId, String nickname, String profileImage) {
-        this(null, kakaoUniqueId, nickname, profileImage);
+    public User(Long uniqueId, String nickname, String profileImage) {
+        this(null, uniqueId, nickname, profileImage);
     }
 
-    public User(Long id, Long kakaoUniqueId, String nickname, String profileImage) {
+    public User(Long id, Long uniqueId, String nickname, String profileImage) {
         this.id = id;
-        this.kakaoUniqueId = kakaoUniqueId;
+        this.uniqueId = uniqueId;
         this.nickname = new Nickname(nickname);
         this.profileImage = new ProfileImage(profileImage);
     }
@@ -34,8 +38,8 @@ public class User {
         return id;
     }
 
-    public Long getKakaoUniqueId() {
-        return kakaoUniqueId;
+    public Long getUniqueId() {
+        return uniqueId;
     }
 
     public String getNickname() {

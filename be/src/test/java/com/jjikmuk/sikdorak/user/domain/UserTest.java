@@ -1,6 +1,5 @@
-package com.jjikmuk.sikdorak.auth.domain;
+package com.jjikmuk.sikdorak.user.domain;
 
-import com.jjikmuk.sikdorak.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -28,7 +27,7 @@ public class UserTest {
                 User user = new User(id, kakaoId, nickname, profileImageUrl);
 
                 assertThat(user.getId()).isEqualTo(id);
-                assertThat(user.getKakaoUniqueId()).isEqualTo(kakaoId);
+                assertThat(user.getUniqueId()).isEqualTo(kakaoId);
                 assertThat(user.getNickname()).isEqualTo(nickname);
                 assertThat(user.getProfileImage()).isEqualTo(profileImageUrl);
             }
