@@ -22,3 +22,15 @@ logging:
   level:
     org.hibernate.SQL: debug
 
+oauth:
+  kakao:
+    grant_type: authorization_code
+    client_id: 5828792c370aa10f250601d6c669d953
+    redirect_uri: http://localhost:8080/api/oauth/callback
+    response_type: code
+
+secret:
+  secretKey: kukimjayforkyrumkahoi
+  accessTokenExpiredMillisecond: 7200000
+  refreshTokenExpiredMillisecond: 604800000
+

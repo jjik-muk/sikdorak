@@ -4,9 +4,11 @@ import com.jjikmuk.sikdorak.auth.controller.dto.response.JwtTokenResponse;
 import com.jjikmuk.sikdorak.auth.controller.dto.response.OAuthTokenResponse;
 import com.jjikmuk.sikdorak.auth.controller.dto.response.UserInfoResponse;
 import com.jjikmuk.sikdorak.auth.controller.dto.response.UserProfileResponse;
+import com.jjikmuk.sikdorak.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.auth.service.OAuthService;
 import com.jjikmuk.sikdorak.common.properties.KakaoProperties;
 import com.jjikmuk.sikdorak.user.domain.User;
+import com.jjikmuk.sikdorak.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ public class KakaoOAuthService implements OAuthService {
     private final KakaoOAuthClient kakaoOAuthClient;
     private final KakaoApiClient kakaoApiClient;
     private final KakaoProperties kakaoProperties;
+    private final UserService userService;
+    private final JwtProvider jwtProvider;
 
 
     public String getLoginPageUrl() {
@@ -32,15 +36,14 @@ public class KakaoOAuthService implements OAuthService {
     public JwtTokenResponse login(String code) {
 
         OAuthTokenResponse oAuthTokenResponse = getOAuthAccessToken(code);
-
         UserInfoResponse userInfo = getUserInformation(oAuthTokenResponse);
         UserProfileResponse userProfileResponse = userInfo.getProperties();
+
         User user = new User(userInfo.getId(), userProfileResponse.getNickname(), userProfileResponse.getProfileImage());
+        userService.createUser(user);
+        JwtTokenResponse tokenResponse = jwtProvider.createTokenResponse(String.valueOf(user.getUniqueId()));
 
-//        userService.save(user);
-//        jwtProvider.createToken(user.getKakaoUniqueId());
-
-        return null;
+        return tokenResponse;
     }
 
     private OAuthTokenResponse getOAuthAccessToken(String code) {
