@@ -7,8 +7,4 @@ public interface OAuthService {
     String getLoginPageUrl();
 
     JwtTokenResponse login(String code);
-
-    default void createToken() {
-
-    }
 }

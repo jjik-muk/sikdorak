@@ -1,5 +1,6 @@
 package com.jjikmuk.sikdorak.auth.service.kakao;
 
+import com.jjikmuk.sikdorak.auth.controller.dto.response.UserInfoResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -8,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface KakaoApiClient {
 
     @GetMapping("/v2/user/me")
-    String getUserInfo(@RequestHeader("Authorization") String accessToken);
+    UserInfoResponse getUserInfo(@RequestHeader("Authorization") String accessToken);
 }
