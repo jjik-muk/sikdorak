@@ -43,20 +43,13 @@ public class InitAcceptanceTest {
 	@BeforeEach
 	void setUpRestDocs(RestDocumentationContextProvider restDocumentation) {
 		this.spec = new RequestSpecBuilder()
+				.setPort(port)
 				.addFilter(documentationConfiguration(restDocumentation)
 						.operationPreprocessors()
 						.withRequestDefaults(prettyPrint())
 						.withResponseDefaults(prettyPrint()))
 				.build();
 	}
-
-//	private void setUpRestAssured() {
-//		Jackson2Mapper jackson2Mapper = new Jackson2Mapper((type, charset) -> objectMapper);
-//		ObjectMapperConfig jackson2ObjectMapperConfig = new ObjectMapperConfig(jackson2Mapper);
-//
-//		RestAssured.config = RestAssuredConfig.config()
-//				.objectMapperConfig(jackson2ObjectMapperConfig);
-//	}
 
 	@AfterEach
 	void tearDown() {
