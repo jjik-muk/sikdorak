@@ -1,5 +1,7 @@
 package com.jjikmuk.sikdorak.common.exception;
 
+import com.jjikmuk.sikdorak.auth.exception.InvalidUserNicknameException;
+import com.jjikmuk.sikdorak.auth.exception.InvalidUserProfileImageUrlException;
 import com.jjikmuk.sikdorak.common.CodeAndMessages;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewScoreException;
@@ -8,6 +10,7 @@ import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisitedDateException;
 import com.jjikmuk.sikdorak.review.exception.InvalidTagException;
 import com.jjikmuk.sikdorak.review.exception.InvalidTagsException;
 import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
+import com.jjikmuk.sikdorak.user.exception.DuplicateUserException;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -25,7 +28,12 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     INVALID_REVIEW_TAG("F-R006", "유효하지 않은 태그 입니다.", InvalidTagException.class),
 
     // Store
-    NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", StoreNotFoundException.class);
+    NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", StoreNotFoundException.class),
+
+    // User
+    DUPLICATE_USER("F-U001", "유저 고유번호가 중복됩니다.",DuplicateUserException.class),
+    INVALID_USER_NIKCNAME("F-U002", "유효하지 않은 닉네임 입니다.", InvalidUserNicknameException.class),
+    INVALID_USER_PROFILE_IMAGE("F-U003", "유효하지 않은 프로필 이미지 url의 형식입니다.", InvalidUserProfileImageUrlException.class);
 
     private final String code;
 
