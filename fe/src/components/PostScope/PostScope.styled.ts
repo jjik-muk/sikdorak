@@ -29,8 +29,8 @@ export const ScopeButtonWrapper = styled.div<ScopeButtonWrapperProps>`
 
 export const Circle = styled.div`
   background-color: red;
-  width: 24px;
-  height: 24px;
+  width: 33%;
+  height: 100%;
   border-radius: 50%;
 `;
 
