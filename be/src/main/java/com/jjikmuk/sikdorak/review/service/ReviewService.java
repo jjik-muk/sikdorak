@@ -17,7 +17,7 @@ public class ReviewService {
 	private final ReviewRepository reviewRepository;
 
 	@Transactional
-	public void insertReview(ReviewInsertRequest request) {
+	public Long insertReview(ReviewInsertRequest request) {
 		Long findStoreId = request.getStoreId();
 		storeService.findById(findStoreId);
 
@@ -29,6 +29,7 @@ public class ReviewService {
 			request.getTags(),
 			request.getImages());
 
-		reviewRepository.save(newReview);
+		Review saveReview = reviewRepository.save(newReview);
+		return saveReview.getId();
 	}
 }
