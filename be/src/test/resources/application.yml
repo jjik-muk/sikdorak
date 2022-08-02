@@ -20,6 +20,7 @@ sql:
 
 logging:
   level:
+    com.jjikmuk.sikdorak: debug
     org.hibernate.SQL: debug
 
 oauth:
@@ -30,7 +31,12 @@ oauth:
     response_type: code
 
 secret:
-  secretKey: kukimjayforkyrumkahoi
+  secretKey: kukimjayforkyrumkahoikukimjayforkyrumkahoi
   accessTokenExpiredMillisecond: 7200000
   refreshTokenExpiredMillisecond: 604800000
 
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: FULL

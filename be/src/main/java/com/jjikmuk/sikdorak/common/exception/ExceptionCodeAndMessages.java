@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.common.exception;
 
 import com.jjikmuk.sikdorak.auth.exception.InvalidUserNicknameException;
 import com.jjikmuk.sikdorak.auth.exception.InvalidUserProfileImageUrlException;
+import com.jjikmuk.sikdorak.auth.exception.KakaoApiException;
 import com.jjikmuk.sikdorak.common.CodeAndMessages;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewScoreException;
@@ -33,7 +34,11 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     // User
     DUPLICATE_USER("F-U001", "유저 고유번호가 중복됩니다.",DuplicateUserException.class),
     INVALID_USER_NIKCNAME("F-U002", "유효하지 않은 닉네임 입니다.", InvalidUserNicknameException.class),
-    INVALID_USER_PROFILE_IMAGE("F-U003", "유효하지 않은 프로필 이미지 url의 형식입니다.", InvalidUserProfileImageUrlException.class);
+    INVALID_USER_PROFILE_IMAGE("F-U003", "유효하지 않은 프로필 이미지 url의 형식입니다.", InvalidUserProfileImageUrlException.class),
+
+    //Third Party
+    FAILED_CONNECTION_WITH_KAKAO_API("F-K001", "카카오 서버와의 통신이 원할하지 않습니다.", KakaoApiException.class);
+
 
     private final String code;
 
