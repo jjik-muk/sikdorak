@@ -10,6 +10,7 @@ import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisibilityException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisitedDateException;
 import com.jjikmuk.sikdorak.review.exception.InvalidTagException;
 import com.jjikmuk.sikdorak.review.exception.InvalidTagsException;
+import com.jjikmuk.sikdorak.store.exception.InvalidAddressException;
 import com.jjikmuk.sikdorak.store.exception.InvalidContactNumberException;
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreNameException;
 import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
@@ -35,6 +36,7 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", StoreNotFoundException.class),
     INVALID_STORE_NAME("F-S002", "유효하지 않은 가게이름 입니다.",InvalidStoreNameException.class),
     INVALID_CONTACT_NUMER("F-S003", "유효하지 않은 연락처 입니다.", InvalidContactNumberException.class),
+    INVALID_ADDRESS("F-S004", "유효하지 않은 연락처 입니다.", InvalidAddressException.class),
 
     // User
     DUPLICATE_USER("F-U001", "중복된 유저입니다.",DuplicateUserException.class),
