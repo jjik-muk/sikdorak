@@ -19,11 +19,11 @@ public class Email {
     private String email;
 
     public Email(String email) {
-        if (!validateEmail(email)) throw new InvalidUserEmailException();
+        if (!isValidEmailForm(email)) throw new InvalidUserEmailException();
         this.email = email;
     }
 
-    private boolean validateEmail(String email) {
+    private boolean isValidEmailForm(String email) {
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();

@@ -18,13 +18,13 @@ public class Nickname {
 
     public Nickname(String nickname) {
         if (Objects.isNull(nickname) ||
-                !validateNickname(nickname)) {
+                !isValidNickname(nickname)) {
             throw new InvalidUserNicknameException();
         }
         this.nickname = nickname;
     }
 
-    private boolean validateNickname(String nickname) {
+    private boolean isValidNickname(String nickname) {
         return nickname.length() > MIN_LENGTH && nickname.length() < MAX_LENGTH;
     }
 }
