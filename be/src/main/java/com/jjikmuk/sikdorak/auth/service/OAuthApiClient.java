@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.auth.service;
 
-import com.jjikmuk.sikdorak.auth.controller.dto.response.UserInfoResponse;
+import com.jjikmuk.sikdorak.auth.controller.dto.response.KakaoAccountResponse;
 import com.jjikmuk.sikdorak.common.config.feignclient.FeignClientHeaderConfiguration;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface OAuthApiClient {
 
     @GetMapping("/v2/user/me")
-    UserInfoResponse getUserInfo(@RequestHeader("Authorization") String accessToken);
+    KakaoAccountResponse getUserInfo(@RequestHeader("Authorization") String accessToken);
 }

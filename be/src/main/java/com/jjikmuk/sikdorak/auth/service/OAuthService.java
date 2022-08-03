@@ -1,9 +1,8 @@
 package com.jjikmuk.sikdorak.auth.service;
 
 import com.jjikmuk.sikdorak.auth.controller.dto.response.JwtTokenResponse;
+import com.jjikmuk.sikdorak.auth.controller.dto.response.KakaoAccountResponse;
 import com.jjikmuk.sikdorak.auth.controller.dto.response.OAuthTokenResponse;
-import com.jjikmuk.sikdorak.auth.controller.dto.response.UserInfoResponse;
-import com.jjikmuk.sikdorak.auth.controller.dto.response.UserProfileResponse;
 import com.jjikmuk.sikdorak.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.common.properties.KakaoProperties;
 import com.jjikmuk.sikdorak.user.domain.User;
@@ -35,14 +34,11 @@ public class OAuthService{
     public JwtTokenResponse login(String code) {
 
         OAuthTokenResponse oAuthTokenResponse = getOAuthAccessToken(code);
-        UserInfoResponse userInfo = getOAuthUserInformation(oAuthTokenResponse);
-        UserProfileResponse userProfileResponse = userInfo.getProperties();
-
-        User user = new User(userInfo.getId(), userProfileResponse.getNickname(), userProfileResponse.getProfileImage());
+        KakaoAccountResponse userInfo = getOAuthUserInformation(oAuthTokenResponse);
+        User user = new User(userInfo.getId(), userInfo.getNickname(), userInfo.getProfileImage());
         userService.createUser(user);
-        JwtTokenResponse tokenResponse = jwtProvider.createTokenResponse(String.valueOf(user.getUniqueId()));
 
-        return tokenResponse;
+        return jwtProvider.createTokenResponse(String.valueOf(user.getUniqueId()));
     }
 
     private OAuthTokenResponse getOAuthAccessToken(String code) {
@@ -53,7 +49,7 @@ public class OAuthService{
                 code);
     }
 
-    private UserInfoResponse getOAuthUserInformation(OAuthTokenResponse oAuthTokenResponse) {
+    private KakaoAccountResponse getOAuthUserInformation(OAuthTokenResponse oAuthTokenResponse) {
         String authorizationHeader = String.format("%s %s", oAuthTokenResponse.getTokenType(), oAuthTokenResponse.getAccessToken());
         return OAuthApiClient.getUserInfo(authorizationHeader);
     }
