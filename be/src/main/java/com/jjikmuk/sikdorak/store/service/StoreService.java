@@ -6,6 +6,8 @@ import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -21,4 +23,11 @@ public class StoreService {
 		return storeRepository.findById(storeId).orElseThrow(StoreNotFoundException::new);
 	}
 
+	public List<Store> findStoresByStoreNameContaining(String storeName) {
+		if (storeName == null) {
+			return Collections.emptyList();
+		}
+
+		return storeRepository.findStoresByStoreNameContaining(storeName);
+	}
 }

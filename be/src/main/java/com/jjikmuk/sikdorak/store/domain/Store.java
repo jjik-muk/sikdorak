@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.store.domain;
 
 import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
-import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -11,8 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-@Getter
-
+@NoArgsConstructor // for @Entity
 public class Store extends BaseTimeEntity {
 
     @Id
@@ -32,4 +31,18 @@ public class Store extends BaseTimeEntity {
     @Embedded
     private StoreLocation location; // Float latitude, Float longitude
 
+    public Store(String storeName, String contactNumber, String baseAddress, String detailAddress, Double latitude, Double longitude) {
+        this.storeName = new StoreName(storeName);
+        this.contactNumber = new ContactNumber(contactNumber);
+        this.address = new Address(baseAddress, detailAddress);
+        this.location = new StoreLocation(latitude, longitude);
+    }
+
+    public String getStoreName() {
+        return storeName.getStoreName();
+    }
+
+    public Long getId() {
+        return id;
+    }
 }
