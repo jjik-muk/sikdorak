@@ -14,7 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.restdocs.operation.preprocess.OperationPreprocessor;
 
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
 
@@ -23,6 +25,8 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 public class InitAcceptanceTest {
 
 	protected static final String DEFAULT_RESTDOC_PATH = "{class_name}/{method_name}/";
+	protected static final String DEFAULT_RESTDOC_SCHEMA = "https";
+	protected static final String DEFAULT_RESTDOC_HOST = "sikdorak.herokuapp.com";
 
 	protected RequestSpecification spec;
 
@@ -42,11 +46,15 @@ public class InitAcceptanceTest {
 
 	@BeforeEach
 	void setUpRestDocs(RestDocumentationContextProvider restDocumentation) {
+		OperationPreprocessor requestOperationProcessor = modifyUris().scheme(DEFAULT_RESTDOC_SCHEMA)
+				.host(DEFAULT_RESTDOC_HOST)
+				.removePort();
+
 		this.spec = new RequestSpecBuilder()
 				.setPort(port)
 				.addFilter(documentationConfiguration(restDocumentation)
 						.operationPreprocessors()
-						.withRequestDefaults(prettyPrint())
+						.withRequestDefaults(requestOperationProcessor, prettyPrint())
 						.withResponseDefaults(prettyPrint()))
 				.build();
 	}
