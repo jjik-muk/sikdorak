@@ -1,6 +1,5 @@
 buildscript {
 	ext {
-		epagesRestdocsVersion = '0.16.2'
 		springCloudVersion = '2021.0.3'
 	}
 }
