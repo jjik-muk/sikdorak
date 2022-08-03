@@ -1,5 +1,11 @@
 package com.jjikmuk.sikdorak.acceptance;
 
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
+
+import com.jjikmuk.sikdorak.common.DatabaseConfigurator;
+import com.jjikmuk.sikdorak.common.MysqlTestContainer;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import io.restassured.RestAssured;
@@ -16,19 +22,18 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.operation.preprocess.OperationPreprocessor;
 
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
-
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ExtendWith(RestDocumentationExtension.class)
-public class InitAcceptanceTest {
+public class InitAcceptanceTest extends MysqlTestContainer {
 
 	protected static final String DEFAULT_RESTDOC_PATH = "{class_name}/{method_name}/";
 	protected static final String DEFAULT_RESTDOC_SCHEMA = "https";
 	protected static final String DEFAULT_RESTDOC_HOST = "sikdorak.herokuapp.com";
 
 	protected RequestSpecification spec;
+
+	@Autowired
+	DatabaseConfigurator databaseConfigurator;
 
 	@Autowired
 	StoreRepository storeRepository;
@@ -61,6 +66,7 @@ public class InitAcceptanceTest {
 
 	@AfterEach
 	void tearDown() {
-		storeRepository.deleteAll();
+		databaseConfigurator.clear();
 	}
+
 }
