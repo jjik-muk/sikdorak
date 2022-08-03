@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
 @Entity
 @NoArgsConstructor
 public class User extends BaseTimeEntity {
@@ -23,15 +24,19 @@ public class User extends BaseTimeEntity {
     @Embedded
     private ProfileImage profileImage;
 
-    public User(Long uniqueId, String nickname, String profileImage) {
-        this(null, uniqueId, nickname, profileImage);
+    @Embedded
+    private Email email;
+
+    public User(Long uniqueId, String nickname, String profileImage, String email) {
+        this(null, uniqueId, nickname, profileImage, email);
     }
 
-    public User(Long id, Long uniqueId, String nickname, String profileImage) {
+    public User(Long id, Long uniqueId, String nickname, String profileImage, String email) {
         this.id = id;
         this.uniqueId = uniqueId;
         this.nickname = new Nickname(nickname);
         this.profileImage = new ProfileImage(profileImage);
+        this.email = new Email(email);
     }
 
     public Long getId() {
@@ -48,5 +53,9 @@ public class User extends BaseTimeEntity {
 
     public String getProfileImage() {
         return profileImage.getProfileImageUrl();
+    }
+
+    public String getEmail() {
+        return email.getEmail();
     }
 }

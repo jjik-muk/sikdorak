@@ -33,7 +33,7 @@ public class OAuthService{
         KakaoAccountResponse userInfo = getOAuthUserInformation(oAuthTokenResponse);
 
         if (!userService.isExistingUser(userInfo.getUniqueId())) {
-            User user = new User(userInfo.getUniqueId(), userInfo.getNickname(), userInfo.getProfileImage());
+            User user = new User(userInfo.getUniqueId(), userInfo.getNickname(), userInfo.getProfileImage(), userInfo.getEmail());
             userService.createUser(user);
             return jwtProvider.createTokenResponse(String.valueOf(user.getUniqueId()));
         }

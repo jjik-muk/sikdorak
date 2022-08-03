@@ -23,13 +23,15 @@ public class UserTest {
                 Long kakaoId = 232323243242L;
                 String nickname = "Forky_Ham";
                 String profileImageUrl = "https://k.kakaocdn.net/dn/RKydg/btrIGzx2qYz/IHPrmTbYBOqqbH1/img_640x640.jpg";
+                String email = "forky@sikdorak.com";
 
-                User user = new User(id, kakaoId, nickname, profileImageUrl);
+                User user = new User(id, kakaoId, nickname, profileImageUrl, email);
 
                 assertThat(user.getId()).isEqualTo(id);
                 assertThat(user.getUniqueId()).isEqualTo(kakaoId);
                 assertThat(user.getNickname()).isEqualTo(nickname);
                 assertThat(user.getProfileImage()).isEqualTo(profileImageUrl);
+                assertThat(user.getEmail()).isEqualTo(email);
             }
         }
     }

@@ -24,7 +24,7 @@ public class UserCreateIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("동일한 유저가 존재하지 않는다면 유저를 저장소에 저장한다.")
     void save() {
-        User user = new User(232323L, "Forky-Ham", "https://profile-img.com");
+        User user = new User(232323L, "Forky-Ham", "https://profile-img.com", "forky@sikdorak.com");
 
         Long id = userService.createUser(user);
         User findUser = userRespository.findById(id).get();
@@ -32,17 +32,5 @@ public class UserCreateIntegrationTest extends InitIntegrationTest {
         assertThat(user.getUniqueId()).isEqualTo(findUser.getUniqueId());
         assertThat(user.getNickname()).isEqualTo(findUser.getNickname());
         assertThat(user.getProfileImage()).isEqualTo(findUser.getProfileImage());
-    }
-
-    @Test
-    @DisplayName("중복된 유저라면 예외를 발생시킨다.")
-    void duplicatedException() {
-        User user1 = new User(232323L, "Forky-Ham", "https://profile-img.com");
-        User user2 = new User(232323L, "Forky-Ham-2", "https://profile-img-2.com");
-
-        userService.createUser(user1);
-
-        assertThatThrownBy(() -> userService.createUser(user2))
-                .isInstanceOf(DuplicateUserException.class);
     }
 }
