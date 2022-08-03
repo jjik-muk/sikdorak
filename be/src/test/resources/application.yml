@@ -1,16 +1,18 @@
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:mysql:8://testDB
   jpa:
     hibernate:
       ddl-auto: create
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 100
+    defer-datasource-initialization: true
     show-sql: true
+
+
 sql:
   init:
     mode: always
@@ -19,3 +21,4 @@ sql:
 logging:
   level:
     org.hibernate.SQL: debug
+

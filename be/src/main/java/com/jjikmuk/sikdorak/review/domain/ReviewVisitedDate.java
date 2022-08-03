@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,8 @@ public class ReviewVisitedDate {
 
 	@Column
 	private LocalDate reviewVisitedDate;
+
+	@Transient
 	private LocalDate currentDate;
 
 

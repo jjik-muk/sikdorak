@@ -62,4 +62,8 @@ public class Review extends BaseTimeEntity {
 		this(null, storeId, reviewContent, reviewScore, reviewVisibility, visitedDate, tags,
 			images);
 	}
+
+	public Long getId() {
+		return id;
+	}
 }
