@@ -3,7 +3,12 @@ package com.jjikmuk.sikdorak.user.domain;
 import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 
 @Entity
