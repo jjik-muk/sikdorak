@@ -9,15 +9,21 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @ConfigurationProperties(prefix = "oauth.kakao")
 public class KakaoProperties {
 
+    private final String loginPageUrl;
     private final String grantType;
     private final String clientId;
     private final String redirectUri;
     private final String responseType;
 
-    public KakaoProperties(String grantType, String clientId, String redirectUri, String responseType) {
+    public KakaoProperties(String loginPageUrl, String grantType, String clientId, String redirectUri, String responseType) {
+        this.loginPageUrl = loginPageUrl;
         this.grantType = grantType;
         this.clientId = clientId;
         this.redirectUri = redirectUri;
         this.responseType = responseType;
+    }
+
+    public String getLoginPageUrl() {
+        return String.format(loginPageUrl, clientId, redirectUri, responseType);
     }
 }

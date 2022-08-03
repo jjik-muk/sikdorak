@@ -25,6 +25,7 @@ logging:
 
 oauth:
   kakao:
+    login_page_url: "https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=%s"
     grant_type: authorization_code
     client_id: 5828792c370aa10f250601d6c669d953
     redirect_uri: http://localhost:8080/api/oauth/callback

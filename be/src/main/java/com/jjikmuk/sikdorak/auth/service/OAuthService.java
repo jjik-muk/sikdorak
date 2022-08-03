@@ -17,28 +17,28 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 @Service
 public class OAuthService{
-
-    private static final String LOGIN_PAGE_URL = "https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=%s";
     private final OAuthTokenClient OAuthTokenClient;
     private final OAuthApiClient OAuthApiClient;
     private final KakaoProperties kakaoProperties;
     private final UserService userService;
     private final JwtProvider jwtProvider;
 
-
     public String getLoginPageUrl() {
-        return String.format(LOGIN_PAGE_URL, kakaoProperties.getClientId(), kakaoProperties.getRedirectUri(), kakaoProperties.getResponseType());
+        return kakaoProperties.getLoginPageUrl();
     }
 
     @Transactional
     public JwtTokenResponse login(String code) {
-
         OAuthTokenResponse oAuthTokenResponse = getOAuthAccessToken(code);
         KakaoAccountResponse userInfo = getOAuthUserInformation(oAuthTokenResponse);
-        User user = new User(userInfo.getId(), userInfo.getNickname(), userInfo.getProfileImage());
-        userService.createUser(user);
 
-        return jwtProvider.createTokenResponse(String.valueOf(user.getUniqueId()));
+        if (!userService.isExistingUser(userInfo.getUniqueId())) {
+            User user = new User(userInfo.getUniqueId(), userInfo.getNickname(), userInfo.getProfileImage());
+            userService.createUser(user);
+            return jwtProvider.createTokenResponse(String.valueOf(user.getUniqueId()));
+        }
+
+        return jwtProvider.createTokenResponse(String.valueOf(userInfo.getUniqueId()));
     }
 
     private OAuthTokenResponse getOAuthAccessToken(String code) {
