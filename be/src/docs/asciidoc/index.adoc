@@ -1,0 +1,17 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+= Getting Started With `Sikdorak` Docs
+notification-api-docs
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+{docdir}
+
+== 이슈 API
+
+include::{docdir}/review/review.adoc[]

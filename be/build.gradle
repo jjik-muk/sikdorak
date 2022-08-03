@@ -1,23 +1,20 @@
-import org.hidetake.gradle.swagger.generator.GenerateSwaggerUI
-import org.springframework.boot.gradle.tasks.bundling.BootJar
-
-buildscript {
-	ext {
-		epagesRestdocsVersion = '0.16.2'
-	}
-}
-
 plugins {
 	id 'org.springframework.boot' version '2.7.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'com.epages.restdocs-api-spec' version "${epagesRestdocsVersion}"
-	id 'org.hidetake.swagger.generator' version '2.18.2'
+	id 'org.asciidoctor.jvm.convert' version '3.3.2'
 	id 'java'
 }
 
 group = 'com.jjikmuk'
 version = '0.0.1'
 sourceCompatibility = '17'
+
+configurations {
+	asciidoctorExtensions // dependencies 에서 적용한 것 추가
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
 
 jar {
 	enabled = false
@@ -31,20 +28,6 @@ configurations {
 
 repositories {
 	mavenCentral()
-}
-
-openapi3 {
-	setServer("https://sikdorak.herokuapp.com/")
-	title = "Sikdorak Service API"
-	description = "An API providing greetings to users."
-	version = "1.0.0"
-	format = "yaml"
-}
-
-swaggerSources {
-	register("sikdorak").configure {
-		setInputFile(file("${project.buildDir}/api-spec/openapi3.yaml"))
-	}
 }
 
 dependencies {
@@ -66,15 +49,15 @@ dependencies {
 	testImplementation 'io.rest-assured:rest-assured'
 
 	// API Docs
-	testImplementation "com.epages:restdocs-api-spec-restassured:${epagesRestdocsVersion}"
-	swaggerUI 'org.webjars:swagger-ui:4.11.1'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
+	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
 	// TestContainers
 	testImplementation "org.testcontainers:junit-jupiter:1.17.2"
 	testImplementation "org.testcontainers:mysql:1.17.2"
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 }
 
@@ -85,31 +68,38 @@ task copyGitSubmodule(type: Copy) {
 	into './src/main/resources'
 }
 
-//-- API 문서 관련 task -------------------------------------------------------
-// API Spec 을 HTML 로 변환
-tasks.withType(GenerateSwaggerUI) {
-	dependsOn 'openapi3'
+//-- API 문서 관련 설정 -------------------------------------------------------
+ext {
+	snippetsDir = file("${project.buildDir}/generated-snippets")
 }
 
-def generateSwaggerUISikdorakTask = tasks.named('generateSwaggerUISikdorak', GenerateSwaggerUI).get()
+asciidoctor {
+	dependsOn test
+	configurations 'asciidoctorExtensions'
+	inputs.dir snippetsDir
 
-// API 문서 HTML 을 build resources 로 복사
-tasks.register('copySwaggerUI', Copy) {
-	dependsOn 'generateSwaggerUISikdorak'
+	sources {
+		include '**/index.adoc'
+	}
 
-	from("${generateSwaggerUISikdorakTask.outputDir}")
-	into("${project.buildDir}/resources/main/static/docs")
+	baseDirFollowsSourceFile()
 }
 
-// API 문서 HTML 을 main resources 로 복사
-tasks.register('copySwaggerUI2MainResources', Copy) {
-	dependsOn 'generateSwaggerUISikdorak'
-
-	from("${generateSwaggerUISikdorakTask.outputDir}")
-	into("${project.projectDir}/src/main/resources/static/docs")
+asciidoctor.doFirst {
+	delete file("${project.rootDir}/src/main/resources/static/docs")
 }
 
-// bootJar 실행 전, copySwaggerUI 를 실행하도록 설정
-tasks.withType(BootJar) {
-	dependsOn 'copySwaggerUI'
+task copyDocument(type: Copy) {
+	dependsOn asciidoctor
+
+	from "${project.buildDir}/docs/asciidoc"
+	into "${project.rootDir}/src/main/resources/static/docs"
+}
+
+bootJar {
+	dependsOn copyDocument
+	copy {
+		from "${project.buildDir}/docs/asciidoc"
+		into "${project.buildDir}/resources/main/static/docs"
+	}
 }
