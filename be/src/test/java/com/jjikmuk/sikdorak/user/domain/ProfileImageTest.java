@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -24,25 +25,20 @@ public class ProfileImageTest {
 
             @ParameterizedTest
             @NullAndEmptySource
-            @MethodSource("provideProfileImageForIsNullAndEmptyAndInvalidForm")
+            @ValueSource(strings = {
+                    "http:/sikdorak",
+                    "http:/sikdorak.com",
+                    " http://sikdorak.com",
+                    "http://sikdorak.com ",
+                    "https:/sikdorak",
+                    "https:/sikdorak.com",
+                    "https//sikdorak$@#.com"
+            })
             @DisplayName("예외를 반환한다.")
             void throw_Exception(String profileImageUrl) {
                 assertThatThrownBy(() -> new ProfileImage(profileImageUrl))
                         .isInstanceOf(InvalidUserProfileImageUrlException.class);
             }
-
-            private static Stream<Arguments> provideProfileImageForIsNullAndEmptyAndInvalidForm() {
-                return Stream.of(
-                        Arguments.of("http:/sikdorak"),
-                        Arguments.of("http:/sikdorak.com"),
-                        Arguments.of(" http://sikdorak.com"),
-                        Arguments.of("http://sikdorak.com "),
-                        Arguments.of("https:/sikdorak"),
-                        Arguments.of("https:/sikdorak.com"),
-                        Arguments.of("https//sikdorak$@#.com")
-                );
-            }
-
         }
     }
 }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -21,29 +22,22 @@ public class EmailTest {
         class Context_with_invalid_email {
 
             @ParameterizedTest
-            @MethodSource("provideEmailForInvalidForm")
+            @ValueSource(strings = {
+                    "s",
+                    "name@mailcom",
+                    "name#mail.com",
+                    "name@mail",
+                    "name@mail#.com",
+                    " name@mail#.com",
+                    "name@mail#.com ",
+                    "name@ma-il#.com",
+                    "name@mail.!com"
+            })
             @DisplayName("예외를 반환한다.")
             void throw_Exception(String email) {
                 assertThatThrownBy(() -> new Email(email))
                         .isInstanceOf(InvalidUserEmailException.class);
             }
-
-            private static Stream<Arguments> provideEmailForInvalidForm() {
-                return Stream.of(
-                        Arguments.of("s"),
-                        Arguments.of("name@mailcom"),
-                        Arguments.of("name#mail.com"),
-                        Arguments.of("name@mail"),
-                        Arguments.of("name@mail#.com"),
-                        Arguments.of(" name@mail#.com"),
-                        Arguments.of("name@mail#.com "),
-                        Arguments.of("name@ma-il#.com"),
-                        Arguments.of("name@mail.!com")
-
-                );
-            }
-
         }
-
     }
 }
