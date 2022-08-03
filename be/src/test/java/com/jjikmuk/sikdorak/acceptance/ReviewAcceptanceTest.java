@@ -40,11 +40,11 @@ public class ReviewAcceptanceTest extends InitAcceptanceTest {
 	private static final Snippet REVIEW_INSERT_REQUEST = requestFields(
 			fieldWithPath("reviewContent").type(JsonFieldType.STRING).description("리뷰 내용"),
 			fieldWithPath("storeId").type(JsonFieldType.NUMBER).description("가게 아이디"),
-			fieldWithPath("reviewScore").type(JsonFieldType.NUMBER).description(""),
-			fieldWithPath("reviewVisibility").type(JsonFieldType.STRING).description(""),
-			fieldWithPath("visitedDate").type(JsonFieldType.STRING).description(""),
-			fieldWithPath("tags").type(JsonFieldType.ARRAY).description(""),
-			fieldWithPath("images").type(JsonFieldType.ARRAY).description("")
+			fieldWithPath("reviewScore").type(JsonFieldType.NUMBER).description("리뷰 점수"),
+			fieldWithPath("reviewVisibility").type(JsonFieldType.STRING).description("공개 범위"),
+			fieldWithPath("visitedDate").type(JsonFieldType.STRING).description("방문일"),
+			fieldWithPath("tags").type(JsonFieldType.ARRAY).description("태그").optional(),
+			fieldWithPath("images").type(JsonFieldType.ARRAY).description("사진").optional()
 	);
 
 	@Test
