@@ -1,6 +1,16 @@
 package com.jjikmuk.sikdorak.acceptance;
 
+import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.fieldWithPathAndValidConstraints;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
+
 import com.jjikmuk.sikdorak.common.exception.ExceptionCodeAndMessages;
+import com.jjikmuk.sikdorak.review.controller.request.ReviewInsertRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,36 +25,38 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
-
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
-
 /**
- *  [x] 요청 텍스트가 유효하지 않은 경우(null, empty, 500자 넘는 경우)
- *  [x] 요청 식당 id가 유효하지 않은 경우(null, 0, -1, 등록되지 않은 값)
- *  [x] 요청 방문일이 유효하지 않은 경우(미래 날짜, 유효하지 않은 날짜 형식)
- *  [x] 요청 평점이 유효하지 않은 경우(1,2,3,4,5 가 아닌 경우)
- *  [x] 요청 태그들이 유효하지 않은 경우(공백 포함, 한글 영어 숫자 이외의 값, 50자 초과, 개수 30개 초과)
- *  [x] 요청 공개 범위가 유효하지 않은 경우(public, protected, private 이외의 값, null, empty)
+ * [x] 요청 텍스트가 유효하지 않은 경우(null, empty, 500자 넘는 경우) [x] 요청 식당 id가 유효하지 않은 경우(null, 0, -1, 등록되지 않은 값)
+ * [x] 요청 방문일이 유효하지 않은 경우(미래 날짜, 유효하지 않은 날짜 형식) [x] 요청 평점이 유효하지 않은 경우(1,2,3,4,5 가 아닌 경우) [x] 요청 태그들이
+ * 유효하지 않은 경우(공백 포함, 한글 영어 숫자 이외의 값, 50자 초과, 개수 30개 초과) [x] 요청 공개 범위가 유효하지 않은 경우(public, protected,
+ * private 이외의 값, null, empty)
  *  TODO
  *  [ ] 요청 이미지가 유효하지 않은 경우(유효하지 않은 image 경로 (유효하지 않은 URL포맷, 관리하고 있는 s3 주소))
  */
 public class ReviewAcceptanceTest extends InitAcceptanceTest {
 
 	private static final Snippet REVIEW_INSERT_REQUEST = requestFields(
-			fieldWithPath("reviewContent").type(JsonFieldType.STRING).description("리뷰 내용"),
-			fieldWithPath("storeId").type(JsonFieldType.NUMBER).description("가게 아이디"),
-			fieldWithPath("reviewScore").type(JsonFieldType.NUMBER).description("리뷰 점수"),
-			fieldWithPath("reviewVisibility").type(JsonFieldType.STRING).description("공개 범위"),
-			fieldWithPath("visitedDate").type(JsonFieldType.STRING).description("방문일"),
-			fieldWithPath("tags").type(JsonFieldType.ARRAY).description("태그").optional(),
-			fieldWithPath("images").type(JsonFieldType.ARRAY).description("사진").optional()
+		fieldWithPathAndValidConstraints("reviewContent", ReviewInsertRequest.class)
+			.type(JsonFieldType.STRING)
+			.description("리뷰 내용"),
+		fieldWithPathAndValidConstraints("storeId", ReviewInsertRequest.class)
+			.type(JsonFieldType.NUMBER)
+			.description("가게 아이디"),
+		fieldWithPathAndValidConstraints("reviewScore", ReviewInsertRequest.class)
+			.type(JsonFieldType.NUMBER)
+			.description("리뷰 점수"),
+		fieldWithPathAndValidConstraints("reviewVisibility", ReviewInsertRequest.class)
+			.type(JsonFieldType.STRING)
+			.description("리뷰 게시물의 공개 범위"),
+		fieldWithPathAndValidConstraints("visitedDate", ReviewInsertRequest.class)
+			.type(JsonFieldType.STRING)
+			.description("가게 방문일"),
+		fieldWithPathAndValidConstraints("tags", ReviewInsertRequest.class)
+			.type(JsonFieldType.ARRAY)
+			.description("리뷰를 표현하는 태그들"),
+		fieldWithPathAndValidConstraints("images", ReviewInsertRequest.class)
+			.type(JsonFieldType.ARRAY)
+			.description("리뷰를 위한 사진 URL")
 	);
 
 	@Test
@@ -57,7 +69,8 @@ public class ReviewAcceptanceTest extends InitAcceptanceTest {
 		requestBody.put("reviewVisibility", "public");
 		requestBody.put("visitedDate", "2022-01-01");
 		requestBody.put("tags", new String[]{"맛집", "꿀맛"});
-		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
+		requestBody.put("images",
+			new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
 
 		given(this.spec)
 			.filter(document(DEFAULT_RESTDOC_PATH, REVIEW_INSERT_REQUEST))
@@ -65,10 +78,10 @@ public class ReviewAcceptanceTest extends InitAcceptanceTest {
 			.header("Content-type", "application/json")
 			.body(requestBody)
 
-		.when()
+			.when()
 			.post("/api/reviews")
 
-		.then()
+			.then()
 			.statusCode(HttpStatus.CREATED.value());
 	}
 
@@ -83,14 +96,15 @@ public class ReviewAcceptanceTest extends InitAcceptanceTest {
 		requestBody.put("reviewVisibility", "public");
 		requestBody.put("visitedDate", "2022-01-01");
 		requestBody.put("tags", new String[]{"맛집", "꿀맛"});
-		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
+		requestBody.put("images",
+			new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
 
 		given()
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
 			.body(requestBody)
 
-		.when()
+			.when()
 			.post("/api/reviews")
 
 			.then()
@@ -109,19 +123,20 @@ public class ReviewAcceptanceTest extends InitAcceptanceTest {
 		requestBody.put("reviewVisibility", "public");
 		requestBody.put("visitedDate", "2022-01-01");
 		requestBody.put("tags", new String[]{"맛집", "꿀맛"});
-		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
+		requestBody.put("images",
+			new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
 
 		given()
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.header("Content-type", "application/json")
-				.body(requestBody)
+			.accept(MediaType.APPLICATION_JSON_VALUE)
+			.header("Content-type", "application/json")
+			.body(requestBody)
 
-				.when()
-				.post("/api/reviews")
+			.when()
+			.post("/api/reviews")
 
-				.then()
-				.statusCode(expectedStatusCode)
-				.body("code", equalTo(ExceptionCodeAndMessages.NOT_FOUND_STORE.getCode()));
+			.then()
+			.statusCode(expectedStatusCode)
+			.body("code", equalTo(ExceptionCodeAndMessages.NOT_FOUND_STORE.getCode()));
 	}
 
 	@Test
@@ -134,20 +149,21 @@ public class ReviewAcceptanceTest extends InitAcceptanceTest {
 		requestBody.put("reviewVisibility", "public");
 		requestBody.put("visitedDate", "9999-12-31");
 		requestBody.put("tags", new String[]{"맛집", "꿀맛"});
-		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
+		requestBody.put("images",
+			new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
 
 		given()
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.header("Content-type", "application/json")
-				.body(requestBody)
+			.accept(MediaType.APPLICATION_JSON_VALUE)
+			.header("Content-type", "application/json")
+			.body(requestBody)
 
-				.when()
-				.post("/api/reviews")
+			.when()
+			.post("/api/reviews")
 
-				.then()
-				.log().all()
-				.statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("code", equalTo(ExceptionCodeAndMessages.INVALID_REVIEW_VISITEDDATE.getCode()));
+			.then()
+			.log().all()
+			.statusCode(HttpStatus.BAD_REQUEST.value())
+			.body("code", equalTo(ExceptionCodeAndMessages.INVALID_REVIEW_VISITEDDATE.getCode()));
 	}
 
 	@ParameterizedTest
@@ -162,25 +178,27 @@ public class ReviewAcceptanceTest extends InitAcceptanceTest {
 		requestBody.put("reviewVisibility", "public");
 		requestBody.put("visitedDate", "2022-01-01");
 		requestBody.put("tags", new String[]{"맛집", "꿀맛"});
-		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
+		requestBody.put("images",
+			new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
 
 		given()
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.header("Content-type", "application/json")
-				.body(requestBody)
+			.accept(MediaType.APPLICATION_JSON_VALUE)
+			.header("Content-type", "application/json")
+			.body(requestBody)
 
-				.when()
-				.post("/api/reviews")
+			.when()
+			.post("/api/reviews")
 
-				.then()
-				.statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("code", equalTo(ExceptionCodeAndMessages.INVALID_REVIEW_SCORE.getCode()));
+			.then()
+			.statusCode(HttpStatus.BAD_REQUEST.value())
+			.body("code", equalTo(ExceptionCodeAndMessages.INVALID_REVIEW_SCORE.getCode()));
 	}
 
 	@ParameterizedTest
 	@MethodSource("provideReviewTagsForIsNullAndWhiteSpaceAndInvalidValues")
 	@DisplayName("리뷰 생성 요청에서 태그들이 유효하지 않은 경우 에러 상태코드를 반환한다")
-	void create_review_reviewTags_invalid_failed(List<String> reviewTags, String expectedErrorCode) {
+	void create_review_reviewTags_invalid_failed(List<String> reviewTags,
+		String expectedErrorCode) {
 		JSONObject requestBody = new JSONObject();
 		requestBody.put("reviewContent", "찐맛집입니다.");
 		requestBody.put("storeId", savedStore.getId());
@@ -188,7 +206,8 @@ public class ReviewAcceptanceTest extends InitAcceptanceTest {
 		requestBody.put("reviewVisibility", "public");
 		requestBody.put("visitedDate", "2022-01-01");
 		requestBody.put("tags", reviewTags);
-		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
+		requestBody.put("images",
+			new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
 
 		given()
 			.accept(MediaType.APPLICATION_JSON_VALUE)
@@ -215,21 +234,22 @@ public class ReviewAcceptanceTest extends InitAcceptanceTest {
 		requestBody.put("reviewVisibility", visibility);
 		requestBody.put("visitedDate", "2022-01-01");
 		requestBody.put("tags", new String[]{"맛집", "꿀맛"});
-		requestBody.put("images", new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
+		requestBody.put("images",
+			new String[]{"https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"});
 
 		given()
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.header("Content-type", "application/json")
-				.body(requestBody)
-				.log().all()
+			.accept(MediaType.APPLICATION_JSON_VALUE)
+			.header("Content-type", "application/json")
+			.body(requestBody)
+			.log().all()
 
-				.when()
-				.post("/api/reviews")
+			.when()
+			.post("/api/reviews")
 
-				.then()
-				.log().all()
-				.statusCode(HttpStatus.BAD_REQUEST.value())
-				.body("code", equalTo(ExceptionCodeAndMessages.INVALID_REVIEW_VISIBILITY.getCode()));
+			.then()
+			.log().all()
+			.statusCode(HttpStatus.BAD_REQUEST.value())
+			.body("code", equalTo(ExceptionCodeAndMessages.INVALID_REVIEW_VISIBILITY.getCode()));
 	}
 
 	private static Stream<Arguments> provideContentForIsNullAndEmptyAnd500char() {
@@ -266,13 +286,20 @@ public class ReviewAcceptanceTest extends InitAcceptanceTest {
 		return Stream.of(
 			Arguments.of(null, ExceptionCodeAndMessages.INVALID_REVIEW_TAGS.getCode()),
 			Arguments.of(List.of("맛집", ""), ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
-			Arguments.of(List.of("맛집", "중간   공백"), ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
-			Arguments.of(List.of("맛집", "중간\t공백"), ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
-			Arguments.of(List.of("맛집", "중간\n공백"), ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
-			Arguments.of(List.of("맛집", "특수문자#"), ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
-			Arguments.of(List.of("맛집", "특수문자!"), ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
-			Arguments.of(List.of("맛집", "특수문자*"), ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
-			Arguments.of(List.of("맛집", tempChar.repeat(51)), ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
+			Arguments.of(List.of("맛집", "중간   공백"),
+				ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
+			Arguments.of(List.of("맛집", "중간\t공백"),
+				ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
+			Arguments.of(List.of("맛집", "중간\n공백"),
+				ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
+			Arguments.of(List.of("맛집", "특수문자#"),
+				ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
+			Arguments.of(List.of("맛집", "특수문자!"),
+				ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
+			Arguments.of(List.of("맛집", "특수문자*"),
+				ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
+			Arguments.of(List.of("맛집", tempChar.repeat(51)),
+				ExceptionCodeAndMessages.INVALID_REVIEW_TAG.getCode()),
 			Arguments.of(limitTags, ExceptionCodeAndMessages.INVALID_REVIEW_TAGS.getCode())
 		);
 	}
