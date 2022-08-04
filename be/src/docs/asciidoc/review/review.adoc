@@ -1,5 +1,14 @@
-=== 리뷰 작성 API
+=== 리뷰 생성
 
-이슈 상태에 따른 이슈의 목록을 조회하는 API 입니다.
+API : `POST /api/reviews`
 
-operation::review_acceptance_test/create_review_success[snippets='curl-request,http-request,request-body,request-fields,http-response,response-body']
+
+=== `201 CREATED`
+
+==== `Request`
+
+operation::review_insert_acceptance_test/create_review_success[snippets='http-request,request-fields']
+
+==== `Response`
+
+operation::review_insert_acceptance_test/create_review_success[snippets='http-response,response-fields']

@@ -10,7 +10,6 @@ notification-api-docs
 :toclevels: 4
 :sectlinks:
 
-{docdir}
 
 == 이슈 API
 

@@ -1,5 +1,7 @@
 package com.jjikmuk.sikdorak.common;
 
+import com.jjikmuk.sikdorak.store.domain.Store;
+import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,8 +20,20 @@ public class DatabaseConfigurator implements InitializingBean {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-
 	private List<String> tableNames;
+
+	@Autowired
+	private StoreRepository storeRepository;
+
+	public Store store;
+
+	public void initDataSource() {
+		this.store = storeRepository.save(new Store());
+	}
+
+	public void clear() {
+		entityManager.unwrap(Session.class).doWork(this::cleanUpDatabase);
+	}
 
 	@Override
 	public void afterPropertiesSet() {
@@ -42,21 +57,12 @@ public class DatabaseConfigurator implements InitializingBean {
 		}
 	}
 
-	public void clear() {
-		entityManager.unwrap(Session.class).doWork(this::cleanUpDatabase);
-	}
-
 	private void cleanUpDatabase(Connection connection) throws SQLException {
 		try (Statement statement = connection.createStatement()) {
-
-			statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 0"); // MySQL 참조무결성 off
+			statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 0");
 
 			for (String tableName : tableNames) {
-
 				statement.executeUpdate("TRUNCATE TABLE " + tableName);
-				// Mysql 8에서 auto_increment 초기화 지원 X
-//				statement
-//					.executeUpdate("ALTER TABLE " + tableName + " ALTER AUTO_INCREMENT = 1");
 			}
 
 			statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");
