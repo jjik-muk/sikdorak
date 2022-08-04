@@ -39,7 +39,7 @@ public interface DocumentFormatGenerator {
 
 	static Snippet commonResponseFieldsWithValidConstraints(Class<?> clazz,
 		FieldDescriptor... fields) {
-		final String dataPrefix = "data.[].";
+		final String dataPrefix = "data.";
 		List<FieldDescriptor> commonResponseFields = getCommonResponseFields();
 
 		for (FieldDescriptor field : fields) {
