@@ -33,7 +33,7 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", StoreNotFoundException.class),
 
     // User
-    DUPLICATE_USER("F-U001", "유저 고유번호가 중복됩니다.",DuplicateUserException.class),
+    DUPLICATE_USER("F-U001", "중복된 유저입니다.",DuplicateUserException.class),
     INVALID_USER_NIKCNAME("F-U002", "유효하지 않은 닉네임 입니다.", InvalidUserNicknameException.class),
     INVALID_USER_PROFILE_IMAGE("F-U003", "유효하지 않은 프로필 이미지 url의 형식입니다.", InvalidUserProfileImageUrlException.class),
     INVALID_USER_EMAIL("F-U004", "유효하지 않은 이메일 형식입니다.", InvalidUserEmailException.class),

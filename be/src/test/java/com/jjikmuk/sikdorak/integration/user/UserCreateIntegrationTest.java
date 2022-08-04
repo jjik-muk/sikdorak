@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@DisplayName("User 통합 테스트")
 public class UserCreateIntegrationTest extends InitIntegrationTest {
 
     @Autowired
@@ -32,5 +33,17 @@ public class UserCreateIntegrationTest extends InitIntegrationTest {
         assertThat(user.getUniqueId()).isEqualTo(findUser.getUniqueId());
         assertThat(user.getNickname()).isEqualTo(findUser.getNickname());
         assertThat(user.getProfileImage()).isEqualTo(findUser.getProfileImage());
+    }
+
+    @Test
+    @DisplayName("유저의 고유Id가 중복된다면 예외를 발생시킨다.")
+    void duplicatedUserException() {
+        User user1 = new User(232323L, "Forky-Ham", "https://profile-img.com","forky@sikdorak.com");
+        User user2 = new User(232323L, "Forky-Ham-2", "https://profile-img-2.com", "forky@sikdorak.com");
+
+        userService.createUser(user1);
+
+        assertThatThrownBy(() -> userService.createUser(user2))
+                .isInstanceOf(DuplicateUserException.class);
     }
 }

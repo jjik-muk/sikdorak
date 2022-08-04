@@ -1,7 +1,6 @@
 package com.jjikmuk.sikdorak.user.domain;
 
 import com.jjikmuk.sikdorak.auth.exception.InvalidUserNicknameException;
-import com.jjikmuk.sikdorak.user.domain.Nickname;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,6 +12,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@DisplayName("User Nickname 단위 테스트")
 public class NicknameTest {
     @Nested
     @DisplayName("생성자")

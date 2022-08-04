@@ -4,15 +4,12 @@ import com.jjikmuk.sikdorak.auth.exception.InvalidUserProfileImageUrlException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.stream.Stream;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@DisplayName("User ProfileImage 단위 테스트")
 public class ProfileImageTest {
 
     @Nested
