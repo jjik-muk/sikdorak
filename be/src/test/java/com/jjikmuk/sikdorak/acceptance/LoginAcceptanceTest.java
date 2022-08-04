@@ -1,33 +1,31 @@
 package com.jjikmuk.sikdorak.acceptance;
 
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.jjikmuk.sikdorak.integration.auth.OAuthMocks;
-import com.jjikmuk.sikdorak.integration.auth.WireMockConfig;
+import com.jjikmuk.sikdorak.common.mock.OAuthMocks;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.startsWith;
 
-@ContextConfiguration(classes = { WireMockConfig.class })
+@AutoConfigureWireMock(port = 0)
+@TestPropertySource(properties = {
+        "oauth.kakao.service.token_url=http://localhost:${wiremock.server.port}",
+        "oauth.kakao.service.api_url=http://localhost:${wiremock.server.port}"
+})
 public class LoginAcceptanceTest extends InitAcceptanceTest {
 
-    @Autowired
-    WireMockServer wireMockServer;
-
     @BeforeEach
-    void setResponse() throws IOException, URISyntaxException {
-        OAuthMocks.setupMockTokenResponse(wireMockServer);
-        OAuthMocks.setupMockUserInfoResponse(wireMockServer);
+    void setWireMockResponse() throws IOException {
+        OAuthMocks.setupMockTokenResponse();
+        OAuthMocks.setupMockUserInfoResponse();
     }
 
     @Test

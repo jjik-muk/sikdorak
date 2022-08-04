@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.integration.auth;
+package com.jjikmuk.sikdorak.common.mock;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
 import org.springframework.http.HttpStatus;

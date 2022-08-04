@@ -92,7 +92,8 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5','io.jsonwebtoken:jjwt-jackson:0.11.5'
 
 	// WireMock
-	testImplementation "com.github.tomakehurst:wiremock-jre8:2.33.2"
+	testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
+
 }
 
 test {
