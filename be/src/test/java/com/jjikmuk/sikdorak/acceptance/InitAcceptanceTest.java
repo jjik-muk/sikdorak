@@ -40,7 +40,7 @@ public class InitAcceptanceTest extends MysqlTestContainer {
 	protected int port;
 
 	@Autowired
-	protected DatabaseConfigurator data;
+	protected DatabaseConfigurator testData;
 
 	{
 		setUpRestAssured();
@@ -48,8 +48,8 @@ public class InitAcceptanceTest extends MysqlTestContainer {
 
 	@BeforeEach
 	void setUpDataBase() {
-		data.clear();
-		data.initDataSource();
+		testData.clear();
+		testData.initDataSource();
 	}
 
 	@BeforeEach

@@ -11,11 +11,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 public abstract class InitIntegrationTest extends MysqlTestContainer {
 
 	@Autowired
-	protected DatabaseConfigurator data;
+	protected DatabaseConfigurator testData;
 
 	@BeforeEach
 	void setUpDataBase() {
-		data.clear();
-		data.initDataSource();
+		testData.clear();
+		testData.initDataSource();
 	}
 }

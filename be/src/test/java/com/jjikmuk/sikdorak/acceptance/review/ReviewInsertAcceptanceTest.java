@@ -27,7 +27,7 @@ public class ReviewInsertAcceptanceTest extends InitAcceptanceTest {
 	void create_review_success() {
 		ReviewInsertRequest reviewInsertRequest = new ReviewInsertRequest(
 			"Test review contents",
-			data.testStore.getId(),
+			testData.store.getId(),
 			3.f,
 			"public",
 			LocalDate.of(2022, 1, 1),

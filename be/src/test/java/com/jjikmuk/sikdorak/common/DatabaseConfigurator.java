@@ -25,10 +25,10 @@ public class DatabaseConfigurator implements InitializingBean {
 	@Autowired
 	private StoreRepository storeRepository;
 
-	public Store testStore;
+	public Store store;
 
 	public void initDataSource() {
-		this.testStore = storeRepository.save(new Store());
+		this.store = storeRepository.save(new Store());
 	}
 
 	public void clear() {
