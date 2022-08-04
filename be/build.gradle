@@ -90,6 +90,9 @@ dependencies {
 	//Jwt
 	compileOnly 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5','io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+	// WireMock
+	testImplementation "com.github.tomakehurst:wiremock-jre8:2.33.2"
 }
 
 test {
