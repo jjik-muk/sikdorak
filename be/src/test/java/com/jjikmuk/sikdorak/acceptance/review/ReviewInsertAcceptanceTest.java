@@ -25,8 +25,12 @@ public class ReviewInsertAcceptanceTest extends InitAcceptanceTest {
 	@Test
 	@DisplayName("리뷰 생성 요청이 정상적인 경우라면 리뷰 생성 후 정상 상태 코드를 반환한다")
 	void create_review_success() {
-		ReviewInsertRequest reviewInsertRequest = new ReviewInsertRequest("Test review contents",
-			savedStore.getId(), 3.f, "public", LocalDate.of(2022, 1, 1),
+		ReviewInsertRequest reviewInsertRequest = new ReviewInsertRequest(
+			"Test review contents",
+			data.testStore.getId(),
+			3.f,
+			"public",
+			LocalDate.of(2022, 1, 1),
 			List.of("tag1", "tag2"),
 			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
 

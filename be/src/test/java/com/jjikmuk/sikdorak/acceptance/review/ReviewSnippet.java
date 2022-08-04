@@ -1,8 +1,8 @@
 package com.jjikmuk.sikdorak.acceptance.review;
 
+import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.DEFAULT_CODE_RESPONSE_FIELD_DESCRIPTOR;
+import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.DEFAULT_MESSAGE_RESPONSE_FIELD_DESCRIPTORS;
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.fieldWithPathAndValidConstraints;
-import static com.jjikmuk.sikdorak.acceptance.InitAcceptanceTest.DEFAULT_CODE_RESPONSE_FIELD_DESCRIPTOR;
-import static com.jjikmuk.sikdorak.acceptance.InitAcceptanceTest.DEFAULT_MESSAGE_RESPONSE_FIELD_DESCRIPTORS;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
