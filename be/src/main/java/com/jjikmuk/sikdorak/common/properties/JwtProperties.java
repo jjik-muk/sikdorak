@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.nio.charset.StandardCharsets;
 
 @Getter
@@ -17,9 +18,9 @@ public class JwtProperties {
 
     @NotEmpty
     private final byte[] secretKey;
-    @NotEmpty
+    @NotNull
     private final long accessTokenExpiredMillisecond;
-    @NotEmpty
+    @NotNull
     private final long refreshTokenExpiredMillisecond;
 
     public JwtProperties(String secretKey, long accessTokenExpiredMillisecond, long refreshTokenExpiredMillisecond) {
