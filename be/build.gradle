@@ -1,3 +1,9 @@
+buildscript {
+	ext {
+		springCloudVersion = '2021.0.3'
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.7.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -8,6 +14,12 @@ plugins {
 group = 'com.jjikmuk'
 version = '0.0.1'
 sourceCompatibility = '17'
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
 
 configurations {
 	asciidoctorExtensions // dependencies 에서 적용한 것 추가
@@ -55,6 +67,13 @@ dependencies {
 	// TestContainers
 	testImplementation "org.testcontainers:junit-jupiter:1.17.2"
 	testImplementation "org.testcontainers:mysql:1.17.2"
+
+	// Feign
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+	//Jwt
+	compileOnly 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5','io.jsonwebtoken:jjwt-jackson:0.11.5'
 }
 
 test {
