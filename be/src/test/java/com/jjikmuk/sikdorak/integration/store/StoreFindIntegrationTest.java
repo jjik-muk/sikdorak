@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.integration.store;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
+import com.jjikmuk.sikdorak.store.controller.response.StoreFindResponse;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.store.service.StoreService;
@@ -56,13 +57,13 @@ public class StoreFindIntegrationTest extends InitIntegrationTest {
             String storeName = STORE_NAME;
 
             // when
-            List<Store> stores = storeService.findStoresByStoreNameContaining(storeName);
+            List<StoreFindResponse> stores = storeService.findStoresByStoreNameContaining(storeName);
 
             // then
             assertThat(stores).isNotNull();
             assertThat(stores).isNotEmpty();
-            for (Store store : stores) {
-                assertThat(store.getStoreName()).contains(storeName);
+            for (StoreFindResponse store : stores) {
+                assertThat(store.storeName()).contains(storeName);
             }
         }
 
@@ -73,13 +74,13 @@ public class StoreFindIntegrationTest extends InitIntegrationTest {
             String storeName = "가게";
 
             // when
-            List<Store> stores = storeService.findStoresByStoreNameContaining(storeName);
+            List<StoreFindResponse> stores = storeService.findStoresByStoreNameContaining(storeName);
 
             // then
             assertThat(stores).isNotNull();
             assertThat(stores).isNotEmpty();
-            for (Store store : stores) {
-                assertThat(store.getStoreName()).contains(storeName);
+            for (StoreFindResponse store : stores) {
+                assertThat(store.storeName()).contains(storeName);
             }
         }
 
@@ -90,7 +91,7 @@ public class StoreFindIntegrationTest extends InitIntegrationTest {
             String storeName = null;
 
             // when
-            List<Store> stores = storeService.findStoresByStoreNameContaining(storeName);
+            List<StoreFindResponse> stores = storeService.findStoresByStoreNameContaining(storeName);
 
             // then
             assertThat(stores).isNotNull();
@@ -104,7 +105,7 @@ public class StoreFindIntegrationTest extends InitIntegrationTest {
             String storeName = "존재하지않는가게이름";
 
             // when
-            List<Store> stores = storeService.findStoresByStoreNameContaining(storeName);
+            List<StoreFindResponse> stores = storeService.findStoresByStoreNameContaining(storeName);
 
             // then
             assertThat(stores).isNotNull();

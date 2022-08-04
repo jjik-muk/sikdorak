@@ -38,11 +38,31 @@ public class Store extends BaseTimeEntity {
         this.location = new StoreLocation(latitude, longitude);
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getStoreName() {
         return storeName.getStoreName();
     }
 
-    public Long getId() {
-        return id;
+    public String getContactNumber() {
+        return contactNumber.getContactNumber();
+    }
+
+    public String getBaseAddress() {
+        return address.getBaseAddress();
+    }
+
+    public String getDetailAddress() {
+        return address.getDetailAddress();
+    }
+
+    public double getLatitude() {
+        return location.latitude();
+    }
+
+    public double getLongitude() {
+        return location.longitude();
     }
 }
