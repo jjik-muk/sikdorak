@@ -22,6 +22,18 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.operation.preprocess.OperationPreprocessor;
+import org.springframework.restdocs.payload.FieldDescriptor;
+import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.restdocs.snippet.Snippet;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ExtendWith(RestDocumentationExtension.class)
@@ -46,10 +58,36 @@ public class InitAcceptanceTest extends MysqlTestContainer {
 		setUpRestAssured();
 	}
 
+	protected static Snippet commonResponseFields(FieldDescriptor ...responseFieldDescriptors) {
+		List<FieldDescriptor> commonResponseFieldDescriptors = new ArrayList<>();
+
+		commonResponseFieldDescriptors.add(fieldWithPath("code").type(JsonFieldType.STRING).description("결과 코드"));
+		commonResponseFieldDescriptors.add(fieldWithPath("message").type(JsonFieldType.STRING).description("메세지"));
+
+		final String dataPrefix = "data.[].";
+
+		for (FieldDescriptor responseField : responseFieldDescriptors) {
+			FieldDescriptor dataField = fieldWithPath(dataPrefix + responseField.getPath()).type(responseField.getType()).description(responseField.getDescription());
+
+			if (responseField.isOptional()) {
+				dataField.optional();
+			}
+
+			commonResponseFieldDescriptors.add(dataField);
+		}
+
+		return responseFields(commonResponseFieldDescriptors);
+	}
+
 	@BeforeEach
 	void setUpDataBase() {
 		testData.clear();
-		testData.initDataSource();
+		testData.initDataSource("맛있는가게",
+				"02-0000-0000",
+				"서울시 송파구 좋은길 1",
+				"1층 101호",
+				37.5093890,
+				127.105143);
 	}
 
 	@BeforeEach
