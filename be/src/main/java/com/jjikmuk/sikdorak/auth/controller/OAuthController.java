@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.auth.controller;
 
-import com.jjikmuk.sikdorak.auth.controller.dto.response.JwtTokenResponse;
+import com.jjikmuk.sikdorak.auth.controller.response.JwtTokenResponse;
 import com.jjikmuk.sikdorak.auth.service.OAuthService;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;

@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.auth.controller.dto.response;
+package com.jjikmuk.sikdorak.auth.controller.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

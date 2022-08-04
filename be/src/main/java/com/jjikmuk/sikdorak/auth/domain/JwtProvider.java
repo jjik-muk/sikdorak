@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.auth.domain;
 
-import com.jjikmuk.sikdorak.auth.controller.dto.response.JwtTokenResponse;
+import com.jjikmuk.sikdorak.auth.controller.response.JwtTokenResponse;
 import com.jjikmuk.sikdorak.common.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

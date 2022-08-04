@@ -1,8 +1,8 @@
 package com.jjikmuk.sikdorak.auth.service;
 
-import com.jjikmuk.sikdorak.auth.controller.dto.response.JwtTokenResponse;
-import com.jjikmuk.sikdorak.auth.controller.dto.response.KakaoAccountResponse;
-import com.jjikmuk.sikdorak.auth.controller.dto.response.OAuthTokenResponse;
+import com.jjikmuk.sikdorak.auth.controller.response.JwtTokenResponse;
+import com.jjikmuk.sikdorak.auth.controller.response.KakaoAccountResponse;
+import com.jjikmuk.sikdorak.auth.controller.response.OAuthTokenResponse;
 import com.jjikmuk.sikdorak.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.common.properties.KakaoProperties;
 import com.jjikmuk.sikdorak.user.domain.User;

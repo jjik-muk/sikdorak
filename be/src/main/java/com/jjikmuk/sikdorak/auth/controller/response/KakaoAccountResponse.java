@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.auth.controller.dto.response;
+package com.jjikmuk.sikdorak.auth.controller.response;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.jjikmuk.sikdorak.common.config.feignclient.KakaoAccountResponseDeserializer;
