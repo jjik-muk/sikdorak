@@ -1,12 +1,15 @@
 name: CI - BE
 
 on:
-  push:
-    branches:
-      - BE-dev
   pull_request:
-    branches:
-      - BE-dev
+    branches: [BE-dev]
+    paths: ["be/**"]
+    types: [opened, synchronize, reopened]
+
+defaults:
+  run:
+    working-directory: ./be
+
 permissions:
   contents: read
 
@@ -14,9 +17,6 @@ jobs:
   be-test:
     name: Test SpringBoot
     runs-on: ubuntu-20.04
-    defaults:
-      run:
-        working-directory: ./be
 
     steps:
       - name: setup repo
