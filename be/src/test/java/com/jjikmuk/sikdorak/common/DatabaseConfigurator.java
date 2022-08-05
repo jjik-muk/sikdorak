@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import com.jjikmuk.sikdorak.user.domain.User;
+import com.jjikmuk.sikdorak.user.domain.UserRespository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +28,11 @@ public class DatabaseConfigurator implements InitializingBean {
 	@Autowired
 	private StoreRepository storeRepository;
 
+	@Autowired
+	private UserRespository userRespository;
+
 	public Store store;
+	public User user;
 
 	public void initDataSource() {
 		this.store = storeRepository.save(new Store("맛있는가게",
@@ -34,6 +41,8 @@ public class DatabaseConfigurator implements InitializingBean {
 				"1층 101호",
 				37.5093890,
 				127.105143));
+		this.user = userRespository.save(new User(12345678L,"test-user", "https://profile.com","sikdorak@gmail.com"));
+
 	}
 
 	public void clear() {
