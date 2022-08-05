@@ -1,6 +1,8 @@
 name: CI - BE
 
 on:
+  push:
+    branches: [BE-dev]
   pull_request:
     branches: [BE-dev]
     paths: ["be/**"]
