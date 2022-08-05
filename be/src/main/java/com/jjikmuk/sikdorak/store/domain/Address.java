@@ -16,6 +16,7 @@ public class Address {
 
     private static final int BASEADDRESS_LENGTH = 255;
     private static final int DETAILADDRESS_LENGTH = 50;
+    private static final String REGEX_ONLY_KOREAN_AND_NUMBER = "^[가-힣 0-9]*$";
 
     private String baseAddress;
 
@@ -47,7 +48,7 @@ public class Address {
         // detailAddress 는 null 이 아닌 경우, not empty, 50자 제한, 한글 숫자만
         if (Objects.nonNull(detailAddress) &&
                 (detailAddress.isBlank() ||
-                        detailAddress.length() > BASEADDRESS_LENGTH ||
+                        detailAddress.length() > DETAILADDRESS_LENGTH ||
                         !isContainsOnlyKoreanAndNumber(detailAddress))
         ) {
             throw new InvalidAddressException();
@@ -55,6 +56,6 @@ public class Address {
     }
 
     private boolean isContainsOnlyKoreanAndNumber(String text) {
-        return Pattern.matches("^[가-힣 0-9]*$", text);
+        return Pattern.matches(REGEX_ONLY_KOREAN_AND_NUMBER, text);
     }
 }
