@@ -20,7 +20,7 @@ public class StoreController {
     private final StoreService storeService;
 
     @GetMapping("api/stores")
-    public CommonResponseEntity<List<StoreFindResponse>> findStore(@RequestParam("storeName") String storeName ) {
+    public CommonResponseEntity<List<StoreFindResponse>> findStoresByStoreName(@RequestParam("storeName") String storeName ) {
         List<StoreFindResponse> findResponseList = storeService.findStoresByStoreNameContaining(storeName);
 
         return new CommonResponseEntity<>(STORE_FIND_SUCCESS, findResponseList, HttpStatus.OK);
