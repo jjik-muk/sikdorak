@@ -4,6 +4,7 @@
 
 - v0.0.1
   - 초기 백엔드 서버는 기능 개발이 완료되기 전까지 Heroku 단일 앱서버를 사용합니다.
+  - sonarcloud로 정적 분석합니다.
 
 ### RUN
 
@@ -13,6 +14,9 @@
     - heroku email
     - heroku private api key
     - heroku app name
+  - sonarcube
+    - SONARCLOUD_ORGANIZATION
+    - SONARCLOUD_TOKEN
 
 ```bash
 # terraform setup
