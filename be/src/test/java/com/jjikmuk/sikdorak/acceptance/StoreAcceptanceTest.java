@@ -26,7 +26,7 @@ public class StoreAcceptanceTest extends InitAcceptanceTest {
         Store savedStore = testData.store;
 
         ResponseCodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.STORE_FIND_SUCCESS;
-        String storeNameSearchKeywork = "가게";
+        String storeNameSearchKeywork = savedStore.getStoreName();
 
         given(this.spec)
             .filter(document(DEFAULT_RESTDOC_PATH, STORE_FIND_REQUEST, STORE_FIND_RESPONSE))
