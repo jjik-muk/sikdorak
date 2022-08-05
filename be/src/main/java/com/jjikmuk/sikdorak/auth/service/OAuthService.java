@@ -17,8 +17,8 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 @Service
 public class OAuthService{
-    private final OAuthTokenClient OAuthTokenClient;
-    private final OAuthApiClient OAuthApiClient;
+    private final OAuthTokenClient oAuthTokenClient;
+    private final OAuthApiClient oAuthApiClient;
     private final KakaoProperties kakaoProperties;
     private final UserService userService;
     private final JwtProvider jwtProvider;
@@ -42,7 +42,7 @@ public class OAuthService{
     }
 
     private OAuthTokenResponse getOAuthAccessToken(String code) {
-        return OAuthTokenClient.getAccessToken(
+        return oAuthTokenClient.getAccessToken(
                 kakaoProperties.getGrantType(),
                 kakaoProperties.getClientId(),
                 kakaoProperties.getRedirectUri(),
@@ -51,7 +51,7 @@ public class OAuthService{
 
     private KakaoAccountResponse getOAuthUserInformation(OAuthTokenResponse oAuthTokenResponse) {
         String authorizationHeader = String.format("%s %s", oAuthTokenResponse.getTokenType(), oAuthTokenResponse.getAccessToken());
-        return OAuthApiClient.getUserInfo(authorizationHeader);
+        return oAuthApiClient.getUserInfo(authorizationHeader);
     }
 
 }
