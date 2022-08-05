@@ -4,7 +4,11 @@ import com.jjikmuk.sikdorak.store.exception.InvalidStoreLocationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -39,19 +43,26 @@ class StoreLocationTest {
         class Context_with_invalid_storePoint {
 
             @ParameterizedTest
-            @CsvSource({
-                    "-91.0, -181.0",            // MIN 미만, MIN 미만
-                    "-91.0, 127.033406",        // MIN 미만, 정상
-                    "91.0, 181.0",              // MAX 초과, MAX 초과
-                    "91.0, 127.033406",         // MAX 초과, 정상
-                    "37.5093890, -181.0",       // 정상,     MIN 미만
-                    "91.0, 181.0",              // MAX 초과, MAX 초과
-                    "37.5093890, 181.0",        // 정상,     MAX 초과
-            })
+            @MethodSource("providePointNullOrOutOfRange")
             @DisplayName("예외를 발생시킨다")
-            void It_throws_error(double latitude, double longitude) {
+            void It_throws_error(Double latitude, Double longitude) {
                 assertThatThrownBy(() -> new StoreLocation(latitude, longitude))
                         .isInstanceOf(InvalidStoreLocationException.class);
+            }
+
+            public static Stream<Arguments> providePointNullOrOutOfRange() {
+                return Stream.of(
+                        Arguments.of(null, null),
+                        Arguments.of(30.0, null),
+                        Arguments.of(null, 100.0),
+                        Arguments.of(-91.0, -181.0),
+                        Arguments.of(-91.0, 127.033406),
+                        Arguments.of(91.0, 181.0),
+                        Arguments.of(91.0, 127.033406),
+                        Arguments.of(37.5093890, -181.0),
+                        Arguments.of(91.0, 181.0),
+                        Arguments.of(37.5093890, 181.0)
+                );
             }
         }
     }
