@@ -7,6 +7,7 @@ const Header = styled.div`
 
 const Main = styled.div`
   border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const MainFooter = styled.div`
@@ -15,7 +16,7 @@ const MainFooter = styled.div`
 
 const ButtonWrapper = styled.div`
   ${() => flexLayoutMixin('', 'space-between')};
-  margin-top: 10px;
+  margin: 30px 0;
 `;
 
 export { Header, Main, MainFooter, ButtonWrapper };

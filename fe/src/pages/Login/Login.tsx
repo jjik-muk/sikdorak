@@ -12,9 +12,11 @@ const { ID, PASSWORD } = TEXT.INPUT;
 
 function Login() {
   const [isPortal, setIsPortal] = useState(false);
+
   const handleClick = () => {
     setIsPortal(!isPortal);
   };
+
   return (
     <Wrap>
       <Form>
@@ -24,9 +26,8 @@ function Login() {
         <LoginInput type={PASSWORD} />
         <LoginButton text={NORMAL} onClick={handleClick} />
         <span>회원가입</span>
-        <div id="portal-test" />
         {isPortal && (
-          <Portal selector="#portal-test">
+          <Portal selector="#portal">
             <ReviewDetail />
           </Portal>
         )}
