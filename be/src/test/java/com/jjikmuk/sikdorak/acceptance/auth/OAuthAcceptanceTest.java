@@ -23,7 +23,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
         "oauth.kakao.service.api_url=http://localhost:${wiremock.server.port}"
 })
 @DisplayName("OAuth 인수테스트")
-public class OAuthAcceptanceTest extends InitAcceptanceTest {
+class OAuthAcceptanceTest extends InitAcceptanceTest {
 
     @BeforeEach
     void setWireMockResponse() throws IOException {

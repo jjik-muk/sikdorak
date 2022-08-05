@@ -1,7 +1,6 @@
 package com.jjikmuk.sikdorak.user.domain;
 
 import com.jjikmuk.sikdorak.auth.exception.InvalidUserProfileImageUrlException;
-import com.jjikmuk.sikdorak.review.exception.InvalidReviewScoreException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +14,7 @@ import java.util.regex.Pattern;
 @Embeddable
 public class ProfileImage {
 
-    private static final String URL_REGEX = "^((((https?|http?)://)|(mailto:|news:))(%[0-9A-Fa-f]{2}|[-()_.!~*';/?:@&=+$,A-Za-z0-9])+)([).!';/?:,][[:blank:]])?$";
+    private static final String URL_REGEX = "^((((https?|http?)://)|(mailto:|news:))(%[0-9A-Fa-f]{2}|[-()_.!~*';/?:@&=+$,A-Za-z0-9])+)([).!';/?:,][:blank])?$";
     private String profileImageUrl;
 
 
