@@ -28,7 +28,12 @@ public class DatabaseConfigurator implements InitializingBean {
 	public Store store;
 
 	public void initDataSource() {
-		this.store = storeRepository.save(new Store());
+		this.store = storeRepository.save(new Store("맛있는가게",
+				"02-0000-0000",
+				"서울시 송파구 좋은길 1",
+				"1층 101호",
+				37.5093890,
+				127.105143));
 	}
 
 	public void clear() {

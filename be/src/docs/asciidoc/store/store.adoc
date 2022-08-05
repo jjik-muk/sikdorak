@@ -1,0 +1,13 @@
+=== 이름으로 음식점 조회
+
+API : `GET /api/stores`
+
+=== `200 OK`
+
+==== `Request`
+
+operation::store_acceptance_test/find_store_by_name_containing_success[snippets='http-request,request-parameters']
+
+==== `Response`
+
+operation::store_acceptance_test/find_store_by_name_containing_success[snippets='http-response,response-fields']
