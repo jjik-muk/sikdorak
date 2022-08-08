@@ -1,3 +1,4 @@
+import { Z_INDEX } from 'constants/zIndex';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
 
@@ -19,7 +20,7 @@ export const Background = styled.div`
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   overflow: auto;
-  z-index: 100;
+  z-index: ${Z_INDEX.MODAL.CONTENTS};
 `;
 
 export const Dim = styled.div`
@@ -32,5 +33,5 @@ export const Dim = styled.div`
   bottom: 0;
   background-color: grey;
   opacity: 0.5;
-  z-index: 10;
+  z-index: ${Z_INDEX.MODAL.DIM};
 `;
