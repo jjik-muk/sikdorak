@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Input = styled.input`
+export const Input = styled.input`
   // TODO: value에 맞춰 사이징
   width: 80px;
   height: 30px;
@@ -10,5 +10,3 @@ const Input = styled.input`
   box-sizing: border-box;
   padding: 5px;
 `;
-
-export { Input };

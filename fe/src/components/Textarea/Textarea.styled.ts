@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Wrap = styled.textarea`
+export const Wrap = styled.textarea`
   width: 335px;
   height: 150px;
   border: 0;
@@ -9,5 +9,3 @@ const Wrap = styled.textarea`
   font-weight: 500;
   padding: 0;
 `;
-
-export { Wrap };

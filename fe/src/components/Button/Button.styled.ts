@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
 
-const Wrap = styled.div`
+export const Wrap = styled.div`
   width: 190px;
   height: 24px;
   border-radius: 10px;
@@ -9,8 +9,6 @@ const Wrap = styled.div`
   ${() => flexLayoutMixin('', 'center', 'center')}
 `;
 
-const Text = styled.div`
+export const Text = styled.div`
   margin-left: 10px;
 `;
-
-export { Wrap, Text };

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Wrap = styled.div`
+export const Wrap = styled.div`
   width: fit-content;
   height: 30px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -10,5 +10,3 @@ const Wrap = styled.div`
   box-sizing: border-box;
   font-size: 14px;
 `;
-
-export { Wrap };
