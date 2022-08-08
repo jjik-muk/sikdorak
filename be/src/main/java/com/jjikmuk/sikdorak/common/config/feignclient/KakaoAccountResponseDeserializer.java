@@ -12,25 +12,23 @@ import java.io.IOException;
 public class KakaoAccountResponseDeserializer extends JsonDeserializer<KakaoAccountResponse> {
 
     @Override
-    public KakaoAccountResponse deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
+    public KakaoAccountResponse deserialize(JsonParser p, DeserializationContext ctxt) throws IOException{
 
         JsonNode jsonNode = p.getCodec().readTree(p);
 
         long uniqueId = jsonNode.get("id").asLong();
-        JsonNode kakao_account_node = jsonNode.get("kakao_account");
-        String nickname = kakao_account_node
-                .get("profile")
+        JsonNode kakaoAccountNode = jsonNode.get("kakao_account");
+
+        String nickname = kakaoAccountNode.get("profile")
                 .get("nickname")
                 .asText();
-        String profileImage = kakao_account_node
-                .get("profile")
+        String profileImage = kakaoAccountNode.get("profile")
                 .get("profile_image_url")
                 .asText();
 
-        String email = kakao_account_node.get("email").asText();
-        boolean isEmailValid = kakao_account_node.get("is_email_valid").asBoolean();
-        boolean isEmailVerified = kakao_account_node.get("is_email_verified").asBoolean();
-
+        String email = kakaoAccountNode.get("email").asText();
+        boolean isEmailValid = kakaoAccountNode.get("is_email_valid").asBoolean();
+        boolean isEmailVerified = kakaoAccountNode.get("is_email_verified").asBoolean();
 
         if (isEmailValid && isEmailVerified) {
             return new KakaoAccountResponse(uniqueId, nickname, profileImage, email);

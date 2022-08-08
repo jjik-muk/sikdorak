@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name="token-client", url = "https://kauth.kakao.com/", configuration = {FeignClientHeaderConfiguration.class})
+@FeignClient(name="token-client", url = "${oauth.kakao.service.token_url}", configuration = {FeignClientHeaderConfiguration.class})
 public interface OAuthTokenClient {
 
     @PostMapping("/oauth/token")

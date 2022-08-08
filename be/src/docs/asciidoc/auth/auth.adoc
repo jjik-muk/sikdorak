@@ -1,0 +1,30 @@
+=== 로그인 페이지 요청
+
+API : `GET /api/oauth/login`
+
+
+=== `301 MOVED_PERMANENTLY`
+
+==== `Request`
+
+operation::login_acceptance_test/redirect_to_social_login_page[snippets='http-request']
+
+==== `Response`
+
+operation::login_acceptance_test/redirect_to_social_login_page[snippets='http-response']
+
+
+=== 유저 로그인 콜백
+
+API : `GET /api/oauth/callback`
+
+
+=== `200 OK`
+
+==== `Request`
+
+operation::login_acceptance_test/user_login_success[snippets='http-request,request-parameters']
+
+==== `Response`
+
+operation::login_acceptance_test/user_login_success[snippets='http-response,response-fields']

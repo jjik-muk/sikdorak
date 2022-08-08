@@ -37,8 +37,25 @@ public interface DocumentFormatGenerator {
 		return requestFields(commonRequestFields);
 	}
 
-	static Snippet commonResponseFieldsWithValidConstraints(Class<?> clazz,
-		FieldDescriptor... fields) {
+	static Snippet commonSingleResponseFieldsWithValidConstraints(Class<?> clazz,
+																  FieldDescriptor... fields) {
+		final String dataPrefix = "data.";
+		List<FieldDescriptor> commonResponseFields = getCommonResponseFields();
+
+		for (FieldDescriptor field : fields) {
+			commonResponseFields.add(
+					fieldWithPath(dataPrefix + field.getPath())
+							.type(field.getType())
+							.description(field.getDescription())
+							.attributes(getFieldConstraints(clazz, field.getPath()))
+			);
+		}
+
+		return responseFields(commonResponseFields);
+	}
+
+	static Snippet commonListResponseFieldsWithValidConstraints(Class<?> clazz,
+																FieldDescriptor... fields) {
 		final String dataPrefix = "data.[].";
 		List<FieldDescriptor> commonResponseFields = getCommonResponseFields();
 
