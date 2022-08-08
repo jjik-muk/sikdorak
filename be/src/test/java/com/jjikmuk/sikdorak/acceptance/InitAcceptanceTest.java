@@ -1,8 +1,11 @@
 package com.jjikmuk.sikdorak.acceptance;
 
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jjikmuk.sikdorak.common.DatabaseConfigurator;
-import com.jjikmuk.sikdorak.common.MysqlTestContainer;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.ObjectMapperConfig;
@@ -19,13 +22,9 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.operation.preprocess.OperationPreprocessor;
 
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.modifyUris;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
-
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ExtendWith(RestDocumentationExtension.class)
-public class InitAcceptanceTest extends MysqlTestContainer {
+public class InitAcceptanceTest {
 
 	protected static final String DEFAULT_RESTDOC_PATH = "{class_name}/{method_name}/";
 	protected static final String DEFAULT_RESTDOC_SCHEMA = "https";
