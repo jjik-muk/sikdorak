@@ -1,10 +1,11 @@
 import { createPortal } from 'react-dom';
-import { Modal, Background } from './Portal.styled';
+import { Modal, Background, Dim } from './Portal.styled';
 
 export default function Portal({ children, selector }: PortalProps) {
   const element = typeof window !== 'undefined' && document.querySelector(selector);
   const ModalBackground = (
     <Modal>
+      <Dim />
       <Background>{children}</Background>
     </Modal>
   );
