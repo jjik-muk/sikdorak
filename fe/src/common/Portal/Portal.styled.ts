@@ -12,8 +12,8 @@ export const Modal = styled.div`
 
 export const Background = styled.div`
   position: relative;
-  width: 800px;
-  height: 800px;
+  width: fit-content;
+  max-height: 800px;
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
