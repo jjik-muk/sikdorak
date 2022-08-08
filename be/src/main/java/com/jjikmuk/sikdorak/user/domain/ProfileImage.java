@@ -1,20 +1,19 @@
 package com.jjikmuk.sikdorak.user.domain;
 
 import com.jjikmuk.sikdorak.auth.exception.InvalidUserProfileImageUrlException;
+import java.util.Objects;
+import java.util.regex.Pattern;
+import javax.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Embeddable;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Getter
 @NoArgsConstructor
 @Embeddable
 public class ProfileImage {
 
-    private static final String URL_REGEX = "^((((https?|http?)://)|(mailto:|news:))(%[0-9A-Fa-f]{2}|[-()_.!~*';/?:@&=+$,A-Za-z0-9])+)([).!';/?:,][:blank])?$";
+    private static final String URL_REGEX = "^(((https?|http?)://)(%[0-9A-Fa-f]{2}|[-()_.!~*';/?:@&=+$,A-Za-z0-9])+)([).!';/?:,][:blank])?$";
+
     private String profileImageUrl;
 
 
@@ -28,9 +27,7 @@ public class ProfileImage {
     }
 
     private boolean validateUrlForm(String profileImageUrl) {
-        Pattern pattern = Pattern.compile(URL_REGEX);
-        Matcher matcher = pattern.matcher(profileImageUrl);
-        return matcher.matches();
+        return Pattern.matches(URL_REGEX, profileImageUrl);
     }
 
 }

@@ -31,8 +31,8 @@ oauth:
     redirect_uri: redirectUri
     response_type: code
     service:
-      token_url: http://localhost:9561
-      api_url: http://localhost:9561
+      token_url: https://kauth.kakao.com/
+      api_url: https://kapi.kakao.com/
 
 
 secret:
