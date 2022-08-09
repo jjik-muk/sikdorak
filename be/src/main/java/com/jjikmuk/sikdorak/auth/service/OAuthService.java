@@ -3,9 +3,11 @@ package com.jjikmuk.sikdorak.auth.service;
 import com.jjikmuk.sikdorak.auth.controller.response.JwtTokenResponse;
 import com.jjikmuk.sikdorak.auth.controller.response.KakaoAccountResponse;
 import com.jjikmuk.sikdorak.auth.controller.response.OAuthTokenResponse;
+import com.jjikmuk.sikdorak.auth.controller.response.SikdorakAccessToken;
 import com.jjikmuk.sikdorak.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.common.properties.KakaoProperties;
 import com.jjikmuk.sikdorak.user.domain.User;
+import com.jjikmuk.sikdorak.user.exception.UserNotFoundException;
 import com.jjikmuk.sikdorak.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +43,19 @@ public class OAuthService{
         return jwtProvider.createTokenResponse(String.valueOf(userInfo.getUniqueId()));
     }
 
+    public SikdorakAccessToken updateAccessToken(String refreshToken) {
+
+        jwtProvider.validateToken(refreshToken);
+        String userUniqueId = jwtProvider.decodeToken(refreshToken);
+        if (!userService.isExistingUser(Long.parseLong(userUniqueId))) {
+            throw new UserNotFoundException();
+        }
+
+        String accessToken = jwtProvider.createAccessToken(userUniqueId);
+
+        return new SikdorakAccessToken(accessToken);
+    }
+
     private OAuthTokenResponse getOAuthAccessToken(String code) {
         return oAuthTokenClient.getAccessToken(
                 kakaoProperties.getGrantType(),
@@ -53,5 +68,4 @@ public class OAuthService{
         String authorizationHeader = String.format("%s %s", oAuthTokenResponse.getTokenType(), oAuthTokenResponse.getAccessToken());
         return oAuthApiClient.getUserInfo(authorizationHeader);
     }
-
 }

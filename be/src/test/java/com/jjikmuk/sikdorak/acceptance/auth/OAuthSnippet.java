@@ -1,5 +1,6 @@
 package com.jjikmuk.sikdorak.acceptance.auth;
 
+import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonResponseNonFields;
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonSingleResponseFieldsWithValidConstraints;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
@@ -29,8 +30,10 @@ public interface OAuthSnippet {
     );
 
 
-    Snippet UPDATE_ACCESS_TOKEN_RESPONSE_SNIPPET = commonSingleResponseFieldsWithValidConstraints(
+    Snippet UPDATE_ACCESS_TOKEN_SUCCESS_RESPONSE_SNIPPET = commonSingleResponseFieldsWithValidConstraints(
         SikdorakAccessToken.class,
         fieldWithPath("accessToken").type(JsonFieldType.STRING).description("액세스 토큰")
     );
+
+    Snippet UPDATE_ACCESS_TOKEN_FAIL_RESPONSE_SNIPPET = commonResponseNonFields();
 }

@@ -39,8 +39,19 @@ API : `GET /api/oauth/refresh`
 
 ==== `Request`
 
-operation::o_auth_update_token_acceptance_test/update_access_token[snippets='http-request,request-headers']
+operation::o_auth_update_token_acceptance_test/update_access_token_success[snippets='http-request,request-headers']
 
 ==== `Response`
 
-operation::o_auth_update_token_acceptance_test/update_access_token[snippets='http-response,response-fields']
+operation::o_auth_update_token_acceptance_test/update_access_token_success[snippets='http-response,response-fields']
+
+
+=== `400 BAD_REQUEST`
+
+==== `Request`
+
+operation::o_auth_update_token_acceptance_test/update_access_token_fail[snippets='http-request,request-headers']
+
+==== `Response`
+
+operation::o_auth_update_token_acceptance_test/update_access_token_fail[snippets='http-response,response-fields']
