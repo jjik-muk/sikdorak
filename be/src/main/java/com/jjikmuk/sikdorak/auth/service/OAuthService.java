@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.auth.service;
 
-import com.jjikmuk.sikdorak.auth.controller.response.JwtTokenResponse;
+import com.jjikmuk.sikdorak.auth.domain.JwtTokenPair;
 import com.jjikmuk.sikdorak.auth.controller.response.KakaoAccountResponse;
 import com.jjikmuk.sikdorak.auth.controller.response.OAuthTokenResponse;
 import com.jjikmuk.sikdorak.auth.controller.response.SikdorakAccessToken;
@@ -30,7 +30,7 @@ public class OAuthService{
     }
 
     @Transactional
-    public JwtTokenResponse login(String code) {
+    public JwtTokenPair login(String code) {
         OAuthTokenResponse oAuthTokenResponse = getOAuthAccessToken(code);
         KakaoAccountResponse userInfo = getOAuthUserInformation(oAuthTokenResponse);
 

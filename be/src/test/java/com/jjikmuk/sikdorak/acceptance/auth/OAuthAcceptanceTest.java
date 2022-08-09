@@ -60,8 +60,9 @@ class OAuthAcceptanceTest extends InitAcceptanceTest {
             .get("/api/oauth/callback")
 
         .then()
+            .log().all()
             .statusCode(HttpStatus.OK.value())
-            .body("data.accessToken", notNullValue())
-            .body("data.refreshToken", notNullValue());
+            .cookie("refreshToken", notNullValue())
+            .body("data.accessToken", notNullValue());
     }
 }

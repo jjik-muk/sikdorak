@@ -8,7 +8,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
-import com.jjikmuk.sikdorak.auth.controller.response.JwtTokenResponse;
+import com.jjikmuk.sikdorak.auth.domain.JwtTokenPair;
 import com.jjikmuk.sikdorak.auth.controller.response.SikdorakAccessToken;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
@@ -20,9 +20,8 @@ public interface OAuthSnippet {
     );
 
     Snippet LOGIN_SUCCESS_RESPONSE_SNIPPET = commonSingleResponseFieldsWithValidConstraints(
-            JwtTokenResponse.class,
-            fieldWithPath("accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
-            fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("리프레쉬 토큰")
+            JwtTokenPair.class,
+            fieldWithPath("accessToken").type(JsonFieldType.STRING).description("액세스 토큰")
     );
 
     Snippet UPDATE_ACCESS_TOKEN_REQUEST_SNIPPET = requestHeaders(

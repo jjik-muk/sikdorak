@@ -1,6 +1,5 @@
 package com.jjikmuk.sikdorak.auth.domain;
 
-import com.jjikmuk.sikdorak.auth.controller.response.JwtTokenResponse;
 import com.jjikmuk.sikdorak.auth.exception.InvalidTokenException;
 import com.jjikmuk.sikdorak.common.properties.JwtProperties;
 import io.jsonwebtoken.Claims;
@@ -23,11 +22,11 @@ public class JwtProvider {
         this.secretKey = Keys.hmacShaKeyFor(jwtProperties.getSecretKey());
     }
 
-    public JwtTokenResponse createTokenResponse(String payload) {
+    public JwtTokenPair createTokenResponse(String payload) {
         String accessToken = createAccessToken(payload);
         String refreshToken = createRefreshToken(payload);
 
-        return new JwtTokenResponse(accessToken, refreshToken);
+        return new JwtTokenPair(accessToken, refreshToken);
     }
 
     public String createAccessToken(String payload) {
