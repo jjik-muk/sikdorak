@@ -1,11 +1,12 @@
 import Icon from 'common/Icon';
-import { Text, Wrap } from './Button.styled';
+import { ReactNode } from 'react';
+import { Wrap } from './Button.styled';
 
-function Button({ text, icon }: ButtonProps) {
+function Button({ children, icon, width, height }: ButtonProps) {
   return (
-    <Wrap>
+    <Wrap width={width} height={height}>
       <Icon icon={icon} />
-      <Text>{text}</Text>
+      {children}
     </Wrap>
   );
 }
@@ -16,5 +17,7 @@ type IconTypes = 'Photo' | 'DownArrow' | 'UpArrow' | 'Star' | 'MenuBtn' | 'Heart
 
 interface ButtonProps {
   icon: IconTypes;
-  text?: string;
+  children?: ReactNode;
+  width: number;
+  height: number;
 }

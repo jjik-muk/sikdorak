@@ -23,9 +23,9 @@ function ReviewDetailWithPicture() {
           </MainFooter>
         </Main>
         <ButtonWrapper>
-          <Button icon="Heart" />
-          <Button icon="TalkBubble" />
-          <Button icon="ShareArrow" />
+          <Button icon="Heart" width={93} height={28} />
+          <Button icon="TalkBubble" width={93} height={28} />
+          <Button icon="ShareArrow" width={93} height={28} />
         </ButtonWrapper>
         <Comment title="호이" />
         <Comment title="럼카" content="스타일 왜 이따위인가요?" />

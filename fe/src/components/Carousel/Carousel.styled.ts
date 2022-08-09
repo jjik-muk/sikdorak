@@ -20,7 +20,7 @@ export const Btns = styled.div`
   justify-content: space-between;
   position: absolute;
   top: 300px;
-  left: 30px;
+  left: 10px;
   width: 580px;
   z-index: 1;
 `;

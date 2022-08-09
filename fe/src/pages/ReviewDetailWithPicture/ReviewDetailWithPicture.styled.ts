@@ -3,7 +3,6 @@ import { flexLayoutMixin } from 'utils/utils';
 
 export const Wrap = styled.div`
   display: flex;
-  gap: 20px;
 `;
 
 export const Header = styled.div`
@@ -25,5 +24,8 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const ContentsWrap = styled.div`
-  width: 333px;
+  width: 400px;
+  padding: 20px;
+  max-height: 600px;
+  overflow-y: auto;
 `;

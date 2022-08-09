@@ -18,3 +18,10 @@ export const ButtonWrapper = styled.div`
   ${() => flexLayoutMixin('', 'space-between')};
   margin: 30px 0;
 `;
+
+export const Wrap = styled.div`
+  width: 755px;
+  padding: 20px;
+  max-height: 600px;
+  overflow-y: auto;
+`;
