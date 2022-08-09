@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.user.domain;
 
-import com.jjikmuk.sikdorak.auth.exception.InvalidUserProfileImageUrlException;
+import com.jjikmuk.sikdorak.user.exception.InvalidUserProfileImageUrlException;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import javax.persistence.Embeddable;

@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.user.domain;
 
-import com.jjikmuk.sikdorak.auth.exception.InvalidUserNicknameException;
+import com.jjikmuk.sikdorak.user.exception.InvalidUserNicknameException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
