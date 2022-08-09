@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrap = styled.textarea`
-  width: 335px;
+  width: 100%;
   height: 150px;
   border: 0;
   resize: none;

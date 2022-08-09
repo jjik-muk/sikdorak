@@ -8,7 +8,7 @@ import { ButtonWrapper, Header, Main, MainFooter } from './ReviewDetail.styled';
 
 export default function ReviewDetail() {
   return (
-    <>
+    <div>
       <Header>
         <Profile nickname="Dashawn" />
         <Icon icon="MenuBtn" />
@@ -29,6 +29,6 @@ export default function ReviewDetail() {
       <Comment title="쿠킴" content="프론트 맘에 안드네요" />
       <Comment title="포키" content="다시" />
       <Comment title="제이" content="해오세요" />
-    </>
+    </div>
   );
 }
