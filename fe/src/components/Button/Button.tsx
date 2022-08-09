@@ -16,5 +16,5 @@ type IconTypes = 'Photo' | 'DownArrow' | 'UpArrow' | 'Star' | 'MenuBtn' | 'Heart
 
 interface ButtonProps {
   icon: IconTypes;
-  text: string;
+  text?: string;
 }

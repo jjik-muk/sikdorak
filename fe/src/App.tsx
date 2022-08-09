@@ -1,7 +1,7 @@
 import Portal from 'common/Portal/Portal';
-import ReviewDetailWithPicture from 'components/ReviewDetailWithPicture/ReviewDetailWithPicture';
 import Login from 'pages/Login/Login';
 import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
+import ReviewDetailWithPicture from 'pages/ReviewDetailWithPicture/ReviewDetailWithPicture';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalStyle from 'styles/GlobalStyle';

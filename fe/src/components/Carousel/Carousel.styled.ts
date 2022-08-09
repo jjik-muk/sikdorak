@@ -12,7 +12,7 @@ export const Container = styled.ul<{ idx: number }>`
   display: flex;
   width: fit-content;
   transform: ${(props) => `translateX(${-PICTURE_SIZE * props.idx}px)`};
-  transition: 0.5s;
+  transition: 0.25s;
 `;
 
 export const Btns = styled.div`
