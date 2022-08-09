@@ -5,6 +5,7 @@ const PICTURE_SIZE = 600;
 
 function Carousel() {
   const [idx, setIdx] = useState(0);
+  const [isMoving, setIsMoving] = useState(false);
   const isFirstIdx = idx === 0;
   const isLastIdx = idx === 2;
 
@@ -13,26 +14,35 @@ function Carousel() {
       <Btns>
         <LeftBtn
           onClick={() => {
+            setIsMoving(true);
             if (isFirstIdx) {
               return;
             }
             setIdx(idx - 1);
           }}
+          disabled={isMoving || isFirstIdx}
         >
           왼
         </LeftBtn>
         <RightBtn
           onClick={() => {
+            setIsMoving(true);
             if (isLastIdx) {
               return;
             }
             setIdx(idx + 1);
           }}
+          disabled={isMoving || isLastIdx}
         >
           오
         </RightBtn>
       </Btns>
-      <Container idx={idx}>
+      <Container
+        idx={idx}
+        onTransitionEnd={() => {
+          setIsMoving(false);
+        }}
+      >
         <img
           width={PICTURE_SIZE}
           height={PICTURE_SIZE}

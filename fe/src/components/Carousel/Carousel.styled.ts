@@ -9,10 +9,10 @@ export const Wrap = styled.div`
 const PICTURE_SIZE = 600;
 
 export const Container = styled.ul<{ idx: number }>`
-  width: fit-content;
-  height: 100%;
   display: flex;
+  width: fit-content;
   transform: ${(props) => `translateX(${-PICTURE_SIZE * props.idx}px)`};
+  transition: 0.5s;
 `;
 
 export const Btns = styled.div`
