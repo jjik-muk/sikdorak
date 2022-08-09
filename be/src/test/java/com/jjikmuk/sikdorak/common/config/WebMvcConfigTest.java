@@ -26,14 +26,14 @@ class WebMvcConfigTest {
 	private MockMvc mvc;
 
 	@ParameterizedTest
-	@ValueSource(strings = {"GET", "POST", "PUT", "DELETE"})
+	@ValueSource(strings = {"GET", "POST", "PUT", "DELETE", "OPTIONS"})
 	@DisplayName("CORS 설정에서 허용된 HTTP Method 로 오는 요청은 성공한다")
 	void cors_allowed_method_ok(String method) {
 		assertCors(method, status().isOk());
 	}
 
 	@ParameterizedTest
-	@ValueSource(strings = {"HEAD", "PATCH", "OPTIONS"})
+	@ValueSource(strings = {"HEAD", "PATCH"})
 	@DisplayName("CORS 설정에서 허용되지 않은 HTTP Method 로 오는 요청은 실패한다.")
 	void cors_not_allowed_method_forbidden(String method) {
 		assertCors(method, status().isForbidden());
