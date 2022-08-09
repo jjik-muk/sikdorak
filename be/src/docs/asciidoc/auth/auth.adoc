@@ -50,8 +50,18 @@ operation::o_auth_update_token_acceptance_test/update_access_token_success[snipp
 
 ==== `Request`
 
-operation::o_auth_update_token_acceptance_test/update_access_token_fail[snippets='http-request,request-headers']
+operation::o_auth_update_token_acceptance_test/update_access_token_fail_expired_token[snippets='http-request,request-headers']
 
 ==== `Response`
 
-operation::o_auth_update_token_acceptance_test/update_access_token_fail[snippets='http-response,response-fields']
+operation::o_auth_update_token_acceptance_test/update_access_token_fail_expired_token[snippets='http-response,response-fields']
+
+=== `404 NOT_FOUND`
+
+==== `Request`
+
+operation::o_auth_update_token_acceptance_test/update_access_token_fail_user_not_found[snippets='http-request,request-headers']
+
+==== `Response`
+
+operation::o_auth_update_token_acceptance_test/update_access_token_fail_user_not_found[snippets='http-response,response-fields']
