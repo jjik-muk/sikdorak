@@ -106,6 +106,7 @@ Temporary Items
 .apdisk
 
 # 빌드 시 복사된 application.yml 파일
+src/main/resources/application.yml
 src/main/resources/application-prod.yml
 src/main/resources/application-dev.yml
 src/main/resources/application-test.yml
