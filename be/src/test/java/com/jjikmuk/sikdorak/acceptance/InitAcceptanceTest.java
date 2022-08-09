@@ -21,9 +21,11 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.operation.preprocess.OperationPreprocessor;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ExtendWith(RestDocumentationExtension.class)
+@ActiveProfiles("test")
 public class InitAcceptanceTest {
 
 	protected static final String DEFAULT_RESTDOC_PATH = "{class_name}/{method_name}/";
