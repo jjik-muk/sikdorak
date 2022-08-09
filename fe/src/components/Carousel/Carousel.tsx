@@ -22,7 +22,7 @@ function Carousel() {
           }}
           disabled={isMoving || isFirstIdx}
         >
-          왼
+          {'<'}
         </LeftBtn>
         <RightBtn
           onClick={() => {
@@ -34,7 +34,7 @@ function Carousel() {
           }}
           disabled={isMoving || isLastIdx}
         >
-          오
+          {'>'}
         </RightBtn>
       </Btns>
       <Container

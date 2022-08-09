@@ -25,6 +25,14 @@ export const Btns = styled.div`
   z-index: 1;
 `;
 
-export const LeftBtn = styled.button``;
+export const LeftBtn = styled.button`
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+`;
 
-export const RightBtn = styled.button``;
+export const RightBtn = styled.button`
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+`;
