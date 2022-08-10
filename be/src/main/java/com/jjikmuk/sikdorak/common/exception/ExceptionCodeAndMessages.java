@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.common.exception;
 import com.jjikmuk.sikdorak.auth.exception.InvalidTokenException;
 import com.jjikmuk.sikdorak.user.exception.InvalidUserNicknameException;
 import com.jjikmuk.sikdorak.user.exception.InvalidUserProfileImageUrlException;
-import com.jjikmuk.sikdorak.auth.exception.KakaoApiException;
+import com.jjikmuk.sikdorak.auth.exception.OAuthServerException;
 import com.jjikmuk.sikdorak.common.CodeAndMessages;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewScoreException;
@@ -50,7 +50,7 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     USER_NOT_FOUND("F-U005", "존재하지 않는 유저입니다.", UserNotFoundException.class),
 
     //OAuth
-    FAILED_CONNECTION_WITH_KAKAO_API("F-O001", "카카오 서버와의 통신이 원할하지 않습니다.", KakaoApiException.class),
+    FAILED_CONNECTION_WITH_OAUTH_SERVER("F-O001", "OAuth 서버와의 통신이 원할하지 않습니다.", OAuthServerException.class),
     EXPIRED_TOKEN("F-O002", "유효하지 않은 토큰입니다.", InvalidTokenException.class);
 
     private final String code;
