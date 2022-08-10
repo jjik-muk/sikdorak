@@ -34,26 +34,24 @@ public class OAuthService{
         OAuthTokenResponse oAuthTokenResponse = getOAuthAccessToken(code);
         KakaoAccountResponse userInfo = getOAuthUserInformation(oAuthTokenResponse);
 
-        if (!userService.isExistingUser(userInfo.getUniqueId())) {
-            User user = new User(userInfo.getUniqueId(), userInfo.getNickname(), userInfo.getProfileImage(), userInfo.getEmail());
+        User user;
+        if (!userService.isExistingUserByUniqueId(userInfo.getUniqueId())) {
+            user = new User(userInfo.getUniqueId(), userInfo.getNickname(), userInfo.getProfileImage(), userInfo.getEmail());
             userService.createUser(user);
-            return jwtProvider.createTokenResponse(String.valueOf(user.getUniqueId()));
+            return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
         }
-
-        return jwtProvider.createTokenResponse(String.valueOf(userInfo.getUniqueId()));
+        user = userService.searchUserByUniqueId(userInfo.getUniqueId());
+        return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
     }
 
     public SikdorakAccessToken updateAccessToken(String refreshToken) {
 
         jwtProvider.validateToken(refreshToken);
-        String userUniqueId = jwtProvider.decodeToken(refreshToken);
-        if (!userService.isExistingUser(Long.parseLong(userUniqueId))) {
+        String userId = jwtProvider.decodeToken(refreshToken);
+        if (!userService.isExistingUserId(Long.parseLong(userId))) {
             throw new UserNotFoundException();
         }
-
-        String accessToken = jwtProvider.createAccessToken(userUniqueId);
-
-        return new SikdorakAccessToken(accessToken);
+        return new SikdorakAccessToken(jwtProvider.createAccessToken(userId));
     }
 
     private OAuthTokenResponse getOAuthAccessToken(String code) {

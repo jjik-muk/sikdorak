@@ -28,7 +28,7 @@ public class OAuthUpdateTokenAcceptanceTest extends InitAcceptanceTest {
     void update_access_token_success() {
 
         String refreshToken = jwtProvider.createRefreshToken(
-            testData.user.getUniqueId().toString());
+            testData.user.getId().toString());
 
         given(this.spec)
             .filter(document(DEFAULT_RESTDOC_PATH,
