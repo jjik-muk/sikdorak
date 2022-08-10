@@ -24,7 +24,7 @@ import org.springframework.test.context.TestPropertySource;
     "oauth.kakao.service.api_url=http://localhost:${wiremock.server.port}"
 })
 @DisplayName("OAuth 로그인 인수테스트")
-class OAuthAcceptanceTest extends InitAcceptanceTest {
+class OAuthLoginAcceptanceTest extends InitAcceptanceTest {
 
     @BeforeAll
     static void setWireMockResponse() throws IOException {
