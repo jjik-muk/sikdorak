@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @DisplayName("Store 인수테스트")
-class StoreAcceptanceTest extends InitAcceptanceTest {
+public class StoreFindAcceptanceTest extends InitAcceptanceTest {
 
     @Test
     @DisplayName("가게를 이름으로 검색할때 조건에 맞는 가게가 있으면 가게 목록이 반환된다.")
