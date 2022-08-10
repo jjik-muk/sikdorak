@@ -28,8 +28,7 @@ public class OAuthUserInterceptorIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("정상적인 토큰이 들어오면 true를 반환하고 request에 유저의 Id를 추가한다.")
     void oAuth_interceptor_success() throws Exception {
-        String accessToken = testData.validAccessToken;
-        httpServletRequest.addHeader("Authorization", "bearer " + accessToken);
+        httpServletRequest.addHeader("Authorization",  testData.validAuthorizationHeader);
 
         boolean result = oAuthUserInterceptor.preHandle(httpServletRequest, null, null);
 
@@ -40,8 +39,7 @@ public class OAuthUserInterceptorIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("유효하지 않은 토큰이 들어오면 예외를 반환한다.")
     void oAuth_interceptor_fail() {
-        String accessToken = testData.invalidAccessToken;
-        httpServletRequest.addHeader("Authorization", "bearer " + accessToken);
+        httpServletRequest.addHeader("Authorization", "bearer " + testData.invalidAuthorizationHeader);
 
         assertThatThrownBy(() -> oAuthUserInterceptor.preHandle(httpServletRequest, null, null))
             .isInstanceOf(InvalidTokenException.class);
