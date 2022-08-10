@@ -1,5 +1,6 @@
-package com.jjikmuk.sikdorak.acceptance;
+package com.jjikmuk.sikdorak.acceptance.store;
 
+import com.jjikmuk.sikdorak.acceptance.InitAcceptanceTest;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import org.junit.jupiter.api.DisplayName;
