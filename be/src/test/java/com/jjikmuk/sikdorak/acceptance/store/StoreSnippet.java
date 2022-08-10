@@ -25,4 +25,7 @@ public interface StoreSnippet {
 			fieldWithPath("latitude").type(JsonFieldType.NUMBER).description("위도"),
 			fieldWithPath("longitude").type(JsonFieldType.NUMBER).description("경도")
 	);
+
+	Snippet STORE_INSERT_REQUEST_SNIPPET = null;
+	Snippet STORE_INSERT_RESPONSE_SNIPPET = null;
 }
