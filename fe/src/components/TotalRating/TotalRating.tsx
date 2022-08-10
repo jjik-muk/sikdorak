@@ -1,7 +1,7 @@
 import Icon from 'common/Icon';
-import styled from 'styled-components';
+import { Wrap } from './TotalRating.styled';
 
-function TotalRating({ taste, price, service }: { taste: number; price: number; service: number }) {
+function TotalRating({ taste, price, service }: TotalRatingProps) {
   return (
     <Wrap>
       <div>맛</div>
@@ -19,9 +19,8 @@ function TotalRating({ taste, price, service }: { taste: number; price: number; 
 
 export default TotalRating;
 
-const Wrap = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 20px;
-`;
+interface TotalRatingProps {
+  taste: number;
+  price: number;
+  service: number;
+}

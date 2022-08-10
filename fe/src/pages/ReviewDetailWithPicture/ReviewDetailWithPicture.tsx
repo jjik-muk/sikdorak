@@ -5,6 +5,7 @@ import Comment from 'components/Comment/Comment';
 import CompnayProfile from 'components/CompanyProfile/CompanyProfile';
 import Profile from 'components/Profile/Profile';
 import TotalRating from 'components/TotalRating/TotalRating';
+import WriteComment from 'components/WriteComment/WriteComment';
 import { Contents } from 'pages/ReviewDetail/ReviewDetail.styled';
 import { ButtonWrapper, ContentsWrap, Header, Main, MainFooter, Wrap } from './ReviewDetailWithPicture.styled';
 
@@ -40,6 +41,7 @@ function ReviewDetailWithPicture() {
         <Comment title="쿠킴" content="프론트 맘에 안드네요" />
         <Comment title="포키" content="다시" />
         <Comment title="제이" content="해오세요" />
+        <WriteComment />
       </ContentsWrap>
     </Wrap>
   );
