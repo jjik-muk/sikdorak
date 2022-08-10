@@ -1,8 +1,9 @@
 package com.jjikmuk.sikdorak.common.exception;
 
-import com.jjikmuk.sikdorak.auth.exception.InvalidUserNicknameException;
-import com.jjikmuk.sikdorak.auth.exception.InvalidUserProfileImageUrlException;
-import com.jjikmuk.sikdorak.auth.exception.KakaoApiException;
+import com.jjikmuk.sikdorak.auth.exception.InvalidTokenException;
+import com.jjikmuk.sikdorak.user.exception.InvalidUserNicknameException;
+import com.jjikmuk.sikdorak.user.exception.InvalidUserProfileImageUrlException;
+import com.jjikmuk.sikdorak.auth.exception.OAuthServerException;
 import com.jjikmuk.sikdorak.common.CodeAndMessages;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewScoreException;
@@ -17,6 +18,7 @@ import com.jjikmuk.sikdorak.store.exception.InvalidStoreNameException;
 import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
 import com.jjikmuk.sikdorak.user.exception.DuplicateUserException;
 import com.jjikmuk.sikdorak.user.exception.InvalidUserEmailException;
+import com.jjikmuk.sikdorak.user.exception.UserNotFoundException;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -45,10 +47,11 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     INVALID_USER_NIKCNAME("F-U002", "유효하지 않은 닉네임 입니다.", InvalidUserNicknameException.class),
     INVALID_USER_PROFILE_IMAGE("F-U003", "유효하지 않은 프로필 이미지 url의 형식입니다.", InvalidUserProfileImageUrlException.class),
     INVALID_USER_EMAIL("F-U004", "유효하지 않은 이메일 형식입니다.", InvalidUserEmailException.class),
+    USER_NOT_FOUND("F-U005", "존재하지 않는 유저입니다.", UserNotFoundException.class),
 
-    //Third Party
-    FAILED_CONNECTION_WITH_KAKAO_API("F-K001", "카카오 서버와의 통신이 원할하지 않습니다.", KakaoApiException.class);
-
+    //OAuth
+    FAILED_CONNECTION_WITH_OAUTH_SERVER("F-O001", "OAuth 서버와의 통신이 원할하지 않습니다.", OAuthServerException.class),
+    EXPIRED_TOKEN("F-O002", "유효하지 않은 토큰입니다.", InvalidTokenException.class);
 
     private final String code;
 

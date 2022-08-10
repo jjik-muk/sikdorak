@@ -1,11 +1,13 @@
 package com.jjikmuk.sikdorak.auth.service;
 
-import com.jjikmuk.sikdorak.auth.controller.response.JwtTokenResponse;
+import com.jjikmuk.sikdorak.auth.domain.JwtTokenPair;
 import com.jjikmuk.sikdorak.auth.controller.response.KakaoAccountResponse;
 import com.jjikmuk.sikdorak.auth.controller.response.OAuthTokenResponse;
+import com.jjikmuk.sikdorak.auth.controller.response.SikdorakAccessToken;
 import com.jjikmuk.sikdorak.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.common.properties.KakaoProperties;
 import com.jjikmuk.sikdorak.user.domain.User;
+import com.jjikmuk.sikdorak.user.exception.UserNotFoundException;
 import com.jjikmuk.sikdorak.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,17 +30,28 @@ public class OAuthService{
     }
 
     @Transactional
-    public JwtTokenResponse login(String code) {
+    public JwtTokenPair login(String code) {
         OAuthTokenResponse oAuthTokenResponse = getOAuthAccessToken(code);
         KakaoAccountResponse userInfo = getOAuthUserInformation(oAuthTokenResponse);
 
-        if (!userService.isExistingUser(userInfo.getUniqueId())) {
-            User user = new User(userInfo.getUniqueId(), userInfo.getNickname(), userInfo.getProfileImage(), userInfo.getEmail());
+        User user;
+        if (!userService.isExistingUserByUniqueId(userInfo.getUniqueId())) {
+            user = new User(userInfo.getUniqueId(), userInfo.getNickname(), userInfo.getProfileImage(), userInfo.getEmail());
             userService.createUser(user);
-            return jwtProvider.createTokenResponse(String.valueOf(user.getUniqueId()));
+            return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
         }
+        user = userService.searchUserByUniqueId(userInfo.getUniqueId());
+        return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
+    }
 
-        return jwtProvider.createTokenResponse(String.valueOf(userInfo.getUniqueId()));
+    public SikdorakAccessToken updateAccessToken(String refreshToken) {
+
+        jwtProvider.validateToken(refreshToken);
+        String userId = jwtProvider.decodeToken(refreshToken);
+        if (!userService.isExistingUserId(Long.parseLong(userId))) {
+            throw new UserNotFoundException();
+        }
+        return new SikdorakAccessToken(jwtProvider.createAccessToken(userId));
     }
 
     private OAuthTokenResponse getOAuthAccessToken(String code) {
@@ -53,5 +66,4 @@ public class OAuthService{
         String authorizationHeader = String.format("%s %s", oAuthTokenResponse.getTokenType(), oAuthTokenResponse.getAccessToken());
         return oAuthApiClient.getUserInfo(authorizationHeader);
     }
-
 }

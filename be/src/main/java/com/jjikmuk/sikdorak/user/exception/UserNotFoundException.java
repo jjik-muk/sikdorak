@@ -1,11 +1,13 @@
-package com.jjikmuk.sikdorak.auth.exception;
+package com.jjikmuk.sikdorak.user.exception;
 
 import com.jjikmuk.sikdorak.common.exception.SikdorakRuntimeException;
 import org.springframework.http.HttpStatus;
 
-public class InvalidUserNicknameException extends SikdorakRuntimeException {
+public class UserNotFoundException extends SikdorakRuntimeException {
+
+
     @Override
     public HttpStatus getHttpStatus() {
-        return HttpStatus.BAD_REQUEST;
+        return HttpStatus.NOT_FOUND;
     }
 }

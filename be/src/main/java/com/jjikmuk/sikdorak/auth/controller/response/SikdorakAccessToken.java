@@ -5,13 +5,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class JwtTokenResponse {
+public class SikdorakAccessToken {
 
     private String accessToken;
-    private String refreshToken;
 
-    public JwtTokenResponse(String accessToken, String refreshToken) {
+    public SikdorakAccessToken(String accessToken) {
         this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
     }
 }

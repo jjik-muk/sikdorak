@@ -1,7 +1,15 @@
 package com.jjikmuk.sikdorak.user.domain;
 
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRespository extends JpaRepository<User, Long> {
-    boolean existsByUniqueId(long userUniqueId);
+
+    Optional<User> findByUniqueId(long uniqueId);
+
+    boolean existsById(long id);
+
+    boolean existsByUniqueId(long uniqueId);
+
+
 }

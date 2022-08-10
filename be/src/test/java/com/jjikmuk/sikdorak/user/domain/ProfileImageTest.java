@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.user.domain;
 
-import com.jjikmuk.sikdorak.auth.exception.InvalidUserProfileImageUrlException;
+import com.jjikmuk.sikdorak.user.exception.InvalidUserProfileImageUrlException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
