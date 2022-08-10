@@ -51,7 +51,7 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
 
     //OAuth
     FAILED_CONNECTION_WITH_OAUTH_SERVER("F-O001", "OAuth 서버와의 통신이 원할하지 않습니다.", OAuthServerException.class),
-    EXPIRED_TOKEN("F-O002", "유효하지 않은 토큰입니다.", InvalidTokenException.class);
+    INVALID_TOKEN("F-O002", "유효하지 않은 토큰입니다.", InvalidTokenException.class);
 
     private final String code;
 

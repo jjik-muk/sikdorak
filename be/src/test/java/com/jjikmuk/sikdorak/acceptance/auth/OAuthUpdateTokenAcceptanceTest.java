@@ -63,8 +63,8 @@ class OAuthUpdateTokenAcceptanceTest extends InitAcceptanceTest {
 
         .then()
             .statusCode(HttpStatus.BAD_REQUEST.value())
-            .body("code", equalTo(ExceptionCodeAndMessages.EXPIRED_TOKEN.getCode()))
-            .body("message", equalTo(ExceptionCodeAndMessages.EXPIRED_TOKEN.getMessage()));
+            .body("code", equalTo(ExceptionCodeAndMessages.INVALID_TOKEN.getCode()))
+            .body("message", equalTo(ExceptionCodeAndMessages.INVALID_TOKEN.getMessage()));
     }
 
     @Test

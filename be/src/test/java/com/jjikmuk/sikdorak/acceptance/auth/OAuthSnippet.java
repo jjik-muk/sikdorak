@@ -9,7 +9,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
 import com.jjikmuk.sikdorak.auth.domain.JwtTokenPair;
-import com.jjikmuk.sikdorak.auth.controller.response.SikdorakAccessToken;
+import com.jjikmuk.sikdorak.auth.controller.response.AccessTokenResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 
@@ -30,7 +30,7 @@ public interface OAuthSnippet {
 
 
     Snippet UPDATE_ACCESS_TOKEN_SUCCESS_RESPONSE_SNIPPET = commonSingleResponseFieldsWithValidConstraints(
-        SikdorakAccessToken.class,
+        AccessTokenResponse.class,
         fieldWithPath("accessToken").type(JsonFieldType.STRING).description("액세스 토큰")
     );
 
