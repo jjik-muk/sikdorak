@@ -18,7 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @DisplayName("OAuth 토큰 재발급 인수테스트")
-public class OAuthUpdateTokenAcceptanceTest extends InitAcceptanceTest {
+class OAuthUpdateTokenAcceptanceTest extends InitAcceptanceTest {
 
     @Autowired
     private JwtProvider jwtProvider;
