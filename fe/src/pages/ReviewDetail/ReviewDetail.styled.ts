@@ -25,3 +25,7 @@ export const Wrap = styled.div`
   max-height: 600px;
   overflow-y: auto;
 `;
+
+export const Contents = styled.div`
+  padding: 20px;
+`;

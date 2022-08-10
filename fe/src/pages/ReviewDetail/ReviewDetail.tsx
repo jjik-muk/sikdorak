@@ -3,8 +3,7 @@ import Button from 'components/Button/Button';
 import Comment from 'components/Comment/Comment';
 import CompnayProfile from 'components/CompanyProfile/CompanyProfile';
 import Profile from 'components/Profile/Profile';
-import Textarea from 'components/Textarea/Textarea';
-import { ButtonWrapper, Header, Main, MainFooter, Wrap } from './ReviewDetail.styled';
+import { ButtonWrapper, Contents, Header, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
 export default function ReviewDetail() {
   return (
@@ -14,7 +13,7 @@ export default function ReviewDetail() {
         <Icon icon="MenuBtn" />
       </Header>
       <Main>
-        <Textarea />
+        <Contents>..흠... 할머니가 북어를 복어로 하셔서 그런지 목숨의 위험이 느껴지는 맛이었습니다.</Contents>
         <MainFooter>
           <CompnayProfile company="할머니 북어탕" region="일산" />
         </MainFooter>
