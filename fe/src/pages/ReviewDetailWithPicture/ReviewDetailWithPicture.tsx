@@ -4,6 +4,7 @@ import Carousel from 'components/Carousel/Carousel';
 import Comment from 'components/Comment/Comment';
 import CompnayProfile from 'components/CompanyProfile/CompanyProfile';
 import Profile from 'components/Profile/Profile';
+import TotalRating from 'components/TotalRating/TotalRating';
 import { Contents } from 'pages/ReviewDetail/ReviewDetail.styled';
 import { ButtonWrapper, ContentsWrap, Header, Main, MainFooter, Wrap } from './ReviewDetailWithPicture.styled';
 
@@ -24,6 +25,7 @@ function ReviewDetailWithPicture() {
         </Header>
         <Main>
           <Contents>..흠... 할머니가 북어를 복어로 하셔서 그런지 목숨의 위험이 느껴지는 맛이었습니다.</Contents>
+          <TotalRating taste={5} price={3} service={1} />
           <MainFooter>
             <CompnayProfile company="할머니 북어탕" region="일산" />
           </MainFooter>
