@@ -14,7 +14,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class OAuthUserInterceptor implements HandlerInterceptor {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String TOKEN_TYPE = "bearer ";
+    private static final String TOKEN_TYPE = "Bearer ";
     private final JwtProvider jwtProvider;
 
     @Override

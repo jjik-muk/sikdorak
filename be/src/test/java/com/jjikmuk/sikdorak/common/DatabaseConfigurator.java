@@ -48,8 +48,8 @@ public class DatabaseConfigurator implements InitializingBean {
 				37.5093890,
 				127.105143));
 		this.user = userRespository.save(new User(12345678L,"test-user", "https://profile.com","sikdorak@gmail.com"));
-		this.validAuthorizationHeader = "bearer " + jwtProvider.createAccessToken(String.valueOf(this.user.getId()));
-		this.invalidAuthorizationHeader ="bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzNjgyMjM2MzgiLCJleHAiOjE2MzA2MzkzNTF9.SnT_Nxgspg3cUomCieDyBRH9TowtWh21YIfAKntuguA";
+		this.validAuthorizationHeader = "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user.getId()));
+		this.invalidAuthorizationHeader ="Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzNjgyMjM2MzgiLCJleHAiOjE2MzA2MzkzNTF9.SnT_Nxgspg3cUomCieDyBRH9TowtWh21YIfAKntuguA";
 
 	}
 

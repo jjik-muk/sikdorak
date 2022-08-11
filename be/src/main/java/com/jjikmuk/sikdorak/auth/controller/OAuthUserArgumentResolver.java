@@ -1,8 +1,7 @@
 package com.jjikmuk.sikdorak.auth.controller;
 
 import com.jjikmuk.sikdorak.auth.domain.AuthenticatedUser;
-import com.jjikmuk.sikdorak.user.domain.UserRespository;
-import com.jjikmuk.sikdorak.user.exception.UserNotFoundException;
+import com.jjikmuk.sikdorak.user.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -16,12 +15,11 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @RequiredArgsConstructor
 public class OAuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private final UserRespository userRespository;
+    private final UserService userService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterAnnotation(AuthenticatedUser.class) != null &&
-            parameter.getParameterType().equals(Long.class);
+        return parameter.hasParameterAnnotation(AuthenticatedUser.class);
     }
 
     @Override
@@ -29,9 +27,8 @@ public class OAuthUserArgumentResolver implements HandlerMethodArgumentResolver 
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        Long userId = (Long) request.getAttribute("userId");
+        long userId = (long) request.getAttribute("userId");
 
-        return userRespository.findById(userId)
-            .orElseThrow(UserNotFoundException::new);
+        return userService.searchUserById(userId);
     }
 }
