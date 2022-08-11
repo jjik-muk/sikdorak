@@ -36,8 +36,8 @@ public class DatabaseConfigurator implements InitializingBean {
 
 	public Store store;
 	public User user;
-	public String validAuthorizationHeader;
-	public String invalidAuthorizationHeader;
+	public String userValidAuthorizationHeader;
+	public String userInvalidAuthorizationHeader;
 
 	public void initDataSource() {
 		this.store = storeRepository.save(new Store("맛있는가게",
@@ -47,8 +47,8 @@ public class DatabaseConfigurator implements InitializingBean {
 				37.5093890,
 				127.105143));
 		this.user = userRespository.save(new User(12345678L,"test-user", "https://profile.com","sikdorak@gmail.com"));
-		this.validAuthorizationHeader = "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user.getId()));
-		this.invalidAuthorizationHeader ="Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzNjgyMjM2MzgiLCJleHAiOjE2MzA2MzkzNTF9.SnT_Nxgspg3cUomCieDyBRH9TowtWh21YIfAKntuguA";
+		this.userValidAuthorizationHeader = "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user.getId()));
+		this.userInvalidAuthorizationHeader ="Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzNjgyMjM2MzgiLCJleHAiOjE2MzA2MzkzNTF9.SnT_Nxgspg3cUomCieDyBRH9TowtWh21YIfAKntuguA";
 
 	}
 
