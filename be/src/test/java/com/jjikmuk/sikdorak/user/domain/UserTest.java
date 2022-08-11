@@ -1,10 +1,11 @@
 package com.jjikmuk.sikdorak.user.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.jjikmuk.sikdorak.user.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("User 단위 테스트")
 public class UserTest {

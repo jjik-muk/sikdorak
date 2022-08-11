@@ -3,9 +3,9 @@ package com.jjikmuk.sikdorak.common.config;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.jjikmuk.sikdorak.auth.controller.OAuthUserArgumentResolver;
-import com.jjikmuk.sikdorak.auth.interceptor.OAuthUserInterceptor;
-import com.jjikmuk.sikdorak.user.service.UserService;
+import com.jjikmuk.sikdorak.user.auth.controller.OAuthUserArgumentResolver;
+import com.jjikmuk.sikdorak.user.auth.interceptor.OAuthUserInterceptor;
+import com.jjikmuk.sikdorak.user.user.service.UserService;
 import java.net.URI;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

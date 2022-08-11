@@ -1,13 +1,14 @@
 package com.jjikmuk.sikdorak.user.domain;
 
-import com.jjikmuk.sikdorak.user.exception.InvalidUserProfileImageUrlException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import com.jjikmuk.sikdorak.user.user.domain.ProfileImage;
+import com.jjikmuk.sikdorak.user.user.exception.InvalidUserProfileImageUrlException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("User ProfileImage 단위 테스트")
 public class ProfileImageTest {

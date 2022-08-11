@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.common.config;
 
-import com.jjikmuk.sikdorak.auth.controller.OAuthUserArgumentResolver;
-import com.jjikmuk.sikdorak.auth.interceptor.OAuthUserInterceptor;
+import com.jjikmuk.sikdorak.user.auth.controller.OAuthUserArgumentResolver;
+import com.jjikmuk.sikdorak.user.auth.interceptor.OAuthUserInterceptor;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
