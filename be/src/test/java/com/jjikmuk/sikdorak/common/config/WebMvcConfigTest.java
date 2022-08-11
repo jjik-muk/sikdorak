@@ -3,6 +3,9 @@ package com.jjikmuk.sikdorak.common.config;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.jjikmuk.sikdorak.auth.controller.OAuthUserArgumentResolver;
+import com.jjikmuk.sikdorak.auth.interceptor.OAuthUserInterceptor;
+import com.jjikmuk.sikdorak.user.service.UserService;
 import java.net.URI;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,56 +25,65 @@ import org.springframework.test.web.servlet.ResultMatcher;
 @ActiveProfiles("test")
 class WebMvcConfigTest {
 
-	@Autowired
-	private MockMvc mvc;
+    @Autowired
+    private MockMvc mvc;
 
-	@ParameterizedTest
-	@ValueSource(strings = {"GET", "POST", "PUT", "DELETE", "OPTIONS"})
-	@DisplayName("CORS 설정에서 허용된 HTTP Method 로 오는 요청은 성공한다")
-	void cors_allowed_method_ok(String method) {
-		assertCors(method, status().isOk());
-	}
+    @MockBean
+    private OAuthUserInterceptor oAuthUserInterceptor;
 
-	@ParameterizedTest
-	@ValueSource(strings = {"HEAD", "PATCH"})
-	@DisplayName("CORS 설정에서 허용되지 않은 HTTP Method 로 오는 요청은 실패한다.")
-	void cors_not_allowed_method_forbidden(String method) {
-		assertCors(method, status().isForbidden());
-	}
+    @MockBean
+    private OAuthUserArgumentResolver oAuthUserArgumentResolver;
 
-	@Test
-	@DisplayName("CORS 설정과 관계없이 TRACE 메소드로 오는 요청은 항상 성공한다.")
-	void always_allowed_method_ok() {
-		assertCors(HttpMethod.TRACE.name(), status().isOk());
-	}
+    @MockBean
+    private UserService userService;
 
-	@Test
-	@DisplayName("CORS 설정에서 허용된 Origin 에서 오는 요청은 성공한다.")
-	void cors_allowed_origin_ok() {
-		String allowedOrigin = "http://localhost:3000";
-		assertCors(HttpMethod.GET.name(), allowedOrigin, status().isOk());
-	}
+    @ParameterizedTest
+    @ValueSource(strings = {"GET", "POST", "PUT", "DELETE", "OPTIONS"})
+    @DisplayName("CORS 설정에서 허용된 HTTP Method 로 오는 요청은 성공한다")
+    void cors_allowed_method_ok(String method) {
+        assertCors(method, status().isOk());
+    }
 
-	@ParameterizedTest
-	@ValueSource(strings = {"https://google.com", "https://naver.com", "http://localhost:1234",
-		"https://localhost:5678"})
-	@DisplayName("CORS 설정에서 허용되지 않은 Origin 에서 오는 요청은 실패한다.")
-	void cors_not_allowed_origin_forbidden(String origin) {
-		assertCors(HttpMethod.GET.name(), origin, status().isForbidden());
-	}
+    @ParameterizedTest
+    @ValueSource(strings = {"HEAD", "PATCH"})
+    @DisplayName("CORS 설정에서 허용되지 않은 HTTP Method 로 오는 요청은 실패한다.")
+    void cors_not_allowed_method_forbidden(String method) {
+        assertCors(method, status().isForbidden());
+    }
 
-	private void assertCors(String method, ResultMatcher statusResult) {
-		assertCors(method, "http://localhost:3000", statusResult);
-	}
+    @Test
+    @DisplayName("CORS 설정과 관계없이 TRACE 메소드로 오는 요청은 항상 성공한다.")
+    void always_allowed_method_ok() {
+        assertCors(HttpMethod.TRACE.name(), status().isOk());
+    }
 
-	private void assertCors(String method, String origin, ResultMatcher statusResult) {
-		try {
-			mvc.perform(request(method, URI.create(CorsTestController.REQUEST_URL))
-					.header("Origin", origin)
-					.header("Access-Control-Request-Method", method))
-				.andExpect(statusResult);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    @Test
+    @DisplayName("CORS 설정에서 허용된 Origin 에서 오는 요청은 성공한다.")
+    void cors_allowed_origin_ok() {
+        String allowedOrigin = "http://localhost:3000";
+        assertCors(HttpMethod.GET.name(), allowedOrigin, status().isOk());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"https://google.com", "https://naver.com", "http://localhost:1234",
+        "https://localhost:5678"})
+    @DisplayName("CORS 설정에서 허용되지 않은 Origin 에서 오는 요청은 실패한다.")
+    void cors_not_allowed_origin_forbidden(String origin) {
+        assertCors(HttpMethod.GET.name(), origin, status().isForbidden());
+    }
+
+    private void assertCors(String method, ResultMatcher statusResult) {
+        assertCors(method, "http://localhost:3000", statusResult);
+    }
+
+    private void assertCors(String method, String origin, ResultMatcher statusResult) {
+        try {
+            mvc.perform(request(method, URI.create(CorsTestController.REQUEST_URL))
+                    .header("Origin", origin)
+                    .header("Access-Control-Request-Method", method))
+                .andExpect(statusResult);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

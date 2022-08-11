@@ -12,8 +12,8 @@ import com.jjikmuk.sikdorak.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -44,6 +44,7 @@ public class OAuthService{
         return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
     }
 
+    @Transactional(readOnly = true)
     public AccessTokenResponse updateAccessToken(String refreshToken) {
 
         jwtProvider.validateToken(refreshToken);

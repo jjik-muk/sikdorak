@@ -46,7 +46,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 			.addPathPatterns("/**")
 			.excludePathPatterns(
 				"/docs/**",
+				"/test/cors/**",
 				"/api/oauth/**",
-				"/api/error/**");
+				"/api/error/**",
+				"/favicon.ico");
 	}
 }
