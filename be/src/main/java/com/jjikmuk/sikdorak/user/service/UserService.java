@@ -22,6 +22,11 @@ public class UserService {
         return user.getId();
     }
 
+    public User searchUserById(long userId) {
+        return userRespository.findById(userId)
+            .orElseThrow(UserNotFoundException::new);
+    }
+
     public User searchUserByUniqueId(long uniqueId) {
         return userRespository.findByUniqueId(uniqueId)
             .orElseThrow(UserNotFoundException::new);

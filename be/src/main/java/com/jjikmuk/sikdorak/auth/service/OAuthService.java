@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.auth.service;
 import com.jjikmuk.sikdorak.auth.domain.JwtTokenPair;
 import com.jjikmuk.sikdorak.auth.controller.response.KakaoAccountResponse;
 import com.jjikmuk.sikdorak.auth.controller.response.OAuthTokenResponse;
-import com.jjikmuk.sikdorak.auth.controller.response.SikdorakAccessToken;
+import com.jjikmuk.sikdorak.auth.controller.response.AccessTokenResponse;
 import com.jjikmuk.sikdorak.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.common.properties.KakaoProperties;
 import com.jjikmuk.sikdorak.user.domain.User;
@@ -12,8 +12,8 @@ import com.jjikmuk.sikdorak.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -44,14 +44,15 @@ public class OAuthService{
         return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
     }
 
-    public SikdorakAccessToken updateAccessToken(String refreshToken) {
+    @Transactional(readOnly = true)
+    public AccessTokenResponse updateAccessToken(String refreshToken) {
 
         jwtProvider.validateToken(refreshToken);
         String userId = jwtProvider.decodeToken(refreshToken);
         if (!userService.isExistingUserId(Long.parseLong(userId))) {
             throw new UserNotFoundException();
         }
-        return new SikdorakAccessToken(jwtProvider.createAccessToken(userId));
+        return new AccessTokenResponse(jwtProvider.createAccessToken(userId));
     }
 
     private OAuthTokenResponse getOAuthAccessToken(String code) {

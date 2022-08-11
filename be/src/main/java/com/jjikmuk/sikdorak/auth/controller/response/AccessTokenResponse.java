@@ -5,11 +5,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SikdorakAccessToken {
+public class AccessTokenResponse {
 
     private String accessToken;
 
-    public SikdorakAccessToken(String accessToken) {
+    public AccessTokenResponse(String accessToken) {
         this.accessToken = accessToken;
     }
 }

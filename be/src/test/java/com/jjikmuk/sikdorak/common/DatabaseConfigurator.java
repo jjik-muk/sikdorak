@@ -1,5 +1,6 @@
 package com.jjikmuk.sikdorak.common;
 
+import com.jjikmuk.sikdorak.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import java.sql.Connection;
@@ -31,8 +32,13 @@ public class DatabaseConfigurator implements InitializingBean {
 	@Autowired
 	private UserRespository userRespository;
 
+	@Autowired
+	private JwtProvider jwtProvider;
+
 	public Store store;
 	public User user;
+	public String validAuthorizationHeader;
+	public String invalidAuthorizationHeader;
 
 	public void initDataSource() {
 		this.store = storeRepository.save(new Store("맛있는가게",
@@ -42,6 +48,8 @@ public class DatabaseConfigurator implements InitializingBean {
 				37.5093890,
 				127.105143));
 		this.user = userRespository.save(new User(12345678L,"test-user", "https://profile.com","sikdorak@gmail.com"));
+		this.validAuthorizationHeader = "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user.getId()));
+		this.invalidAuthorizationHeader ="Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzNjgyMjM2MzgiLCJleHAiOjE2MzA2MzkzNTF9.SnT_Nxgspg3cUomCieDyBRH9TowtWh21YIfAKntuguA";
 
 	}
 

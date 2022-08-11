@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.auth.controller;
 
 import com.jjikmuk.sikdorak.auth.domain.JwtTokenPair;
-import com.jjikmuk.sikdorak.auth.controller.response.SikdorakAccessToken;
+import com.jjikmuk.sikdorak.auth.controller.response.AccessTokenResponse;
 import com.jjikmuk.sikdorak.auth.service.OAuthService;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
@@ -29,17 +29,17 @@ public class OAuthController {
     }
 
     @GetMapping("/api/oauth/callback")
-    public CommonResponseEntity<SikdorakAccessToken> loginCallback(@RequestParam String code, HttpServletResponse response) {
+    public CommonResponseEntity<AccessTokenResponse> loginCallback(@RequestParam String code, HttpServletResponse response) {
         JwtTokenPair jwtTokenPair = oAuthService.login(code);
         String refreshToken = jwtTokenPair.getRefreshToken();
         setCookie(response, refreshToken);
 
         return new CommonResponseEntity<>(ResponseCodeAndMessages.LOGIN_SUCCESS,
-            new SikdorakAccessToken(jwtTokenPair.getAccessToken()), HttpStatus.OK);
+            new AccessTokenResponse(jwtTokenPair.getAccessToken()), HttpStatus.OK);
     }
 
     @GetMapping("/api/oauth/refresh")
-    public CommonResponseEntity<SikdorakAccessToken> updateAccessToken(@CookieValue("refreshToken") Cookie cookie) {
+    public CommonResponseEntity<AccessTokenResponse> updateAccessToken(@CookieValue("refreshToken") Cookie cookie) {
         String refreshToken = cookie.getValue();
 
         return new CommonResponseEntity<>(ResponseCodeAndMessages.UPDATE_ACCESS_TOKEN_SUCCESS,
