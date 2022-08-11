@@ -1,7 +1,9 @@
 package com.jjikmuk.sikdorak.user.auth.controller;
 
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
-import com.jjikmuk.sikdorak.user.user.service.UserService;
+import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
+import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
+import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -15,20 +17,37 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @RequiredArgsConstructor
 public class OAuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private final UserService userService;
+	private static final String AUTHORIZATION_HEADER = "Authorization";
+	private static final String TOKEN_TYPE = "Bearer ";
+	private final JwtProvider jwtProvider;
 
-    @Override
-    public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(AuthenticatedUser.class);
-    }
+	@Override
+	public boolean supportsParameter(MethodParameter parameter) {
+		return parameter.hasParameterAnnotation(AuthenticatedUser.class);
+	}
 
-    @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-        NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+	@Override
+	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
+		NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
 
-        HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        long userId = (long) request.getAttribute("userId");
+		String token = parseAuthorizationHeader(
+			Objects.requireNonNull(webRequest.getNativeRequest(HttpServletRequest.class)));
 
-        return userService.searchUserById(userId);
-    }
+		try {
+			jwtProvider.validateToken(token);
+		} catch (InvalidTokenException e) {
+			return new LoginUser(Authority.ANONYMOUS);
+		}
+
+		Long userId = Long.valueOf(jwtProvider.decodeToken(token));
+		return new LoginUser(userId, Authority.USER);
+	}
+
+	private String parseAuthorizationHeader(HttpServletRequest request) {
+		String authorization = request.getHeader(AUTHORIZATION_HEADER);
+		if (Objects.isNull(authorization) || authorization.isEmpty()) {
+			throw new InvalidTokenException();
+		}
+		return authorization.replace(TOKEN_TYPE, "");
+	}
 }
