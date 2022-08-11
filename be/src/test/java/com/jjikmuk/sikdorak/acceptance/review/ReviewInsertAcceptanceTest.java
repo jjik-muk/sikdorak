@@ -20,7 +20,7 @@ import org.springframework.http.MediaType;
  *  [ ] 유저 추가해야함
  */
 @DisplayName("ReviewInsert 인수 테스트")
-public class ReviewInsertAcceptanceTest extends InitAcceptanceTest {
+class ReviewInsertAcceptanceTest extends InitAcceptanceTest {
 
 	@Test
 	@DisplayName("리뷰 생성 요청이 정상적인 경우라면 리뷰 생성 후 정상 상태 코드를 반환한다")

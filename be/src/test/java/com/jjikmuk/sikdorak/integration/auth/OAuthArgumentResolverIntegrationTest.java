@@ -15,7 +15,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.ServletWebRequest;
 
 @DisplayName("OAuth Argument Resolver 통합 테스트")
-public class OAuthArgumentResolverIntegrationTest extends InitIntegrationTest {
+class OAuthArgumentResolverIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     private OAuthUserArgumentResolver oAuthUserArgumentResolver;

@@ -31,7 +31,7 @@ public class OAuthUserInterceptorIntegrationTest extends InitIntegrationTest {
         httpServletRequest.addHeader("Authorization",  testData.validAuthorizationHeader);
 
         boolean result = oAuthUserInterceptor.preHandle(httpServletRequest, null, null);
-
+        System.out.println(httpServletRequest.getAttribute("userId").getClass());
         assertThat(result).isTrue();
         assertThat(httpServletRequest.getAttribute("userId")).isEqualTo(testData.user.getId());
     }

@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 @DisplayName("Store 인수테스트")
-public class StoreAcceptanceTest extends InitAcceptanceTest {
+class StoreAcceptanceTest extends InitAcceptanceTest {
 
     @Test
     @DisplayName("가게를 이름으로 검색할때 조건에 맞는 가게가 있으면 가게 목록이 반환된다.")
