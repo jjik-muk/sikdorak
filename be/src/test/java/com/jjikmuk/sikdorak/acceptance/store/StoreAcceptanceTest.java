@@ -33,6 +33,7 @@ public class StoreAcceptanceTest extends InitAcceptanceTest {
             .filter(document(DEFAULT_RESTDOC_PATH, STORE_FIND_REQUEST, STORE_FIND_RESPONSE))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
+            .header("Authorization", testData.validAuthorizationHeader)
             .param("storeName", storeNameSearchKeywork)
 
         .when()
@@ -55,6 +56,7 @@ public class StoreAcceptanceTest extends InitAcceptanceTest {
         given()
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
+            .header("Authorization", testData.validAuthorizationHeader)
             .param("storeName", notExistStoreName)
 
         .when()

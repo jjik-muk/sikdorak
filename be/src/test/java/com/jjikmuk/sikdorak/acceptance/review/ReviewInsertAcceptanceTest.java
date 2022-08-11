@@ -41,6 +41,7 @@ public class ReviewInsertAcceptanceTest extends InitAcceptanceTest {
 					REVIEW_INSERT_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
+			.header("Authorization", testData.validAuthorizationHeader)
 			.body(reviewInsertRequest)
 
 		.when()
