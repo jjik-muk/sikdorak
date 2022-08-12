@@ -9,7 +9,8 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
     UPDATE_ACCESS_TOKEN_SUCCESS("T-O002", "액세스 토큰 재발급에 성공했습니다."),
 
     // Store
-    STORE_FIND_SUCCESS("T-S001", "가게 목록 조회에 성공했습니다.");
+    STORE_FIND_SUCCESS("T-S001", "가게 목록 조회에 성공했습니다."),
+    STORE_INSERT_SUCCESS("T-S002", "가게 등록에 성공했습니다.");
 
     private final String code;
     private final String message;
