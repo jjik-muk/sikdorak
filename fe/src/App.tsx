@@ -14,7 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route
-            path="/writeReview"
+            path="/reviewWrite"
             element={
               <Portal selector="#portal">
                 <ReviewWrite />

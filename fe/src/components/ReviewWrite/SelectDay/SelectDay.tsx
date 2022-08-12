@@ -1,4 +1,4 @@
-import Calendar from 'components/Calendar/Calendar';
+import Calendar from 'components/ReviewWrite/Calendar/Calendar';
 import { useState } from 'react';
 import { SelectDayWrapper, Wrap } from './SelectDay.styled';
 

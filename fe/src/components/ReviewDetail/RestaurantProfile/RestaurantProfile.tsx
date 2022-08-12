@@ -1,8 +1,8 @@
-import { CompanyName, Picture, Wrap, Region } from './CompanyProfile.styled';
+import { CompanyName, Picture, Wrap, Region } from './RestaurantProfile.styled';
 
 const DEFAULT_IMG_URL = 'https://flyclipart.com/thumb2/profile-user-png-icon-free-download-196388.png';
 
-function CompnayProfile({ imgUrl = DEFAULT_IMG_URL, company, region }: ProfileProps) {
+function RestaurantProfile({ imgUrl = DEFAULT_IMG_URL, company, region }: RestaurantProfileProps) {
   return (
     <Wrap>
       <Picture src={imgUrl} />
@@ -14,9 +14,9 @@ function CompnayProfile({ imgUrl = DEFAULT_IMG_URL, company, region }: ProfilePr
   );
 }
 
-export default CompnayProfile;
+export default RestaurantProfile;
 
-interface ProfileProps {
+interface RestaurantProfileProps {
   imgUrl?: string;
   company: string;
   region: string;

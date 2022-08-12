@@ -1,10 +1,10 @@
 import Icon from 'common/Icon';
-import Button from 'components/Button/Button';
-import Comment from 'components/Comment/Comment';
-import CompnayProfile from 'components/CompanyProfile/CompanyProfile';
-import Profile from 'components/Profile/Profile';
-import TotalRating from 'components/TotalRating/TotalRating';
-import WriteComment from 'components/WriteComment/WriteComment';
+import Button from 'common/IconButton/IconButton';
+import Comment from 'components/ReviewDetail/Comment/Comment';
+import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
+import TotalRating from 'components/ReviewDetail/TotalRating/TotalRating';
+import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
+import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import { ButtonWrapper, Contents, Header, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
 export default function ReviewDetail() {

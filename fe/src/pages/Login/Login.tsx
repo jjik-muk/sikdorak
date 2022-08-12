@@ -1,8 +1,8 @@
 import TEXT from 'constants/text';
+import Logo from 'common/Logo/Logo';
 import Portal from 'common/Portal/Portal';
 import LoginButton from 'components/Login/LoginButton/LoginButton';
 import LoginInput from 'components/Login/LoginInput/LoginInput';
-import Logo from 'components/Logo/Logo';
 import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
 import { useState } from 'react';
 import { Form, Wrap } from './Login.styled';

@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import Profile from './Profile';
+import Profile from './UserProfile';
 
 describe('Profile', () => {
   it('랜더 잘 되니?', () => {

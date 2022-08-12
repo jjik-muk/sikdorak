@@ -1,8 +1,8 @@
 import Icon from 'common/Icon';
 import { ReactNode } from 'react';
-import { Wrap } from './Button.styled';
+import { Wrap } from './IconButton.styled';
 
-function Button({ children, icon, width, height }: ButtonProps) {
+function IconButton({ children, icon, width, height }: IconButtonProps) {
   return (
     <Wrap width={width} height={height}>
       <Icon icon={icon} />
@@ -11,11 +11,11 @@ function Button({ children, icon, width, height }: ButtonProps) {
   );
 }
 
-export default Button;
+export default IconButton;
 
 type IconTypes = 'Photo' | 'DownArrow' | 'UpArrow' | 'Star' | 'MenuBtn' | 'Heart' | 'ShareArrow' | 'TalkBubble';
 
-interface ButtonProps {
+interface IconButtonProps {
   icon: IconTypes;
   children?: ReactNode;
   width: number;

@@ -1,4 +1,4 @@
-import StarIcon from 'components/StarIcon/StarIcon';
+import StarIcon from 'components/ReviewWrite/WriteRating/StarRating/StarIcon/StarIcon';
 import { useState } from 'react';
 import { Wrap } from './StarRating.styled';
 

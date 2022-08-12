@@ -1,12 +1,12 @@
 import Icon from 'common/Icon';
-import Button from 'components/Button/Button';
-import Carousel from 'components/Carousel/Carousel';
-import Comment from 'components/Comment/Comment';
-import CompnayProfile from 'components/CompanyProfile/CompanyProfile';
-import Profile from 'components/Profile/Profile';
-import TagList from 'components/Tag/TagList/TagList';
-import TotalRating from 'components/TotalRating/TotalRating';
-import WriteComment from 'components/WriteComment/WriteComment';
+import Button from 'common/IconButton/IconButton';
+import Carousel from 'components/ReviewDetail/Carousel/Carousel';
+import Comment from 'components/ReviewDetail/Comment/Comment';
+import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
+import TotalRating from 'components/ReviewDetail/TotalRating/TotalRating';
+import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
+import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
+import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
 import { Contents } from 'pages/ReviewDetail/ReviewDetail.styled';
 import { ButtonWrapper, ContentsWrap, Header, Main, MainFooter, Wrap } from './ReviewDetailWithPicture.styled';
 

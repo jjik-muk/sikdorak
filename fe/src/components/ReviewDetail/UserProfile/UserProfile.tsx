@@ -1,8 +1,8 @@
-import { Nickname, Picture, Wrap } from './Profile.styled';
+import { Nickname, Picture, Wrap } from './UserProfile.styled';
 
 const DEFAULT_IMG_URL = 'https://flyclipart.com/thumb2/profile-user-png-icon-free-download-196388.png';
 
-function Profile({ imgUrl = DEFAULT_IMG_URL, nickname }: ProfileProps) {
+function UserProfile({ imgUrl = DEFAULT_IMG_URL, nickname }: UserProfileProps) {
   return (
     <Wrap>
       <Picture src={imgUrl} />
@@ -11,9 +11,9 @@ function Profile({ imgUrl = DEFAULT_IMG_URL, nickname }: ProfileProps) {
   );
 }
 
-export default Profile;
+export default UserProfile;
 
-interface ProfileProps {
+interface UserProfileProps {
   imgUrl?: string;
   nickname: string;
 }

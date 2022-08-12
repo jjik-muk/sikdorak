@@ -1,4 +1,4 @@
-import StarRating from 'components/StarRating/StarRating';
+import StarRating from 'components/ReviewWrite/WriteRating/StarRating/StarRating';
 import { Text, Wrap } from './WriteRating.styled';
 
 function WriteRating() {
