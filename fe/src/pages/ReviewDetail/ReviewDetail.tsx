@@ -2,6 +2,7 @@ import Icon from 'common/Icon';
 import Button from 'common/IconButton/IconButton';
 import Carousel from 'components/ReviewDetail/Carousel/Carousel';
 import Comment from 'components/ReviewDetail/Comment/Comment';
+import Menu from 'components/ReviewDetail/Menu/Menu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
 import TotalRating from 'components/ReviewDetail/TotalRating/TotalRating';
 import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
@@ -30,6 +31,7 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
   const wrapWidth = hasPicture ? 400 : 750;
   const btnWidth = hasPicture ? 90 : 190;
   const [isActiveHeart, setIsActiveHeart] = useState(false);
+  const [isActiveMenu, setIsActiveMenu] = useState(false);
   const id = useId();
 
   const clickCreateComment = () => {
@@ -42,7 +44,10 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
       <ContentsWrap wrapWidth={wrapWidth}>
         <Header>
           <Profile nickname="Dashawn" />
-          <Icon icon="MenuBtn" />
+          <div onClick={handleMenu}>
+            <Icon icon="MenuBtn" />
+            {isActiveMenu && <Menu />}
+          </div>
         </Header>
         <Main>
           <Contents>..흠... 할머니가 북어를 복어로 하셔서 그런지 목숨의 위험이 느껴지는 맛이었습니다.</Contents>
@@ -70,6 +75,14 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
       </ContentsWrap>
     </Wrap>
   );
+
+  function handleMenu() {
+    if (isActiveMenu) {
+      setIsActiveMenu(false);
+      return;
+    }
+    setIsActiveMenu(true);
+  }
 
   function handleToggleHeart() {
     if (isActiveHeart) {
