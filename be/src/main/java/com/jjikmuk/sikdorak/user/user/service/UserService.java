@@ -15,28 +15,28 @@ public class UserService {
 
     public long createUser(User user) {
 
-        if (isExistingUserByUniqueId(user.getUniqueId())) {
+        if (isExistingByUniqueId(user.getUniqueId())) {
             throw new DuplicateUserException();
         }
         userRespository.save(user);
         return user.getId();
     }
 
-    public User searchUserById(long userId) {
+    public User searchById(long userId) {
         return userRespository.findById(userId)
             .orElseThrow(UserNotFoundException::new);
     }
 
-    public User searchUserByUniqueId(long uniqueId) {
+    public User searchByUniqueId(long uniqueId) {
         return userRespository.findByUniqueId(uniqueId)
             .orElseThrow(UserNotFoundException::new);
     }
 
-    public boolean isExistingUserId(long userId) {
+    public boolean isExistingById(long userId) {
         return userRespository.existsById(userId);
     }
 
-    public boolean isExistingUserByUniqueId(long userUniqueId) {
+    public boolean isExistingByUniqueId(long userUniqueId) {
         return userRespository.existsByUniqueId(userUniqueId);
     }
 }
