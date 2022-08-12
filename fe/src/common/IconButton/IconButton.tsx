@@ -2,10 +2,10 @@ import Icon from 'common/Icon';
 import { ReactNode } from 'react';
 import { Wrap } from './IconButton.styled';
 
-function IconButton({ children, icon, width, height }: IconButtonProps) {
+function IconButton({ children, icon, width, height, fill, stroke }: IconButtonProps) {
   return (
     <Wrap width={width} height={height}>
-      <Icon icon={icon} />
+      <Icon icon={icon} fill={fill} stroke={stroke} />
       {children}
     </Wrap>
   );
@@ -20,4 +20,6 @@ interface IconButtonProps {
   children?: ReactNode;
   width: number;
   height: number;
+  fill?: string;
+  stroke?: string;
 }

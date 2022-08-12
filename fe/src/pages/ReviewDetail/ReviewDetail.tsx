@@ -7,6 +7,7 @@ import TotalRating from 'components/ReviewDetail/TotalRating/TotalRating';
 import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
+import { useState } from 'react';
 import { ButtonWrapper, Contents, ContentsWrap, Header, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
 const IMAGE_URLS = [
@@ -26,6 +27,7 @@ const COMMENTS = [
 function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
   const wrapWidth = hasPicture ? 400 : 750;
   const btnWidth = hasPicture ? 90 : 190;
+  const [isActiveHeart, setIsActiveHeart] = useState(false);
 
   return (
     <Wrap>
@@ -43,7 +45,9 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
           </MainFooter>
         </Main>
         <ButtonWrapper>
-          <Button icon="Heart" width={btnWidth} height={30} />
+          <div onClick={handleToggleHeart}>
+            <Button icon="Heart" width={btnWidth} height={30} fill={isActiveHeart ? 'red' : '#FFF'} />
+          </div>
           <Button icon="TalkBubble" width={btnWidth} height={30} />
           <Button icon="ShareArrow" width={btnWidth} height={30} />
         </ButtonWrapper>
@@ -55,6 +59,14 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
       </ContentsWrap>
     </Wrap>
   );
+
+  function handleToggleHeart() {
+    if (isActiveHeart) {
+      setIsActiveHeart(false);
+      return;
+    }
+    setIsActiveHeart(true);
+  }
 }
 
 export default ReviewDetailWithPicture;
