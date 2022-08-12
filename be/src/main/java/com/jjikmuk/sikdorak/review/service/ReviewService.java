@@ -20,27 +20,19 @@ public class ReviewService {
 	private final ReviewRepository reviewRepository;
 
 	@Transactional
-	public Long insertReview(ReviewInsertRequest request) {
-		Long findStoreId = request.getStoreId();
-		storeService.findById(findStoreId);
-
-		Review newReview = new Review(request.getStoreId(),
-			request.getReviewContent(),
-			request.getReviewScore(),
-			request.getReviewVisibility(),
-			request.getVisitedDate(),
-			request.getTags(),
-			request.getImages());
-
-		Review saveReview = reviewRepository.save(newReview);
-		return saveReview.getId();
-	}
-
-	public Long insertReview(LoginUser loginUser, ReviewInsertRequest reviewInsertRequest) {
+	public Review insertReview(LoginUser loginUser, ReviewInsertRequest reviewInsertRequest) {
 		userService.searchById(loginUser.getId());
 		storeService.findById(reviewInsertRequest.getStoreId());
 
-		throw new UnsupportedOperationException("ReviewService#insertReview 아직 구현하지 않음 :)");
+		Review newReview = new Review(loginUser.getId(),
+			reviewInsertRequest.getStoreId(),
+			reviewInsertRequest.getReviewContent(),
+			reviewInsertRequest.getReviewScore(),
+			reviewInsertRequest.getReviewVisibility(),
+			reviewInsertRequest.getVisitedDate(),
+			reviewInsertRequest.getTags(),
+			reviewInsertRequest.getImages());
 
+		return reviewRepository.save(newReview);
 	}
 }

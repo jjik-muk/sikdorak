@@ -4,6 +4,7 @@ import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UserNotFoundException;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,11 @@ public class UserService {
         return user.getId();
     }
 
-    public User searchById(long userId) {
+    public User searchById(Long userId) {
+        if (Objects.isNull(userId)) {
+            throw new UserNotFoundException();
+        }
+
         return userRespository.findById(userId)
             .orElseThrow(UserNotFoundException::new);
     }

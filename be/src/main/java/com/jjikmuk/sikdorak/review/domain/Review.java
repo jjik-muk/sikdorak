@@ -23,6 +23,8 @@ public class Review extends BaseTimeEntity {
 	@Column(name = "reviewId")
 	private Long id;
 
+	private Long userId;
+
 	private Long storeId;
 
 	@Embedded
@@ -43,10 +45,11 @@ public class Review extends BaseTimeEntity {
 	@Transient
 	private List<String> images;
 
-	public Review(Long id, Long storeId, String reviewContent, Float reviewScore,
+	public Review(Long id, Long userId, Long storeId, String reviewContent, Float reviewScore,
 		String reviewVisibility,
 		LocalDate visitedDate, List<String> tags, List<String> images) {
 		this.id = id;
+		this.userId = userId;
 		this.storeId = storeId;
 		this.reviewContent = new ReviewContent(reviewContent);
 		this.reviewScore = new ReviewScore(reviewScore);
@@ -57,13 +60,17 @@ public class Review extends BaseTimeEntity {
 	}
 
 
-	public Review(Long storeId, String reviewContent, Float reviewScore, String reviewVisibility,
+	public Review(Long userId, Long storeId, String reviewContent, Float reviewScore, String reviewVisibility,
 		LocalDate visitedDate, List<String> tags, List<String> images) {
-		this(null, storeId, reviewContent, reviewScore, reviewVisibility, visitedDate, tags,
+		this(null, userId, storeId, reviewContent, reviewScore, reviewVisibility, visitedDate, tags,
 			images);
 	}
 
 	public Long getId() {
 		return id;
+	}
+
+	public Long getUserId() {
+		return userId;
 	}
 }
