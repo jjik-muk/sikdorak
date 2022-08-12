@@ -3,6 +3,7 @@ import { flexLayoutMixin } from 'utils/utils';
 
 export const Wrap = styled.div`
   width: 100%;
+  padding: 12px;
 `;
 
 export const PostScopeWrapper = styled.div`

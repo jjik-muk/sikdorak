@@ -1,7 +1,6 @@
 import Modal from 'common/Modal/Modal';
-import BoxContainer from 'components/BoxContainer/BoxContainer';
 import { useState } from 'react';
-import { RestaurantSearchWrapper } from './RestaurantSearch.styled';
+import { RestaurantSearchWrapper, Wrap } from './RestaurantSearch.styled';
 
 export default function RestaurantSearch() {
   const [searchText, setSearchText] = useState('');
@@ -12,11 +11,11 @@ export default function RestaurantSearch() {
   };
 
   return (
-    <BoxContainer>
+    <Wrap>
       <div>
         <RestaurantSearchWrapper onChange={handleSearch} />
         {searchText && <Modal>{searchText}</Modal>}
       </div>
-    </BoxContainer>
+    </Wrap>
   );
 }

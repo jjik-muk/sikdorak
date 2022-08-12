@@ -17,3 +17,8 @@ export const RestaurantSearchWrapper = styled.input.attrs<RestaurantSearchWrappe
     outline: none;
   }
 `;
+
+export const Wrap = styled.div`
+  width: 100%;
+  padding: 12px;
+`;

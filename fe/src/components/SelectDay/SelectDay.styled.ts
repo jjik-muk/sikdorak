@@ -9,3 +9,8 @@ export const SelectDayWrapper = styled.button`
   cursor: pointer;
   outline: inherit;
 `;
+
+export const Wrap = styled.div`
+  width: 100%;
+  padding: 12px;
+`;
