@@ -7,7 +7,7 @@ import TotalRating from 'components/ReviewDetail/TotalRating/TotalRating';
 import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
-import { useId, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import { createKey } from 'utils/utils';
 import { ButtonWrapper, Contents, ContentsWrap, Header, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
@@ -26,10 +26,15 @@ const COMMENTS = [
 ];
 
 function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
+  const commentRef = useRef<HTMLTextAreaElement>(null);
   const wrapWidth = hasPicture ? 400 : 750;
   const btnWidth = hasPicture ? 90 : 190;
   const [isActiveHeart, setIsActiveHeart] = useState(false);
   const id = useId();
+
+  const clickCreateComment = () => {
+    commentRef.current.focus();
+  };
 
   return (
     <Wrap>
@@ -50,7 +55,9 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
           <div onClick={handleToggleHeart}>
             <Button icon="Heart" width={btnWidth} height={30} fill={isActiveHeart ? 'red' : '#FFF'} />
           </div>
-          <Button icon="TalkBubble" width={btnWidth} height={30} />
+          <div onClick={clickCreateComment}>
+            <Button icon="TalkBubble" width={btnWidth} height={30} />
+          </div>
           <div onClick={handleCopyURL}>
             <Button icon="ShareArrow" width={btnWidth} height={30} />
           </div>
@@ -59,7 +66,7 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
         {COMMENTS.map(({ title, content }, idx) => (
           <Comment key={createKey(id, idx)} title={title} content={content} />
         ))}
-        <WriteComment />
+        <WriteComment commentRef={commentRef} />
       </ContentsWrap>
     </Wrap>
   );
