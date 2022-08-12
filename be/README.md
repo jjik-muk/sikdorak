@@ -2,6 +2,7 @@
 
 <p align="middle">광고는 리뷰는 싫어! 미식가들의 솔직 담백한 음식 리뷰 SNS! 식도락입니다.</p>
 
+
 <div align="center">
     <p dir="auto">
         <a href="https://kukim.notion.site/57d3b9e3bce0462da756284f0fb2060b">
