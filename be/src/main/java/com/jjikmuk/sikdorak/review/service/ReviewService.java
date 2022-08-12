@@ -22,7 +22,7 @@ public class ReviewService {
 	@Transactional
 	public Review insertReview(LoginUser loginUser, ReviewInsertRequest reviewInsertRequest) {
 		userService.searchById(loginUser.getId());
-		storeService.findById(reviewInsertRequest.getStoreId());
+		storeService.searchById(reviewInsertRequest.getStoreId());
 
 		Review newReview = new Review(loginUser.getId(),
 			reviewInsertRequest.getStoreId(),
