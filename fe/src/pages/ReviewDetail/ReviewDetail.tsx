@@ -7,7 +7,8 @@ import TotalRating from 'components/ReviewDetail/TotalRating/TotalRating';
 import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
-import { useState } from 'react';
+import { useId, useState } from 'react';
+import { createKey } from 'utils/utils';
 import { ButtonWrapper, Contents, ContentsWrap, Header, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
 const IMAGE_URLS = [
@@ -28,6 +29,7 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
   const wrapWidth = hasPicture ? 400 : 750;
   const btnWidth = hasPicture ? 90 : 190;
   const [isActiveHeart, setIsActiveHeart] = useState(false);
+  const id = useId();
 
   return (
     <Wrap>
@@ -54,8 +56,8 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
           </div>
         </ButtonWrapper>
         <TagList tags={['#초밥', '#맛집', '#부산']} />
-        {COMMENTS.map(({ title, content }) => (
-          <Comment title={title} content={content} />
+        {COMMENTS.map(({ title, content }, idx) => (
+          <Comment key={createKey(id, idx)} title={title} content={content} />
         ))}
         <WriteComment />
       </ContentsWrap>
