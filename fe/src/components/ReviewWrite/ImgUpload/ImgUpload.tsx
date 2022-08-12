@@ -6,7 +6,7 @@ function ImgUpload() {
     <ImgUploadWrapper>
       <Icon icon="Photo" fill="black" />
       <div>사진을 업로드해주세요</div>
-      <ButtonWrapper>사진 업로드</ButtonWrapper>;
+      <ButtonWrapper>사진 업로드</ButtonWrapper>
     </ImgUploadWrapper>
   );
 }

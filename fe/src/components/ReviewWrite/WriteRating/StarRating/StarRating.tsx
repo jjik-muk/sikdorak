@@ -5,7 +5,7 @@ import { Wrap } from './StarRating.styled';
 const YELLOW = '#f1c40f';
 
 function StarRating() {
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(0);
 
   return (
     <Wrap>
