@@ -49,7 +49,9 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
             <Button icon="Heart" width={btnWidth} height={30} fill={isActiveHeart ? 'red' : '#FFF'} />
           </div>
           <Button icon="TalkBubble" width={btnWidth} height={30} />
-          <Button icon="ShareArrow" width={btnWidth} height={30} />
+          <div onClick={handleCopyURL}>
+            <Button icon="ShareArrow" width={btnWidth} height={30} />
+          </div>
         </ButtonWrapper>
         <TagList tags={['#초밥', '#맛집', '#부산']} />
         {COMMENTS.map(({ title, content }) => (
@@ -66,6 +68,12 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
       return;
     }
     setIsActiveHeart(true);
+  }
+
+  function handleCopyURL() {
+    const curURL = window.location.href;
+    const { clipboard } = navigator;
+    clipboard.writeText(curURL);
   }
 }
 
