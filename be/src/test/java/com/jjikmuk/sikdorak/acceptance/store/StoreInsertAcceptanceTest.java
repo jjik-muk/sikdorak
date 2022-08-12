@@ -38,7 +38,7 @@ public class StoreInsertAcceptanceTest extends InitAcceptanceTest {
 				STORE_INSERT_REQUEST_SNIPPET,
 				STORE_INSERT_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
-			.header("Authorization", testData.validAuthorizationHeader)
+			.header("Authorization", testData.userValidAuthorizationHeader)
 			.contentType(ContentType.JSON)
 			.body(storeInsertRequest)
 
