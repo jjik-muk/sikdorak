@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.acceptance.store;
 
-import com.jjikmuk.sikdorak.store.controller.response.StoreFindResponse;
+import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 
@@ -13,12 +13,12 @@ import static org.springframework.restdocs.request.RequestDocumentation.requestP
 
 public interface StoreSnippet {
 
-	Snippet STORE_FIND_REQUEST = requestParameters(
+	Snippet STORE_SEARCH_REQUEST = requestParameters(
 			parameterWithName("storeName").description("가게 이름 검색 키워드")
 	);
 
-	Snippet STORE_FIND_RESPONSE = commonListResponseFieldsWithValidConstraints(
-			StoreFindResponse.class,
+	Snippet STORE_SEARCH_RESPONSE = commonListResponseFieldsWithValidConstraints(
+			StoreSearchResponse.class,
 			 fieldWithPath("id").type(JsonFieldType.NUMBER).description(Constants.ID_DESCRIPTION),
 			fieldWithPath("storeName").type(JsonFieldType.STRING).description(Constants.STORENAME_DESCRIPTION),
 			fieldWithPath("contactNumber").type(JsonFieldType.STRING).description(Constants.CONTACTNUMBER_DESCRIPTION),
