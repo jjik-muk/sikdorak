@@ -1,43 +1,60 @@
 import Icon from 'common/Icon';
 import Button from 'common/IconButton/IconButton';
+import Carousel from 'components/ReviewDetail/Carousel/Carousel';
 import Comment from 'components/ReviewDetail/Comment/Comment';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
 import TotalRating from 'components/ReviewDetail/TotalRating/TotalRating';
 import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
-import { ButtonWrapper, Contents, Header, Main, MainFooter, Wrap } from './ReviewDetail.styled';
+import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
+import { ButtonWrapper, Contents, ContentsWrap, Header, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
-export default function ReviewDetail() {
+const IMAGE_URLS = [
+  'https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20201002142956&q=80&rw=750&rh=536',
+  'https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000881/img/ko/a0000881_parts_586c7364bbcdc.jpg?20200630185341&q=80&rw=686&rh=490',
+  'https://blog.kakaocdn.net/dn/u8bU3/btq9nhUNEgR/kBXjA4SUp2WFK3AiXRzN4k/img.png',
+];
+
+const COMMENTS = [
+  { title: '럼카', content: '동해물과 백두산이' },
+  { title: '호이', content: '마르고 닳도록' },
+  { title: '쿠킴', content: '하느님이 보우하사' },
+  { title: '포키', content: '우리나라 만세' },
+  { title: '제이', content: '무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.' },
+];
+
+function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
+  const wrapWidth = hasPicture ? 400 : 750;
+  const btnWidth = hasPicture ? 90 : 190;
+
   return (
     <Wrap>
-      <Header>
-        <Profile nickname="Dashawn" />
-        <Icon icon="MenuBtn" />
-      </Header>
-      <Main>
-        <Contents>..흠... 할머니가 북어를 복어로 하셔서 그런지 목숨의 위험이 느껴지는 맛이었습니다.</Contents>
-        <TotalRating taste={5} price={3} service={1} />
-        <MainFooter>
-          <CompnayProfile company="할머니 북어탕" region="일산" />
-        </MainFooter>
-      </Main>
-      <ButtonWrapper>
-        <Button icon="Heart" width={190} height={24}>
-          좋아요
-        </Button>
-        <Button icon="TalkBubble" width={190} height={24}>
-          댓글달기
-        </Button>
-        <Button icon="ShareArrow" width={190} height={24}>
-          공유하기
-        </Button>
-      </ButtonWrapper>
-      <Comment title="호이" />
-      <Comment title="럼카" content="스타일 왜 이따위인가요?" />
-      <Comment title="쿠킴" content="프론트 맘에 안드네요" />
-      <Comment title="포키" content="다시" />
-      <Comment title="제이" content="해오세요" />
-      <WriteComment />
+      {hasPicture && <Carousel urls={IMAGE_URLS} />}
+      <ContentsWrap wrapWidth={wrapWidth}>
+        <Header>
+          <Profile nickname="Dashawn" />
+          <Icon icon="MenuBtn" />
+        </Header>
+        <Main>
+          <Contents>..흠... 할머니가 북어를 복어로 하셔서 그런지 목숨의 위험이 느껴지는 맛이었습니다.</Contents>
+          <TotalRating taste={5} price={3} service={1} />
+          <MainFooter>
+            <CompnayProfile company="호이 초밥" region="부산" />
+          </MainFooter>
+        </Main>
+        <ButtonWrapper>
+          <Button icon="Heart" width={btnWidth} height={30} />
+          <Button icon="TalkBubble" width={btnWidth} height={30} />
+          <Button icon="ShareArrow" width={btnWidth} height={30} />
+        </ButtonWrapper>
+        <TagList tags={['#초밥', '#맛집', '#부산']} />
+        {COMMENTS.map(({ title, content }) => (
+          <Comment title={title} content={content} />
+        ))}
+        <WriteComment />
+      </ContentsWrap>
     </Wrap>
   );
 }
+
+export default ReviewDetailWithPicture;

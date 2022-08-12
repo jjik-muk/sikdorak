@@ -1,7 +1,6 @@
 import Portal from 'common/Portal/Portal';
 import Login from 'pages/Login/Login';
-import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
-import ReviewDetailWithPicture from 'pages/ReviewDetailWithPicture/ReviewDetailWithPicture';
+import ReviewDetailWithPicture from 'pages/ReviewDetail/ReviewDetail';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalStyle from 'styles/GlobalStyle';
@@ -25,7 +24,7 @@ function App() {
             path="/reviewDetail1"
             element={
               <Portal selector="#portal">
-                <ReviewDetail />
+                <ReviewDetailWithPicture />
               </Portal>
             }
           />
@@ -33,7 +32,7 @@ function App() {
             path="/reviewDetail2"
             element={
               <Portal selector="#portal">
-                <ReviewDetailWithPicture />
+                <ReviewDetailWithPicture hasPicture />
               </Portal>
             }
           />

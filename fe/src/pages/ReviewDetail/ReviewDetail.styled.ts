@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
 
+export const Wrap = styled.div`
+  display: flex;
+`;
+
 export const Header = styled.div`
   ${() => flexLayoutMixin('', 'space-between', 'center')}
 `;
@@ -19,8 +23,8 @@ export const ButtonWrapper = styled.div`
   margin: 30px 0;
 `;
 
-export const Wrap = styled.div`
-  width: 755px;
+export const ContentsWrap = styled.div<{ wrapWidth: number }>`
+  width: ${({ wrapWidth }) => wrapWidth}px;
   padding: 20px;
   max-height: 600px;
   overflow-y: auto;
