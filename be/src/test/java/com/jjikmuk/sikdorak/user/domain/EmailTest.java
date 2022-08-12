@@ -1,12 +1,13 @@
 package com.jjikmuk.sikdorak.user.domain;
 
-import com.jjikmuk.sikdorak.user.exception.InvalidUserEmailException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import com.jjikmuk.sikdorak.user.user.domain.Email;
+import com.jjikmuk.sikdorak.user.user.exception.InvalidUserEmailException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("User Email 단위 테스트")
 public class EmailTest {

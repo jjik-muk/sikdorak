@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.common.config.feignclient;
 
-import com.jjikmuk.sikdorak.auth.exception.OAuthServerException;
 import com.jjikmuk.sikdorak.common.util.feignclient.FeignClientResponseUtils;
+import com.jjikmuk.sikdorak.user.auth.exception.OAuthServerException;
 import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;

@@ -1,9 +1,5 @@
 package com.jjikmuk.sikdorak.common.exception;
 
-import com.jjikmuk.sikdorak.auth.exception.InvalidTokenException;
-import com.jjikmuk.sikdorak.user.exception.InvalidUserNicknameException;
-import com.jjikmuk.sikdorak.user.exception.InvalidUserProfileImageUrlException;
-import com.jjikmuk.sikdorak.auth.exception.OAuthServerException;
 import com.jjikmuk.sikdorak.common.CodeAndMessages;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewScoreException;
@@ -16,12 +12,15 @@ import com.jjikmuk.sikdorak.store.exception.InvalidContactNumberException;
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreLocationException;
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreNameException;
 import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
-import com.jjikmuk.sikdorak.user.exception.DuplicateUserException;
-import com.jjikmuk.sikdorak.user.exception.InvalidUserEmailException;
-import com.jjikmuk.sikdorak.user.exception.UserNotFoundException;
-import lombok.Getter;
-
+import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
+import com.jjikmuk.sikdorak.user.auth.exception.OAuthServerException;
+import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
+import com.jjikmuk.sikdorak.user.user.exception.InvalidUserEmailException;
+import com.jjikmuk.sikdorak.user.user.exception.InvalidUserNicknameException;
+import com.jjikmuk.sikdorak.user.user.exception.InvalidUserProfileImageUrlException;
+import com.jjikmuk.sikdorak.user.user.exception.UserNotFoundException;
 import java.util.Arrays;
+import lombok.Getter;
 
 @Getter
 public enum ExceptionCodeAndMessages implements CodeAndMessages {

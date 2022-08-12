@@ -1,8 +1,10 @@
 package com.jjikmuk.sikdorak.common;
 
-import com.jjikmuk.sikdorak.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
+import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
+import com.jjikmuk.sikdorak.user.user.domain.User;
+import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,9 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import com.jjikmuk.sikdorak.user.domain.User;
-import com.jjikmuk.sikdorak.user.domain.UserRespository;
 import org.hibernate.Session;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +36,8 @@ public class DatabaseConfigurator implements InitializingBean {
 
 	public Store store;
 	public User user;
-	public String validAuthorizationHeader;
-	public String invalidAuthorizationHeader;
+	public String userValidAuthorizationHeader;
+	public String userInvalidAuthorizationHeader;
 
 	public void initDataSource() {
 		this.store = storeRepository.save(new Store("맛있는가게",
@@ -48,8 +47,8 @@ public class DatabaseConfigurator implements InitializingBean {
 				37.5093890,
 				127.105143));
 		this.user = userRespository.save(new User(12345678L,"test-user", "https://profile.com","sikdorak@gmail.com"));
-		this.validAuthorizationHeader = "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user.getId()));
-		this.invalidAuthorizationHeader ="Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzNjgyMjM2MzgiLCJleHAiOjE2MzA2MzkzNTF9.SnT_Nxgspg3cUomCieDyBRH9TowtWh21YIfAKntuguA";
+		this.userValidAuthorizationHeader = "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user.getId()));
+		this.userInvalidAuthorizationHeader ="Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzNjgyMjM2MzgiLCJleHAiOjE2MzA2MzkzNTF9.SnT_Nxgspg3cUomCieDyBRH9TowtWh21YIfAKntuguA";
 
 	}
 

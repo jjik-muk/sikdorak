@@ -1,16 +1,16 @@
 package com.jjikmuk.sikdorak.user.domain;
 
-import com.jjikmuk.sikdorak.user.exception.InvalidUserNicknameException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import com.jjikmuk.sikdorak.user.user.domain.Nickname;
+import com.jjikmuk.sikdorak.user.user.exception.InvalidUserNicknameException;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("User Nickname 단위 테스트")
 public class NicknameTest {

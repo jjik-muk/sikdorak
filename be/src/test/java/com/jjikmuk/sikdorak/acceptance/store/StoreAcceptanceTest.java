@@ -1,13 +1,5 @@
 package com.jjikmuk.sikdorak.acceptance.store;
 
-import com.jjikmuk.sikdorak.acceptance.InitAcceptanceTest;
-import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
-import com.jjikmuk.sikdorak.store.domain.Store;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-
 import static com.jjikmuk.sikdorak.acceptance.store.StoreSnippet.STORE_FIND_REQUEST;
 import static com.jjikmuk.sikdorak.acceptance.store.StoreSnippet.STORE_FIND_RESPONSE;
 import static io.restassured.RestAssured.given;
@@ -17,6 +9,14 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
+
+import com.jjikmuk.sikdorak.acceptance.InitAcceptanceTest;
+import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
+import com.jjikmuk.sikdorak.store.domain.Store;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 @DisplayName("Store 인수테스트")
 class StoreAcceptanceTest extends InitAcceptanceTest {
@@ -33,7 +33,7 @@ class StoreAcceptanceTest extends InitAcceptanceTest {
             .filter(document(DEFAULT_RESTDOC_PATH, STORE_FIND_REQUEST, STORE_FIND_RESPONSE))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.validAuthorizationHeader)
+            .header("Authorization", testData.userValidAuthorizationHeader)
             .param("storeName", storeNameSearchKeywork)
 
         .when()
@@ -56,7 +56,7 @@ class StoreAcceptanceTest extends InitAcceptanceTest {
         given()
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.validAuthorizationHeader)
+            .header("Authorization", testData.userValidAuthorizationHeader)
             .param("storeName", notExistStoreName)
 
         .when()
