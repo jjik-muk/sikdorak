@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.store.service;
 
-import com.jjikmuk.sikdorak.store.controller.response.StoreFindResponse;
+import com.jjikmuk.sikdorak.store.controller.request.StoreInsertRequest;
+import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
@@ -15,7 +16,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class StoreService {
 
-    private final StoreRepository storeRepository;
+	private final StoreRepository storeRepository;
 
 	public Store findById(Long storeId) {
 		if (Objects.isNull(storeId)) {
@@ -24,14 +25,28 @@ public class StoreService {
 		return storeRepository.findById(storeId).orElseThrow(StoreNotFoundException::new);
 	}
 
-	public List<StoreFindResponse> findStoresByStoreNameContaining(String storeName) {
+	public List<StoreSearchResponse> searchStoresByStoreNameContaining(String storeName) {
 		if (storeName == null) {
 			return Collections.emptyList();
 		}
 
 		return storeRepository.findStoresByStoreNameContaining(storeName)
-				.stream()
-				.map(StoreFindResponse::from)
-				.toList();
+			.stream()
+			.map(StoreSearchResponse::from)
+			.toList();
+	}
+
+	public Long insertStore(StoreInsertRequest insertRequest) {
+		Store store = new Store(
+			insertRequest.getStoreName(),
+			insertRequest.getContactNumber(),
+			insertRequest.getBaseAddress(),
+			insertRequest.getDetailAddress(),
+			insertRequest.getLatitude(),
+			insertRequest.getLongitude()
+		);
+
+		return storeRepository.save(store)
+			.getId();
 	}
 }
