@@ -4,6 +4,7 @@ import com.jjikmuk.sikdorak.review.controller.request.ReviewInsertRequest;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.service.StoreService;
+import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,5 +32,10 @@ public class ReviewService {
 
 		Review saveReview = reviewRepository.save(newReview);
 		return saveReview.getId();
+	}
+
+	public Long insertReview(LoginUser loginUser, ReviewInsertRequest reviewInsertRequest) {
+		throw new UnsupportedOperationException("ReviewService#insertReview 아직 구현하지 않음 :)");
+
 	}
 }

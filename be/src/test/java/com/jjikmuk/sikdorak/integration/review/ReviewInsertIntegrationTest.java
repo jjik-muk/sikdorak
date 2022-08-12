@@ -7,6 +7,8 @@ import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewInsertRequest;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
+import com.jjikmuk.sikdorak.user.auth.controller.Authority;
+import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -26,6 +28,7 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("만약 정상적인 리뷰 요청이 주어진다면 리뷰를 등록할 수 있다.")
 	void create_review_Success() {
+		LoginUser loginUser = new LoginUser(testData.user.getId(), Authority.USER);
 		ReviewInsertRequest reviewInsertRequest = new ReviewInsertRequest(
 			"Test review contents",
 			testData.store.getId(),
@@ -35,14 +38,15 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 			List.of("tag1", "tag2"),
 			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
 
-		Long saveId = reviewService.insertReview(reviewInsertRequest);
+		Long saveReviewId = reviewService.insertReview(loginUser, reviewInsertRequest);
 
-		assertThat(saveId).isNotNull();
+		assertThat(saveReviewId).isNotNull();
 	}
 
 	@Test
 	@DisplayName("만약 존재하지 않은 상점 id의 리뷰 요청이 주어진다면 예외를 발생시킨다.")
 	void create_review_failed() {
+		LoginUser loginUser = new LoginUser(testData.user.getId(), Authority.USER);
 		Long invalidStoreId = Long.MAX_VALUE;
 		ReviewInsertRequest reviewInsertRequest = new ReviewInsertRequest(
 			"Test review contents",
