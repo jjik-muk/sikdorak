@@ -7,9 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 
 public class CommonResponseEntity<T> extends ResponseEntity<BaseResponse<T>> {
+
+    public CommonResponseEntity(CodeAndMessages codeAndMessages, HttpStatus httpStatus) {
+        this(codeAndMessages, null, httpStatus);
+    }
+
     public CommonResponseEntity(CodeAndMessages codeAndMessages, T data, HttpStatus httpStatus) {
         this(codeAndMessages, data, null, httpStatus);
-
     }
 
     public CommonResponseEntity(CodeAndMessages codeAndMessages, T data, MultiValueMap<String, String> headers,HttpStatus httpStatus) {
