@@ -49,7 +49,7 @@ public class StoreModifyAcceptanceTest extends InitAcceptanceTest {
 			.put("/api/stores")
 
 		.then()
-			.statusCode(HttpStatus.NO_CONTENT)
+			.statusCode(HttpStatus.OK)
 			.body("code", Matchers.equalTo(expectedCodeAndMessage.getCode()))
 			.body("message", Matchers.equalTo(expectedCodeAndMessage.getMessage()));
 	}

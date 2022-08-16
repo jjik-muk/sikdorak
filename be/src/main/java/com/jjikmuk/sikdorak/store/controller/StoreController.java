@@ -1,10 +1,12 @@
 package com.jjikmuk.sikdorak.store.controller;
 
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_INSERT_SUCCESS;
+import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_MODIFY_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_SUCCESS;
 
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.store.controller.request.StoreInsertRequest;
+import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.service.StoreService;
 import java.util.List;
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,9 +37,14 @@ public class StoreController {
 	}
 
 	@PostMapping()
-	public CommonResponseEntity<Void> insertStor(@RequestBody StoreInsertRequest insertRequest) {
+	public CommonResponseEntity<Void> insertStore(@RequestBody StoreInsertRequest insertRequest) {
 		storeService.insertStore(insertRequest);
 
 		return new CommonResponseEntity<>(STORE_INSERT_SUCCESS, null, HttpStatus.CREATED);
+	}
+
+	@PutMapping()
+	public CommonResponseEntity<Void> modifyStore(@RequestBody StoreModifyRequest modifyRequest) {
+		return new CommonResponseEntity<>(STORE_MODIFY_SUCCESS, HttpStatus.OK);
 	}
 }

@@ -40,6 +40,7 @@ public interface StoreSnippet {
 	Snippet STORE_INSERT_RESPONSE_SNIPPET = commonResponseNonFields();
 
 	Snippet STORE_MODIFY_REQUEST_SNIPPET = requestFields(
+		fieldWithPath("id").type(JsonFieldType.NUMBER).description(Constants.ID_DESCRIPTION),
 		fieldWithPath("storeName").type(JsonFieldType.STRING).description(Constants.STORENAME_DESCRIPTION),
 		fieldWithPath("contactNumber").type(JsonFieldType.STRING).description(Constants.CONTACTNUMBER_DESCRIPTION),
 		fieldWithPath("baseAddress").type(JsonFieldType.STRING).description(Constants.BASEADDRESS_DESCRIPTION),
