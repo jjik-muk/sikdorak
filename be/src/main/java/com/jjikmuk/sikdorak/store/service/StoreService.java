@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.store.service;
 
 import com.jjikmuk.sikdorak.store.controller.request.StoreInsertRequest;
+import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
@@ -47,5 +48,21 @@ public class StoreService {
 
 		return storeRepository.save(store)
 			.getId();
+	}
+
+	public Long modifyStore(StoreModifyRequest modifyRequest) {
+		Store savedStore = findById(modifyRequest.getId());
+
+		Store modifiedStore = new Store(
+			savedStore.getId(),
+			modifyRequest.getStoreName(),
+			modifyRequest.getContactNumber(),
+			modifyRequest.getBaseAddress(),
+			modifyRequest.getDetailAddress(),
+			modifyRequest.getLatitude(),
+			modifyRequest.getLongitude()
+		);
+
+		return storeRepository.save(modifiedStore).getId();
 	}
 }

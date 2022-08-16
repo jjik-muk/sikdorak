@@ -45,6 +45,8 @@ public class StoreController {
 
 	@PutMapping()
 	public CommonResponseEntity<Void> modifyStore(@RequestBody StoreModifyRequest modifyRequest) {
+		storeService.modifyStore(modifyRequest);
+
 		return new CommonResponseEntity<>(STORE_MODIFY_SUCCESS, HttpStatus.OK);
 	}
 }
