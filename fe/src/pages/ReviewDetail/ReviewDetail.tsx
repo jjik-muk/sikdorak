@@ -1,5 +1,4 @@
 import Icon from 'common/Icon';
-import Button from 'common/IconButton/IconButton';
 import Carousel from 'components/ReviewDetail/Carousel/Carousel';
 import Comment from 'components/ReviewDetail/Comment/Comment';
 import Menu from 'components/ReviewDetail/Menu/Menu';
@@ -10,7 +9,7 @@ import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
 import { useId, useRef, useState } from 'react';
 import { createKey } from 'utils/utils';
-import { ButtonWrapper, Contents, ContentsWrap, Header, Main, MainFooter, Wrap } from './ReviewDetail.styled';
+import { ButtonWrapper, Contents, ContentsWrap, Header, IconWrap, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
 const IMAGE_URLS = [
   'https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20201002142956&q=80&rw=750&rh=536',
@@ -58,13 +57,19 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
         </Main>
         <ButtonWrapper>
           <div onClick={handleToggleHeart}>
-            <Button icon="Heart" width={btnWidth} height={30} fill={isActiveHeart ? 'red' : '#FFF'} />
+            <IconWrap width={btnWidth} height={30}>
+              <Icon icon="Heart" fill={isActiveHeart ? 'red' : '#FFF'} />
+            </IconWrap>
           </div>
           <div onClick={clickCreateComment}>
-            <Button icon="TalkBubble" width={btnWidth} height={30} />
+            <IconWrap width={btnWidth} height={30}>
+              <Icon icon="TalkBubble" fill={isActiveHeart ? 'red' : '#FFF'} />
+            </IconWrap>
           </div>
           <div onClick={handleCopyURL}>
-            <Button icon="ShareArrow" width={btnWidth} height={30} />
+            <IconWrap width={btnWidth} height={30}>
+              <Icon icon="ShareArrow" fill={isActiveHeart ? 'red' : '#FFF'} />
+            </IconWrap>
           </div>
         </ButtonWrapper>
         <TagList tags={['#초밥', '#맛집', '#부산']} />

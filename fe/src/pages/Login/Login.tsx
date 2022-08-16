@@ -1,6 +1,7 @@
 import TEXT from 'constants/text';
 import Logo from 'common/Logo/Logo';
 import Portal from 'common/Portal/Portal';
+import CommonHeader from 'components/Common/CommonHeader';
 import LoginButton from 'components/Login/LoginButton/LoginButton';
 import LoginInput from 'components/Login/LoginInput/LoginInput';
 import { useOutsideClick } from 'hooks/useOutsideClick';
@@ -22,21 +23,24 @@ function Login() {
   useOutsideClick(modalRef, handleClick);
 
   return (
-    <Wrap>
-      <Form>
-        <Logo />
-        <LoginButton text={KAKAO} />
-        <LoginInput type={ID} />
-        <LoginInput type={PASSWORD} />
-        <LoginButton text={NORMAL} onClick={handleClick} />
-        <span>회원가입</span>
-        {isPortal && (
-          <Portal selector="#portal" ref={modalRef}>
-            <ReviewDetail />
-          </Portal>
-        )}
-      </Form>
-    </Wrap>
+    <>
+      <CommonHeader />
+      <Wrap>
+        <Form>
+          <Logo />
+          <LoginButton text={KAKAO} />
+          <LoginInput type={ID} />
+          <LoginInput type={PASSWORD} />
+          <LoginButton text={NORMAL} onClick={handleClick} />
+          <span>회원가입</span>
+          {isPortal && (
+            <Portal selector="#portal" ref={modalRef}>
+              <ReviewDetail />
+            </Portal>
+          )}
+        </Form>
+      </Wrap>
+    </>
   );
 }
 
