@@ -4,6 +4,7 @@ import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UserNotFoundException;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,28 +16,32 @@ public class UserService {
 
     public long createUser(User user) {
 
-        if (isExistingUserByUniqueId(user.getUniqueId())) {
+        if (isExistingByUniqueId(user.getUniqueId())) {
             throw new DuplicateUserException();
         }
         userRespository.save(user);
         return user.getId();
     }
 
-    public User searchUserById(long userId) {
+    public User searchById(Long userId) {
+        if (Objects.isNull(userId)) {
+            throw new UserNotFoundException();
+        }
+
         return userRespository.findById(userId)
             .orElseThrow(UserNotFoundException::new);
     }
 
-    public User searchUserByUniqueId(long uniqueId) {
+    public User searchByUniqueId(long uniqueId) {
         return userRespository.findByUniqueId(uniqueId)
             .orElseThrow(UserNotFoundException::new);
     }
 
-    public boolean isExistingUserId(long userId) {
+    public boolean isExistingById(long userId) {
         return userRespository.existsById(userId);
     }
 
-    public boolean isExistingUserByUniqueId(long userUniqueId) {
+    public boolean isExistingByUniqueId(long userUniqueId) {
         return userRespository.existsByUniqueId(userUniqueId);
     }
 }

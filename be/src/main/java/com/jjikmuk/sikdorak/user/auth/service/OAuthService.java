@@ -35,12 +35,12 @@ public class OAuthService{
         KakaoAccountResponse userInfo = getOAuthUserInformation(oAuthTokenResponse);
 
         User user;
-        if (!userService.isExistingUserByUniqueId(userInfo.getUniqueId())) {
+        if (!userService.isExistingByUniqueId(userInfo.getUniqueId())) {
             user = new User(userInfo.getUniqueId(), userInfo.getNickname(), userInfo.getProfileImage(), userInfo.getEmail());
             userService.createUser(user);
             return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
         }
-        user = userService.searchUserByUniqueId(userInfo.getUniqueId());
+        user = userService.searchByUniqueId(userInfo.getUniqueId());
         return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
     }
 
@@ -49,7 +49,7 @@ public class OAuthService{
 
         jwtProvider.validateToken(refreshToken);
         String userId = jwtProvider.decodeToken(refreshToken);
-        if (!userService.isExistingUserId(Long.parseLong(userId))) {
+        if (!userService.isExistingById(Long.parseLong(userId))) {
             throw new UserNotFoundException();
         }
         return new AccessTokenResponse(jwtProvider.createAccessToken(userId));
