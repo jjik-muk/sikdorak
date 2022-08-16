@@ -1,11 +1,11 @@
 package com.jjikmuk.sikdorak.store.controller;
 
-import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_INSERT_SUCCESS;
+import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_CREATE_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_MODIFY_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_SUCCESS;
 
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
-import com.jjikmuk.sikdorak.store.controller.request.StoreInsertRequest;
+import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.service.StoreService;
@@ -37,10 +37,10 @@ public class StoreController {
 	}
 
 	@PostMapping()
-	public CommonResponseEntity<Void> insertStore(@RequestBody StoreInsertRequest insertRequest) {
-		storeService.insertStore(insertRequest);
+	public CommonResponseEntity<Void> createStore(@RequestBody StoreCreateRequest createRequest) {
+		storeService.createStore(createRequest);
 
-		return new CommonResponseEntity<>(STORE_INSERT_SUCCESS, null, HttpStatus.CREATED);
+		return new CommonResponseEntity<>(STORE_CREATE_SUCCESS, null, HttpStatus.CREATED);
 	}
 
 	@PutMapping()

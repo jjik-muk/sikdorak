@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.common.exception.SikdorakRuntimeException;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.store.controller.request.StoreInsertRequest;
+import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.store.service.StoreService;
@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("StoreInsert 통합테스트")
-public class StoreInsertIntegrationTest extends InitIntegrationTest {
+@DisplayName("StoreCreate 통합테스트")
+public class StoreCreateIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     private StoreService storeService;
@@ -25,13 +25,13 @@ public class StoreInsertIntegrationTest extends InitIntegrationTest {
 
     @Nested
     @DisplayName("가게를 저장할 때")
-    class InsertStoreTest {
+    class CreateStoreTest {
 
         @Test
         @DisplayName("정상적인 가게 생성 요청이 주어진다면 가게를 등록할 수 있다")
         void create_store_success() {
             // given
-            StoreInsertRequest storeInsertRequest = new StoreInsertRequest(
+            StoreCreateRequest storeCreateRequest = new StoreCreateRequest(
                 "새로 생긴 가게",
                 "02-0000-0000",
                 "서울시 어쩌구 00길 00",
@@ -41,23 +41,23 @@ public class StoreInsertIntegrationTest extends InitIntegrationTest {
             );
 
             // when
-            Long savedStoreId = storeService.insertStore(storeInsertRequest);
+            Long savedStoreId = storeService.createStore(storeCreateRequest);
 
             // then
             Store savedStore = storeRepository.findById(savedStoreId).orElseThrow();
-            assertThat(storeInsertRequest.getStoreName()).isEqualTo(savedStore.getStoreName());
-            assertThat(storeInsertRequest.getContactNumber()).isEqualTo(savedStore.getContactNumber());
-            assertThat(storeInsertRequest.getBaseAddress()).isEqualTo(savedStore.getBaseAddress());
-            assertThat(storeInsertRequest.getDetailAddress()).isEqualTo(savedStore.getDetailAddress());
-            assertThat(storeInsertRequest.getLatitude()).isEqualTo(savedStore.getLatitude());
-            assertThat(storeInsertRequest.getLongitude()).isEqualTo(savedStore.getLongitude());
+            assertThat(storeCreateRequest.getStoreName()).isEqualTo(savedStore.getStoreName());
+            assertThat(storeCreateRequest.getContactNumber()).isEqualTo(savedStore.getContactNumber());
+            assertThat(storeCreateRequest.getBaseAddress()).isEqualTo(savedStore.getBaseAddress());
+            assertThat(storeCreateRequest.getDetailAddress()).isEqualTo(savedStore.getDetailAddress());
+            assertThat(storeCreateRequest.getLatitude()).isEqualTo(savedStore.getLatitude());
+            assertThat(storeCreateRequest.getLongitude()).isEqualTo(savedStore.getLongitude());
         }
 
         @Test
         @DisplayName("정상적이지 않은 가게 생성 요청이 주어진다면 예외를 발생시킨다")
         void create_store_failed() {
             // given
-            StoreInsertRequest invalidStoreInsertRequest = new StoreInsertRequest(
+            StoreCreateRequest invalidStoreCreateRequest = new StoreCreateRequest(
                 null,
                 "02-0000-0000",
                 "서울시 어쩌구 00길 00",
@@ -67,7 +67,7 @@ public class StoreInsertIntegrationTest extends InitIntegrationTest {
             );
 
             // then
-            assertThatThrownBy(() -> storeService.insertStore(invalidStoreInsertRequest))
+            assertThatThrownBy(() -> storeService.createStore(invalidStoreCreateRequest))
                 .isInstanceOf(SikdorakRuntimeException.class);
         }
     }

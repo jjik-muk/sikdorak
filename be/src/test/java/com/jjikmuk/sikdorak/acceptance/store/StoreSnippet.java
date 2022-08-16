@@ -28,7 +28,7 @@ public interface StoreSnippet {
 			fieldWithPath("longitude").type(JsonFieldType.NUMBER).description(Constants.LONGITUDE_DESCRIPTION)
 	);
 
-	Snippet STORE_INSERT_REQUEST_SNIPPET = requestFields(
+	Snippet STORE_CREATE_REQUEST_SNIPPET = requestFields(
 		fieldWithPath("storeName").type(JsonFieldType.STRING).description(Constants.STORENAME_DESCRIPTION),
 		fieldWithPath("contactNumber").type(JsonFieldType.STRING).description(Constants.CONTACTNUMBER_DESCRIPTION),
 		fieldWithPath("baseAddress").type(JsonFieldType.STRING).description(Constants.BASEADDRESS_DESCRIPTION),
@@ -37,7 +37,7 @@ public interface StoreSnippet {
 		fieldWithPath("longitude").type(JsonFieldType.NUMBER).description(Constants.LONGITUDE_DESCRIPTION)
 	);
 
-	Snippet STORE_INSERT_RESPONSE_SNIPPET = commonResponseNonFields();
+	Snippet STORE_CREATE_RESPONSE_SNIPPET = commonResponseNonFields();
 
 	Snippet STORE_MODIFY_REQUEST_SNIPPET = requestFields(
 		fieldWithPath("id").type(JsonFieldType.NUMBER).description(Constants.ID_DESCRIPTION),
