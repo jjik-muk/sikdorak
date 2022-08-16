@@ -1,24 +1,29 @@
 package com.jjikmuk.sikdorak.common.aop;
 
+import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.exception.NeedLoginException;
-import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Aspect
 @Component
 public class ValidateUserLoginAspect {
 
     @Before("@annotation(com.jjikmuk.sikdorak.common.aop.UserOnly)")
-    public void validateLogin() {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        String authorization = request.getHeader("Authorization");
+    public void validateLogin(JoinPoint joinPoint) {
+        LoginUser loginUser = findLoginUser(joinPoint.getArgs());
+        loginUser.ifAnonymousThrowException();
+    }
 
-        if (authorization == null || authorization.isEmpty()) {
-            throw new NeedLoginException();
-        }
+    private LoginUser findLoginUser(Object[] args) {
+        return Arrays.stream(args)
+            .filter(a -> a instanceof LoginUser)
+            .map(a -> (LoginUser) a)
+            .findFirst()
+            .orElseThrow(NeedLoginException::new);
+
     }
 }

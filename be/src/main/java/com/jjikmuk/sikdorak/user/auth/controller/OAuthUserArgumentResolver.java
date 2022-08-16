@@ -30,10 +30,11 @@ public class OAuthUserArgumentResolver implements HandlerMethodArgumentResolver 
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
 		NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
 
-		String token = parseAuthorizationHeader(
-			Objects.requireNonNull(webRequest.getNativeRequest(HttpServletRequest.class)));
+		String token;
 
 		try {
+			token = parseAuthorizationHeader(
+				Objects.requireNonNull(webRequest.getNativeRequest(HttpServletRequest.class)));
 			jwtProvider.validateToken(token);
 		} catch (InvalidTokenException e) {
 			return new LoginUser(Authority.ANONYMOUS);
