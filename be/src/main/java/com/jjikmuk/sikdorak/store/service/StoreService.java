@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class StoreService {
 
 	private final StoreRepository storeRepository;
 
+	@Transactional(readOnly = true)
 	public Store searchById(Long storeId) {
 		if (Objects.isNull(storeId)) {
 			throw new StoreNotFoundException();
@@ -25,6 +27,7 @@ public class StoreService {
 		return storeRepository.findById(storeId).orElseThrow(StoreNotFoundException::new);
 	}
 
+	@Transactional(readOnly = true)
 	public List<StoreSearchResponse> searchStoresByStoreNameContaining(String storeName) {
 		if (storeName == null) {
 			return Collections.emptyList();
@@ -36,6 +39,7 @@ public class StoreService {
 			.toList();
 	}
 
+	@Transactional
 	public Long createStore(StoreCreateRequest createRequest) {
 		Store store = new Store(
 			createRequest.getStoreName(),
@@ -50,6 +54,7 @@ public class StoreService {
 			.getId();
 	}
 
+	@Transactional
 	public Long modifyStore(StoreModifyRequest modifyRequest) {
 		Store savedStore = searchById(modifyRequest.getId());
 
