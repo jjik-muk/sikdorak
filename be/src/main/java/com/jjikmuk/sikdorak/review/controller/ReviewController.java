@@ -6,6 +6,7 @@ import com.jjikmuk.sikdorak.review.controller.request.ReviewInsertRequest;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
+import com.jjikmuk.sikdorak.common.aop.UserOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
+    @UserOnly
     @PostMapping("/api/reviews")
     public CommonResponseEntity<Void> insertReview(
         @AuthenticatedUser LoginUser loginUser,
