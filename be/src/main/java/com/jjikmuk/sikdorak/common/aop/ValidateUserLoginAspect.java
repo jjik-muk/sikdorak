@@ -20,10 +20,9 @@ public class ValidateUserLoginAspect {
 
     private LoginUser findLoginUser(Object[] args) {
         return Arrays.stream(args)
-            .filter(a -> a instanceof LoginUser)
-            .map(a -> (LoginUser) a)
+            .filter(LoginUser.class::isInstance)
+            .map(LoginUser.class::cast)
             .findFirst()
             .orElseThrow(NeedLoginException::new);
-
     }
 }
