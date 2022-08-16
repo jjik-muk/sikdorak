@@ -39,6 +39,17 @@ public interface StoreSnippet {
 
 	Snippet STORE_INSERT_RESPONSE_SNIPPET = commonResponseNonFields();
 
+	Snippet STORE_MODIFY_REQUEST_SNIPPET = requestFields(
+		fieldWithPath("storeName").type(JsonFieldType.STRING).description(Constants.STORENAME_DESCRIPTION),
+		fieldWithPath("contactNumber").type(JsonFieldType.STRING).description(Constants.CONTACTNUMBER_DESCRIPTION),
+		fieldWithPath("baseAddress").type(JsonFieldType.STRING).description(Constants.BASEADDRESS_DESCRIPTION),
+		fieldWithPath("detailAddress").type(JsonFieldType.STRING).description(Constants.DETAILADDRESS_DESCRIPTION).optional(),
+		fieldWithPath("latitude").type(JsonFieldType.NUMBER).description(Constants.LATITUDE_DESCRIPTION),
+		fieldWithPath("longitude").type(JsonFieldType.NUMBER).description(Constants.LONGITUDE_DESCRIPTION)
+	);
+
+	Snippet STORE_MODIFY_RESPONSE_SNIPPET = commonResponseNonFields();
+
 	class Constants {
 		private static final String ID_DESCRIPTION = "가게 아이디";
 		private static final String STORENAME_DESCRIPTION = "가게 이름";
