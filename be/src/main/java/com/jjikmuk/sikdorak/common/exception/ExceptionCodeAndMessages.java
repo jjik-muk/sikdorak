@@ -13,6 +13,7 @@ import com.jjikmuk.sikdorak.store.exception.InvalidStoreLocationException;
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreNameException;
 import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
+import com.jjikmuk.sikdorak.user.auth.exception.NeedLoginException;
 import com.jjikmuk.sikdorak.user.auth.exception.OAuthServerException;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidUserEmailException;
@@ -50,7 +51,8 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
 
     //OAuth
     FAILED_CONNECTION_WITH_OAUTH_SERVER("F-O001", "OAuth 서버와의 통신이 원할하지 않습니다.", OAuthServerException.class),
-    INVALID_TOKEN("F-O002", "유효하지 않은 토큰입니다.", InvalidTokenException.class);
+    INVALID_TOKEN("F-O002", "유효하지 않은 토큰입니다.", InvalidTokenException.class),
+    NEED_LOGIN("F-O003", "로그인이 필요한 서비스입니다.", NeedLoginException.class);
 
     private final String code;
 
