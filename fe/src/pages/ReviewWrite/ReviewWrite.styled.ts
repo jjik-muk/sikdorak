@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
 
-const Wrap = styled.div`
+export const Wrap = styled.div`
   display: flex;
   width: 1400px;
   flex-direction: column;
@@ -10,25 +10,26 @@ const Wrap = styled.div`
   border-radius: 7px;
 `;
 
-const Content = styled.div`
+export const Content = styled.div`
   display: flex;
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
   ${() => flexLayoutMixin('row', 'center', 'center')};
   font-size: 20px;
   font-weight: 700;
 `;
 
-const ImgWrap = styled.div`
+export const ImgWrap = styled.div`
   ${() => flexLayoutMixin('row', 'space-between', 'center')}
   width: 1000px;
   height: 660px;
 `;
 
-const InputWrap = styled.div`
+export const InputWrap = styled.div`
   display: flex;
   flex-direction: column;
+  width: 400px;
   height: 650px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
@@ -38,5 +39,3 @@ const InputWrap = styled.div`
     border-bottom: 1px solid grey;
   }
 `;
-
-export { Wrap, Content, Title, ImgWrap, InputWrap };

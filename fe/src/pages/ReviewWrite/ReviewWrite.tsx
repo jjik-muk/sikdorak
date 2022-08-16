@@ -1,11 +1,11 @@
-import ImgUpload from 'components/ImgUpload/ImgUpload';
-import PostScope from 'components/PostScope/PostScope';
-import Profile from 'components/Profile/Profile';
-import RestaurantSearch from 'components/RestaurantSearch/RestaurantSearch';
-import SelectDay from 'components/SelectDay/SelectDay';
-import TagContainer from 'components/Tag/TagContainer/TagContainer';
-import Textarea from 'components/Textarea/Textarea';
-import WriteRating from 'components/WriteRating/WriteRating';
+import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
+import ImgUpload from 'components/ReviewWrite/ImgUpload/ImgUpload';
+import PostScope from 'components/ReviewWrite/PostScope/PostScope';
+import RestaurantSearch from 'components/ReviewWrite/RestaurantSearch/RestaurantSearch';
+import SelectDay from 'components/ReviewWrite/SelectDay/SelectDay';
+import TagContainer from 'components/ReviewWrite/Tag/TagContainer/TagContainer';
+import Textarea from 'components/ReviewWrite/Textarea/Textarea';
+import WriteRating from 'components/ReviewWrite/WriteRating/WriteRating';
 import { Content, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
 
 function ReviewWrite() {
