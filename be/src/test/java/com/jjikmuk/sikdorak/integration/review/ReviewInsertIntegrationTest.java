@@ -13,12 +13,8 @@ import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.exception.UserNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -69,10 +65,10 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 			.isInstanceOf(StoreNotFoundException.class);
 	}
 
-	@ParameterizedTest
-	@MethodSource("provideInvalidLoginUser")
+	@Test
 	@DisplayName("만약 비회원이 정상적인 리뷰 생성 요청을 한다면 예외를 발생시킨다.")
-	void create_review_invalid_user_valid_store(LoginUser loginUser) {
+	void create_review_invalid_user_valid_store() {
+		LoginUser loginUser = new LoginUser(Long.MAX_VALUE, Authority.USER);
 		ReviewInsertRequest reviewInsertRequest = new ReviewInsertRequest(
 			"Test review contents",
 			testData.store.getId(),
@@ -84,14 +80,6 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 
 		assertThatThrownBy(() -> reviewService.insertReview(loginUser, reviewInsertRequest))
 			.isInstanceOf(UserNotFoundException.class);
-	}
-
-	private static Stream<Arguments> provideInvalidLoginUser() {
-		return Stream.of(
-			Arguments.of(new LoginUser(Long.MAX_VALUE, Authority.USER)),
-			Arguments.of(new LoginUser(Authority.USER)),
-			Arguments.of(new LoginUser(Authority.ANONYMOUS))
-		);
 	}
 }
 
