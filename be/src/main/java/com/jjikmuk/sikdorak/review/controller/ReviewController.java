@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.review.controller;
 
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
+import com.jjikmuk.sikdorak.common.aop.UserOnly;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewInsertRequest;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
@@ -14,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-// TODO: Login AOP 추가하기
 public class ReviewController {
 
     private final ReviewService reviewService;
 
+    @UserOnly
     @PostMapping("/api/reviews")
     public CommonResponseEntity<Void> insertReview(
         @AuthenticatedUser LoginUser loginUser,

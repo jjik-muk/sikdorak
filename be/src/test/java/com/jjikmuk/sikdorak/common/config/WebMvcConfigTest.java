@@ -4,7 +4,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.jjikmuk.sikdorak.user.auth.controller.OAuthUserArgumentResolver;
-import com.jjikmuk.sikdorak.user.auth.interceptor.OAuthUserInterceptor;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
 import java.net.URI;
 import org.junit.jupiter.api.DisplayName;
@@ -27,9 +26,6 @@ class WebMvcConfigTest {
 
     @Autowired
     private MockMvc mvc;
-
-    @MockBean
-    private OAuthUserInterceptor oAuthUserInterceptor;
 
     @MockBean
     private OAuthUserArgumentResolver oAuthUserArgumentResolver;
