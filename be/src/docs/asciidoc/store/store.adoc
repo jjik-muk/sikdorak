@@ -34,7 +34,7 @@ API : `PUT /api/stores`
 
 ==== `Request`
 
-operation::store_modify_acceptance_test/modify_store_success[snippets='http-request,request-body']
+operation::store_modify_acceptance_test/modify_store_success[snippets='http-request,path-parameters,request-body']
 
 ==== `Response`
 
