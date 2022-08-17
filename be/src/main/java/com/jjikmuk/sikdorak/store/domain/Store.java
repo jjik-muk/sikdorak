@@ -65,4 +65,11 @@ public class Store extends BaseTimeEntity {
     public double getLongitude() {
         return location.longitude();
     }
+
+    public void editAll(String storeName, String contactNumber, String baseAddress, String detailAddress, Double latitude, Double longitude) {
+        this.storeName = new StoreName(storeName);
+        this.contactNumber = new ContactNumber(contactNumber);
+        this.address = new Address(baseAddress, detailAddress);
+        this.location = new StoreLocation(latitude, longitude);
+    }
 }

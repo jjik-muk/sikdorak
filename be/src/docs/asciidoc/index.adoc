@@ -16,7 +16,7 @@ notification-api-docs
 include::{docdir}/review/review.adoc[]
 
 
-== 음식점 API
+== 가게 API
 
 include::{docdir}/store/store.adoc[]
 

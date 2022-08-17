@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.Length;
 
 @Getter
 @NoArgsConstructor
-public class StoreInsertRequest {
+public class StoreCreateRequest {
 
 	@NotBlank
 	@Length(min = 50)
@@ -33,7 +33,7 @@ public class StoreInsertRequest {
 	@Max(180)
 	private Double longitude;
 
-	public StoreInsertRequest(String storeName, String contactNumber, String baseAddress,
+	public StoreCreateRequest(String storeName, String contactNumber, String baseAddress,
 		String detailAddress, Double latitude, Double longitude) {
 		this.storeName = storeName;
 		this.contactNumber = contactNumber;

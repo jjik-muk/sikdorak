@@ -1,15 +1,16 @@
 package com.jjikmuk.sikdorak.acceptance.store;
 
-import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
-import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.restdocs.snippet.Snippet;
-
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonListResponseFieldsWithValidConstraints;
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonResponseNonFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+
+import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
+import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.restdocs.snippet.Snippet;
 
 public interface StoreSnippet {
 
@@ -28,7 +29,7 @@ public interface StoreSnippet {
 			fieldWithPath("longitude").type(JsonFieldType.NUMBER).description(Constants.LONGITUDE_DESCRIPTION)
 	);
 
-	Snippet STORE_INSERT_REQUEST_SNIPPET = requestFields(
+	Snippet STORE_CREATE_REQUEST_SNIPPET = requestFields(
 		fieldWithPath("storeName").type(JsonFieldType.STRING).description(Constants.STORENAME_DESCRIPTION),
 		fieldWithPath("contactNumber").type(JsonFieldType.STRING).description(Constants.CONTACTNUMBER_DESCRIPTION),
 		fieldWithPath("baseAddress").type(JsonFieldType.STRING).description(Constants.BASEADDRESS_DESCRIPTION),
@@ -37,7 +38,22 @@ public interface StoreSnippet {
 		fieldWithPath("longitude").type(JsonFieldType.NUMBER).description(Constants.LONGITUDE_DESCRIPTION)
 	);
 
-	Snippet STORE_INSERT_RESPONSE_SNIPPET = commonResponseNonFields();
+	Snippet STORE_CREATE_RESPONSE_SNIPPET = commonResponseNonFields();
+
+	Snippet STORE_MODIFY_REQUEST_PARAM_SNIPPET = pathParameters(
+		parameterWithName("storeId").description(Constants.ID_DESCRIPTION)
+	);
+
+	Snippet STORE_MODIFY_REQUEST_SNIPPET = requestFields(
+		fieldWithPath("storeName").type(JsonFieldType.STRING).description(Constants.STORENAME_DESCRIPTION),
+		fieldWithPath("contactNumber").type(JsonFieldType.STRING).description(Constants.CONTACTNUMBER_DESCRIPTION),
+		fieldWithPath("baseAddress").type(JsonFieldType.STRING).description(Constants.BASEADDRESS_DESCRIPTION),
+		fieldWithPath("detailAddress").type(JsonFieldType.STRING).description(Constants.DETAILADDRESS_DESCRIPTION).optional(),
+		fieldWithPath("latitude").type(JsonFieldType.NUMBER).description(Constants.LATITUDE_DESCRIPTION),
+		fieldWithPath("longitude").type(JsonFieldType.NUMBER).description(Constants.LONGITUDE_DESCRIPTION)
+	);
+
+	Snippet STORE_MODIFY_RESPONSE_SNIPPET = commonResponseNonFields();
 
 	class Constants {
 		private static final String ID_DESCRIPTION = "가게 아이디";
