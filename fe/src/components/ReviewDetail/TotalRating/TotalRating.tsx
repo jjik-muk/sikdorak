@@ -19,8 +19,8 @@ function TotalRating({ taste, price, service }: TotalRatingProps) {
 
 export default TotalRating;
 
-interface TotalRatingProps {
+type TotalRatingProps = {
   taste: number;
   price: number;
   service: number;
-}
+};

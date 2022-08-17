@@ -40,11 +40,11 @@ export default Icon;
 
 type IconComponentsKeys = keyof typeof iconComponents;
 
-interface IconProps {
+type IconProps = {
   icon: IconComponentsKeys;
   width?: number;
   height?: number;
   fill?: string;
   stroke?: string;
   onClick?: (idx: number) => void;
-}
+};

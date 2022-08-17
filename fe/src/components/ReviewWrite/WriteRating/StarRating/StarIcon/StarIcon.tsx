@@ -12,7 +12,7 @@ function StarIcon({ onClick, fill }: StarIconProps) {
 
 export default StarIcon;
 
-interface StarIconProps {
+type StarIconProps = {
   onClick: () => void;
   fill: string;
-}
+};

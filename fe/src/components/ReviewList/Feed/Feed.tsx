@@ -91,11 +91,11 @@ function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps)
 
 export default Feed;
 
-interface FeedProps {
+type FeedProps = {
   author: string;
   contents: string;
   rating: number[];
   pictures?: string[];
   store: { name: string; region: string };
   likeCnt: number;
-}
+};

@@ -15,11 +15,11 @@ export default IconButton;
 
 type IconTypes = 'Photo' | 'DownArrow' | 'UpArrow' | 'Star' | 'MenuBtn' | 'Heart' | 'ShareArrow' | 'TalkBubble';
 
-interface IconButtonProps {
+type IconButtonProps = {
   icon: IconTypes;
   children?: ReactNode;
   width: number;
   height: number;
   fill?: string;
   stroke?: string;
-}
+};

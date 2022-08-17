@@ -16,8 +16,8 @@ function RestaurantProfile({ imgUrl = DEFAULT_IMG_URL, company, region }: Restau
 
 export default RestaurantProfile;
 
-interface RestaurantProfileProps {
+type RestaurantProfileProps = {
   imgUrl?: string;
   company: string;
   region: string;
-}
+};

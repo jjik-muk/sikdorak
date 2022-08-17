@@ -41,6 +41,6 @@ export const ScopeDescriptionArea = styled.div`
 
 const getScope = (scope: string) => scope === 'friends' && 'flex-end';
 
-interface ScopeButtonWrapperProps {
+type ScopeButtonWrapperProps = {
   scope: string;
-}
+};

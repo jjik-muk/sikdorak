@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-interface RestaurantSearchWrapperProps {
+type RestaurantSearchWrapperProps = {
   type: string;
   placeholder: string;
-}
+};
 
 export const RestaurantSearchWrapper = styled.input.attrs<RestaurantSearchWrapperProps>({
   type: 'text',
