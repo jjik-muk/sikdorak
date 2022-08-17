@@ -7,10 +7,10 @@ import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
-import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
+import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.user.auth.controller.Authority;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.exception.UserNotFoundException;
+import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -62,7 +62,7 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
 
 		assertThatThrownBy(() -> reviewService.createReview(loginUser, reviewCreateRequest))
-			.isInstanceOf(StoreNotFoundException.class);
+			.isInstanceOf(NotFoundStoreException.class);
 	}
 
 	@Test
@@ -79,7 +79,7 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
 
 		assertThatThrownBy(() -> reviewService.createReview(loginUser, reviewCreateRequest))
-			.isInstanceOf(UserNotFoundException.class);
+			.isInstanceOf(NotFoundUserException.class);
 	}
 }
 

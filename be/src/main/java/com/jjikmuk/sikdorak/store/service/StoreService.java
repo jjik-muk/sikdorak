@@ -4,7 +4,7 @@ import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.domain.Store;
-import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
+import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import java.util.Collections;
 import java.util.List;
@@ -22,10 +22,10 @@ public class StoreService {
 	@Transactional(readOnly = true)
 	public Store searchById(Long storeId) {
 		if (Objects.isNull(storeId)) {
-			throw new StoreNotFoundException();
+			throw new NotFoundStoreException();
 		}
 
-		return storeRepository.findById(storeId).orElseThrow(StoreNotFoundException::new);
+		return storeRepository.findById(storeId).orElseThrow(NotFoundStoreException::new);
 	}
 
 	@Transactional(readOnly = true)
@@ -58,7 +58,7 @@ public class StoreService {
 	@Transactional
 	public Long modifyStore(Long storeId, StoreModifyRequest modifyRequest) {
 		Store store = storeRepository.findById(storeId)
-			.orElseThrow(StoreNotFoundException::new);
+			.orElseThrow(NotFoundStoreException::new);
 
 		store.editAll(
 			modifyRequest.getStoreName(),

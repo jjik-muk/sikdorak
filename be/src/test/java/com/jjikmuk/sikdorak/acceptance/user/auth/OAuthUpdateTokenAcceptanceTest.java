@@ -85,8 +85,8 @@ class OAuthUpdateTokenAcceptanceTest extends InitAcceptanceTest {
 
         .then()
             .statusCode(HttpStatus.NOT_FOUND.value())
-            .body("code", equalTo(ExceptionCodeAndMessages.USER_NOT_FOUND.getCode()))
-            .body("message", equalTo(ExceptionCodeAndMessages.USER_NOT_FOUND.getMessage()));
+            .body("code", equalTo(ExceptionCodeAndMessages.NOT_FOUND_USER.getCode()))
+            .body("message", equalTo(ExceptionCodeAndMessages.NOT_FOUND_USER.getMessage()));
     }
 
 }
