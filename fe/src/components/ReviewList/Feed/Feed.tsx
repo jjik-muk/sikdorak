@@ -1,3 +1,4 @@
+import { DETAIL, FEED } from 'constants/size';
 import Icon from 'common/Icon';
 import Menu from 'components/ReviewDetail/Menu/Menu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
@@ -24,7 +25,7 @@ function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps)
 
   return (
     <Wrap>
-      <ContentsWrap wrapWidth={750}>
+      <ContentsWrap wrapWidth={DETAIL.WRAP.WIDTH_NO_IMG}>
         <Header>
           <UserProfile nickname={author} />
           <div onClick={toggleIsActiveMenu}>
@@ -36,7 +37,7 @@ function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps)
           <Contents>{contents}</Contents>
           <Pictures>
             {pictures.map((picture) => (
-              <img src={picture} alt="음식" width={100} height={70} />
+              <img src={picture} alt="음식" width={FEED.IMG.WIDTH} height={FEED.IMG.HEIGHT} />
             ))}
           </Pictures>
           <TotalRating taste={taste} price={price} service={service} />
@@ -46,18 +47,18 @@ function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps)
         </Main>
         <ButtonWrapper>
           <div onClick={toggleIsActiveHeart}>
-            <IconWrap width={190} height={30}>
+            <IconWrap width={FEED.BTN.WIDTH_NO_IMG} height={FEED.BTN.HEIGHT}>
               <Icon icon="Heart" fill={isActiveHeart ? 'red' : '#FFF'} />
               {likeCnt}
             </IconWrap>
           </div>
           <div>
-            <IconWrap width={190} height={30}>
+            <IconWrap width={FEED.BTN.WIDTH_NO_IMG} height={FEED.BTN.HEIGHT}>
               <Icon icon="TalkBubble" fill={isActiveHeart ? 'red' : '#FFF'} />
             </IconWrap>
           </div>
           <div onClick={handleCopyURL}>
-            <IconWrap width={190} height={30}>
+            <IconWrap width={FEED.BTN.WIDTH_NO_IMG} height={FEED.BTN.HEIGHT}>
               <Icon icon="ShareArrow" fill={isActiveHeart ? 'red' : '#FFF'} />
             </IconWrap>
           </div>

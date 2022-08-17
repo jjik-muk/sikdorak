@@ -1,4 +1,4 @@
-import SIZE from 'constants/size';
+import { ICON } from 'constants/size';
 import { ReactComponent as DownArrow } from 'assets/DownArrow.svg';
 import { ReactComponent as Heart } from 'assets/Heart.svg';
 import { ReactComponent as MenuBtn } from 'assets/MenuBtn.svg';
@@ -19,14 +19,7 @@ const iconComponents = {
   TalkBubble,
 };
 
-function Icon({
-  icon,
-  width = SIZE.ICON.WIDTH,
-  height = SIZE.ICON.HEIGHT,
-  fill = 'none',
-  stroke = '#000',
-  onClick,
-}: IconProps) {
+function Icon({ icon, width = ICON.WIDTH, height = ICON.HEIGHT, fill = 'none', stroke = '#000', onClick }: IconProps) {
   const SelectedIcon = iconComponents[icon];
 
   if (!SelectedIcon) {

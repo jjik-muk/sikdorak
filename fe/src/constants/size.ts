@@ -1,10 +1,23 @@
-// TODO: 커밋 전에 파일 삭제
+export const ICON = {
+  WIDTH: 30,
+  HEIGHT: 30,
+};
 
-const SIZE = {
-  ICON: {
-    WIDTH: 30,
-    HEIGHT: 30,
+export const DETAIL = {
+  WRAP: {
+    WIDTH_NO_IMG: 750,
+    WIDTH_WITH_IMG: 400,
   },
 };
 
-export default SIZE;
+export const FEED = {
+  BTN: {
+    WIDTH_NO_IMG: 190,
+    WIDTH_WITH_IMG: 90,
+    HEIGHT: 30,
+  },
+  IMG: {
+    WIDTH: 100,
+    HEIGHT: 70,
+  },
+};

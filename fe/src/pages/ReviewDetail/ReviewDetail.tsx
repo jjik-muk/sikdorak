@@ -1,3 +1,5 @@
+import { COMMENTS, IMAGE_URLS } from 'constants/dummyData';
+import { DETAIL, FEED } from 'constants/size';
 import Icon from 'common/Icon';
 import Button from 'common/IconButton/IconButton';
 import Carousel from 'components/ReviewDetail/Carousel/Carousel';
@@ -13,24 +15,10 @@ import { useId, useRef } from 'react';
 import { createKey } from 'utils/utils';
 import { ButtonWrapper, Contents, ContentsWrap, Header, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
-const IMAGE_URLS = [
-  'https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20201002142956&q=80&rw=750&rh=536',
-  'https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000881/img/ko/a0000881_parts_586c7364bbcdc.jpg?20200630185341&q=80&rw=686&rh=490',
-  'https://blog.kakaocdn.net/dn/u8bU3/btq9nhUNEgR/kBXjA4SUp2WFK3AiXRzN4k/img.png',
-];
-
-const COMMENTS = [
-  { title: '럼카', content: '동해물과 백두산이' },
-  { title: '호이', content: '마르고 닳도록' },
-  { title: '쿠킴', content: '하느님이 보우하사' },
-  { title: '포키', content: '우리나라 만세' },
-  { title: '제이', content: '무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.' },
-];
-
 function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
   const commentRef = useRef<HTMLTextAreaElement>(null);
-  const wrapWidth = hasPicture ? 400 : 750;
-  const btnWidth = hasPicture ? 90 : 190;
+  const wrapWidth = hasPicture ? DETAIL.WRAP.WIDTH_WITH_IMG : DETAIL.WRAP.WIDTH_NO_IMG;
+  const btnWidth = hasPicture ? FEED.BTN.WIDTH_WITH_IMG : FEED.BTN.WIDTH_NO_IMG;
   const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const id = useId();
@@ -59,13 +47,13 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
         </Main>
         <ButtonWrapper>
           <div onClick={toggleIsActiveHeart}>
-            <Button icon="Heart" width={btnWidth} height={30} fill={isActiveHeart ? 'red' : '#FFF'} />
+            <Button icon="Heart" width={btnWidth} height={FEED.BTN.HEIGHT} fill={isActiveHeart ? 'red' : '#FFF'} />
           </div>
           <div onClick={clickCreateComment}>
-            <Button icon="TalkBubble" width={btnWidth} height={30} />
+            <Button icon="TalkBubble" width={btnWidth} height={FEED.BTN.HEIGHT} />
           </div>
           <div onClick={handleCopyURL}>
-            <Button icon="ShareArrow" width={btnWidth} height={30} />
+            <Button icon="ShareArrow" width={btnWidth} height={FEED.BTN.HEIGHT} />
           </div>
         </ButtonWrapper>
         <TagList tags={['#초밥', '#맛집', '#부산']} />
