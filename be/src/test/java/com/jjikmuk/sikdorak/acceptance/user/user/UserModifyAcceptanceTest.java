@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @DisplayName("유저 프로필 수정 인수테스트")
-public class UserModifyAcceptanceTest extends InitAcceptanceTest {
+class UserModifyAcceptanceTest extends InitAcceptanceTest {
 
     @Test
     @DisplayName("유저 프로필 업데이트 요청이 정상적인 경우라면 프로필을 업데이트하고 정상 상태코드를 반환한다.")
