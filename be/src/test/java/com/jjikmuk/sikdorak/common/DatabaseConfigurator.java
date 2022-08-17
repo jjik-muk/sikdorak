@@ -41,8 +41,10 @@ public class DatabaseConfigurator implements InitializingBean {
 	private JwtProvider jwtProvider;
 
 	public Store store;
-	public User user;
-	public String userValidAuthorizationHeader;
+	public User user1;
+	public User user2;
+	public String user1ValidAuthorizationHeader;
+	public String user2ValidAuthorizationHeader;
 	public String userInvalidAuthorizationHeader;
 	public Review review;
 
@@ -53,13 +55,17 @@ public class DatabaseConfigurator implements InitializingBean {
 			"1층 101호",
 			37.5093890,
 			127.105143));
-		this.user = userRespository.save(
-			new User(12345678L, "test-user", "https://profile.com", "sikdorak@gmail.com"));
-		this.userValidAuthorizationHeader =
-			"Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user.getId()));
+		this.user1 = userRespository.save(
+			new User(12345678L, "test-user1", "https://profile1.com", "sikdorak1@gmail.com"));
+		this.user2 = userRespository.save(
+			new User(87654321L, "test-user2", "https://profile2.com", "sikdorak2@gmail.com"));
+		this.user1ValidAuthorizationHeader =
+			"Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user1.getId()));
+		this.user2ValidAuthorizationHeader =
+			"Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user2.getId()));
 		this.userInvalidAuthorizationHeader = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzNjgyMjM2MzgiLCJleHAiOjE2MzA2MzkzNTF9.SnT_Nxgspg3cUomCieDyBRH9TowtWh21YIfAKntuguA";
 
-		this.review = reviewRepository.save(new Review(this.user.getId(),
+		this.review = reviewRepository.save(new Review(this.user1.getId(),
 			this.store.getId(),
 			"Test review contents",
 			3.f,

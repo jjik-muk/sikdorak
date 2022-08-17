@@ -9,7 +9,6 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 import com.jjikmuk.sikdorak.acceptance.InitAcceptanceTest;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
-import com.jjikmuk.sikdorak.store.domain.Store;
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +41,7 @@ class StoreModifyAcceptanceTest extends InitAcceptanceTest {
 				STORE_MODIFY_REQUEST_SNIPPET,
 				STORE_MODIFY_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
-			.header("Authorization", testData.userValidAuthorizationHeader)
+			.header("Authorization", testData.user1ValidAuthorizationHeader)
 			.contentType(ContentType.JSON)
 			.body(storeModifyRequest)
 

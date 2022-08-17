@@ -38,7 +38,7 @@ class StoreCreateAcceptanceTest extends InitAcceptanceTest {
 				STORE_CREATE_REQUEST_SNIPPET,
 				STORE_CREATE_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
-			.header("Authorization", testData.userValidAuthorizationHeader)
+			.header("Authorization", testData.user1ValidAuthorizationHeader)
 			.contentType(ContentType.JSON)
 			.body(storeCreateRequest)
 
