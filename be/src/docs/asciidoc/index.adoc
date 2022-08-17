@@ -20,7 +20,12 @@ include::{docdir}/review/review.adoc[]
 
 include::{docdir}/store/store.adoc[]
 
+== 유저 API
+
+include::{docdir}/user/user.adoc[]
+
 == 로그인 API
 
 include::{docdir}/auth/auth.adoc[]
+
 

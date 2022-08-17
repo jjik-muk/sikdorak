@@ -27,7 +27,7 @@ class UserModifyIntegrationTest extends InitIntegrationTest {
     @DisplayName("올바른 입력값이 들어오면 유저의 정보를 수정한다.")
     void user_modify_success() {
 
-        LoginUser loginUser = new LoginUser(testData.user.getId(), Authority.USER);
+        LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
         UserModifyRequest userModifyRequest = new UserModifyRequest(
             "포키",
             "forkyy@gmail.com",
@@ -46,7 +46,7 @@ class UserModifyIntegrationTest extends InitIntegrationTest {
     @DisplayName("올바르지 않은 닉네임이 들어오면 예외가 발생한다.")
     void modify_profile_with_wrong_data() {
 
-        LoginUser loginUser = new LoginUser(testData.user.getId(), Authority.USER);
+        LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
         UserModifyRequest userModifyRequest = new UserModifyRequest(
             "",
             "forkyy@gmail.com",

@@ -35,7 +35,7 @@ public class UserModifyAcceptanceTest extends InitAcceptanceTest {
                     USER_MODIFY_RESPONSE_SNIPPET))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.userValidAuthorizationHeader)
+            .header("Authorization", testData.user1ValidAuthorizationHeader)
             .body(userModifyRequest)
 
         .when()
@@ -64,7 +64,7 @@ public class UserModifyAcceptanceTest extends InitAcceptanceTest {
                     USER_MODIFY_RESPONSE_SNIPPET))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.userValidAuthorizationHeader)
+            .header("Authorization", testData.user1ValidAuthorizationHeader)
             .body(userModifyRequest)
 
         .when()
