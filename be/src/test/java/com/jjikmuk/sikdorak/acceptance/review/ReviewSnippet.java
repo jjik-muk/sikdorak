@@ -46,4 +46,11 @@ interface ReviewSnippet {
 	Snippet REVIEW_MODIFY_REQUEST_PARAM_SNIPPET = pathParameters(
 		parameterWithName("reviewId").description("리뷰 아이디")
 	);
+
+	Snippet REVIEW_REMOVE_REQUEST_PARAM_SNIPPET = pathParameters(
+		parameterWithName("reviewId").description("리뷰 아이디")
+	);
+
+	Snippet REVIEW_REMOVE_RESPONSE_SNIPPET = commonResponseNonFields();
+
 }
