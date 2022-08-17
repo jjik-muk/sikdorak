@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.store.domain.Store;
-import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
+import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.store.service.StoreService;
 import java.util.Optional;
@@ -48,7 +48,7 @@ public class StoreRemoveIntegrationTest extends InitIntegrationTest {
 
             // then
             assertThatThrownBy(() -> storeService.removeStore(notSavedStoreId))
-                .isInstanceOf(StoreNotFoundException.class);
+                .isInstanceOf(NotFoundStoreException.class);
         }
     }
 }
