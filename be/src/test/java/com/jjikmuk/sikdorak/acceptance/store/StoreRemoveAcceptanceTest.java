@@ -48,7 +48,7 @@ class StoreRemoveAcceptanceTest extends InitAcceptanceTest {
 	void remove_store_failed() {
 		Long unsavedStoreId = Long.MIN_VALUE;
 
-		CodeAndMessages expectedCodeAndMessage = ExceptionCodeAndMessages.FAILED_DELETE_STORE;
+		CodeAndMessages expectedCodeAndMessage = ExceptionCodeAndMessages.NOT_FOUND_STORE;
 
 		given(this.spec).log().all()
 			.filter(document(DEFAULT_RESTDOC_PATH,
@@ -62,7 +62,7 @@ class StoreRemoveAcceptanceTest extends InitAcceptanceTest {
 			.delete("/api/stores/{storeId}", unsavedStoreId)
 
 			.then()
-			.statusCode(HttpStatus.BAD_REQUEST)
+			.statusCode(HttpStatus.NOT_FOUND)
 			.body("code", Matchers.equalTo(expectedCodeAndMessage.getCode()))
 			.body("message", Matchers.equalTo(expectedCodeAndMessage.getMessage()));
 	}

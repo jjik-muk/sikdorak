@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
+import com.jjikmuk.sikdorak.store.domain.Store;
+import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.store.service.StoreService;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +18,9 @@ public class StoreSearchIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     private StoreService storeService;
+
+    @Autowired
+    private StoreRepository storeRepository;
 
     @Nested
     @DisplayName("가게 이름으로 검색할 때")
@@ -82,6 +87,22 @@ public class StoreSearchIntegrationTest extends InitIntegrationTest {
             // then
             assertThat(stores).isNotNull();
             assertThat(stores).isEmpty();
+        }
+
+        @Test
+        @DisplayName("삭제된 가게는 조회 결과에 포함되지 않는다.")
+        void deleted_store_not_containing_in_result() {
+            // given
+            Store deletedStore = testData.store;
+            storeRepository.deleteById(deletedStore.getId());
+
+            // when
+            List<StoreSearchResponse> storeSearchResponses = storeService.searchStoresByStoreNameContaining(
+                deletedStore.getStoreName());
+
+            // then
+            assertThat(storeSearchResponses).isNotNull();
+            assertThat(storeSearchResponses).isEmpty();
         }
     }
 }

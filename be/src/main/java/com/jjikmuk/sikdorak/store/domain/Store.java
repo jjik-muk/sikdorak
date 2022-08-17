@@ -14,6 +14,8 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @NoArgsConstructor // for @Entity
+@SQLDelete(sql = "UPDATE store SET deleted = true WHERE store_id = ?")
+@Where(clause = "deleted = false")
 public class Store extends BaseTimeEntity {
 
     @Id
@@ -69,10 +71,6 @@ public class Store extends BaseTimeEntity {
 
     public double getLongitude() {
         return location.longitude();
-    }
-
-    public boolean isDeleted() {
-        return isDeleted();
     }
 
     public void editAll(String storeName, String contactNumber, String baseAddress, String detailAddress, Double latitude, Double longitude) {

@@ -4,7 +4,6 @@ import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.domain.Store;
-import com.jjikmuk.sikdorak.store.exception.StoreDeleteFailedException;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import java.util.Collections;
@@ -75,10 +74,9 @@ public class StoreService {
 
 	@Transactional
 	public void removeStore(Long storeId) {
-		try {
-			storeRepository.deleteById(storeId);
-		} catch (Exception e) {
-			throw new StoreDeleteFailedException();
-		}
+		Store store = storeRepository.findById(storeId)
+			.orElseThrow(NotFoundStoreException::new);
+
+		store.delete();
 	}
 }
