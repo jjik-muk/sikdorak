@@ -1,7 +1,9 @@
 package com.jjikmuk.sikdorak.review.service;
 
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
+import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
 import com.jjikmuk.sikdorak.review.domain.Review;
+import com.jjikmuk.sikdorak.review.exception.ReviewNotFoundException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
@@ -9,6 +11,7 @@ import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
+import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,5 +43,31 @@ public class ReviewService {
 			reviewCreateRequest.getImages());
 
 		return reviewRepository.save(newReview);
+	}
+
+	public Review modifyReview(LoginUser loginUser, Long reviewId,
+		ReviewModifyRequest reviewModifyRequest) {
+		Review review = reviewRepository.findById(reviewId).orElseThrow(ReviewNotFoundException::new);
+		User user = userRespository.findById(loginUser.getId()).orElseThrow(UserNotFoundException::new);
+		Store store = storeRepository.findById(reviewModifyRequest.getStoreId()).orElseThrow(StoreNotFoundException::new);
+
+		validateReviewWithUser(review, user);
+
+		review.editAll(
+			store.getId(),
+			reviewModifyRequest.getReviewContent(),
+			reviewModifyRequest.getReviewScore(),
+			reviewModifyRequest.getReviewVisibility(),
+			reviewModifyRequest.getVisitedDate(),
+			reviewModifyRequest.getTags(),
+			reviewModifyRequest.getImages());
+
+		return review;
+	}
+
+	private void validateReviewWithUser(Review review, User user) {
+		if (!review.isAuthor(user)) {
+			throw new UnauthorizedUserException();
+		}
 	}
 }

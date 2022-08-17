@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.review.domain;
 
 import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
+import com.jjikmuk.sikdorak.user.user.domain.User;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Column;
@@ -72,5 +73,20 @@ public class Review extends BaseTimeEntity {
 
 	public Long getUserId() {
 		return userId;
+	}
+
+	public boolean isAuthor(User user) {
+		return this.userId.equals(user.getId());
+	}
+
+	public void editAll(Long storeId, String reviewContent, Float reviewScore,
+		String reviewVisibility, LocalDate visitedDate, List<String> tags, List<String> images) {
+		this.storeId = storeId;
+		this.reviewContent = new ReviewContent(reviewContent);
+		this.reviewScore = new ReviewScore(reviewScore);
+		this.reviewVisibility = ReviewVisibility.create(reviewVisibility);
+		this.visitedDate = new ReviewVisitedDate(visitedDate);
+		this.tags = new Tags(tags);
+		this.images = images;
 	}
 }

@@ -3,6 +3,8 @@ package com.jjikmuk.sikdorak.acceptance.review;
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonRequestFieldsWithValidConstraints;
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonResponseNonFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -41,4 +43,7 @@ interface ReviewSnippet {
 
 	Snippet REVIEW_MODIFY_RESPONSE_SNIPPET = commonResponseNonFields();
 
+	Snippet REVIEW_MODIFY_REQUEST_PARAM_SNIPPET = pathParameters(
+		parameterWithName("reviewId").description("리뷰 아이디")
+	);
 }

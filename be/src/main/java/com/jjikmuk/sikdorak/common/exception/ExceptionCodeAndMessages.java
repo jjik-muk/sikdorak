@@ -19,6 +19,7 @@ import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidUserEmailException;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidUserNicknameException;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidUserProfileImageUrlException;
+import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UserNotFoundException;
 import java.util.Arrays;
 import lombok.Getter;
@@ -48,6 +49,7 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     INVALID_USER_PROFILE_IMAGE("F-U003", "유효하지 않은 프로필 이미지 url의 형식입니다.", InvalidUserProfileImageUrlException.class),
     INVALID_USER_EMAIL("F-U004", "유효하지 않은 이메일 형식입니다.", InvalidUserEmailException.class),
     USER_NOT_FOUND("F-U005", "존재하지 않는 유저입니다.", UserNotFoundException.class),
+    UNAUTHORIZED_USER("F-U006", "권한이 없는 유저입니다.", UnauthorizedUserException.class),
 
     //OAuth
     FAILED_CONNECTION_WITH_OAUTH_SERVER("F-O001", "OAuth 서버와의 통신이 원할하지 않습니다.", OAuthServerException.class),
