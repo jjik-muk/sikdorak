@@ -19,7 +19,7 @@ class StoreRemoveAcceptanceTest extends InitAcceptanceTest {
 
 	@Test
 	@DisplayName("가게 삭제 요청이 정상적인 경우라면, 가게 삭제 후 정상 상태 코드를 반환한다.")
-	void modify_store_success() {
+	void remove_store_success() {
 		Long savedStoreId = testData.store.getId();
 
 		ResponseCodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.STORE_REMOVE_SUCCESS;
