@@ -3,7 +3,7 @@ import Menu from 'components/ReviewDetail/Menu/Menu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
 import TotalRating from 'components/ReviewDetail/TotalRating/TotalRating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
-import { useState } from 'react';
+import useToggle from 'hooks/useToggle';
 import {
   ButtonWrapper,
   Contents,
@@ -17,8 +17,8 @@ import {
 } from './Feed.styled';
 
 function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps) {
-  const [isActiveHeart, setIsActiveHeart] = useState(false);
-  const [isActiveMenu, setIsActiveMenu] = useState(false);
+  const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
+  const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const [taste, price, service] = rating;
   const { name, region } = store;
 
@@ -27,7 +27,7 @@ function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps)
       <ContentsWrap wrapWidth={750}>
         <Header>
           <UserProfile nickname={author} />
-          <div onClick={handleMenu}>
+          <div onClick={toggleIsActiveMenu}>
             <Icon icon="MenuBtn" />
             {isActiveMenu && <Menu />}
           </div>
@@ -45,7 +45,7 @@ function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps)
           </MainFooter>
         </Main>
         <ButtonWrapper>
-          <div onClick={handleToggleHeart}>
+          <div onClick={toggleIsActiveHeart}>
             <IconWrap width={190} height={30}>
               <Icon icon="Heart" fill={isActiveHeart ? 'red' : '#FFF'} />
               {likeCnt}
@@ -65,14 +65,6 @@ function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps)
       </ContentsWrap>
     </Wrap>
   );
-
-  function handleMenu() {
-    setIsActiveMenu(!isActiveMenu);
-  }
-
-  function handleToggleHeart() {
-    setIsActiveHeart(!isActiveHeart);
-  }
 
   function handleCopyURL() {
     const curURL = window.location.href;

@@ -8,7 +8,8 @@ import TotalRating from 'components/ReviewDetail/TotalRating/TotalRating';
 import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
-import { useId, useRef, useState } from 'react';
+import useToggle from 'hooks/useToggle';
+import { useId, useRef } from 'react';
 import { createKey } from 'utils/utils';
 import { ButtonWrapper, Contents, ContentsWrap, Header, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
@@ -30,8 +31,8 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const wrapWidth = hasPicture ? 400 : 750;
   const btnWidth = hasPicture ? 90 : 190;
-  const [isActiveHeart, setIsActiveHeart] = useState(false);
-  const [isActiveMenu, setIsActiveMenu] = useState(false);
+  const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
+  const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const id = useId();
 
   const clickCreateComment = () => {
@@ -44,7 +45,7 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
       <ContentsWrap wrapWidth={wrapWidth}>
         <Header>
           <Profile nickname="Dashawn" />
-          <div onClick={handleMenu}>
+          <div onClick={toggleIsActiveMenu}>
             <Icon icon="MenuBtn" />
             {isActiveMenu && <Menu />}
           </div>
@@ -57,7 +58,7 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
           </MainFooter>
         </Main>
         <ButtonWrapper>
-          <div onClick={handleToggleHeart}>
+          <div onClick={toggleIsActiveHeart}>
             <Button icon="Heart" width={btnWidth} height={30} fill={isActiveHeart ? 'red' : '#FFF'} />
           </div>
           <div onClick={clickCreateComment}>
@@ -75,14 +76,6 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
       </ContentsWrap>
     </Wrap>
   );
-
-  function handleMenu() {
-    setIsActiveMenu(!isActiveMenu);
-  }
-
-  function handleToggleHeart() {
-    setIsActiveHeart(!isActiveHeart);
-  }
 
   function handleCopyURL() {
     const curURL = window.location.href;
