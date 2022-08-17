@@ -48,7 +48,7 @@ class ReviewModifyIntegrationTest extends InitIntegrationTest {
 	}
 
 	@Test
-	@DisplayName("존재하지 않는 리뷰에 대해 수정 요청이 주어진다면 리뷰를 수정할 수 있다.")
+	@DisplayName("존재하지 않는 리뷰에 대해 수정 요청이 주어진다면 예외를 발생시킨다.")
 	void modify_review_invalid_review() {
 		long invalidReviewId = Long.MAX_VALUE;
 		LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
@@ -67,7 +67,7 @@ class ReviewModifyIntegrationTest extends InitIntegrationTest {
 	}
 
 	@Test
-	@DisplayName("존재하지 않는 스토어에 대한 수정 요청이 주어진다면 리뷰를 수정할 수 있다.")
+	@DisplayName("존재하지 않는 스토어에 대한 수정 요청이 주어진다면 예외를 발생시킨다.")
 	void modify_review_invalid_store() {
 		long invalidStoreId = Long.MAX_VALUE;
 		LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
@@ -86,7 +86,7 @@ class ReviewModifyIntegrationTest extends InitIntegrationTest {
 	}
 
 	@Test
-	@DisplayName("존재하지 않는 유저에 대한 수정 요청이 주어진다면 리뷰를 수정할 수 있다.")
+	@DisplayName("존재하지 않는 유저에 대한 수정 요청이 주어진다면 예외를 발생시킨다")
 	void modify_review_invalid_user() {
 		long invalidUserId = Long.MAX_VALUE;
 		LoginUser loginUser = new LoginUser(invalidUserId, Authority.USER);
