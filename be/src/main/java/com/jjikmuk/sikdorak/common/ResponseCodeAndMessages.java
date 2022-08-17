@@ -12,7 +12,10 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
     // Store
     STORE_SEARCH_SUCCESS("T-S001", "가게 목록 조회에 성공했습니다."),
     STORE_CREATE_SUCCESS("T-S002", "가게 등록에 성공했습니다."),
-    STORE_MODIFY_SUCCESS("T-S003", "가게 수정에 성공했습니다.");
+    STORE_MODIFY_SUCCESS("T-S003", "가게 수정에 성공했습니다."),
+
+    //User
+    USER_MODIFY_SUCCESS("T-U001", "유저 프로필 수정에 성공했습니다.");
 
     private final String code;
     private final String message;

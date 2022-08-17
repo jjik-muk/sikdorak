@@ -62,4 +62,10 @@ public class User extends BaseTimeEntity {
     public String getEmail() {
         return email.getEmail();
     }
+
+    public void editAll(String nickname, String email, String profileImage) {
+        this.nickname = new Nickname(nickname);
+        this.email = new Email(email);
+        this.profileImage = new ProfileImage(profileImage);
+    }
 }

@@ -1,0 +1,14 @@
+=== 유저 프로필 수정 요청
+
+API : `PUT /api/user`
+
+
+=== `200 OK`
+
+==== `Request`
+
+operation::user_modify_acceptance_test/modify_user_profile_success[snippets='http-request,request-body']
+
+==== `Response`
+
+operation::user_modify_acceptance_test/modify_user_profile_success[snippets='http-response']
