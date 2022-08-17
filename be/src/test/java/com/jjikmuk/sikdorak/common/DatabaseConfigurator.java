@@ -1,5 +1,7 @@
 package com.jjikmuk.sikdorak.common;
 
+import com.jjikmuk.sikdorak.review.domain.Review;
+import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
@@ -9,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -32,24 +35,38 @@ public class DatabaseConfigurator implements InitializingBean {
 	private UserRespository userRespository;
 
 	@Autowired
+	private ReviewRepository reviewRepository;
+
+	@Autowired
 	private JwtProvider jwtProvider;
 
 	public Store store;
 	public User user;
 	public String userValidAuthorizationHeader;
 	public String userInvalidAuthorizationHeader;
+	public Review review;
 
 	public void initDataSource() {
 		this.store = storeRepository.save(new Store("맛있는가게",
-				"02-0000-0000",
-				"서울시 송파구 좋은길 1",
-				"1층 101호",
-				37.5093890,
-				127.105143));
-		this.user = userRespository.save(new User(12345678L,"test-user", "https://profile.com","sikdorak@gmail.com"));
-		this.userValidAuthorizationHeader = "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user.getId()));
-		this.userInvalidAuthorizationHeader ="Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzNjgyMjM2MzgiLCJleHAiOjE2MzA2MzkzNTF9.SnT_Nxgspg3cUomCieDyBRH9TowtWh21YIfAKntuguA";
+			"02-0000-0000",
+			"서울시 송파구 좋은길 1",
+			"1층 101호",
+			37.5093890,
+			127.105143));
+		this.user = userRespository.save(
+			new User(12345678L, "test-user", "https://profile.com", "sikdorak@gmail.com"));
+		this.userValidAuthorizationHeader =
+			"Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user.getId()));
+		this.userInvalidAuthorizationHeader = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzNjgyMjM2MzgiLCJleHAiOjE2MzA2MzkzNTF9.SnT_Nxgspg3cUomCieDyBRH9TowtWh21YIfAKntuguA";
 
+		this.review = reviewRepository.save(new Review(this.user.getId(),
+			this.store.getId(),
+			"Test review contents",
+			3.f,
+			"public",
+			LocalDate.of(2022, 1, 1),
+			List.of("tag1", "tag2"),
+			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
 	}
 
 	public void clear() {
