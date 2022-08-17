@@ -31,10 +31,9 @@ public class StoreModifyIntegrationTest extends InitIntegrationTest {
         @DisplayName("존재하는 가게에 대한 수정 요청이라면 가게를 수정할 수 있다.")
         void modify_store_success() {
             // given
-            Store savedStore = testData.store;
+            Long savedStoreId = testData.store.getId();
 
             StoreModifyRequest storeModifyRequest = new StoreModifyRequest(
-                savedStore.getId(),
                 "업데이트된 가게 이름",
                 "02-9999-9999",
                 "서울시 어쩌구 00길 00",
@@ -44,11 +43,10 @@ public class StoreModifyIntegrationTest extends InitIntegrationTest {
             );
 
             // when
-            Long savedStoreId = storeService.modifyStore(storeModifyRequest);
+            Long updatedStoreId = storeService.modifyStore(savedStoreId, storeModifyRequest);
 
             // then
-            Store updatedStore = storeRepository.findById(savedStoreId).orElseThrow();
-            assertThat(storeModifyRequest.getId()).isEqualTo(updatedStore.getId());
+            Store updatedStore = storeRepository.findById(updatedStoreId).orElseThrow();
             assertThat(storeModifyRequest.getStoreName()).isEqualTo(updatedStore.getStoreName());
             assertThat(storeModifyRequest.getContactNumber()).isEqualTo(updatedStore.getContactNumber());
             assertThat(storeModifyRequest.getBaseAddress()).isEqualTo(updatedStore.getBaseAddress());
@@ -63,7 +61,6 @@ public class StoreModifyIntegrationTest extends InitIntegrationTest {
             long notSavedStoreId = Long.MIN_VALUE;
 
             StoreModifyRequest storeModifyRequest = new StoreModifyRequest(
-                notSavedStoreId,
                 "업데이트된 가게 이름",
                 "02-9999-9999",
                 "서울시 어쩌구 00길 00",
@@ -73,7 +70,7 @@ public class StoreModifyIntegrationTest extends InitIntegrationTest {
             );
 
             // then
-            assertThatThrownBy(() -> storeService.modifyStore(storeModifyRequest))
+            assertThatThrownBy(() -> storeService.modifyStore(notSavedStoreId, storeModifyRequest))
                 .isInstanceOf(SikdorakRuntimeException.class);
         }
     }

@@ -31,22 +31,11 @@ public class Store extends BaseTimeEntity {
     @Embedded
     private StoreLocation location; // Float latitude, Float longitude
 
-    public Store(Long id, String storeName, String contactNumber, String baseAddress, String detailAddress, Double latitude, Double longitude) {
-        this.id = id;
+    public Store(String storeName, String contactNumber, String baseAddress, String detailAddress, Double latitude, Double longitude) {
         this.storeName = new StoreName(storeName);
         this.contactNumber = new ContactNumber(contactNumber);
         this.address = new Address(baseAddress, detailAddress);
         this.location = new StoreLocation(latitude, longitude);
-    }
-
-    public Store(String storeName, String contactNumber, String baseAddress, String detailAddress, Double latitude, Double longitude) {
-        this(null,
-            storeName,
-            contactNumber,
-            baseAddress,
-            detailAddress,
-            latitude,
-            longitude);
     }
 
     public Long getId() {
@@ -75,5 +64,12 @@ public class Store extends BaseTimeEntity {
 
     public double getLongitude() {
         return location.longitude();
+    }
+
+    public void editAll(String storeName, String contactNumber, String baseAddress, String detailAddress, Double latitude, Double longitude) {
+        this.storeName = new StoreName(storeName);
+        this.contactNumber = new ContactNumber(contactNumber);
+        this.address = new Address(baseAddress, detailAddress);
+        this.location = new StoreLocation(latitude, longitude);
     }
 }

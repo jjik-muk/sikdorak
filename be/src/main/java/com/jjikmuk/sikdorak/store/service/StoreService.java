@@ -24,6 +24,7 @@ public class StoreService {
 		if (Objects.isNull(storeId)) {
 			throw new StoreNotFoundException();
 		}
+
 		return storeRepository.findById(storeId).orElseThrow(StoreNotFoundException::new);
 	}
 
@@ -55,11 +56,11 @@ public class StoreService {
 	}
 
 	@Transactional
-	public Long modifyStore(StoreModifyRequest modifyRequest) {
-		Store savedStore = searchById(modifyRequest.getId());
+	public Long modifyStore(Long storeId, StoreModifyRequest modifyRequest) {
+		Store store = storeRepository.findById(storeId)
+			.orElseThrow(StoreNotFoundException::new);
 
-		Store modifiedStore = new Store(
-			savedStore.getId(),
+		store.editAll(
 			modifyRequest.getStoreName(),
 			modifyRequest.getContactNumber(),
 			modifyRequest.getBaseAddress(),
@@ -68,6 +69,6 @@ public class StoreService {
 			modifyRequest.getLongitude()
 		);
 
-		return storeRepository.save(modifiedStore).getId();
+		return store.getId();
 	}
 }
