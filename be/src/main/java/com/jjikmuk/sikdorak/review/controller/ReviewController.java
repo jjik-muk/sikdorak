@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.review.controller;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.aop.UserOnly;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
-import com.jjikmuk.sikdorak.review.controller.request.ReviewInsertRequest;
+import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
@@ -23,9 +23,9 @@ public class ReviewController {
     @PostMapping("/api/reviews")
     public CommonResponseEntity<Void> insertReview(
         @AuthenticatedUser LoginUser loginUser,
-        @RequestBody ReviewInsertRequest reviewInsertRequest) {
-        reviewService.insertReview(loginUser, reviewInsertRequest);
+        @RequestBody ReviewCreateRequest reviewCreateRequest) {
+        reviewService.createReview(loginUser, reviewCreateRequest);
 
-        return new CommonResponseEntity<>(ResponseCodeAndMessages.REVIEW_CREATED, null, HttpStatus.CREATED);
+        return new CommonResponseEntity<>(ResponseCodeAndMessages.REVIEW_CREATED_SUCCESS, HttpStatus.CREATED);
     }
 }

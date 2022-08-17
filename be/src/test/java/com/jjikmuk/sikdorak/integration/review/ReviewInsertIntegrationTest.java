@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.review.controller.request.ReviewInsertRequest;
+import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
@@ -32,7 +32,7 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 	@DisplayName("만약 회원이 정상적인 리뷰 생성 요청이 주어진다면 리뷰를 등록할 수 있다.")
 	void create_review_valid_user_store() {
 		LoginUser loginUser = new LoginUser(testData.user.getId(), Authority.USER);
-		ReviewInsertRequest reviewInsertRequest = new ReviewInsertRequest(
+		ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(
 			"Test review contents",
 			testData.store.getId(),
 			3.f,
@@ -41,7 +41,7 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 			List.of("tag1", "tag2"),
 			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
 
-		Review saveReview = reviewService.insertReview(loginUser, reviewInsertRequest);
+		Review saveReview = reviewService.createReview(loginUser, reviewCreateRequest);
 
 		assertThat(saveReview.getId()).isNotNull();
 		assertThat(saveReview.getUserId()).isEqualTo(testData.user.getId());
@@ -52,7 +52,7 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 	void create_review_valid_user_invalid_store() {
 		LoginUser loginUser = new LoginUser(testData.user.getId(), Authority.USER);
 		Long invalidStoreId = Long.MAX_VALUE;
-		ReviewInsertRequest reviewInsertRequest = new ReviewInsertRequest(
+		ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(
 			"Test review contents",
 			invalidStoreId,
 			3.f,
@@ -61,7 +61,7 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 			List.of("tag1", "tag2"),
 			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
 
-		assertThatThrownBy(() -> reviewService.insertReview(loginUser, reviewInsertRequest))
+		assertThatThrownBy(() -> reviewService.createReview(loginUser, reviewCreateRequest))
 			.isInstanceOf(StoreNotFoundException.class);
 	}
 
@@ -69,7 +69,7 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 	@DisplayName("만약 비회원이 정상적인 리뷰 생성 요청을 한다면 예외를 발생시킨다.")
 	void create_review_invalid_user_valid_store() {
 		LoginUser loginUser = new LoginUser(Long.MAX_VALUE, Authority.USER);
-		ReviewInsertRequest reviewInsertRequest = new ReviewInsertRequest(
+		ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(
 			"Test review contents",
 			testData.store.getId(),
 			3.f,
@@ -78,7 +78,7 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 			List.of("tag1", "tag2"),
 			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
 
-		assertThatThrownBy(() -> reviewService.insertReview(loginUser, reviewInsertRequest))
+		assertThatThrownBy(() -> reviewService.createReview(loginUser, reviewCreateRequest))
 			.isInstanceOf(UserNotFoundException.class);
 	}
 }

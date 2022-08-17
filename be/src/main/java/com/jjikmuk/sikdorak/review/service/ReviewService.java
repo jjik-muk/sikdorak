@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.review.service;
 
-import com.jjikmuk.sikdorak.review.controller.request.ReviewInsertRequest;
+import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.domain.Store;
@@ -24,20 +24,20 @@ public class ReviewService {
 	private final ReviewRepository reviewRepository;
 
 	@Transactional
-	public Review insertReview(LoginUser loginUser, ReviewInsertRequest reviewInsertRequest) {
+	public Review createReview(LoginUser loginUser, ReviewCreateRequest reviewCreateRequest) {
 		User user = userRespository.findById(loginUser.getId())
 			.orElseThrow(UserNotFoundException::new);
-		Store store = storeRepository.findById(reviewInsertRequest.getStoreId())
+		Store store = storeRepository.findById(reviewCreateRequest.getStoreId())
 			.orElseThrow(StoreNotFoundException::new);
 
 		Review newReview = new Review(user.getId(),
 			store.getId(),
-			reviewInsertRequest.getReviewContent(),
-			reviewInsertRequest.getReviewScore(),
-			reviewInsertRequest.getReviewVisibility(),
-			reviewInsertRequest.getVisitedDate(),
-			reviewInsertRequest.getTags(),
-			reviewInsertRequest.getImages());
+			reviewCreateRequest.getReviewContent(),
+			reviewCreateRequest.getReviewScore(),
+			reviewCreateRequest.getReviewVisibility(),
+			reviewCreateRequest.getVisitedDate(),
+			reviewCreateRequest.getTags(),
+			reviewCreateRequest.getImages());
 
 		return reviewRepository.save(newReview);
 	}

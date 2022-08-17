@@ -3,17 +3,15 @@ package com.jjikmuk.sikdorak.acceptance.review;
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonRequestFieldsWithValidConstraints;
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonResponseNonFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 
-import com.jjikmuk.sikdorak.review.controller.request.ReviewInsertRequest;
+import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 
 interface ReviewSnippet {
 
-	Snippet REVIEW_INSERT_REQUEST_SNIPPET = commonRequestFieldsWithValidConstraints(
-		ReviewInsertRequest.class,
+	Snippet REVIEW_CREATE_REQUEST_SNIPPET = commonRequestFieldsWithValidConstraints(
+		ReviewCreateRequest.class,
 		fieldWithPath("reviewContent")
 			.type(JsonFieldType.STRING)
 			.description("리뷰 내용"),
@@ -37,5 +35,10 @@ interface ReviewSnippet {
 			.description("리뷰를 위한 사진 URL")
 	);
 
-	Snippet REVIEW_INSERT_RESPONSE_SNIPPET = commonResponseNonFields();
+	Snippet REVIEW_CREATE_RESPONSE_SNIPPET = commonResponseNonFields();
+
+	Snippet REVIEW_MODIFY_REQUEST_SNIPPET = REVIEW_CREATE_REQUEST_SNIPPET;
+
+	Snippet REVIEW_MODIFY_RESPONSE_SNIPPET = commonResponseNonFields();
+
 }
