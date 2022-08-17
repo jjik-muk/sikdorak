@@ -31,7 +31,7 @@ class StoreRemoveAcceptanceTest extends InitAcceptanceTest {
 				STORE_REMOVE_REQUEST_PARAM_SNIPPET,
 				STORE_REMOVE_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
-			.header("Authorization", testData.userValidAuthorizationHeader)
+			.header("Authorization", testData.user1ValidAuthorizationHeader)
 			.contentType(ContentType.JSON)
 
 		.when()
@@ -55,7 +55,7 @@ class StoreRemoveAcceptanceTest extends InitAcceptanceTest {
 				STORE_REMOVE_REQUEST_PARAM_SNIPPET,
 				STORE_REMOVE_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
-			.header("Authorization", testData.userValidAuthorizationHeader)
+			.header("Authorization", testData.user1ValidAuthorizationHeader)
 			.contentType(ContentType.JSON)
 
 			.when()
