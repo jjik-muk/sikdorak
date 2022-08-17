@@ -77,19 +77,11 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
   );
 
   function handleMenu() {
-    if (isActiveMenu) {
-      setIsActiveMenu(false);
-      return;
-    }
-    setIsActiveMenu(true);
+    setIsActiveMenu(!isActiveMenu);
   }
 
   function handleToggleHeart() {
-    if (isActiveHeart) {
-      setIsActiveHeart(false);
-      return;
-    }
-    setIsActiveHeart(true);
+    setIsActiveHeart(!isActiveHeart);
   }
 
   function handleCopyURL() {
