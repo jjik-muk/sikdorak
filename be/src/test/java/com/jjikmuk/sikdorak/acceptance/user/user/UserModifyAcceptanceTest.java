@@ -49,34 +49,6 @@ class UserModifyAcceptanceTest extends InitAcceptanceTest {
     }
 
     @Test
-    @DisplayName("유저 프로필 업데이트 요청이 정상적이지 않은 경우라면 예외 상태코드를 반환한다.")
-    void modify_user_profile_fail() {
-        UserModifyRequest userModifyRequest = new UserModifyRequest(
-            "",
-            "forkyy.gmail.com",
-            "https://s3.amazon-test/test.jpg"
-        );
-
-        given(this.spec)
-            .filter(
-                document(DEFAULT_RESTDOC_PATH,
-                    USER_MODIFY_REQUEST_SNIPPET,
-                    USER_MODIFY_RESPONSE_SNIPPET))
-            .accept(MediaType.APPLICATION_JSON_VALUE)
-            .header("Content-type", "application/json")
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
-            .body(userModifyRequest)
-
-        .when()
-            .put("/api/user")
-
-        .then()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
-            .body("code", equalTo(ExceptionCodeAndMessages.INVALID_USER_NIKCNAME.getCode()))
-            .body("message", equalTo(ExceptionCodeAndMessages.INVALID_USER_NIKCNAME.getMessage()));
-    }
-
-    @Test
     @DisplayName("비회원이 유저 프로필 업데이트 요청을 했을 경우라면 예외 상태코드를 반환한다. ")
     void anonymous_user_modify_request() {
 

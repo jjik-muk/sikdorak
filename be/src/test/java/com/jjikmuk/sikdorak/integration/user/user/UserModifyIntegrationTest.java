@@ -3,13 +3,13 @@ package com.jjikmuk.sikdorak.integration.user.user;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.common.exception.SikdorakRuntimeException;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.auth.controller.Authority;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
+import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,10 +43,10 @@ class UserModifyIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    @DisplayName("올바르지 않은 닉네임이 들어오면 예외가 발생한다.")
-    void modify_profile_with_wrong_data() {
+    @DisplayName("존재하지 않은 유저의 요청이 들어오면 예외가 발생한다.")
+    void user_modify_with_wrong_id() {
 
-        LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
+        LoginUser loginUser = new LoginUser(987654321L, Authority.USER);
         UserModifyRequest userModifyRequest = new UserModifyRequest(
             "",
             "forkyy@gmail.com",
@@ -54,6 +54,6 @@ class UserModifyIntegrationTest extends InitIntegrationTest {
         );
 
         assertThatThrownBy(() -> userService.modifyUser(loginUser, userModifyRequest))
-            .isInstanceOf(SikdorakRuntimeException.class);
+            .isInstanceOf(NotFoundUserException.class);
     }
 }
