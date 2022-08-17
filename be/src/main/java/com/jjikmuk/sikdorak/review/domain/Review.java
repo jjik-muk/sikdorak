@@ -75,6 +75,10 @@ public class Review extends BaseTimeEntity {
 		return userId;
 	}
 
+	public String getReviewContent() {
+		return reviewContent.getReviewContent();
+	}
+
 	public boolean isAuthor(User user) {
 		return this.userId.equals(user.getId());
 	}
