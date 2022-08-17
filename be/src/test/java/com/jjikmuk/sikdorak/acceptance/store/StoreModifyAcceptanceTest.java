@@ -1,5 +1,6 @@
 package com.jjikmuk.sikdorak.acceptance.store;
 
+import static com.jjikmuk.sikdorak.acceptance.store.StoreSnippet.STORE_MODIFY_REQUEST_PARAM_SNIPPET;
 import static com.jjikmuk.sikdorak.acceptance.store.StoreSnippet.STORE_MODIFY_REQUEST_SNIPPET;
 import static com.jjikmuk.sikdorak.acceptance.store.StoreSnippet.STORE_MODIFY_RESPONSE_SNIPPET;
 import static io.restassured.RestAssured.given;
@@ -22,10 +23,9 @@ class StoreModifyAcceptanceTest extends InitAcceptanceTest {
 	@Test
 	@DisplayName("가게 수정 요청이 정상적인 경우라면, 리뷰 생성 후 정상 상태 코드를 반환한다.")
 	void modify_store_success() {
-		Store savedStore = testData.store;
+		Long savedStoreId = testData.store.getId();
 
 		StoreModifyRequest storeModifyRequest = new StoreModifyRequest(
-			savedStore.getId(),
 			"업데이트된 가게 이름",
 			"02-9999-9999",
 			"서울시 어쩌구 00길 00",
@@ -36,8 +36,9 @@ class StoreModifyAcceptanceTest extends InitAcceptanceTest {
 
 		ResponseCodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.STORE_MODIFY_SUCCESS;
 
-		given(this.spec)
+		given(this.spec).log().all()
 			.filter(document(DEFAULT_RESTDOC_PATH,
+				STORE_MODIFY_REQUEST_PARAM_SNIPPET,
 				STORE_MODIFY_REQUEST_SNIPPET,
 				STORE_MODIFY_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
@@ -46,7 +47,7 @@ class StoreModifyAcceptanceTest extends InitAcceptanceTest {
 			.body(storeModifyRequest)
 
 		.when()
-			.put("/api/stores")
+			.put("/api/stores/{storeId}", savedStoreId)
 
 		.then()
 			.statusCode(HttpStatus.OK)
