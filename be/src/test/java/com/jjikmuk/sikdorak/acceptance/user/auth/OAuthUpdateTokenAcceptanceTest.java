@@ -28,7 +28,7 @@ class OAuthUpdateTokenAcceptanceTest extends InitAcceptanceTest {
     void update_access_token_success() {
 
         String refreshToken = jwtProvider.createRefreshToken(
-            testData.user.getId().toString());
+            testData.user1.getId().toString());
 
         given(this.spec)
             .filter(document(DEFAULT_RESTDOC_PATH,
@@ -85,8 +85,8 @@ class OAuthUpdateTokenAcceptanceTest extends InitAcceptanceTest {
 
         .then()
             .statusCode(HttpStatus.NOT_FOUND.value())
-            .body("code", equalTo(ExceptionCodeAndMessages.USER_NOT_FOUND.getCode()))
-            .body("message", equalTo(ExceptionCodeAndMessages.USER_NOT_FOUND.getMessage()));
+            .body("code", equalTo(ExceptionCodeAndMessages.NOT_FOUND_USER.getCode()))
+            .body("message", equalTo(ExceptionCodeAndMessages.NOT_FOUND_USER.getMessage()));
     }
 
 }

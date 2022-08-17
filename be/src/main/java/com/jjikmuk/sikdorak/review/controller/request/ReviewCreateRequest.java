@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.URL;
 
 @Getter
 @NoArgsConstructor
-public class ReviewInsertRequest {
+public class ReviewCreateRequest {
 
 	@NotBlank
 	@Size(min = 1, max = 500)
@@ -44,7 +44,7 @@ public class ReviewInsertRequest {
 	@Size(max = 10)
 	private List<String> images;
 
-	public ReviewInsertRequest(String reviewContent, Long storeId, Float reviewScore,
+	public ReviewCreateRequest(String reviewContent, Long storeId, Float reviewScore,
 		String reviewVisibility, LocalDate visitedDate, List<String> tags,
 		List<String> images) {
 		this.reviewContent = reviewContent;

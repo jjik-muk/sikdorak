@@ -7,11 +7,12 @@ import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisibilityException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisitedDateException;
 import com.jjikmuk.sikdorak.review.exception.InvalidTagException;
 import com.jjikmuk.sikdorak.review.exception.InvalidTagsException;
+import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.store.exception.InvalidAddressException;
 import com.jjikmuk.sikdorak.store.exception.InvalidContactNumberException;
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreLocationException;
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreNameException;
-import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
+import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
 import com.jjikmuk.sikdorak.user.auth.exception.NeedLoginException;
 import com.jjikmuk.sikdorak.user.auth.exception.OAuthServerException;
@@ -19,7 +20,8 @@ import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidUserEmailException;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidUserNicknameException;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidUserProfileImageUrlException;
-import com.jjikmuk.sikdorak.user.user.exception.UserNotFoundException;
+import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
+import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import java.util.Arrays;
 import lombok.Getter;
 
@@ -34,9 +36,10 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     INVALID_REVIEW_VISITEDDATE("F-R004", "유효하지 않은 방문일자 입니다.", InvalidReviewVisitedDateException.class),
     INVALID_REVIEW_TAGS("F-R005", "유효하지 않은 태그들 입니다.", InvalidTagsException.class),
     INVALID_REVIEW_TAG("F-R006", "유효하지 않은 태그 입니다.", InvalidTagException.class),
+    NOT_FOUND_STROE("F-R007", "리뷰를 찾을 수 없습니다.", NotFoundReviewException.class),
 
     // Store
-    NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", StoreNotFoundException.class),
+    NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", NotFoundStoreException.class),
     INVALID_STORE_NAME("F-S002", "유효하지 않은 가게이름 입니다.",InvalidStoreNameException.class),
     INVALID_CONTACT_NUMER("F-S003", "유효하지 않은 연락처 입니다.", InvalidContactNumberException.class),
     INVALID_ADDRESS("F-S004", "유효하지 않은 연락처 입니다.", InvalidAddressException.class),
@@ -47,7 +50,8 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     INVALID_USER_NIKCNAME("F-U002", "유효하지 않은 닉네임 입니다.", InvalidUserNicknameException.class),
     INVALID_USER_PROFILE_IMAGE("F-U003", "유효하지 않은 프로필 이미지 url의 형식입니다.", InvalidUserProfileImageUrlException.class),
     INVALID_USER_EMAIL("F-U004", "유효하지 않은 이메일 형식입니다.", InvalidUserEmailException.class),
-    USER_NOT_FOUND("F-U005", "존재하지 않는 유저입니다.", UserNotFoundException.class),
+    NOT_FOUND_USER("F-U005", "존재하지 않는 유저입니다.", NotFoundUserException.class),
+    UNAUTHORIZED_USER("F-U006", "권한이 없는 유저입니다.", UnauthorizedUserException.class),
 
     //OAuth
     FAILED_CONNECTION_WITH_OAUTH_SERVER("F-O001", "OAuth 서버와의 통신이 원할하지 않습니다.", OAuthServerException.class),

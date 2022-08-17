@@ -1,15 +1,18 @@
 package com.jjikmuk.sikdorak.review.service;
 
-import com.jjikmuk.sikdorak.review.controller.request.ReviewInsertRequest;
+import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
+import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
 import com.jjikmuk.sikdorak.review.domain.Review;
+import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.domain.Store;
-import com.jjikmuk.sikdorak.store.exception.StoreNotFoundException;
+import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
-import com.jjikmuk.sikdorak.user.user.exception.UserNotFoundException;
+import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
+import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,21 +27,48 @@ public class ReviewService {
 	private final ReviewRepository reviewRepository;
 
 	@Transactional
-	public Review insertReview(LoginUser loginUser, ReviewInsertRequest reviewInsertRequest) {
+	public Review createReview(LoginUser loginUser, ReviewCreateRequest reviewCreateRequest) {
 		User user = userRespository.findById(loginUser.getId())
-			.orElseThrow(UserNotFoundException::new);
-		Store store = storeRepository.findById(reviewInsertRequest.getStoreId())
-			.orElseThrow(StoreNotFoundException::new);
+			.orElseThrow(NotFoundUserException::new);
+		Store store = storeRepository.findById(reviewCreateRequest.getStoreId())
+			.orElseThrow(NotFoundStoreException::new);
 
 		Review newReview = new Review(user.getId(),
 			store.getId(),
-			reviewInsertRequest.getReviewContent(),
-			reviewInsertRequest.getReviewScore(),
-			reviewInsertRequest.getReviewVisibility(),
-			reviewInsertRequest.getVisitedDate(),
-			reviewInsertRequest.getTags(),
-			reviewInsertRequest.getImages());
+			reviewCreateRequest.getReviewContent(),
+			reviewCreateRequest.getReviewScore(),
+			reviewCreateRequest.getReviewVisibility(),
+			reviewCreateRequest.getVisitedDate(),
+			reviewCreateRequest.getTags(),
+			reviewCreateRequest.getImages());
 
 		return reviewRepository.save(newReview);
+	}
+
+	public Review modifyReview(LoginUser loginUser, Long reviewId,
+		ReviewModifyRequest reviewModifyRequest) {
+		Review review = reviewRepository.findById(reviewId).orElseThrow(NotFoundReviewException::new);
+		User user = userRespository.findById(loginUser.getId()).orElseThrow(NotFoundUserException::new);
+		Store store = storeRepository.findById(reviewModifyRequest.getStoreId()).orElseThrow(
+			NotFoundStoreException::new);
+
+		validateReviewWithUser(review, user);
+
+		review.editAll(
+			store.getId(),
+			reviewModifyRequest.getReviewContent(),
+			reviewModifyRequest.getReviewScore(),
+			reviewModifyRequest.getReviewVisibility(),
+			reviewModifyRequest.getVisitedDate(),
+			reviewModifyRequest.getTags(),
+			reviewModifyRequest.getImages());
+
+		return review;
+	}
+
+	private void validateReviewWithUser(Review review, User user) {
+		if (!review.isAuthor(user)) {
+			throw new UnauthorizedUserException();
+		}
 	}
 }

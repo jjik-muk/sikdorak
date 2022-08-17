@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.user.user.service;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
-import com.jjikmuk.sikdorak.user.user.exception.UserNotFoundException;
+import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,16 +25,16 @@ public class UserService {
 
     public User searchById(Long userId) {
         if (Objects.isNull(userId)) {
-            throw new UserNotFoundException();
+            throw new NotFoundUserException();
         }
 
         return userRespository.findById(userId)
-            .orElseThrow(UserNotFoundException::new);
+            .orElseThrow(NotFoundUserException::new);
     }
 
     public User searchByUniqueId(long uniqueId) {
         return userRespository.findByUniqueId(uniqueId)
-            .orElseThrow(UserNotFoundException::new);
+            .orElseThrow(NotFoundUserException::new);
     }
 
     public boolean isExistingById(long userId) {

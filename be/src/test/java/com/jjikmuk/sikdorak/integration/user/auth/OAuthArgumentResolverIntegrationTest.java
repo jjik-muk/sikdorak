@@ -29,12 +29,12 @@ class OAuthArgumentResolverIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("올바른 유저 Id가 넘어오는 경우 로그인 유저 객체를 반환한다.")
 	void oAuth_argument_resolver_success() {
-		mockHttpServletRequest.addHeader("Authorization", testData.userValidAuthorizationHeader);
+		mockHttpServletRequest.addHeader("Authorization", testData.user1ValidAuthorizationHeader);
 
 		LoginUser loginUser = (LoginUser) oAuthUserArgumentResolver.resolveArgument(null, null,
 			new ServletWebRequest(mockHttpServletRequest), null);
 
-		assertThat(loginUser.getId()).isEqualTo(testData.user.getId());
+		assertThat(loginUser.getId()).isEqualTo(testData.user1.getId());
 		assertThat(loginUser.getAuthority()).isEqualTo(Authority.USER);
 	}
 

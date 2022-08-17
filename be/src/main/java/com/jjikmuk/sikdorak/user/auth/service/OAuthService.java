@@ -7,7 +7,7 @@ import com.jjikmuk.sikdorak.user.auth.controller.response.OAuthTokenResponse;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.exception.UserNotFoundException;
+import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +50,7 @@ public class OAuthService{
         jwtProvider.validateToken(refreshToken);
         String userId = jwtProvider.decodeToken(refreshToken);
         if (!userService.isExistingById(Long.parseLong(userId))) {
-            throw new UserNotFoundException();
+            throw new NotFoundUserException();
         }
         return new AccessTokenResponse(jwtProvider.createAccessToken(userId));
     }

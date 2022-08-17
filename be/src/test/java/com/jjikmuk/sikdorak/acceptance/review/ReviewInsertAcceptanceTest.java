@@ -1,12 +1,12 @@
 package com.jjikmuk.sikdorak.acceptance.review;
 
-import static com.jjikmuk.sikdorak.acceptance.review.ReviewSnippet.REVIEW_INSERT_REQUEST_SNIPPET;
-import static com.jjikmuk.sikdorak.acceptance.review.ReviewSnippet.REVIEW_INSERT_RESPONSE_SNIPPET;
+import static com.jjikmuk.sikdorak.acceptance.review.ReviewSnippet.REVIEW_CREATE_REQUEST_SNIPPET;
+import static com.jjikmuk.sikdorak.acceptance.review.ReviewSnippet.REVIEW_CREATE_RESPONSE_SNIPPET;
 import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import com.jjikmuk.sikdorak.acceptance.InitAcceptanceTest;
-import com.jjikmuk.sikdorak.review.controller.request.ReviewInsertRequest;
+import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +25,7 @@ class ReviewInsertAcceptanceTest extends InitAcceptanceTest {
 	@Test
 	@DisplayName("리뷰 생성 요청이 정상적인 경우라면 리뷰 생성 후 정상 상태 코드를 반환한다")
 	void create_review_success() {
-		ReviewInsertRequest reviewInsertRequest = new ReviewInsertRequest(
+		ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(
 			"Test review contents",
 			testData.store.getId(),
 			3.f,
@@ -37,12 +37,12 @@ class ReviewInsertAcceptanceTest extends InitAcceptanceTest {
 		given(this.spec)
 			.filter(
 				document(DEFAULT_RESTDOC_PATH,
-					REVIEW_INSERT_REQUEST_SNIPPET,
-					REVIEW_INSERT_RESPONSE_SNIPPET))
+					REVIEW_CREATE_REQUEST_SNIPPET,
+					REVIEW_CREATE_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
-			.header("Authorization", testData.userValidAuthorizationHeader)
-			.body(reviewInsertRequest)
+			.header("Authorization", testData.user1ValidAuthorizationHeader)
+			.body(reviewCreateRequest)
 
 		.when()
 			.post("/api/reviews")

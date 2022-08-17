@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.user.user.exception;
 import com.jjikmuk.sikdorak.common.exception.SikdorakRuntimeException;
 import org.springframework.http.HttpStatus;
 
-public class UserNotFoundException extends SikdorakRuntimeException {
+public class NotFoundUserException extends SikdorakRuntimeException {
 
 
     @Override
