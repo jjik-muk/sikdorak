@@ -17,7 +17,7 @@ import org.springframework.cloud.contract.spec.internal.HttpStatus;
 import org.springframework.http.MediaType;
 
 @DisplayName("StoreModify 인수 테스트")
-public class StoreModifyAcceptanceTest extends InitAcceptanceTest {
+class StoreModifyAcceptanceTest extends InitAcceptanceTest {
 
 	@Test
 	@DisplayName("가게 수정 요청이 정상적인 경우라면, 리뷰 생성 후 정상 상태 코드를 반환한다.")
