@@ -9,7 +9,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(SikdorakRuntimeException.class)
     public CommonResponseEntity<Void> handle(SikdorakRuntimeException exception) {
-        return new CommonResponseEntity<>(exception.getCodeAndMessages(), null, exception.getHttpStatus());
+        return new CommonResponseEntity<>(exception.getCodeAndMessages(), exception.getHttpStatus());
     }
 
 }
