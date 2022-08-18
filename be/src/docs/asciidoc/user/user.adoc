@@ -12,3 +12,35 @@ operation::user_modify_acceptance_test/modify_user_profile_success[snippets='htt
 ==== `Response`
 
 operation::user_modify_acceptance_test/modify_user_profile_success[snippets='http-response']
+
+
+=== 유저 팔로우 요청
+
+API : `PUT /api/user/follow`
+
+
+=== `200 OK`
+
+==== `Request`
+
+operation::user_follow_acceptance_test/user_follow_success[snippets='http-request,request-body']
+
+==== `Response`
+
+operation::user_follow_acceptance_test/user_follow_success[snippets='http-response']
+
+
+=== 유저 언팔로우 요청
+
+API : `PUT /api/user/unfollow`
+
+
+=== `200 OK`
+
+==== `Request`
+
+operation::user_follow_acceptance_test/user_unfollow_success[snippets='http-request,request-body']
+
+==== `Response`
+
+operation::user_follow_acceptance_test/user_unfollow_success[snippets='http-response']
