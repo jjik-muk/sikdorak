@@ -110,3 +110,6 @@ src/main/resources/application.yml
 src/main/resources/application-prod.yml
 src/main/resources/application-dev.yml
 src/main/resources/application-test.yml
+
+# 빌드 시 복사된 db 관련 파일들
+src/main/resources/db/**
