@@ -1,7 +1,6 @@
 import { COMMENTS, IMAGE_URLS } from 'constants/dummyData';
 import { DETAIL, FEED } from 'constants/size';
 import Icon from 'common/Icon';
-import Button from 'common/IconButton/IconButton';
 import Carousel from 'components/ReviewDetail/Carousel/Carousel';
 import Comment from 'components/ReviewDetail/Comment/Comment';
 import Menu from 'components/ReviewDetail/Menu/Menu';
@@ -13,7 +12,7 @@ import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
 import useToggle from 'hooks/useToggle';
 import { useId, useRef } from 'react';
 import { createKey } from 'utils/utils';
-import { ButtonWrapper, Contents, ContentsWrap, Header, Main, MainFooter, Wrap } from './ReviewDetail.styled';
+import { ButtonWrapper, Contents, ContentsWrap, Header, IconWrap, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
 function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
   const commentRef = useRef<HTMLTextAreaElement>(null);
@@ -47,13 +46,19 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
         </Main>
         <ButtonWrapper>
           <div onClick={toggleIsActiveHeart}>
-            <Button icon="Heart" width={btnWidth} height={FEED.BTN.HEIGHT} fill={isActiveHeart ? 'red' : '#FFF'} />
+            <IconWrap width={btnWidth} height={FEED.BTN.HEIGHT}>
+              <Icon icon="Heart" fill={isActiveHeart ? 'red' : '#FFF'} />
+            </IconWrap>
           </div>
           <div onClick={clickCreateComment}>
-            <Button icon="TalkBubble" width={btnWidth} height={FEED.BTN.HEIGHT} />
+            <IconWrap width={btnWidth} height={FEED.BTN.HEIGHT}>
+              <Icon icon="TalkBubble" fill={isActiveHeart ? 'red' : '#FFF'} />
+            </IconWrap>
           </div>
           <div onClick={handleCopyURL}>
-            <Button icon="ShareArrow" width={btnWidth} height={FEED.BTN.HEIGHT} />
+            <IconWrap width={btnWidth} height={FEED.BTN.HEIGHT}>
+              <Icon icon="ShareArrow" fill={isActiveHeart ? 'red' : '#FFF'} />
+            </IconWrap>
           </div>
         </ButtonWrapper>
         <TagList tags={['#초밥', '#맛집', '#부산']} />
