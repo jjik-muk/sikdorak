@@ -66,6 +66,18 @@ public class ReviewService {
 		return review;
 	}
 
+	@Transactional
+	public Review removeReview(LoginUser loginUser, Long reviewId) {
+		Review review = reviewRepository.findById(reviewId).orElseThrow(NotFoundReviewException::new);
+		User user = userRespository.findById(loginUser.getId()).orElseThrow(NotFoundUserException::new);
+
+		validateReviewWithUser(review, user);
+
+		review.delete();
+
+		return review;
+	}
+
 	private void validateReviewWithUser(Review review, User user) {
 		if (!review.isAuthor(user)) {
 			throw new UnauthorizedUserException();

@@ -14,9 +14,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @NoArgsConstructor
+@SQLDelete(sql = "update review set deleted = true where review_id = ?")
+@Where(clause = "deleted = false")
 public class Review extends BaseTimeEntity {
 
 	@Id
@@ -45,6 +49,8 @@ public class Review extends BaseTimeEntity {
 
 	@Transient
 	private List<String> images;
+
+	private boolean deleted = Boolean.FALSE;
 
 	public Review(Long id, Long userId, Long storeId, String reviewContent, Float reviewScore,
 		String reviewVisibility,
@@ -83,6 +89,10 @@ public class Review extends BaseTimeEntity {
 		return this.userId.equals(user.getId());
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
 	public void editAll(Long storeId, String reviewContent, Float reviewScore,
 		String reviewVisibility, LocalDate visitedDate, List<String> tags, List<String> images) {
 		this.storeId = storeId;
@@ -92,5 +102,9 @@ public class Review extends BaseTimeEntity {
 		this.visitedDate = new ReviewVisitedDate(visitedDate);
 		this.tags = new Tags(tags);
 		this.images = images;
+	}
+
+	public void delete() {
+		this.deleted = true;
 	}
 }
