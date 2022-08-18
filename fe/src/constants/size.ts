@@ -5,7 +5,7 @@ export const ICON = {
 
 export const DETAIL = {
   WRAP: {
-    WIDTH_NO_IMG: 750,
+    WIDTH_NO_IMG: 800,
     WIDTH_WITH_IMG: 400,
   },
 };
