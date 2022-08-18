@@ -1,11 +1,11 @@
+import { STYLE } from 'constants/style';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
 
 export const Wrap = styled.div`
   display: flex;
   width: fit-content;
-  border: 1px solid grey;
-  border-radius: 10px;
+  ${STYLE.BOX_CONTAINER}
   margin-bottom: 24px;
 `;
 
@@ -14,8 +14,7 @@ export const Header = styled.div`
 `;
 
 export const Main = styled.div`
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  ${STYLE.BOX_CONTAINER}
 `;
 
 export const MainFooter = styled.div`
@@ -48,8 +47,7 @@ export const Contents = styled.p`
 export const IconWrap = styled.div<{ width: number; height: number }>`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  ${STYLE.BOX_CONTAINER}
   ${() => flexLayoutMixin('', 'center', 'center')}
 `;
 

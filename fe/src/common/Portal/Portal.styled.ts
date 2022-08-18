@@ -1,3 +1,4 @@
+import { STYLE } from 'constants/style';
 import { Z_INDEX } from 'constants/zIndex';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
@@ -16,10 +17,8 @@ export const Background = styled.div`
   width: fit-content;
   max-height: 800px;
   background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  ${STYLE.BOX_CONTAINER}
   z-index: ${Z_INDEX.MODAL.CONTENTS};
-  border-radius: 10px;
 `;
 
 export const Dim = styled.div`

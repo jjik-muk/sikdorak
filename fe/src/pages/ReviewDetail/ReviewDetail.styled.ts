@@ -1,3 +1,4 @@
+import { STYLE } from 'constants/style';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
 
@@ -10,8 +11,7 @@ export const Header = styled.div`
 `;
 
 export const Main = styled.div`
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  ${STYLE.BOX_CONTAINER}
 `;
 
 export const MainFooter = styled.div`
@@ -26,8 +26,7 @@ export const ButtonWrapper = styled.div`
 export const IconWrap = styled.div<{ width: number; height: number }>`
   width: ${({ width }) => width}px; // 24
   height: ${({ height }) => height}px; // 24
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  ${STYLE.BOX_CONTAINER}
   ${() => flexLayoutMixin('', 'center', 'center')}
 `;
 

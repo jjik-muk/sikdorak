@@ -1,3 +1,4 @@
+import { STYLE } from 'constants/style';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
 
@@ -14,7 +15,7 @@ export const ButtonWrapper = styled.button`
   color: #fff;
   font-size: 14px;
   padding: 10px;
-  border-radius: 10px;
+  ${STYLE.BOX_CONTAINER}
   border: 0;
   cursor: pointer;
 `;
