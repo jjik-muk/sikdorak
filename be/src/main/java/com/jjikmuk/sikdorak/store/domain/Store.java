@@ -59,11 +59,11 @@ public class Store extends BaseTimeEntity {
     }
 
     public double getLatitude() {
-        return location.latitude();
+        return location.getLatitude();
     }
 
     public double getLongitude() {
-        return location.longitude();
+        return location.getLongitude();
     }
 
     public void editAll(String storeName, String contactNumber, String baseAddress, String detailAddress, Double latitude, Double longitude) {
