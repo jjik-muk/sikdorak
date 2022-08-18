@@ -35,7 +35,7 @@ class StoreModifyAcceptanceTest extends InitAcceptanceTest {
 
 		ResponseCodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.STORE_MODIFY_SUCCESS;
 
-		given(this.spec).log().all()
+		given(this.spec)
 			.filter(document(DEFAULT_RESTDOC_PATH,
 				STORE_MODIFY_REQUEST_PARAM_SNIPPET,
 				STORE_MODIFY_REQUEST_SNIPPET,

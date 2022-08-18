@@ -26,7 +26,7 @@ class StoreRemoveAcceptanceTest extends InitAcceptanceTest {
 
 		ResponseCodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.STORE_REMOVE_SUCCESS;
 
-		given(this.spec).log().all()
+		given(this.spec)
 			.filter(document(DEFAULT_RESTDOC_PATH,
 				STORE_REMOVE_REQUEST_PARAM_SNIPPET,
 				STORE_REMOVE_RESPONSE_SNIPPET))
@@ -50,7 +50,7 @@ class StoreRemoveAcceptanceTest extends InitAcceptanceTest {
 
 		CodeAndMessages expectedCodeAndMessage = ExceptionCodeAndMessages.NOT_FOUND_STORE;
 
-		given(this.spec).log().all()
+		given(this.spec)
 			.filter(document(DEFAULT_RESTDOC_PATH,
 				STORE_REMOVE_REQUEST_PARAM_SNIPPET,
 				STORE_REMOVE_RESPONSE_SNIPPET))
