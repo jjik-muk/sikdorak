@@ -42,7 +42,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Test Spring Boot with Gradle
-        run: ./gradlew test
+        run: ./gradlew build
 
       - name: Setup Heroku CLI
         uses: akhileshns/heroku-deploy@v3.12.12
