@@ -7,11 +7,11 @@ API : `GET /api/oauth/login`
 
 ==== `Request`
 
-operation::o_auth_acceptance_test/redirect_to_social_login_page[snippets='http-request']
+operation::o_auth_login_acceptance_test/redirect_to_social_login_page[snippets='http-request']
 
 ==== `Response`
 
-operation::o_auth_acceptance_test/redirect_to_social_login_page[snippets='http-response']
+operation::o_auth_login_acceptance_test/redirect_to_social_login_page[snippets='http-response']
 
 
 === 유저 로그인 콜백
