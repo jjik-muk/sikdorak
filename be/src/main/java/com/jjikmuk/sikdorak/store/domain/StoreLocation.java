@@ -18,7 +18,6 @@ public class StoreLocation {
     private static final double LONGITUDE_MIN = -180.0;
     private static final double LONGITUDE_MAX = 180.0;
 
-//    private Point storePoint;
     private Double latitude;
     private Double longitude;
 
