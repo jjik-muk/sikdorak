@@ -4,7 +4,9 @@ import { flexLayoutMixin } from 'utils/utils';
 export const Wrap = styled.div`
   ${() => flexLayoutMixin('', 'center', 'center')};
   position: sticky;
-  top: 10px;
+  top: 0;
+  padding: 10px 0 10px 0;
+  background-color: #fff;
 `;
 
 export const Header = styled.div`
