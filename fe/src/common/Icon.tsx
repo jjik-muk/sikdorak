@@ -3,8 +3,10 @@ import { ReactComponent as Alarm } from 'assets/Alarm.svg';
 import { ReactComponent as DownArrow } from 'assets/DownArrow.svg';
 import { ReactComponent as Heart } from 'assets/Heart.svg';
 import { ReactComponent as Home } from 'assets/Home.svg';
+import { ReactComponent as Location } from 'assets/Location.svg';
 import { ReactComponent as Map } from 'assets/Map.svg';
 import { ReactComponent as MenuBtn } from 'assets/MenuBtn.svg';
+import { ReactComponent as Phone } from 'assets/Phone.svg';
 import { ReactComponent as Photo } from 'assets/Photo.svg';
 import { ReactComponent as PostBtn } from 'assets/PostBtn.svg';
 import { ReactComponent as Profile } from 'assets/Profile.svg';
@@ -29,6 +31,8 @@ export const iconComponents = {
   PostBtn,
   SearchBtn,
   Profile,
+  Location,
+  Phone,
 };
 
 function Icon({ icon, width = ICON.WIDTH, height = ICON.HEIGHT, fill = 'none', stroke = '#000', onClick }: IconProps) {
