@@ -11,6 +11,7 @@ plugins {
 	id "org.sonarqube" version "3.4.0.2513"
 	id "jacoco"
 	id 'java'
+	id 'com.google.cloud.tools.jib' version '3.2.1'
 }
 
 group = 'com.jjikmuk'
@@ -101,6 +102,8 @@ test {
 }
 
 //-- Git submodule 관련 task ------------------------------------------------------
+processResources.dependsOn('copyGitSubmodule')
+
 task copyGitSubmodule(type: Copy) {
 	from './config'
 	include '*.yml'
@@ -142,3 +145,25 @@ bootJar {
 		into "${project.buildDir}/resources/main/static/docs"
 	}
 }
+//-- jib 관련 설정 -------------------------------------------------------
+
+jib {
+	from {
+		image = "eclipse-temurin:17-jre" // java 17
+	}
+
+	to {
+		image = "registry.heroku.com/sikdorak-test/web" // docker image push into heroku container registry
+		tags = ["latest"]
+
+		auth {
+			username = 'heroku whoami'.execute().text.trim()
+			password = 'heroku auth:token'.execute().text.trim()
+		}
+	}
+	container {
+		mainClass = 'com.jjikmuk.sikdorak.SikdorakApplication' // entry point java class
+		jvmFlags = ["-Dspring.profiles.active=dev", "-Xms128m", "-Xmx128m"] // setup JVM Options
+	}
+}
+

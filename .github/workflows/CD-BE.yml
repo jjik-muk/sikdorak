@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   be-build-test:
-    name: Build Test SpringBoot
+    name: Test & Deploy SpringBoot
     runs-on: ubuntu-20.04
     defaults:
       run:
@@ -22,14 +22,13 @@ jobs:
         with:
           token: ${{ secrets.SUBMODULES_ACCESS_TOKEN }}
           submodules: recursive
-      
+
       - name: setup java 17
         uses: actions/setup-java@v3
         with:
           java-version: "17"
           distribution: "temurin"
           cache: gradle
-
       - name: Use gradle cache
         uses: actions/cache@v3
         with:
@@ -39,37 +38,23 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-            
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build test with Gradle
+      - name: Test Spring Boot with Gradle
         run: ./gradlew build
-      
-  be-deploy:
-    needs: be-build-test
-    name: Deploy SpringBoot to Heroku
-    runs-on: ubuntu-20.04
-    env:
-      heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-      heroku_app_name: sikdorak
-      heroku_email: ${{ secrets.HEROKU_EMAIL }}
-    
-    steps:
-      - name: setup repo
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.SUBMODULES_ACCESS_TOKEN }}
-          submodules: recursive
 
-      - name: Add BE remote origin
+      - name: Setup Heroku CLI
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "sikdorak-test"
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          justlogin: true
+      - name: Deploy Spring Boot image into heroku registry
         run: |
-          git remote add heroku-be https://heroku:${heroku_api_key}@git.heroku.com/${heroku_app_name}.git
-      - name: Deploy BE to Heroku
-        run: |
-            git subtree split --prefix be -b heroku-be-tmp
-            git push -f heroku-be heroku-be-tmp:main
-            git branch -D heroku-be-tmp
+          ./gradlew jib
+          heroku container:release web -a sikdorak-test
 
       - name: Noti Discord - Test Success
         uses: rjstone/discord-webhook-notify@v1
