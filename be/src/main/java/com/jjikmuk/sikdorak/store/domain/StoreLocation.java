@@ -2,12 +2,13 @@ package com.jjikmuk.sikdorak.store.domain;
 
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreLocationException;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.geo.Point;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
+@Getter
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StoreLocation {
@@ -17,7 +18,8 @@ public class StoreLocation {
     private static final double LONGITUDE_MIN = -180.0;
     private static final double LONGITUDE_MAX = 180.0;
 
-    private Point storePoint;
+    private Double latitude;
+    private Double longitude;
 
     public StoreLocation(Double latitude, Double longitude) {
         if (Objects.isNull(latitude) ||
@@ -28,18 +30,11 @@ public class StoreLocation {
         }
 
         // longitude = X, latitude = Y
-        this.storePoint = new Point(longitude, latitude);
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     private boolean isInRange(double value, double min, double max) {
         return min <= value && value <= max;
-    }
-
-    public double latitude() {
-        return storePoint.getY();
-    }
-
-    public double longitude() {
-        return storePoint.getX();
     }
 }

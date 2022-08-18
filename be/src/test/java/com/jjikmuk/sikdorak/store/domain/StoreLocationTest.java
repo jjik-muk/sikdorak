@@ -33,8 +33,8 @@ class StoreLocationTest {
             void It_returns_a_object(double latitude, double longitude) {
                 StoreLocation storePoint = new StoreLocation(latitude, longitude);
 
-                assertThat(storePoint.latitude()).isEqualTo(latitude);
-                assertThat(storePoint.longitude()).isEqualTo(longitude);
+                assertThat(storePoint.getLatitude()).isEqualTo(latitude);
+                assertThat(storePoint.getLongitude()).isEqualTo(longitude);
             }
         }
 
