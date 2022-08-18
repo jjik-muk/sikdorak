@@ -1,4 +1,5 @@
 import { STYLE } from 'constants/style';
+import { Z_INDEX } from 'constants/zIndex';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
 
@@ -8,6 +9,7 @@ export const Wrap = styled.div`
   top: 0;
   padding: 10px 0 10px 0;
   background-color: #fff;
+  z-index: ${Z_INDEX.COMMON_HEADER};
 `;
 
 export const Header = styled.div`
