@@ -3,6 +3,7 @@ import Login from 'pages/Login/Login';
 import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
 import ReviewList from 'pages/ReviewList/ReviewList';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
+import UserDetail from 'pages/UserDetail/userDetail';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalStyle from 'styles/GlobalStyle';
 
@@ -37,6 +38,7 @@ function App() {
               </Portal>
             }
           />
+          <Route path="/userDetail" element={<UserDetail />} />
           <Route path="/reviewList" element={<ReviewList />} />
         </Routes>
       </BrowserRouter>
