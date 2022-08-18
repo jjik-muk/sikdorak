@@ -16,7 +16,7 @@ const Portal = forwardRef(({ children, selector }: PortalProps, ref?: any) => {
 
 export default Portal;
 
-interface PortalProps {
+type PortalProps = {
   children: React.ReactNode;
   selector: string;
-}
+};

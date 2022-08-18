@@ -48,8 +48,8 @@ function Comment({ imgUrl = DEFAULT_IMG_URL, title = '식도락', content = '댓
 
 export default Comment;
 
-interface CommentProps {
+type CommentProps = {
   imgUrl?: string;
   title?: string;
   content?: string;
-}
+};

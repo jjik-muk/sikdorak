@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-interface ModalWrapperProps {
+type ModalWrapperProps = {
   width?: string;
   height?: string;
-}
+};
 
 export const ModalWrapper = styled.div<ModalWrapperProps>`
   background-color: #fff;

@@ -1,4 +1,4 @@
-import SIZE from 'constants/size';
+import { ICON } from 'constants/size';
 import { ReactComponent as Alarm } from 'assets/Alarm.svg';
 import { ReactComponent as DownArrow } from 'assets/DownArrow.svg';
 import { ReactComponent as Heart } from 'assets/Heart.svg';
@@ -31,14 +31,7 @@ export const iconComponents = {
   Profile,
 };
 
-function Icon({
-  icon,
-  width = SIZE.ICON.WIDTH,
-  height = SIZE.ICON.HEIGHT,
-  fill = 'none',
-  stroke = '#000',
-  onClick,
-}: IconProps) {
+function Icon({ icon, width = ICON.WIDTH, height = ICON.HEIGHT, fill = 'none', stroke = '#000', onClick }: IconProps) {
   const SelectedIcon = iconComponents[icon];
 
   if (!SelectedIcon) {
@@ -52,11 +45,11 @@ export default Icon;
 
 export type IconComponentsKeys = keyof typeof iconComponents;
 
-interface IconProps {
+type IconProps = {
   icon: IconComponentsKeys;
   width?: number;
   height?: number;
   fill?: string;
   stroke?: string;
   onClick?: (idx: number) => void;
-}
+};

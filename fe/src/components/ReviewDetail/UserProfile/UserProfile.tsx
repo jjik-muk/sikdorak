@@ -13,7 +13,7 @@ function UserProfile({ imgUrl = DEFAULT_IMG_URL, nickname }: UserProfileProps) {
 
 export default UserProfile;
 
-interface UserProfileProps {
+type UserProfileProps = {
   imgUrl?: string;
   nickname: string;
-}
+};
