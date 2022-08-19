@@ -41,3 +41,31 @@ operation::review_modify_acceptance_test/modify_review_failed[snippets='http-req
 ==== `Response`
 
 operation::review_modify_acceptance_test/modify_review_failed[snippets='http-response,response-fields']
+
+=== 리뷰 삭제
+
+API : `DELETE /api/reviews/{reviewId}`
+
+=== `200 OK`
+
+리뷰 작성자가 리뷰 삭제한 경우
+
+==== `Request`
+
+operation::review_remove_accecptance_test/remove_review_success[snippets='http-request']
+
+==== `Response`
+
+operation::review_remove_accecptance_test/remove_review_success[snippets='http-response,response-fields']
+
+=== `401 UNATHORIZED`
+
+비회원이 리뷰 삭제 요청한 경우
+
+==== `Request`
+
+operation::review_remove_accecptance_test/remove_review_failed_need_login[snippets='http-request']
+
+==== `Response`
+
+operation::review_remove_accecptance_test/remove_review_failed_need_login[snippets='http-response,response-fields']
