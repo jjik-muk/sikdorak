@@ -23,7 +23,7 @@ import org.springframework.http.MediaType;
 class ReviewInsertAcceptanceTest extends InitAcceptanceTest {
 
 	@Test
-	@DisplayName("리뷰 생성 요청이 정상적인 경우라면 리뷰 생성 후 정상 상태 코드를 반환한다")
+	@DisplayName("유저가 리뷰 생성 요청이 정상적인 경우라면 리뷰 생성 후 정상 상태 코드를 반환한다")
 	void create_review_success() {
 		ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(
 			"Test review contents",
@@ -49,6 +49,34 @@ class ReviewInsertAcceptanceTest extends InitAcceptanceTest {
 
 		.then()
 			.statusCode(HttpStatus.CREATED.value());
+	}
+
+	@Test
+	@DisplayName("비회원이 리뷰 생성 요청한다면 예외를 반환한다")
+	void create_review_failed() {
+		ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(
+			"Test review contents",
+			testData.store.getId(),
+			3.f,
+			"public",
+			LocalDate.of(2022, 1, 1),
+			List.of("tag1", "tag2"),
+			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
+
+		given(this.spec)
+			.filter(
+				document(DEFAULT_RESTDOC_PATH,
+					REVIEW_CREATE_REQUEST_SNIPPET,
+					REVIEW_CREATE_RESPONSE_SNIPPET))
+			.accept(MediaType.APPLICATION_JSON_VALUE)
+			.header("Content-type", "application/json")
+			.body(reviewCreateRequest)
+
+			.when()
+			.post("/api/reviews")
+
+			.then()
+			.statusCode(HttpStatus.UNAUTHORIZED.value());
 	}
 
 }
