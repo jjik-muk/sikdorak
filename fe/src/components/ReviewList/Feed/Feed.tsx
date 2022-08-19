@@ -36,9 +36,10 @@ function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps)
         <Main>
           <Contents>{contents}</Contents>
           <Pictures>
-            {pictures.map((picture) => (
-              <img src={picture} alt="음식" width={FEED.IMG.WIDTH} height={FEED.IMG.HEIGHT} />
-            ))}
+            {pictures &&
+              pictures.map((picture) => (
+                <img src={picture} alt="음식" width={FEED.IMG.WIDTH} height={FEED.IMG.HEIGHT} />
+              ))}
           </Pictures>
           <TotalRating taste={taste} price={price} service={service} />
           <MainFooter>

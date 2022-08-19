@@ -1,3 +1,4 @@
+import { STYLE } from 'constants/style';
 import styled from 'styled-components';
 
 export const Wrap = styled.div`
@@ -6,5 +7,5 @@ export const Wrap = styled.div`
   color: #fff;
   text-align: center;
   padding: 10px;
-  border-radius: 10px;
+  ${STYLE.BOX_CONTAINER}
 `;

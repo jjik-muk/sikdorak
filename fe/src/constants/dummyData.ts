@@ -49,3 +49,14 @@ export const COMMENTS = [
   { title: '포키', content: '우리나라 만세' },
   { title: '제이', content: '무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.' },
 ];
+
+export const STORE = {
+  storeName: '호이 초밥',
+  storeRating: 4.5,
+  storePictures: IMAGE_URLS,
+  reviewCnt: 451,
+  address: '인천 계양구 봉오대로 559 1층',
+  phoneNumber: '010-1234-5678',
+};
+
+export const DEFAULT_IMG = 'http://www.mth.co.kr/wp-content/uploads/2014/12/default-placeholder-300x300.png';

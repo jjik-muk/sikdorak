@@ -1,3 +1,4 @@
+import { STYLE } from 'constants/style';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
 
@@ -17,8 +18,7 @@ export const CommentWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  ${STYLE.BOX_CONTAINER}
   padding: 10px;
   padding-top: 0;
 `;
