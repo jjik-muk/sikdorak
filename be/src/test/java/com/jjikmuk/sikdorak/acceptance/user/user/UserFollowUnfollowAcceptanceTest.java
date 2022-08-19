@@ -16,14 +16,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-@DisplayName("유저 팔로우 인수 테스트")
-class UserFollowAcceptanceTest extends InitAcceptanceTest {
+@DisplayName("UserFollowUnfollow 인수 테스트")
+class UserFollowUnfollowAcceptanceTest extends InitAcceptanceTest {
 
     @Test
     @DisplayName("유저의 팔로우 요청이 올바른 경우라면 성공 상태코드를 응답한다.")
     void user_follow_success() {
 
-        UserFollowAndUnfollowRequest userFollowAndUnfollowRequest = new UserFollowAndUnfollowRequest(testData.user2.getId());
+        UserFollowAndUnfollowRequest userFollowAndUnfollowRequest = new UserFollowAndUnfollowRequest(testData.followAcceptUser.getId());
 
         given(this.spec)
             .filter(document(
@@ -49,7 +49,7 @@ class UserFollowAcceptanceTest extends InitAcceptanceTest {
     @DisplayName("유저의 언팔로우 요청이 올바른 경우라면 성공 상태코드를 응답한다.")
     void user_unfollow_success() {
 
-        UserFollowAndUnfollowRequest userFollowAndUnfollowRequest = new UserFollowAndUnfollowRequest(testData.user2.getId());
+        UserFollowAndUnfollowRequest userFollowAndUnfollowRequest = new UserFollowAndUnfollowRequest(testData.followAcceptUser.getId());
 
         given(this.spec)
             .filter(document(
@@ -59,7 +59,7 @@ class UserFollowAcceptanceTest extends InitAcceptanceTest {
             ))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .contentType(ContentType.JSON)
-            .header("Authorization", testData.user3ValidAuthorizationHeader)
+            .header("Authorization", testData.followSendUserValidAuthorizationHeader)
             .body(userFollowAndUnfollowRequest)
 
         .when()
@@ -76,7 +76,7 @@ class UserFollowAcceptanceTest extends InitAcceptanceTest {
     @DisplayName("비회원이 유저에 대한 팔로우 요청을 하면 실패 상태코드를 반환한다.")
     void anonymous_user_follow_fail() {
 
-        UserFollowAndUnfollowRequest userFollowAndUnfollowRequest = new UserFollowAndUnfollowRequest(testData.user2.getId());
+        UserFollowAndUnfollowRequest userFollowAndUnfollowRequest = new UserFollowAndUnfollowRequest(testData.followAcceptUser.getId());
 
         given(this.spec)
             .filter(document(
@@ -103,7 +103,7 @@ class UserFollowAcceptanceTest extends InitAcceptanceTest {
     @DisplayName("비회원이 유저에 대한 언팔로우 요청을 하면 실패 상태코드를 반환한다.")
     void anonymous_user_unfollow_fail() {
 
-        UserFollowAndUnfollowRequest userFollowAndUnfollowRequest = new UserFollowAndUnfollowRequest(testData.user2.getId());
+        UserFollowAndUnfollowRequest userFollowAndUnfollowRequest = new UserFollowAndUnfollowRequest(testData.followAcceptUser.getId());
 
         given(this.spec)
             .filter(document(

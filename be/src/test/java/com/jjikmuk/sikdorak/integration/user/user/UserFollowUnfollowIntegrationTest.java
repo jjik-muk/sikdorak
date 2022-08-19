@@ -18,8 +18,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("유저 팔로우 통합 테스트")
-class UserFollowIntegrationTest extends InitIntegrationTest {
+@DisplayName("UserFollowUnfollow 통합 테스트")
+class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     private UserService userService;
@@ -31,26 +31,26 @@ class UserFollowIntegrationTest extends InitIntegrationTest {
     @DisplayName("팔로우 되어 있지 않은 유저에 대한 팔로우 요청이 들어오면 유저를 팔로우 한다.")
     void user_follow_success() {
 
-        LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
+        LoginUser loginUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
         UserFollowAndUnfollowRequest request = new UserFollowAndUnfollowRequest(
-            testData.user2.getId());
+            testData.user1.getId());
 
         userService.followUser(loginUser, request);
 
-        Set<Long> user1Followings = userRespository.findFollowings(testData.user1.getId());
-        Set<Long> user2Followers = userRespository.findFollowers(testData.user2.getId());
+        Set<Long> sendUserFollowings = userRespository.findFollowings(testData.followSendUser.getId());
+        Set<Long> acceptUserFollowers = userRespository.findFollowers(testData.user1.getId());
 
-        assertThat(user1Followings.contains(testData.user2.getId())).isTrue();
-        assertThat(user2Followers.contains(testData.user1.getId())).isTrue();
+        assertThat(sendUserFollowings.contains(testData.user1.getId())).isTrue();
+        assertThat(acceptUserFollowers.contains(testData.followSendUser.getId())).isTrue();
     }
 
     @Test
     @DisplayName("유저 본인에 대한 팔로우 요청이 들어오면 예외를 반환한다.")
     void user_follow_with_same_user_id() {
 
-        LoginUser loginUser = new LoginUser(testData.user3.getId(), Authority.USER);
+        LoginUser loginUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
         UserFollowAndUnfollowRequest request = new UserFollowAndUnfollowRequest(
-            testData.user3.getId());
+            testData.followSendUser.getId());
 
         assertThatThrownBy(() -> userService.followUser(loginUser, request))
             .isInstanceOf(DuplicateSendAcceptUserException.class);
@@ -60,7 +60,7 @@ class UserFollowIntegrationTest extends InitIntegrationTest {
     @DisplayName("존재하지 않는 유저에 대한 팔로우 요청이 들어오면 예외를 반환한다.")
     void user_follow_with_not_found_user() {
 
-        LoginUser loginUser = new LoginUser(testData.user3.getId(), Authority.USER);
+        LoginUser loginUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
         UserFollowAndUnfollowRequest request = new UserFollowAndUnfollowRequest(123123123L);
 
         assertThatThrownBy(() -> userService.followUser(loginUser, request))
@@ -72,9 +72,9 @@ class UserFollowIntegrationTest extends InitIntegrationTest {
     @DisplayName("이미 팔로우 한 유저에 대한 팔로우 요청이 들어오면 예외를 반환한다.")
     void user_follow_with_already_followed_user() {
 
-        LoginUser loginUser = new LoginUser(testData.user3.getId(), Authority.USER);
+        LoginUser loginUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
         UserFollowAndUnfollowRequest request = new UserFollowAndUnfollowRequest(
-            testData.user2.getId());
+            testData.followAcceptUser.getId());
 
         assertThatThrownBy(() -> userService.followUser(loginUser, request))
             .isInstanceOf(DuplicateFollowingException.class);
@@ -86,17 +86,17 @@ class UserFollowIntegrationTest extends InitIntegrationTest {
     @DisplayName("팔로우 되어 있는 유저에 대한 언팔로우 요청이 들어오면 언팔로우 한다.")
     void user_unfollow_success() {
 
-        LoginUser loginUser = new LoginUser(testData.user3.getId(), Authority.USER);
+        LoginUser loginUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
         UserFollowAndUnfollowRequest unfollowRequest = new UserFollowAndUnfollowRequest(
-            testData.user2.getId());
+            testData.followAcceptUser.getId());
 
         userService.unfollowUser(loginUser, unfollowRequest);
 
-        Set<Long> sendUserFollowings = userRespository.findFollowings(testData.user3.getId());
+        Set<Long> sendUserFollowings = userRespository.findFollowings(testData.followSendUser.getId());
         Set<Long> acceptUserFollowers = userRespository.findFollowers(testData.user2.getId());
 
         assertThat(sendUserFollowings.contains(testData.user2.getId())).isFalse();
-        assertThat(acceptUserFollowers.contains(testData.user3.getId())).isFalse();
+        assertThat(acceptUserFollowers.contains(testData.followSendUser.getId())).isFalse();
 
     }
 
@@ -104,9 +104,9 @@ class UserFollowIntegrationTest extends InitIntegrationTest {
     @DisplayName("유저 본인에 대한 언팔로우 요청이 들어오면 예외를 반환한다.")
     void user_unfollow_with_same_user_id() {
 
-        LoginUser loginUser = new LoginUser(testData.user3.getId(), Authority.USER);
+        LoginUser loginUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
         UserFollowAndUnfollowRequest request = new UserFollowAndUnfollowRequest(
-            testData.user3.getId());
+            testData.followSendUser.getId());
 
         assertThatThrownBy(() -> userService.unfollowUser(loginUser, request))
             .isInstanceOf(DuplicateSendAcceptUserException.class);
@@ -116,7 +116,7 @@ class UserFollowIntegrationTest extends InitIntegrationTest {
     @DisplayName("존재하지 않는 유저에 대한 언팔로우 요청이 들어오면 예외를 반환한다.")
     void user_unfollow_with_not_found_user() {
 
-        LoginUser loginUser = new LoginUser(testData.user3.getId(), Authority.USER);
+        LoginUser loginUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
         UserFollowAndUnfollowRequest request = new UserFollowAndUnfollowRequest(123123123L);
 
         assertThatThrownBy(() -> userService.unfollowUser(loginUser, request))
@@ -128,7 +128,7 @@ class UserFollowIntegrationTest extends InitIntegrationTest {
     @DisplayName("팔로우 하지 않은 유저에 대한 언팔로우 요청이 들어오면 예외를 반환한다.")
     void user_unfollow_with_unfollowed_user() {
 
-        LoginUser loginUser = new LoginUser(testData.user3.getId(), Authority.USER);
+        LoginUser loginUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
         UserFollowAndUnfollowRequest unfollowRequest = new UserFollowAndUnfollowRequest(
             testData.user1.getId());
 

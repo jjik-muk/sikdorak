@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-@DisplayName("유저 프로필 수정 인수테스트")
+@DisplayName("UserModify 인수테스트")
 class UserModifyAcceptanceTest extends InitAcceptanceTest {
 
     @Test
