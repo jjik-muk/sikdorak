@@ -2,8 +2,10 @@ package com.jjikmuk.sikdorak.common;
 
 public enum ResponseCodeAndMessages implements CodeAndMessages {
 
+    // Review
     REVIEW_CREATE_SUCCESS("T-R001", "리뷰 생성 성공했습니다."),
     REVIEW_MODIFY_SUCCESS("T-R002", "리뷰 수정 성공했습니다."),
+    REVIEW_REMOVE_SUCCESS("T-R003", "리뷰 삭제 성공했습니다."),
 
     // OAuth
     LOGIN_SUCCESS("T-O001", "로그인에 성공했습니다."),

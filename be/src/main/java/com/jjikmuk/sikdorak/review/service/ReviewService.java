@@ -45,6 +45,7 @@ public class ReviewService {
 		return reviewRepository.save(newReview);
 	}
 
+	@Transactional
 	public Review modifyReview(LoginUser loginUser, Long reviewId,
 		ReviewModifyRequest reviewModifyRequest) {
 		Review review = reviewRepository.findById(reviewId).orElseThrow(NotFoundReviewException::new);
@@ -62,6 +63,18 @@ public class ReviewService {
 			reviewModifyRequest.getVisitedDate(),
 			reviewModifyRequest.getTags(),
 			reviewModifyRequest.getImages());
+
+		return review;
+	}
+
+	@Transactional
+	public Review removeReview(LoginUser loginUser, Long reviewId) {
+		Review review = reviewRepository.findById(reviewId).orElseThrow(NotFoundReviewException::new);
+		User user = userRespository.findById(loginUser.getId()).orElseThrow(NotFoundUserException::new);
+
+		validateReviewWithUser(review, user);
+
+		review.delete();
 
 		return review;
 	}
