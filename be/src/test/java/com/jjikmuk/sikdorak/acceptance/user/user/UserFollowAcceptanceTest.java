@@ -8,6 +8,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import com.jjikmuk.sikdorak.acceptance.InitAcceptanceTest;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
+import com.jjikmuk.sikdorak.common.exception.ExceptionCodeAndMessages;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
@@ -45,7 +46,7 @@ class UserFollowAcceptanceTest extends InitAcceptanceTest {
     }
 
     @Test
-    @DisplayName("유저의 팔로우 취소 요청이 올바른 경우라면 성공 상태코드를 응답한다.")
+    @DisplayName("유저의 언팔로우 요청이 올바른 경우라면 성공 상태코드를 응답한다.")
     void user_unfollow_success() {
 
         UserFollowAndUnfollowRequest userFollowAndUnfollowRequest = new UserFollowAndUnfollowRequest(testData.user2.getId());
@@ -58,7 +59,7 @@ class UserFollowAcceptanceTest extends InitAcceptanceTest {
             ))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .contentType(ContentType.JSON)
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.user3ValidAuthorizationHeader)
             .body(userFollowAndUnfollowRequest)
 
         .when()
@@ -68,6 +69,59 @@ class UserFollowAcceptanceTest extends InitAcceptanceTest {
             .statusCode(HttpStatus.OK.value())
             .body("code", equalTo(ResponseCodeAndMessages.USER_UNFOLLOW_SUCCESS.getCode()))
             .body("message", equalTo(ResponseCodeAndMessages.USER_UNFOLLOW_SUCCESS.getMessage()));
+
+    }
+
+    @Test
+    @DisplayName("비회원이 유저에 대한 팔로우 요청을 하면 실패 상태코드를 반환한다.")
+    void anonymous_user_follow_fail() {
+
+        UserFollowAndUnfollowRequest userFollowAndUnfollowRequest = new UserFollowAndUnfollowRequest(testData.user2.getId());
+
+        given(this.spec)
+            .filter(document(
+                DEFAULT_RESTDOC_PATH,
+                USER_FOLLOW_REQUEST_SNIPPET,
+                USER_FOLLOW_RESPONSE_SNIPPET
+            ))
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .contentType(ContentType.JSON)
+            .body(userFollowAndUnfollowRequest)
+
+        .when()
+            .put("/api/user/follow")
+
+        .then()
+            .statusCode(HttpStatus.UNAUTHORIZED.value())
+            .body("code", equalTo(ExceptionCodeAndMessages.NEED_LOGIN.getCode()))
+            .body("message", equalTo(ExceptionCodeAndMessages.NEED_LOGIN.getMessage()));
+
+    }
+
+
+    @Test
+    @DisplayName("비회원이 유저에 대한 언팔로우 요청을 하면 실패 상태코드를 반환한다.")
+    void anonymous_user_unfollow_fail() {
+
+        UserFollowAndUnfollowRequest userFollowAndUnfollowRequest = new UserFollowAndUnfollowRequest(testData.user2.getId());
+
+        given(this.spec)
+            .filter(document(
+                DEFAULT_RESTDOC_PATH,
+                USER_FOLLOW_REQUEST_SNIPPET,
+                USER_FOLLOW_RESPONSE_SNIPPET
+            ))
+            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .contentType(ContentType.JSON)
+            .body(userFollowAndUnfollowRequest)
+
+        .when()
+            .put("/api/user/unfollow")
+
+        .then()
+            .statusCode(HttpStatus.UNAUTHORIZED.value())
+            .body("code", equalTo(ExceptionCodeAndMessages.NEED_LOGIN.getCode()))
+            .body("message", equalTo(ExceptionCodeAndMessages.NEED_LOGIN.getMessage()));
 
     }
 
