@@ -1,8 +1,6 @@
 package com.jjikmuk.sikdorak.user.user.domain;
 
-import com.jjikmuk.sikdorak.user.user.exception.InvalidFollowingException;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -24,12 +22,4 @@ public class Followings {
     )
     private Set<Long> following = new HashSet<>();
 
-    public Followings(Set<Long> following) {
-
-        if (Objects.isNull(following)) {
-            throw new InvalidFollowingException();
-        }
-
-        this.following = following;
-    }
 }
