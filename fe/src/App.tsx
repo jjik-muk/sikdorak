@@ -1,4 +1,3 @@
-import { IMAGE_URLS } from 'constants/dummyData';
 import Portal from 'common/Portal/Portal';
 import Login from 'pages/Login/Login';
 import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
@@ -41,7 +40,7 @@ function App() {
             }
           />
           <Route path="/userDetail" element={<UserDetail />} />
-          <Route path="/storeDetail" element={<StoreDetail pictures={IMAGE_URLS} />} />
+          <Route path="/storeDetail" element={<StoreDetail />} />
           <Route path="/reviewList" element={<ReviewList />} />
         </Routes>
       </BrowserRouter>

@@ -1,4 +1,4 @@
-import { FEEDS } from 'constants/dummyData';
+import { FEEDS, STORE } from 'constants/dummyData';
 import Icon from 'common/Icon';
 import CommonHeader from 'components/Common/CommonHeader';
 import Feed from 'components/ReviewList/Feed/Feed';
@@ -15,7 +15,8 @@ import {
   Wrap,
 } from './StoreDetail.styled';
 
-function StoreDetail({ pictures }: StoreDetailProps) {
+function StoreDetail() {
+  const { storeName, storeRating, pictures, reviewCnt, address, phoneNumber } = STORE;
   const imgUrls = pictures.slice(0, 5);
 
   return (
@@ -36,19 +37,19 @@ function StoreDetail({ pictures }: StoreDetailProps) {
         </PictureWrap>
         <StoreInfo>
           <InfoWrap>
-            <Title>치즈룸과 테이스팅룸 롯데월드몰</Title>
+            <Title>{storeName}</Title>
             <Row>
               <Icon icon="Star" stroke="#fff" fill="#f1c40f" width={15} height={15} />
-              <Text>4.5 / 5</Text>
-              <Text>리뷰 5,299</Text>
+              <Text>{storeRating} / 5</Text>
+              <Text>리뷰 {reviewCnt}</Text>
             </Row>
             <Row>
               <Icon icon="Location" width={15} height={15} fill="#000" />
-              <Text>481 Effertz Walks</Text>
+              <Text>{address}</Text>
             </Row>
             <Row>
               <Icon icon="Phone" width={15} height={15} fill="#000" />
-              <Text>02-3213-4550</Text>
+              <Text>{phoneNumber}</Text>
             </Row>
           </InfoWrap>
         </StoreInfo>
@@ -61,7 +62,3 @@ function StoreDetail({ pictures }: StoreDetailProps) {
 }
 
 export default StoreDetail;
-
-type StoreDetailProps = {
-  pictures?: string[];
-};
