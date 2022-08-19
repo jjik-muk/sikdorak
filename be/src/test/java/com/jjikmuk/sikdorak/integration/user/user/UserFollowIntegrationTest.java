@@ -36,7 +36,7 @@ class UserFollowIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    @DisplayName("올바른 유저 정보가 들어오면 유저를 팔로우 한다.")
+    @DisplayName("팔로우 되어 있지 않은 유저에 대한 팔로우 요청이 들어오면 유저를 팔로우 한다.")
     void user_follow_success() {
 
         UserFollowAndUnfollowRequest request = new UserFollowAndUnfollowRequest(
@@ -52,7 +52,7 @@ class UserFollowIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    @DisplayName("유저 본인의 정보가 들어오면 예외를 반환한다.")
+    @DisplayName("유저 본인에 대한 팔로우 요청이 들어오면 예외를 반환한다.")
     void user_follow_with_same_user_id() {
 
         UserFollowAndUnfollowRequest request = new UserFollowAndUnfollowRequest(
@@ -63,7 +63,7 @@ class UserFollowIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 유저의 정보가 들어오면 예외를 반환한다.")
+    @DisplayName("존재하지 않는 유저에 대한 팔로우 요청이 들어오면 예외를 반환한다.")
     void user_follow_with_not_found_user() {
 
         UserFollowAndUnfollowRequest request2 = new UserFollowAndUnfollowRequest(987654321L);
@@ -74,7 +74,7 @@ class UserFollowIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    @DisplayName("이미 팔로우 한 유저의 정보가 들어오면 예외를 반환한다.")
+    @DisplayName("이미 팔로우 한 유저에 대한 팔로우 요청이 들어오면 예외를 반환한다.")
     void user_follow_with_already_followed_user() {
 
         UserFollowAndUnfollowRequest request1 = new UserFollowAndUnfollowRequest(
@@ -91,7 +91,7 @@ class UserFollowIntegrationTest extends InitIntegrationTest {
 
 
     @Test
-    @DisplayName("올바른 유저 정보가 들어오면 유저를 언팔로우 한다.")
+    @DisplayName("팔로우 되어 있는 유저에 대한 언팔로우 요청이 들어오면 언팔로우 한다.")
     void user_unfollow_success() {
 
         UserFollowAndUnfollowRequest followRequest = new UserFollowAndUnfollowRequest(
@@ -112,7 +112,29 @@ class UserFollowIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    @DisplayName("팔로우 하지 않은 유저의 정보가 들어오면 예외를 반환한다.")
+    @DisplayName("유저 본인에 대한 언팔로우 요청이 들어오면 예외를 반환한다.")
+    void user_unfollow_with_same_user_id() {
+
+        UserFollowAndUnfollowRequest request = new UserFollowAndUnfollowRequest(
+            testData.user1.getId());
+
+        assertThatThrownBy(() -> userService.unfollowUser(loginUser, request))
+            .isInstanceOf(DuplicateSendAcceptUserException.class);
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 유저에 대한 언팔로우 요청이 들어오면 예외를 반환한다.")
+    void user_unfollow_with_not_found_user() {
+
+        UserFollowAndUnfollowRequest request2 = new UserFollowAndUnfollowRequest(987654321L);
+
+        assertThatThrownBy(() -> userService.unfollowUser(loginUser, request2))
+            .isInstanceOf(NotFoundUserException.class);
+
+    }
+
+    @Test
+    @DisplayName("팔로우 하지 않은 유저에 대한 언팔로우 요청이 들어오면 예외를 반환한다.")
     void user_unfollow_with_unfollowed_user() {
 
         UserFollowAndUnfollowRequest unfollowRequest = new UserFollowAndUnfollowRequest(

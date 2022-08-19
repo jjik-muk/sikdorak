@@ -1,10 +1,14 @@
 package com.jjikmuk.sikdorak.user.user.service;
 
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
+import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
+import com.jjikmuk.sikdorak.user.user.exception.DuplicateFollowingException;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
+import com.jjikmuk.sikdorak.user.user.exception.DuplicateSendAcceptUserException;
+import com.jjikmuk.sikdorak.user.user.exception.NotFoundFollowException;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +44,33 @@ public class UserService {
         return user.getId();
     }
 
+    @Transactional
+    public void followUser(LoginUser loginUser, UserFollowAndUnfollowRequest userFollowAndUnfollowRequest) {
+
+        User sendUser = userRespository.findById(loginUser.getId())
+            .orElseThrow(NotFoundUserException::new);
+        User acceptUser = userRespository.findById(userFollowAndUnfollowRequest.getUserId())
+            .orElseThrow(NotFoundUserException::new);
+
+        validateFollowUsers(sendUser, acceptUser);
+
+        sendUser.follow(acceptUser);
+    }
+
+
+    @Transactional
+    public void unfollowUser(LoginUser loginUser, UserFollowAndUnfollowRequest userFollowAndUnfollowRequest) {
+
+        User sendUser = userRespository.findById(loginUser.getId())
+            .orElseThrow(NotFoundUserException::new);
+        User acceptUser = userRespository.findById(userFollowAndUnfollowRequest.getUserId())
+            .orElseThrow(NotFoundUserException::new);
+
+        validateUnfollowUsers(sendUser, acceptUser);
+
+        sendUser.unfollow(acceptUser);
+    }
+
     @Transactional(readOnly = true)
     public User searchById(Long userId) {
         if (Objects.isNull(userId)) {
@@ -64,6 +95,29 @@ public class UserService {
     @Transactional(readOnly = true)
     public boolean isExistingByUniqueId(long userUniqueId) {
         return userRespository.existsByUniqueId(userUniqueId);
+    }
+
+
+    private void validateFollowUsers(User sendUser, User acceptUser) {
+        validateSendAndAcceptUser(sendUser, acceptUser);
+
+        if (sendUser.isFollowing(acceptUser)) {
+            throw new DuplicateFollowingException();
+        }
+    }
+
+    private void validateUnfollowUsers(User sendUser, User acceptUser) {
+        validateSendAndAcceptUser(sendUser, acceptUser);
+
+        if (!sendUser.isFollowing(acceptUser)) {
+            throw new NotFoundFollowException();
+        }
+    }
+
+    private void validateSendAndAcceptUser(User sendUser, User acceptUser) {
+        if (sendUser.equals(acceptUser)) {
+            throw new DuplicateSendAcceptUserException();
+        }
     }
 
 
