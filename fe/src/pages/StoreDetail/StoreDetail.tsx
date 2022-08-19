@@ -1,4 +1,4 @@
-import { FEEDS, STORE } from 'constants/dummyData';
+import { DEFAULT_IMG, FEEDS, STORE } from 'constants/dummyData';
 import Icon from 'common/Icon';
 import CommonHeader from 'components/Common/CommonHeader';
 import Feed from 'components/ReviewList/Feed/Feed';
@@ -6,7 +6,7 @@ import {
   DimText,
   InfoWrap,
   MoreDim,
-  OthersPicture,
+  OtherPicture,
   PictureWrap,
   Row,
   StoreInfo,
@@ -16,8 +16,8 @@ import {
 } from './StoreDetail.styled';
 
 function StoreDetail() {
-  const { storeName, storeRating, pictures, reviewCnt, address, phoneNumber } = STORE;
-  const imgUrls = pictures.slice(0, 5);
+  const { storeName, storeRating, storePictures, reviewCnt, address, phoneNumber } = STORE;
+  const [firstImg, ...otherImg] = getImagesOfStore({ pictures: storePictures, defaultImg: DEFAULT_IMG });
 
   return (
     <>
@@ -25,13 +25,13 @@ function StoreDetail() {
       <Wrap>
         <PictureWrap>
           <div>
-            <img src={imgUrls[0]} alt="음식" width={400} height={400} />
+            <img src={firstImg} alt="음식" width={400} height={400} />
           </div>
-          <OthersPicture>
-            {imgUrls.slice(1).map((picture) => (
+          <OtherPicture>
+            {otherImg.map((picture) => (
               <img src={picture} alt="음식" width={200} height={200} />
             ))}
-          </OthersPicture>
+          </OtherPicture>
           <MoreDim />
           <DimText>더 보기</DimText>
         </PictureWrap>
@@ -53,12 +53,25 @@ function StoreDetail() {
             </Row>
           </InfoWrap>
         </StoreInfo>
-        {FEEDS.map(({ author, contents, rating, store, likeCnt }) => (
-          <Feed author={author} contents={contents} rating={rating} store={store} likeCnt={likeCnt} />
+        {FEEDS.map(({ author, contents, rating, store, likeCnt, pictures }) => (
+          <Feed
+            author={author}
+            contents={contents}
+            rating={rating}
+            store={store}
+            likeCnt={likeCnt}
+            pictures={pictures}
+          />
         ))}
       </Wrap>
     </>
   );
+
+  function getImagesOfStore({ pictures, defaultImg }) {
+    return Array(5)
+      .fill(0)
+      .map((_, i) => pictures[i] || defaultImg);
+  }
 }
 
 export default StoreDetail;

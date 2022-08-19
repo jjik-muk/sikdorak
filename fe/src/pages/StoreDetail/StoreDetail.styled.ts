@@ -15,7 +15,7 @@ export const PictureWrap = styled.div`
   cursor: pointer;
 `;
 
-export const OthersPicture = styled.div`
+export const OtherPicture = styled.div`
   width: 400px;
   height: 400px;
   display: grid;
@@ -67,4 +67,5 @@ export const DimText = styled.div`
   font-weight: 500;
   right: 0;
   bottom: 0;
+  font-size: 20px;
 `;
