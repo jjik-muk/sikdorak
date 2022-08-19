@@ -45,6 +45,7 @@ public class ReviewService {
 		return reviewRepository.save(newReview);
 	}
 
+	@Transactional
 	public Review modifyReview(LoginUser loginUser, Long reviewId,
 		ReviewModifyRequest reviewModifyRequest) {
 		Review review = reviewRepository.findById(reviewId).orElseThrow(NotFoundReviewException::new);
