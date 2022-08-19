@@ -35,7 +35,7 @@ export const iconComponents = {
   Phone,
 };
 
-function Icon({ icon, width = ICON.WIDTH, height = ICON.HEIGHT, fill = 'none', stroke = '#000', onClick }: IconProps) {
+function Icon({ icon, width = ICON.MEDIUM, height = ICON.MEDIUM, fill = 'none', stroke = '#000', onClick }: IconProps) {
   const SelectedIcon = iconComponents[icon];
 
   if (!SelectedIcon) {

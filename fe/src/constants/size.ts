@@ -1,6 +1,6 @@
 export const ICON = {
-  WIDTH: 30,
-  HEIGHT: 30,
+  MEDIUM: 30,
+  SMALL: 15,
 };
 
 export const DETAIL = {
@@ -19,5 +19,12 @@ export const FEED = {
   IMG: {
     WIDTH: 100,
     HEIGHT: 70,
+  },
+};
+
+export const STORE_DETAIL = {
+  IMG: {
+    LARGE: 400,
+    SMALL: 200,
   },
 };

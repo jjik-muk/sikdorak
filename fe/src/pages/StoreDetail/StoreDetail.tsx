@@ -1,4 +1,6 @@
 import { DEFAULT_IMG, FEEDS, STORE } from 'constants/dummyData';
+import { ICON, STORE_DETAIL } from 'constants/size';
+import TEXT from 'constants/text';
 import Icon from 'common/Icon';
 import CommonHeader from 'components/Common/CommonHeader';
 import Feed from 'components/ReviewList/Feed/Feed';
@@ -25,11 +27,11 @@ function StoreDetail() {
       <Wrap>
         <PictureWrap>
           <div>
-            <img src={firstImg} alt="음식" width={400} height={400} />
+            <img src={firstImg} alt={TEXT.ALT.FOOD} width={STORE_DETAIL.IMG.LARGE} height={STORE_DETAIL.IMG.LARGE} />
           </div>
           <OtherPicture>
             {otherImg.map((picture) => (
-              <img src={picture} alt="음식" width={200} height={200} />
+              <img src={picture} alt={TEXT.ALT.FOOD} width={STORE_DETAIL.IMG.SMALL} height={STORE_DETAIL.IMG.SMALL} />
             ))}
           </OtherPicture>
           <MoreDim />
@@ -39,16 +41,16 @@ function StoreDetail() {
           <InfoWrap>
             <Title>{storeName}</Title>
             <Row>
-              <Icon icon="Star" stroke="#fff" fill="#f1c40f" width={15} height={15} />
+              <Icon icon="Star" stroke="#fff" fill="#f1c40f" width={ICON.SMALL} height={ICON.SMALL} />
               <Text>{storeRating} / 5</Text>
               <Text>리뷰 {reviewCnt}</Text>
             </Row>
             <Row>
-              <Icon icon="Location" width={15} height={15} fill="#000" />
+              <Icon icon="Location" width={ICON.SMALL} height={ICON.SMALL} fill="#000" />
               <Text>{address}</Text>
             </Row>
             <Row>
-              <Icon icon="Phone" width={15} height={15} fill="#000" />
+              <Icon icon="Phone" width={ICON.SMALL} height={ICON.SMALL} fill="#000" />
               <Text>{phoneNumber}</Text>
             </Row>
           </InfoWrap>
@@ -68,7 +70,8 @@ function StoreDetail() {
   );
 
   function getImagesOfStore({ pictures, defaultImg }) {
-    return Array(5)
+    const ARR_LEN = 5;
+    return Array(ARR_LEN)
       .fill(0)
       .map((_, i) => pictures[i] || defaultImg);
   }
