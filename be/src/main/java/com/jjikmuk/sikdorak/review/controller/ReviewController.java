@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@UserOnly
 public class ReviewController {
 
 	private final ReviewService reviewService;
 
-	@UserOnly
 	@PostMapping("/api/reviews")
 	public CommonResponseEntity<Void> createReview(
 		@AuthenticatedUser LoginUser loginUser,
@@ -34,7 +34,6 @@ public class ReviewController {
 			HttpStatus.CREATED);
 	}
 
-	@UserOnly
 	@PutMapping("/api/reviews/{reviewId}")
 	public CommonResponseEntity<Void> modifyReview(
 		@PathVariable Long reviewId,
@@ -46,7 +45,6 @@ public class ReviewController {
 			HttpStatus.OK);
 	}
 
-	@UserOnly
 	@DeleteMapping("/api/reviews/{reviewId}")
 	public CommonResponseEntity<Void> removeReview(
 		@PathVariable Long reviewId,
