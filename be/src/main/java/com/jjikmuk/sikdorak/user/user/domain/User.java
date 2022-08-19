@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.user.user.domain;
 
 import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -41,29 +42,28 @@ public class User extends BaseTimeEntity {
     private Followers followers;
 
     public User(Long uniqueId, String nickname, String profileImage, String email) {
-        this(null, uniqueId, nickname, profileImage, email);
+        this(null, uniqueId, nickname, profileImage, email, new HashSet<>(), new HashSet<>());
     }
 
     public User(Long id, Long uniqueId, String nickname, String profileImage, String email) {
+        this(id, uniqueId, nickname, profileImage, email, new HashSet<>(), new HashSet<>());
+    }
+
+    public User(Long uniqueId, String nickname, String profileImage, String email,
+        Set<Long> followings, Set<Long> followers) {
+        this(null, uniqueId, nickname, profileImage, email, followings, followers);
+    }
+
+    public User(Long id,Long uniqueId, String nickname, String profileImage, String email,
+        Set<Long> followings, Set<Long> followers) {
         this.id = id;
         this.uniqueId = uniqueId;
         this.nickname = new Nickname(nickname);
         this.profileImage = new ProfileImage(profileImage);
         this.email = new Email(email);
-        this.followings = new Followings();
-        this.followers = new Followers();
+        this.followings = new Followings(followings);
+        this.followers = new Followers(followers);
     }
-//
-//    public User(Long id, Long uniqueId, String nickname, String profileImage, String email,
-//        Set<Long> followings, Set<Long> followers) {
-//        this.id = id;
-//        this.uniqueId = uniqueId;
-//        this.nickname = new Nickname(nickname);
-//        this.profileImage = new ProfileImage(profileImage);
-//        this.email = new Email(email);
-//        this.followings = new Followings(followings);
-//        this.followers = new Followers(followers);
-//    }
 
     public Long getId() {
         return id;

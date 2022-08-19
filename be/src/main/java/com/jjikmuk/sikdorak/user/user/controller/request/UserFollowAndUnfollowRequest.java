@@ -1,5 +1,7 @@
 package com.jjikmuk.sikdorak.user.user.controller.request;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +11,10 @@ import lombok.NoArgsConstructor;
 public class UserFollowAndUnfollowRequest {
 
     @NotNull
+    @Min(1)
+    @Max(Long.MAX_VALUE)
     private long userId;
+
 
     public UserFollowAndUnfollowRequest(long userId) {
         this.userId = userId;
