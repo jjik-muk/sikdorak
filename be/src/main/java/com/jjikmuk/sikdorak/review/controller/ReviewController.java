@@ -53,7 +53,7 @@ public class ReviewController {
 		@AuthenticatedUser LoginUser loginUser) {
 		reviewService.removeReview(loginUser, reviewId);
 
-		return new CommonResponseEntity<>(ResponseCodeAndMessages.REVIEW_MODIFY_SUCCESS,
+		return new CommonResponseEntity<>(ResponseCodeAndMessages.REVIEW_REMOVE_SUCCESS,
 			HttpStatus.OK);
 	}
 }
