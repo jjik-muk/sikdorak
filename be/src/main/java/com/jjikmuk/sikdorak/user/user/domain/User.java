@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.user.user.domain;
 
 import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
 import java.util.Set;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -49,7 +50,7 @@ public class User extends BaseTimeEntity {
         this.uniqueId = uniqueId;
         this.nickname = new Nickname(nickname);
         this.profileImage = new ProfileImage(profileImage);
-        this.email = new Email(email);
+        this.email = Objects.isNull(email) ? new Email() : new Email(email);
         this.followings = new Followings();
         this.followers = new Followers();
     }

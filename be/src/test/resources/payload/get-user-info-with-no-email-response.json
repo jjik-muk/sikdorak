@@ -13,12 +13,8 @@
     "email_needs_agreement": false,
     "is_email_valid": true,
     "is_email_verified": true,
-    "email": "sample@sample.com",
     "age_range_needs_agreement": false,
-    "age_range": "20~29",
     "birthday_needs_agreement": false,
-    "birthday": "1130",
-    "gender_needs_agreement": false,
-    "gender": "female"
+    "gender_needs_agreement": false
   }
 }
