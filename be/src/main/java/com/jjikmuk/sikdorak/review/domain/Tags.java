@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.review.domain;
 
 import com.jjikmuk.sikdorak.review.exception.InvalidTagsException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -27,7 +28,8 @@ public class Tags {
 
 	public Tags(List<String> tags) {
 		if (Objects.isNull(tags)) {
-			throw new InvalidTagsException();
+			this.tags = new HashSet<>();
+			return;
 		}
 
 		Set<Tag> filteredTags = tags.stream()
