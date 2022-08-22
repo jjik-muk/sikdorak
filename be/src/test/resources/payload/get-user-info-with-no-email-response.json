@@ -4,8 +4,8 @@
     "profile_needs_agreement": false,
     "profile": {
       "nickname": "홍길동",
-      "thumbnail_image_url": "http://yyy.kakao.com/.../img_110x110.jpg",
-      "profile_image_url": "http://yyy.kakao.com/dn/.../img_640x640.jpg",
+      "thumbnail_image_url": "http://yyy.kakao.com/img_110x110.jpg",
+      "profile_image_url": "http://yyy.kakao.com/dn/img_640x640.jpg",
       "is_default_image": false
     },
     "name_needs_agreement": false,

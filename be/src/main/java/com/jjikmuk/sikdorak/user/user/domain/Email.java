@@ -12,7 +12,6 @@ public class Email {
 
     private static final String EMAIL_REGEX = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
 
-    @javax.validation.constraints.Email
     private String email;
 
     public Email() {
