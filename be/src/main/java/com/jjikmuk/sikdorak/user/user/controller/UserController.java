@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @UserOnly
-    @PutMapping("api/user/follow")
+    @PutMapping("/api/user/follow")
     public CommonResponseEntity<Void> follow(@AuthenticatedUser LoginUser loginUser,
         @RequestBody UserFollowAndUnfollowRequest userFollowAndUnfollowRequest) {
 
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @UserOnly
-    @PutMapping("api/user/unfollow")
+    @PutMapping("/api/user/unfollow")
     public CommonResponseEntity<Void> unfollow(@AuthenticatedUser LoginUser loginUser,
         @RequestBody UserFollowAndUnfollowRequest userFollowAndUnfollowRequest) {
 
