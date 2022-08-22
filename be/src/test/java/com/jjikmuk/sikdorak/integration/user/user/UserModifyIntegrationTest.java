@@ -15,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@DisplayName("UserModify 통합 테스트")
 class UserModifyIntegrationTest extends InitIntegrationTest {
 
     @Autowired
