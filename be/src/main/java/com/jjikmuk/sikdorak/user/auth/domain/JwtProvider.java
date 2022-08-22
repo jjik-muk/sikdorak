@@ -44,7 +44,6 @@ public class JwtProvider {
         return buildToken(payload, refreshTokeExpiredDate);
     }
 
-    // INFO: token값에 대한 null 예외처리는 parseClaimsJws에서 모두 하기 때문에 별도로 작성하지 않았습니다.
     public void validateToken(String token) {
         try {
             Jwts.parserBuilder()
