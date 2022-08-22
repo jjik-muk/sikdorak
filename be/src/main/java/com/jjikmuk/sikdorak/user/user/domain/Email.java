@@ -5,10 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.persistence.Embeddable;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 @Embeddable
 public class Email {
 
@@ -16,6 +14,10 @@ public class Email {
 
     @javax.validation.constraints.Email
     private String email;
+
+    public Email() {
+        this.email = "";
+    }
 
     public Email(String email) {
         if (!isValidEmailForm(email)) throw new InvalidUserEmailException();

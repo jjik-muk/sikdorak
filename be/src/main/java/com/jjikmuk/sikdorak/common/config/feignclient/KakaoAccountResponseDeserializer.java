@@ -24,12 +24,14 @@ public class KakaoAccountResponseDeserializer extends JsonDeserializer<KakaoAcco
                 .get("profile_image_url")
                 .asText();
 
-        String email = kakaoAccountNode.get("email").asText();
-        boolean isEmailValid = kakaoAccountNode.get("is_email_valid").asBoolean();
-        boolean isEmailVerified = kakaoAccountNode.get("is_email_verified").asBoolean();
+        if (kakaoAccountNode.has("email")) {
+            String email = kakaoAccountNode.get("email").asText();
+            boolean isEmailValid = kakaoAccountNode.get("is_email_valid").asBoolean();
+            boolean isEmailVerified = kakaoAccountNode.get("is_email_verified").asBoolean();
 
-        if (isEmailValid && isEmailVerified) {
-            return new KakaoAccountResponse(uniqueId, nickname, profileImage, email);
+            if (isEmailValid && isEmailVerified) {
+                return new KakaoAccountResponse(uniqueId, nickname, profileImage, email);
+            }
         }
 
         return new KakaoAccountResponse(uniqueId, nickname, profileImage, null);
