@@ -40,8 +40,8 @@ class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
         Set<Long> sendUserFollowings = userRespository.findFollowings(testData.followSendUser.getId());
         Set<Long> acceptUserFollowers = userRespository.findFollowers(testData.user1.getId());
 
-        assertThat(sendUserFollowings.contains(testData.user1.getId())).isTrue();
-        assertThat(acceptUserFollowers.contains(testData.followSendUser.getId())).isTrue();
+        assertThat(sendUserFollowings).contains(testData.user1.getId());
+        assertThat(acceptUserFollowers).contains(testData.followSendUser.getId());
     }
 
     @Test
@@ -95,8 +95,8 @@ class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
         Set<Long> sendUserFollowings = userRespository.findFollowings(testData.followSendUser.getId());
         Set<Long> acceptUserFollowers = userRespository.findFollowers(testData.user2.getId());
 
-        assertThat(sendUserFollowings.contains(testData.user2.getId())).isFalse();
-        assertThat(acceptUserFollowers.contains(testData.followSendUser.getId())).isFalse();
+        assertThat(sendUserFollowings).doesNotContain(testData.user2.getId());
+        assertThat(acceptUserFollowers).doesNotContain(testData.followSendUser.getId());
 
     }
 
