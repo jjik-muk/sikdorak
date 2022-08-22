@@ -48,6 +48,7 @@ public class DatabaseConfigurator implements InitializingBean {
     public String user1ValidAuthorizationHeader;
     public String user2ValidAuthorizationHeader;
     public String followSendUserValidAuthorizationHeader;
+    public String followAcceptUserValidAuthorizationHeader;
     public String userInvalidAuthorizationHeader;
     public Review review;
 
@@ -135,6 +136,8 @@ public class DatabaseConfigurator implements InitializingBean {
             "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user2.getId()));
         this.followSendUserValidAuthorizationHeader =
             "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.followSendUser.getId()));
+        this.followAcceptUserValidAuthorizationHeader =
+            "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.followAcceptUser.getId()));
         this.userInvalidAuthorizationHeader = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzNjgyMjM2MzgiLCJleHAiOjE2MzA2MzkzNTF9.SnT_Nxgspg3cUomCieDyBRH9TowtWh21YIfAKntuguA";
     }
 

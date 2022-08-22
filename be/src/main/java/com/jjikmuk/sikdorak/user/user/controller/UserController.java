@@ -32,7 +32,7 @@ public class UserController {
         List<UserReviewResponse> userReviewRespons = userService.searchUserReviewsByUserIdAndRelationType(userId, loginUser);
 
         return new CommonResponseEntity<>(
-            ResponseCodeAndMessages.USER_REVIEWS_SEARCH_SUCCESS,
+            ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS,
             userReviewRespons,
             HttpStatus.OK);
     }
