@@ -1,8 +1,9 @@
 package com.jjikmuk.sikdorak.user.user.domain;
 
 import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
-import java.util.Set;
+import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -119,4 +120,21 @@ public class User extends BaseTimeEntity {
         this.getFollowings().remove(acceptUser.getId());
     }
 
+    /**
+     * 유저 - 로그인 유저와의 관계
+     * @param loginUser : 로그인한 유저
+     * @return : 친구 관계 여부 (SELF : 자기 자신, CONNECTION : 친구, DISCONNECTION : 친구 아님)
+     */
+    public RelationType relationTypeTo(LoginUser loginUser) {
+        if (this.id.equals(loginUser.getId())) {
+            return RelationType.SELF;
+        }
+        else if (loginUser.isAnonymous()) {
+            return RelationType.DISCONNECTION;
+        }
+        else if (!this.followers.isConnection(loginUser.getId())) { // 위 조건문, loginUser.isAnonymous()와 별도로 나눈 조회를 늦게하기 위해서이다.
+            return RelationType.DISCONNECTION;
+        }
+        return RelationType.CONNECTION;
+    }
 }

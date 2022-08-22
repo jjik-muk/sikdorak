@@ -44,4 +44,10 @@ public class Tags {
 	public int size() {
 		return tags.size();
 	}
+
+	public Set<String> getTags() {
+		return tags.stream()
+			.map(Tag::getText)
+			.collect(Collectors.toSet());
+	}
 }

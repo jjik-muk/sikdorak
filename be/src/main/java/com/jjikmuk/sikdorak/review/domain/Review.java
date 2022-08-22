@@ -4,6 +4,7 @@ import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -81,6 +82,30 @@ public class Review extends BaseTimeEntity {
 		return userId;
 	}
 
+	public Long getStoreId() {
+		return storeId;
+	}
+
+	public float getReviewScore() {
+		return reviewScore.getReviewScore();
+	}
+
+	public String getReviewVisibility() {
+		return reviewVisibility.name();
+	}
+
+	public LocalDate getVisitedDate() {
+		return visitedDate.getReviewVisitedDate();
+	}
+
+	public Set<String> getTags() {
+		return tags.getTags();
+	}
+
+	public List<String> getImages() {
+		return images;
+	}
+
 	public String getReviewContent() {
 		return reviewContent.getReviewContent();
 	}
@@ -107,4 +132,5 @@ public class Review extends BaseTimeEntity {
 	public void delete() {
 		this.deleted = true;
 	}
+
 }

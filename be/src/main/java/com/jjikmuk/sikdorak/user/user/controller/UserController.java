@@ -7,9 +7,13 @@ import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
+import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+
+    @GetMapping("/api/users/{userId}/reviews")
+    public CommonResponseEntity<List<UserReviewResponse>> searchReviewsByUserId(
+        @PathVariable Long userId,
+        @AuthenticatedUser LoginUser loginUser) {
+
+        List<UserReviewResponse> userReviewRespons = userService.searchByUserReviews(userId, loginUser);
+
+        return new CommonResponseEntity<>(
+            ResponseCodeAndMessages.USER_REVIEWS_SEARCH_SUCCESS,
+            userReviewRespons,
+            HttpStatus.OK);
+    }
 
     @UserOnly
     @PutMapping("/api/user")
