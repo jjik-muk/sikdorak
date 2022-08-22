@@ -28,7 +28,7 @@ public class UserService {
     private final ReviewRepository reviewRepository;
 
     @Transactional(readOnly = true)
-    public List<UserReviewResponse> searchByUserReviews(Long searchUserId, LoginUser loginUser) {
+    public List<UserReviewResponse> searchUserReviewsByUserIdAndRelationType(Long searchUserId, LoginUser loginUser) {
         log.debug("searchByUserReviews: searchUserId={}, loginUser.id={}, loginUser.authority={}", searchUserId, loginUser.getId(), loginUser.getAuthority());
 
         User searchUser = userRespository.findById(searchUserId)

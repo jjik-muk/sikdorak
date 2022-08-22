@@ -29,7 +29,7 @@ public class UserController {
         @PathVariable Long userId,
         @AuthenticatedUser LoginUser loginUser) {
 
-        List<UserReviewResponse> userReviewRespons = userService.searchByUserReviews(userId, loginUser);
+        List<UserReviewResponse> userReviewRespons = userService.searchUserReviewsByUserIdAndRelationType(userId, loginUser);
 
         return new CommonResponseEntity<>(
             ResponseCodeAndMessages.USER_REVIEWS_SEARCH_SUCCESS,

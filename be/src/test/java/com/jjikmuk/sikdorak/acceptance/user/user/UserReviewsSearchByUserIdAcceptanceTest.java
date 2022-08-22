@@ -40,8 +40,7 @@ class UserReviewsSearchByUserIdAcceptanceTest extends InitAcceptanceTest {
 			.log().all()
 			.statusCode(HttpStatus.OK.value())
 			.body("code", Matchers.equalTo(ResponseCodeAndMessages.USER_REVIEWS_SEARCH_SUCCESS.getCode()))
-			.body("message",
-				Matchers.equalTo(ResponseCodeAndMessages.USER_REVIEWS_SEARCH_SUCCESS.getMessage()));
+			.body("message", Matchers.equalTo(ResponseCodeAndMessages.USER_REVIEWS_SEARCH_SUCCESS.getMessage()));
 	}
 
 

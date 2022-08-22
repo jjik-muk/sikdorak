@@ -147,5 +147,32 @@ public class DatabaseConfigurator implements InitializingBean {
             LocalDate.of(2022, 1, 1),
             List.of("tag1", "tag2"),
             List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
+
+        reviewRepository.save(new Review(this.followAcceptUser.getId(),
+            this.store.getId(),
+            "전체 공개된 리뷰 게시물",
+            3.f,
+            "public",
+            LocalDate.of(2022, 1, 1),
+            List.of("tag1", "tag2"),
+            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
+
+        reviewRepository.save(new Review(this.followAcceptUser.getId(),
+            this.store.getId(),
+            "친구 공개된 리뷰 게시물",
+            3.f,
+            "protected",
+            LocalDate.of(2022, 1, 1),
+            List.of("tag1", "tag2"),
+            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
+
+        reviewRepository.save(new Review(this.followAcceptUser.getId(),
+            this.store.getId(),
+            "비공개된 리뷰 게시물",
+            3.f,
+            "private",
+            LocalDate.of(2022, 1, 1),
+            List.of("tag1", "tag2"),
+            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
     }
 }
