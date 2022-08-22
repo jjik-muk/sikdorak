@@ -13,7 +13,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -48,8 +47,8 @@ public class Review extends BaseTimeEntity {
 	@Embedded
 	private Tags tags = new Tags();
 
-	@Transient
-	private List<String> images;
+	@Embedded
+	private Images images = new Images();
 
 	private boolean deleted = Boolean.FALSE;
 
@@ -64,7 +63,7 @@ public class Review extends BaseTimeEntity {
 		this.reviewVisibility = ReviewVisibility.create(reviewVisibility);
 		this.visitedDate = new ReviewVisitedDate(visitedDate);
 		this.tags = new Tags(tags);
-		this.images = images;
+		this.images = new Images(images);
 	}
 
 
@@ -103,7 +102,7 @@ public class Review extends BaseTimeEntity {
 	}
 
 	public List<String> getImages() {
-		return images;
+		return images.getImages();
 	}
 
 	public String getReviewContent() {
@@ -126,7 +125,7 @@ public class Review extends BaseTimeEntity {
 		this.reviewVisibility = ReviewVisibility.create(reviewVisibility);
 		this.visitedDate = new ReviewVisitedDate(visitedDate);
 		this.tags = new Tags(tags);
-		this.images = images;
+		this.images = new Images(images);
 	}
 
 	public void delete() {

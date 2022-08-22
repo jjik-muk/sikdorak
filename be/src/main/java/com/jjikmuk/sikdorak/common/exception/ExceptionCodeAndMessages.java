@@ -2,6 +2,8 @@ package com.jjikmuk.sikdorak.common.exception;
 
 import com.jjikmuk.sikdorak.common.CodeAndMessages;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
+import com.jjikmuk.sikdorak.review.exception.InvalidReviewImageException;
+import com.jjikmuk.sikdorak.review.exception.InvalidReviewImagesException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewScoreException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisibilityException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisitedDateException;
@@ -17,8 +19,8 @@ import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
 import com.jjikmuk.sikdorak.user.auth.exception.NeedLoginException;
 import com.jjikmuk.sikdorak.user.auth.exception.OAuthServerException;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateFollowingException;
-import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateSendAcceptUserException;
+import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidFollowersException;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidFollowingException;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidUserEmailException;
@@ -42,6 +44,8 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     INVALID_REVIEW_TAGS("F-R005", "유효하지 않은 태그들 입니다.", InvalidTagsException.class),
     INVALID_REVIEW_TAG("F-R006", "유효하지 않은 태그 입니다.", InvalidTagException.class),
     NOT_FOUND_STROE("F-R007", "리뷰를 찾을 수 없습니다.", NotFoundReviewException.class),
+    INVALID_REVIEW_IMAGES("F-R008", "유효하지 않은 리뷰 이미지들 입니다.", InvalidReviewImagesException.class),
+    INVALID_REVIEW_IMAGE("F-R009", "유효하지 않은 리뷰 이미지 입니다.", InvalidReviewImageException.class),
 
     // Store
     NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", NotFoundStoreException.class),
