@@ -1,8 +1,10 @@
 package com.jjikmuk.sikdorak.user.auth.domain;
 
 import com.jjikmuk.sikdorak.common.properties.JwtProperties;
+import com.jjikmuk.sikdorak.user.auth.exception.ExpiredTokenException;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -49,7 +51,9 @@ public class JwtProvider {
                 .setSigningKey(secretKey)
                 .build()
                 .parseClaimsJws(token);
-        }catch (JwtException e) {
+        } catch (ExpiredJwtException e) {
+            throw new ExpiredTokenException();
+        }catch (IllegalArgumentException | JwtException e) {
             throw new InvalidTokenException();
         }
     }
