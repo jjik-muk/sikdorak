@@ -30,6 +30,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				HttpMethod.DELETE.name(),
 				HttpMethod.OPTIONS.name()
 			);
+
+		registry.addMapping("/api/oauth/**")
+				.allowCredentials(true);
 	}
 
 	@Override
