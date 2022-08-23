@@ -1,8 +1,10 @@
 package com.jjikmuk.sikdorak.user.auth.domain;
 
 import com.jjikmuk.sikdorak.common.properties.JwtProperties;
+import com.jjikmuk.sikdorak.user.auth.exception.ExpiredTokenException;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -22,43 +24,45 @@ public class JwtProvider {
     }
 
     public JwtTokenPair createTokenResponse(String payload) {
-        String accessToken = createAccessToken(payload);
-        String refreshToken = createRefreshToken(payload);
+
+        Date accessTokenExpiredDate = new Date(
+            new Date().getTime() + jwtProperties.getAccessTokenExpiredMillisecond());
+        Date refreshTokeExpiredDate = new Date(
+            new Date().getTime() + jwtProperties.getRefreshTokenExpiredMillisecond());
+
+
+        String accessToken = createAccessToken(payload, accessTokenExpiredDate);
+        String refreshToken = createRefreshToken(payload, refreshTokeExpiredDate);
 
         return new JwtTokenPair(accessToken, refreshToken);
     }
 
-    public String createAccessToken(String payload) {
-        Date accessTokenExpiredDate = new Date(
-            new Date().getTime() + jwtProperties.getAccessTokenExpiredMillisecond());
-
+    public String createAccessToken(String payload, Date accessTokenExpiredDate) {
         return buildToken(payload, accessTokenExpiredDate);
     }
 
-    public String createRefreshToken(String payload) {
-        Date refreshTokeExpiredDate = new Date(
-            new Date().getTime() + jwtProperties.getRefreshTokenExpiredMillisecond());
-
-        return buildToken(payload, refreshTokeExpiredDate);
+    public String createRefreshToken(String payload, Date refreshTokenExpiredDate) {
+        return buildToken(payload, refreshTokenExpiredDate);
     }
 
-    // INFO: token값에 대한 null 예외처리는 parseClaimsJws에서 모두 하기 때문에 별도로 작성하지 않았습니다.
     public void validateToken(String token) {
         try {
             Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
                 .parseClaimsJws(token);
-        }catch (JwtException e) {
+        } catch (ExpiredJwtException e) {
+            throw new ExpiredTokenException();
+        }catch (IllegalArgumentException | JwtException e) {
             throw new InvalidTokenException();
         }
     }
 
-    public String decodeToken(String refreshToken) {
+    public String decodeToken(String token) {
         Claims claim = Jwts.parserBuilder()
             .setSigningKey(secretKey)
             .build()
-            .parseClaimsJws(refreshToken)
+            .parseClaimsJws(token)
             .getBody();
 
         return claim.get("id", String.class);

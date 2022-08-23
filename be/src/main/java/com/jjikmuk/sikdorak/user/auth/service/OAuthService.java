@@ -1,7 +1,6 @@
 package com.jjikmuk.sikdorak.user.auth.service;
 
 import com.jjikmuk.sikdorak.common.properties.KakaoProperties;
-import com.jjikmuk.sikdorak.user.auth.controller.response.AccessTokenResponse;
 import com.jjikmuk.sikdorak.user.auth.controller.response.KakaoAccountResponse;
 import com.jjikmuk.sikdorak.user.auth.controller.response.OAuthTokenResponse;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
@@ -45,14 +44,16 @@ public class OAuthService{
     }
 
     @Transactional(readOnly = true)
-    public AccessTokenResponse updateAccessToken(String refreshToken) {
+    public JwtTokenPair updateAccessAndRefreshToken(String refreshToken) {
 
         jwtProvider.validateToken(refreshToken);
         String userId = jwtProvider.decodeToken(refreshToken);
+
         if (!userService.isExistingById(Long.parseLong(userId))) {
             throw new NotFoundUserException();
         }
-        return new AccessTokenResponse(jwtProvider.createAccessToken(userId));
+
+        return jwtProvider.createTokenResponse(userId);
     }
 
     private OAuthTokenResponse getOAuthAccessToken(String code) {

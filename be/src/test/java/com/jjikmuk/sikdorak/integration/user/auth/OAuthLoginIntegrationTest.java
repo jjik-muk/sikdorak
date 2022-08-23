@@ -44,7 +44,6 @@ public class OAuthLoginIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("이메일 정보를 가진 유저일 경우 이메일을 저장하고 로그인에 성공한다.")
     public void oauth_login_success_with_user_email() {
-
         WireMock.setScenarioState("Email Not Null", "Started");
 
         JwtTokenPair code = oAuthService.login("code");
@@ -54,13 +53,11 @@ public class OAuthLoginIntegrationTest extends InitIntegrationTest {
         assertThat(code.getAccessToken()).isNotNull();
         assertThat(user).isNotNull();
         assertThat(user.getEmail()).isNotNull();
-
     }
 
     @Test
     @DisplayName("이메일 정보가 없는 유저일 경우 이메일은 빈칸으로 저장하고 로그인에 성공한다.")
     public void oauth_login_success_without_user_email() {
-
         WireMock.setScenarioState("Email Null", "Started");
 
         JwtTokenPair code = oAuthService.login("code");
@@ -71,6 +68,5 @@ public class OAuthLoginIntegrationTest extends InitIntegrationTest {
         assertThat(code.getAccessToken()).isNotNull();
         assertThat(user).isNotNull();
         assertThat(user.getEmail()).isEmpty();
-
     }
 }

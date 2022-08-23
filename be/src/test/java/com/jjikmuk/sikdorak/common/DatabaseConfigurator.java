@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -49,7 +50,9 @@ public class DatabaseConfigurator implements InitializingBean {
     public String user2ValidAuthorizationHeader;
     public String followSendUserValidAuthorizationHeader;
     public String followAcceptUserValidAuthorizationHeader;
-    public String userInvalidAuthorizationHeader;
+    public String user1RefreshToken;
+    public String user1ExpiredRefreshToken;
+    public String user1InvalidRefreshToken;
     public Review review;
 
     public void initDataSource() {
@@ -130,15 +133,25 @@ public class DatabaseConfigurator implements InitializingBean {
     }
 
     private void initUserAuthorizationData() {
+        String user1Payload = String.valueOf(this.user1.getId());
+        String user2Payload = String.valueOf(this.user2.getId());
+        String followSendUserPayload = String.valueOf(this.followSendUser.getId());
+        String followAcceptUserPayload = String.valueOf(this.followAcceptUser.getId());
+
+        Date now = new Date();
+        Date accessTokenExpiredTime = new Date(now.getTime() + 1800000);
+
         this.user1ValidAuthorizationHeader =
-            "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user1.getId()));
+            "Bearer " + jwtProvider.createAccessToken(user1Payload, accessTokenExpiredTime);
         this.user2ValidAuthorizationHeader =
-            "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user2.getId()));
+            "Bearer " + jwtProvider.createAccessToken(user2Payload,accessTokenExpiredTime);
         this.followSendUserValidAuthorizationHeader =
-            "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.followSendUser.getId()));
+            "Bearer " + jwtProvider.createAccessToken(followSendUserPayload, accessTokenExpiredTime);
         this.followAcceptUserValidAuthorizationHeader =
-            "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.followAcceptUser.getId()));
-        this.userInvalidAuthorizationHeader = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzNjgyMjM2MzgiLCJleHAiOjE2MzA2MzkzNTF9.SnT_Nxgspg3cUomCieDyBRH9TowtWh21YIfAKntuguA";
+            "Bearer " + jwtProvider.createAccessToken(followAcceptUserPayload, accessTokenExpiredTime);
+        this.user1RefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime()+8000000));
+        this.user1ExpiredRefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime() + 100));
+        this.user1InvalidRefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime() - 1000)) + "invalid";
     }
 
     private void initReviewData() {
