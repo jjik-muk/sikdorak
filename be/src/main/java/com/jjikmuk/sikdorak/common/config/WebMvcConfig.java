@@ -22,6 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
+			.allowCredentials(true)
 			.allowedOrigins(allowedOrigins)
 			.allowedMethods(
 				HttpMethod.GET.name(),
@@ -30,9 +31,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				HttpMethod.DELETE.name(),
 				HttpMethod.OPTIONS.name()
 			);
-
-		registry.addMapping("/api/oauth/**")
-				.allowCredentials(true);
 	}
 
 	@Override
