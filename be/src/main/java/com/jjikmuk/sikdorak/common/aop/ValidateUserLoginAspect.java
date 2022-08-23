@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ValidateUserLoginAspect {
 
-    @Before("@annotation(com.jjikmuk.sikdorak.common.aop.UserOnly)")
+    @Before("@annotation(com.jjikmuk.sikdorak.common.aop.UserOnly) || @within(com.jjikmuk.sikdorak.common.aop.UserOnly)")
     public void validateLogin(JoinPoint joinPoint) {
         LoginUser loginUser = findLoginUser(joinPoint.getArgs());
         loginUser.ifAnonymousThrowException();

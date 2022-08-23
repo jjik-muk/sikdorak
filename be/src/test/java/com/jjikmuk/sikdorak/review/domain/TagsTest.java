@@ -1,17 +1,16 @@
 package com.jjikmuk.sikdorak.review.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.jjikmuk.sikdorak.review.exception.InvalidTagsException;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Tags 클래스")
 class TagsTest {
@@ -35,6 +34,18 @@ class TagsTest {
                 Tags tags = new Tags(limitTags);
 
                 assertThat(tags.size()).isEqualTo(length);
+            }
+        }
+
+        @Nested
+        @DisplayName("만약 태그가 null로 주어진다면")
+        class Context_with_empty_Tags {
+            @Test
+            @DisplayName("빈 Tags 객체를 반환한다.")
+            void It_returns_a_object() {
+                Tags tags = new Tags(null);
+
+                assertThat(tags.size()).isZero();
             }
         }
 

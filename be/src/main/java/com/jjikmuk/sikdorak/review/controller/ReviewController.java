@@ -15,16 +15,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/reviews")
+@UserOnly
 public class ReviewController {
 
 	private final ReviewService reviewService;
 
-	@UserOnly
-	@PostMapping("/api/reviews")
+	@PostMapping
 	public CommonResponseEntity<Void> createReview(
 		@AuthenticatedUser LoginUser loginUser,
 		@RequestBody ReviewCreateRequest reviewCreateRequest) {
@@ -34,8 +36,7 @@ public class ReviewController {
 			HttpStatus.CREATED);
 	}
 
-	@UserOnly
-	@PutMapping("/api/reviews/{reviewId}")
+	@PutMapping("/{reviewId}")
 	public CommonResponseEntity<Void> modifyReview(
 		@PathVariable Long reviewId,
 		@AuthenticatedUser LoginUser loginUser,
@@ -46,8 +47,7 @@ public class ReviewController {
 			HttpStatus.OK);
 	}
 
-	@UserOnly
-	@DeleteMapping("/api/reviews/{reviewId}")
+	@DeleteMapping("/{reviewId}")
 	public CommonResponseEntity<Void> removeReview(
 		@PathVariable Long reviewId,
 		@AuthenticatedUser LoginUser loginUser) {

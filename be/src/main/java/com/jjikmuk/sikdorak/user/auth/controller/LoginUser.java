@@ -19,6 +19,10 @@ public class LoginUser {
 		this(null, authority);
 	}
 
+	public boolean isAnonymous() {
+		return authority.equals(Authority.ANONYMOUS);
+	}
+
 	public void ifAnonymousThrowException() {
 		if (authority.equals(Authority.ANONYMOUS)) {
 			throw new NeedLoginException();

@@ -1,25 +1,54 @@
 package com.jjikmuk.sikdorak.user.user.service;
 
+import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
+import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateFollowingException;
-import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateSendAcceptUserException;
+import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundFollowException;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
+import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class UserService {
 
     private final UserRespository userRespository;
+    private final ReviewRepository reviewRepository;
+
+    @Transactional(readOnly = true)
+    public List<UserReviewResponse> searchUserReviewsByUserIdAndRelationType(Long searchUserId, LoginUser loginUser) {
+        log.debug("searchByUserReviews: searchUserId={}, loginUser.id={}, loginUser.authority={}", searchUserId, loginUser.getId(), loginUser.getAuthority());
+
+        User searchUser = userRespository.findById(searchUserId)
+            .orElseThrow(NotFoundUserException::new);
+
+        return switch (searchUser.relationTypeTo(loginUser)) {
+            case SELF -> reviewRepository.findByUserId(searchUserId)
+                .stream()
+                .map(UserReviewResponse::from)
+                .toList();
+            case CONNECTION -> reviewRepository.findByUserIdAndConnection(searchUserId)
+                .stream()
+                .map(UserReviewResponse::from)
+                .toList();
+            case DISCONNECTION -> reviewRepository.findByUserIdAndDisconnection(searchUserId)
+                .stream()
+                .map(UserReviewResponse::from)
+                .toList();
+        };
+    }
 
     @Transactional
     public long createUser(User user) {
@@ -119,6 +148,4 @@ public class UserService {
             throw new DuplicateSendAcceptUserException();
         }
     }
-
-
 }
