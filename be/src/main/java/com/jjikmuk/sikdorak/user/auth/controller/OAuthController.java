@@ -8,7 +8,10 @@ import com.jjikmuk.sikdorak.user.auth.service.OAuthService;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.server.Cookie.SameSite;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,8 +53,12 @@ public class OAuthController {
     }
 
     private static void setCookie(HttpServletResponse response, String refreshToken) {
-        Cookie cookie = new Cookie("refreshToken", refreshToken);
-        cookie.setHttpOnly(true);
-        response.addCookie(cookie);
+        ResponseCookie cookieHeader = ResponseCookie.from("refreshToken", refreshToken)
+            .sameSite(SameSite.NONE.attributeValue())
+            .secure(true)
+            .httpOnly(true)
+            .build();
+
+        response.addHeader(HttpHeaders.SET_COOKIE, cookieHeader.toString());
     }
 }
