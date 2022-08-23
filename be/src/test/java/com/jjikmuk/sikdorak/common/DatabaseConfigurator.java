@@ -136,6 +136,7 @@ public class DatabaseConfigurator implements InitializingBean {
         String user1Payload = String.valueOf(this.user1.getId());
         String user2Payload = String.valueOf(this.user2.getId());
         String followSendUserPayload = String.valueOf(this.followSendUser.getId());
+        String followAcceptUserPayload = String.valueOf(this.followAcceptUser.getId());
 
         Date now = new Date();
         Date accessTokenExpiredTime = new Date(now.getTime() + 1800000);
@@ -146,6 +147,8 @@ public class DatabaseConfigurator implements InitializingBean {
             "Bearer " + jwtProvider.createAccessToken(user2Payload,accessTokenExpiredTime);
         this.followSendUserValidAuthorizationHeader =
             "Bearer " + jwtProvider.createAccessToken(followSendUserPayload, accessTokenExpiredTime);
+        this.followAcceptUserValidAuthorizationHeader =
+            "Bearer " + jwtProvider.createAccessToken(followAcceptUserPayload, accessTokenExpiredTime);
         this.user1RefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime()+8000000));
         this.user1ExpiredRefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime() + 100));
         this.user1InvalidRefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime() - 1000)) + "invalid";

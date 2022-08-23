@@ -65,7 +65,6 @@ class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
 
         assertThatThrownBy(() -> userService.followUser(loginUser, request))
             .isInstanceOf(NotFoundUserException.class);
-
     }
 
     @Test
@@ -78,7 +77,6 @@ class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
 
         assertThatThrownBy(() -> userService.followUser(loginUser, request))
             .isInstanceOf(DuplicateFollowingException.class);
-
     }
 
 
@@ -97,7 +95,6 @@ class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
 
         assertThat(sendUserFollowings).doesNotContain(testData.user2.getId());
         assertThat(acceptUserFollowers).doesNotContain(testData.followSendUser.getId());
-
     }
 
     @Test
@@ -121,7 +118,6 @@ class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
 
         assertThatThrownBy(() -> userService.unfollowUser(loginUser, request))
             .isInstanceOf(NotFoundUserException.class);
-
     }
 
     @Test
@@ -134,7 +130,6 @@ class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
 
         assertThatThrownBy(() -> userService.unfollowUser(loginUser, unfollowRequest))
             .isInstanceOf(NotFoundFollowException.class);
-
     }
 
 }
