@@ -24,30 +24,26 @@ public class JwtProvider {
     }
 
     public JwtTokenPair createTokenResponse(String payload) {
-        String accessToken = createAccessToken(payload);
-        String refreshToken = createRefreshToken(payload);
+
+        Date accessTokenExpiredDate = new Date(
+            new Date().getTime() + jwtProperties.getAccessTokenExpiredMillisecond());
+        Date refreshTokeExpiredDate = new Date(
+            new Date().getTime() + jwtProperties.getRefreshTokenExpiredMillisecond());
+
+
+        String accessToken = createAccessToken(payload, accessTokenExpiredDate);
+        String refreshToken = createRefreshToken(payload, refreshTokeExpiredDate);
 
         return new JwtTokenPair(accessToken, refreshToken);
     }
 
-    public String createAccessToken(String payload) {
-        Date accessTokenExpiredDate = new Date(
-            new Date().getTime() + jwtProperties.getAccessTokenExpiredMillisecond());
-
+    public String createAccessToken(String payload, Date accessTokenExpiredDate) {
         return buildToken(payload, accessTokenExpiredDate);
     }
 
-    public String createRefreshToken(String payload) {
-        Date refreshTokeExpiredDate = new Date(
-            new Date().getTime() + jwtProperties.getRefreshTokenExpiredMillisecond());
-
-        return buildToken(payload, refreshTokeExpiredDate);
+    public String createRefreshToken(String payload, Date refreshTokenExpiredDate) {
+        return buildToken(payload, refreshTokenExpiredDate);
     }
-
-    public String createRefreshToken(String payload, Date refreshTokeExpiredDate) {
-        return buildToken(payload, refreshTokeExpiredDate);
-    }
-
 
     public void validateToken(String token) {
         try {
