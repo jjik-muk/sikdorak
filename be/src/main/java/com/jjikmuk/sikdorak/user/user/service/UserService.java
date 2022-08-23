@@ -53,7 +53,28 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserProfileResponse searchUserProfile(Long userId, LoginUser loginUser) {
-        return null;
+
+        User searchUser = userRespository.findById(userId)
+            .orElseThrow(NotFoundUserException::new);
+
+        boolean isViewer = false, followStatus = false;
+
+        switch (searchUser.relationTypeTo(loginUser)) {
+            case SELF -> isViewer = true;
+            case CONNECTION ->  followStatus = true;
+            case DISCONNECTION -> {}
+        }
+
+        return new UserProfileResponse(
+            searchUser.getId(),
+            searchUser.getNickname(),
+            searchUser.getProfileImage(),
+            searchUser.getEmail(),
+            isViewer,
+            followStatus,
+            searchUser.getFollowers().size(),
+            searchUser.getFollowings().size()
+        );
     }
 
     @Transactional

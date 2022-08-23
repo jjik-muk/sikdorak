@@ -22,7 +22,7 @@ public class Followers {
     )
     private Set<Long> follower = new HashSet<>();
 
-    public boolean isConnection(Long userId) {
+    public boolean isConnected(Long userId) {
         return follower.contains(userId);
     }
 }

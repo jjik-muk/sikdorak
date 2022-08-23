@@ -7,6 +7,7 @@ import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
+import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
 import java.util.List;
@@ -29,11 +30,23 @@ public class UserController {
         @PathVariable Long userId,
         @AuthenticatedUser LoginUser loginUser) {
 
-        List<UserReviewResponse> userReviewRespons = userService.searchUserReviewsByUserIdAndRelationType(userId, loginUser);
+        List<UserReviewResponse> userReviewResponse = userService.searchUserReviewsByUserIdAndRelationType(userId, loginUser);
 
         return new CommonResponseEntity<>(
             ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS,
-            userReviewRespons,
+            userReviewResponse,
+            HttpStatus.OK);
+    }
+
+    @GetMapping("/api/users/{userId}")
+    public CommonResponseEntity<UserProfileResponse> searchUserProfileByUserID(@AuthenticatedUser LoginUser loginUser,
+        @PathVariable Long userId
+    ) {
+
+        UserProfileResponse userProfileResponse = userService.searchUserProfile(userId, loginUser);
+
+        return new CommonResponseEntity<>(ResponseCodeAndMessages.USER_SEARCH_PROFILE_SUCCESS,
+            userProfileResponse,
             HttpStatus.OK);
     }
 

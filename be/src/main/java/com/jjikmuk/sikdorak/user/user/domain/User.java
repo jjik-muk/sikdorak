@@ -132,7 +132,7 @@ public class User extends BaseTimeEntity {
         else if (loginUser.isAnonymous()) {
             return RelationType.DISCONNECTION;
         }
-        else if (!this.followers.isConnection(loginUser.getId())) { // 위 조건문, loginUser.isAnonymous()와 별도로 나눈 조회를 늦게하기 위해서이다.
+        else if (!this.followers.isConnected(loginUser.getId())) { // 위 조건문, loginUser.isAnonymous()와 별도로 나눈 조회를 늦게하기 위해서이다.
             return RelationType.DISCONNECTION;
         }
         return RelationType.CONNECTION;
