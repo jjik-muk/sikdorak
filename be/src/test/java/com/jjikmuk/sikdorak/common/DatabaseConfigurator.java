@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -49,7 +50,10 @@ public class DatabaseConfigurator implements InitializingBean {
     public String user2ValidAuthorizationHeader;
     public String followSendUserValidAuthorizationHeader;
     public String followAcceptUserValidAuthorizationHeader;
+    public String user1RefreshToken;
     public String userInvalidAuthorizationHeader;
+    public String user1ExpiredRefreshToken;
+    public String user1InvalidRefreshToken;
     public Review review;
 
     public void initDataSource() {
@@ -95,7 +99,7 @@ public class DatabaseConfigurator implements InitializingBean {
                 statement.executeUpdate("TRUNCATE TABLE " + tableName);
             }
 
-            statement.executeUpdate("SET FOREIGN_KEY_CHECKS = 1");
+            statement.executeUpdate("성SET FOREIGN_KEY_CHECKS = 1");
         }
     }
 
@@ -136,8 +140,9 @@ public class DatabaseConfigurator implements InitializingBean {
             "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.user2.getId()));
         this.followSendUserValidAuthorizationHeader =
             "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.followSendUser.getId()));
-        this.followAcceptUserValidAuthorizationHeader =
-            "Bearer " + jwtProvider.createAccessToken(String.valueOf(this.followAcceptUser.getId()));
+        this.user1RefreshToken = jwtProvider.createRefreshToken(String.valueOf(this.user1.getId()), new Date(new Date().getTime()+8000000));
+        this.user1ExpiredRefreshToken = jwtProvider.createRefreshToken(String.valueOf(this.user1.getId()), new Date(new Date().getTime()+100));
+        this.user1InvalidRefreshToken = jwtProvider.createRefreshToken(String.valueOf(this.user1.getId())) + "invalid";
         this.userInvalidAuthorizationHeader = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjIzNjgyMjM2MzgiLCJleHAiOjE2MzA2MzkzNTF9.SnT_Nxgspg3cUomCieDyBRH9TowtWh21YIfAKntuguA";
     }
 
