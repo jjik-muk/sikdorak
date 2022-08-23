@@ -20,7 +20,7 @@ class ImagesTest {
 	class Describe_constructor {
 
 		@Nested
-		@DisplayName("만약 이미지 url 개수가 0 ~ 10개 이하로 주어진다ㅕㅁㄴ")
+		@DisplayName("만약 이미지 url 개수가 0 ~ 10개 이하로 주어진다면")
 		class Context_with_valid_images {
 
 			@ParameterizedTest
