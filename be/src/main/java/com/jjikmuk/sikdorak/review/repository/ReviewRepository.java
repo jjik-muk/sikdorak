@@ -14,4 +14,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
 	@Query("select r from Review as r where r.userId = :userId and r.reviewVisibility = 'PUBLIC'")
 	List<Review> findByUserIdAndDisconnection(Long userId);
+
+	Integer countByUserId(Long userId);
 }

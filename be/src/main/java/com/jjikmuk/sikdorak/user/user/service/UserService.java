@@ -56,7 +56,7 @@ public class UserService {
 
         User searchUser = userRespository.findById(userId)
             .orElseThrow(NotFoundUserException::new);
-
+        int reviewCount = reviewRepository.countByUserId(searchUser.getId());
         boolean isViewer = false, followStatus = false;
 
         switch (searchUser.relationTypeTo(loginUser)) {
@@ -73,7 +73,8 @@ public class UserService {
             isViewer,
             followStatus,
             searchUser.getFollowers().size(),
-            searchUser.getFollowings().size()
+            searchUser.getFollowings().size(),
+            reviewCount
         );
     }
 

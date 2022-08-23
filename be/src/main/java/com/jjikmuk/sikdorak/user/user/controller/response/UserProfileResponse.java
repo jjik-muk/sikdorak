@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.user.user.controller.response;
 
 import com.jjikmuk.sikdorak.user.user.domain.User;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
@@ -25,12 +26,20 @@ public record UserProfileResponse(
     boolean followStatus,
 
     @NotNull
+    @Min(0)
     int followingCount,
 
     @NotNull
-    int followersCount) {
+    @Min(0)
+    int followersCount,
 
-    public static UserProfileResponse from(User user, boolean isViewer, boolean followStatus) {
+    @NotNull
+    @Min(0)
+    int reviewCount
+
+) {
+
+    public static UserProfileResponse from(User user, boolean isViewer, boolean followStatus, int reviewCount) {
         return new UserProfileResponse(
             user.getId(),
             user.getNickname(),
@@ -39,7 +48,8 @@ public record UserProfileResponse(
             isViewer,
             followStatus,
             user.getFollowers().size(),
-            user.getFollowings().size()
+            user.getFollowings().size(),
+            reviewCount
         );
     }
 }
