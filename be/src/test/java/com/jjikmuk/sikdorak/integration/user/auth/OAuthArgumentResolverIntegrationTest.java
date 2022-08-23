@@ -39,9 +39,8 @@ class OAuthArgumentResolverIntegrationTest extends InitIntegrationTest {
 	}
 
 	@Test
-	@DisplayName("유효하지 않은 유저 Id가 넘어오는 경우 Anonymous 로그인 유저 객체를 반환한다.")
+	@DisplayName("토큰이 존재하지 않는 경우 Anonymous 로그인 유저 객체를 반환한다.")
 	void oAuth_argument_resolver_fail() {
-		mockHttpServletRequest.addHeader("Authorization", testData.userInvalidAuthorizationHeader);
 
 		LoginUser loginUser = (LoginUser) oAuthUserArgumentResolver.resolveArgument(null, null,
 			new ServletWebRequest(mockHttpServletRequest), null);
