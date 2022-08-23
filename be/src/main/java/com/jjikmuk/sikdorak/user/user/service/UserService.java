@@ -4,6 +4,7 @@ import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
+import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
@@ -48,6 +49,11 @@ public class UserService {
                 .map(UserReviewResponse::from)
                 .toList();
         };
+    }
+
+    @Transactional(readOnly = true)
+    public UserProfileResponse searchUserProfile(Long userId, LoginUser loginUser) {
+        return null;
     }
 
     @Transactional

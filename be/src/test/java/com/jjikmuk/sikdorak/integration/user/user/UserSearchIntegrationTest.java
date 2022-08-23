@@ -1,0 +1,66 @@
+package com.jjikmuk.sikdorak.integration.user.user;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
+import com.jjikmuk.sikdorak.user.auth.controller.Authority;
+import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
+import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileResponse;
+import com.jjikmuk.sikdorak.user.user.service.UserService;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+/**
+ * [] 제공해야 하는 정보 : 닉네임, 프로필 이미지, 이메일(있다면), 조회자와 유저의 일치 여부, 팔로잉 상태, 팔로워 수, 팔로잉 수
+ */
+
+@DisplayName("유저 프로필 조회 통합 테스트")
+public class UserSearchIntegrationTest extends InitIntegrationTest {
+
+    @Autowired
+    private UserService userService;
+
+    @Test
+    @DisplayName("유저 본인의 정보를 조회할 경우 유저 정보를 반환한다.")
+    void user_search_self_profile() {
+        LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
+
+        UserProfileResponse userProfileResponse = userService.searchUserProfile(
+            testData.user1.getId(), loginUser);
+
+        assertThat(userProfileResponse.id()).isEqualTo(testData.user1.getId());
+        assertThat(userProfileResponse.nickname()).isEqualTo(testData.user1.getNickname());
+        assertThat(userProfileResponse.isViewer()).isTrue();
+        assertThat(userProfileResponse.followStatus()).isFalse();
+    }
+
+    @Test
+    @DisplayName("비회원이 유저의 정보를 조회할 경우 유저 정보를 반환한다.")
+    void anonymous_user_search_user_profile() {
+        LoginUser loginUser = new LoginUser(null, Authority.ANONYMOUS);
+
+        UserProfileResponse userProfileResponse = userService.searchUserProfile(
+            testData.user1.getId(), loginUser);
+
+        assertThat(userProfileResponse.id()).isEqualTo(testData.user1.getId());
+        assertThat(userProfileResponse.nickname()).isEqualTo(testData.user1.getNickname());
+        assertThat(userProfileResponse.isViewer()).isFalse();
+        assertThat(userProfileResponse.followStatus()).isFalse();
+    }
+
+    @Test
+    @DisplayName("회원이 유저의 정보를 조회할 경우 유저 정보를 반환한다.")
+    void user_search_another_user_profile() {
+        LoginUser loginUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
+
+        UserProfileResponse userProfileResponse = userService.searchUserProfile(
+            testData.followAcceptUser.getId(), loginUser);
+
+        assertThat(userProfileResponse.id()).isEqualTo(testData.followAcceptUser.getId());
+        assertThat(userProfileResponse.nickname()).isEqualTo(testData.followAcceptUser.getNickname());
+        assertThat(userProfileResponse.isViewer()).isFalse();
+        assertThat(userProfileResponse.followStatus()).isTrue();
+    }
+
+}
