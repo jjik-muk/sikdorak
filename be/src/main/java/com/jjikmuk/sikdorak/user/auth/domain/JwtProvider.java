@@ -44,6 +44,11 @@ public class JwtProvider {
         return buildToken(payload, refreshTokeExpiredDate);
     }
 
+    public String createRefreshToken(String payload, Date refreshTokeExpiredDate) {
+        return buildToken(payload, refreshTokeExpiredDate);
+    }
+
+
     public void validateToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -57,11 +62,11 @@ public class JwtProvider {
         }
     }
 
-    public String decodeToken(String refreshToken) {
+    public String decodeToken(String token) {
         Claims claim = Jwts.parserBuilder()
             .setSigningKey(secretKey)
             .build()
-            .parseClaimsJws(refreshToken)
+            .parseClaimsJws(token)
             .getBody();
 
         return claim.get("id", String.class);
