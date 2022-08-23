@@ -1,7 +1,10 @@
 package com.jjikmuk.sikdorak.acceptance.user.user;
 
 
+import static com.jjikmuk.sikdorak.acceptance.user.user.UserSnippet.USER_SEARCH_REVIEWS_REQUEST_PARAM_SNIPPET;
+import static com.jjikmuk.sikdorak.acceptance.user.user.UserSnippet.USER_SEARCH_REVIEWS_RESPONSE_SNIPPET;
 import static io.restassured.RestAssured.given;
+import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import com.jjikmuk.sikdorak.acceptance.InitAcceptanceTest;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
@@ -24,10 +27,10 @@ class UserReviewsSearchByUserIdAcceptanceTest extends InitAcceptanceTest {
 	@DisplayName("비회원/친구 관계 아닌 유저가 특정 유저의 리뷰를 조회한다면 public 리뷰들만 보여준다.")
 	void guest_search_user_reviews_success() {
 		given(this.spec)
-//			.filter(
-//				document(DEFAULT_RESTDOC_PATH,
-//					USER_SEARCH_REVIEWS_REQUEST_PARAM_SNIPPET,
-//					USER_SEARCH_REVIEWS_RESPONSE_SNIPPET))
+			.filter(
+				document(DEFAULT_RESTDOC_PATH,
+					USER_SEARCH_REVIEWS_REQUEST_PARAM_SNIPPET,
+					USER_SEARCH_REVIEWS_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
 
@@ -37,18 +40,14 @@ class UserReviewsSearchByUserIdAcceptanceTest extends InitAcceptanceTest {
 		.then()
 			.statusCode(HttpStatus.OK.value())
 			.body("code", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getCode()))
-			.body("message", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getMessage()));
+			.body("message", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getMessage()))
+			.body("data.size()", Matchers.equalTo(1));
 	}
 
 	@Test
 	@DisplayName("친구관계인 유저가 특정 유저의 리뷰를 조회한다면 public|protected 리뷰들을 보여준다.")
 	void connection_user_search_user_reviews_success() {
 		given(this.spec)
-			.log().all()
-//			.filter(
-//				document(DEFAULT_RESTDOC_PATH,
-//					USER_SEARCH_REVIEWS_REQUEST_PARAM_SNIPPET,
-//					USER_SEARCH_REVIEWS_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
 			.header("Authorization", testData.followSendUserValidAuthorizationHeader)
@@ -59,17 +58,19 @@ class UserReviewsSearchByUserIdAcceptanceTest extends InitAcceptanceTest {
 		.then()
 			.statusCode(HttpStatus.OK.value())
 			.body("code", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getCode()))
-			.body("message", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getMessage()));
+			.body("message", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getMessage()))
+			.body("data.size()", Matchers.equalTo(2));
+
 	}
 
 	@Test
 	@DisplayName("유저 자신의 리뷰를 조회한다면 public|protected|private, 전체 리뷰를 보여준다.")
 	void self_user_search_user_reviews_success() {
 		given(this.spec)
-//			.filter(
-//				document(DEFAULT_RESTDOC_PATH,
-//					USER_SEARCH_REVIEWS_REQUEST_PARAM_SNIPPET,
-//					USER_SEARCH_REVIEWS_RESPONSE_SNIPPET))
+			.filter(
+				document(DEFAULT_RESTDOC_PATH,
+					USER_SEARCH_REVIEWS_REQUEST_PARAM_SNIPPET,
+					USER_SEARCH_REVIEWS_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
 			.header("Authorization", testData.followAcceptUserValidAuthorizationHeader)
@@ -80,7 +81,8 @@ class UserReviewsSearchByUserIdAcceptanceTest extends InitAcceptanceTest {
 		.then()
 			.statusCode(HttpStatus.OK.value())
 			.body("code", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getCode()))
-			.body("message", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getMessage()));
+			.body("message", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getMessage()))
+			.body("data.size()", Matchers.equalTo(3));
 	}
 
 }
