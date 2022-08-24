@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.review.service;
 
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
+import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
@@ -9,6 +10,7 @@ import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
+import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
@@ -25,6 +27,24 @@ public class ReviewService {
 	private final StoreRepository storeRepository;
 	private final UserRespository userRespository;
 	private final ReviewRepository reviewRepository;
+
+	@Transactional(readOnly = true)
+	public ReviewDetailResponse searchReviewDetail(LoginUser loginUser, Long reviewId) {
+		Review review = reviewRepository.findById(reviewId)
+			.orElseThrow(NotFoundReviewException::new);
+		User reviewOwner = userRespository.findById(review.getUserId())
+			.orElseThrow(NotFoundUserException::new);
+		Store store = storeRepository.findById(review.getStoreId())
+			.orElseThrow(NotFoundReviewException::new);
+
+		RelationType relationType = reviewOwner.relationTypeTo(loginUser);
+
+		if (!review.isRead(relationType)) {
+			throw new UnauthorizedUserException();
+		}
+
+		return ReviewDetailResponse.of(review, store, reviewOwner);
+	}
 
 	@Transactional
 	public Review createReview(LoginUser loginUser, ReviewCreateRequest reviewCreateRequest) {
@@ -48,8 +68,10 @@ public class ReviewService {
 	@Transactional
 	public Review modifyReview(LoginUser loginUser, Long reviewId,
 		ReviewModifyRequest reviewModifyRequest) {
-		Review review = reviewRepository.findById(reviewId).orElseThrow(NotFoundReviewException::new);
-		User user = userRespository.findById(loginUser.getId()).orElseThrow(NotFoundUserException::new);
+		Review review = reviewRepository.findById(reviewId)
+			.orElseThrow(NotFoundReviewException::new);
+		User user = userRespository.findById(loginUser.getId())
+			.orElseThrow(NotFoundUserException::new);
 		Store store = storeRepository.findById(reviewModifyRequest.getStoreId()).orElseThrow(
 			NotFoundStoreException::new);
 
@@ -69,8 +91,10 @@ public class ReviewService {
 
 	@Transactional
 	public Review removeReview(LoginUser loginUser, Long reviewId) {
-		Review review = reviewRepository.findById(reviewId).orElseThrow(NotFoundReviewException::new);
-		User user = userRespository.findById(loginUser.getId()).orElseThrow(NotFoundUserException::new);
+		Review review = reviewRepository.findById(reviewId)
+			.orElseThrow(NotFoundReviewException::new);
+		User user = userRespository.findById(loginUser.getId())
+			.orElseThrow(NotFoundUserException::new);
 
 		validateReviewWithUser(review, user);
 
