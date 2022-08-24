@@ -63,7 +63,7 @@ interface ReviewSnippet {
 		parameterWithName("reviewId").description("리뷰 아이디")
 	);
 
-	Snippet test_test = createResponseSnippetWithFields(
+	Snippet REVIEW_DETAIL_SEARCH_RESPONSE_SUCESS_SNIPPET = createResponseSnippetWithFields(
 		responseFieldsOfCommon(),
 
 		responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailUserResponse.class,
@@ -89,4 +89,8 @@ interface ReviewSnippet {
 			fieldWithPath("images").type(JsonFieldType.ARRAY).description("리뷰를 위한 사진 URL"),
 			fieldWithPath("createdAt").type(JsonFieldType.STRING).description("리뷰 생성 시간"),
 			fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("리뷰 수정 시간")));
+
+	Snippet REVIEW_DETAIL_SEARCH_RESPONSE_FAILED_SNIPPET = createResponseSnippetWithFields(
+		responseFieldsOfCommonNonData());
+
 }
