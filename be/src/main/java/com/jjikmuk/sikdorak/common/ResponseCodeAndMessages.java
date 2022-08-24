@@ -21,6 +21,7 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
     USER_FOLLOW_SUCCESS("T-U002", "유저 팔로우에 성공했습니다."),
     USER_UNFOLLOW_SUCCESS("T-U003", "유저 언팔로우에 성공했습니다."),
     USER_SEARCH_REVIEWS_SUCCESS("T-U004", "유저 리뷰 검색 성공했습니다."),
+    USER_SEARCH_PROFILE_SUCCESS("T-U005", "유저 프로필 조회에 성공했습니다."),
 
     // ETC
     SYSTEMINFO_SEARCH_API_DOCS_INFO("T-S001", "API 문서 코드/메세지 검색 성공했습니다.");

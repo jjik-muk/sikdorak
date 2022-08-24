@@ -150,8 +150,8 @@ public class DatabaseConfigurator implements InitializingBean {
         this.followAcceptUserValidAuthorizationHeader =
             "Bearer " + jwtProvider.createAccessToken(followAcceptUserPayload, accessTokenExpiredTime);
         this.user1RefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime()+8000000));
-        this.user1ExpiredRefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime() + 100));
-        this.user1InvalidRefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime() - 1000)) + "invalid";
+        this.user1ExpiredRefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime() - 1000));
+        this.user1InvalidRefreshToken = user1RefreshToken + "invalid";
     }
 
     private void initReviewData() {

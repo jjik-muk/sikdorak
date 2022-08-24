@@ -3,12 +3,14 @@ package com.jjikmuk.sikdorak.acceptance.user.user;
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonListResponseFieldsWithValidConstraints;
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonRequestFieldsWithValidConstraints;
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonResponseNonFields;
+import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonSingleResponseFieldsWithValidConstraints;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
+import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
@@ -48,6 +50,23 @@ public interface UserSnippet {
         fieldWithPath("images").type(JsonFieldType.ARRAY).description("리뷰 이미지"),
         fieldWithPath("createdAt").type(JsonFieldType.STRING).description("리뷰 생성 시간"),
         fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("리뷰 수정 시간")
+    );
+
+    Snippet USER_SEARCH_REQUEST_SNIPPET = pathParameters(
+        parameterWithName("userId").description("프로필을 조회할 유저 아이디")
+    );
+
+    Snippet USER_SEARCH_RESPONSE_SNIPPET = commonSingleResponseFieldsWithValidConstraints(
+        UserProfileResponse.class,
+        fieldWithPath("id").type(JsonFieldType.NUMBER).description("유저 아이디"),
+        fieldWithPath("nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
+        fieldWithPath("email").type(JsonFieldType.STRING).description("유저 이메일"),
+        fieldWithPath("profileImage").type(JsonFieldType.STRING).description("유저 프로필 이미지"),
+        fieldWithPath("relationStatus.isViewer").type(JsonFieldType.BOOLEAN).description("자신의 프로필 조회 여부"),
+        fieldWithPath("relationStatus.followStatus").type(JsonFieldType.BOOLEAN).description("요청 유저와의 관계"),
+        fieldWithPath("followersCount").type(JsonFieldType.NUMBER).description("유저 팔로워 수"),
+        fieldWithPath("followingCount").type(JsonFieldType.NUMBER).description("유저 팔로잉 수"),
+        fieldWithPath("reviewCount").type(JsonFieldType.NUMBER).description("유저 게시물 수")
     );
 
 }

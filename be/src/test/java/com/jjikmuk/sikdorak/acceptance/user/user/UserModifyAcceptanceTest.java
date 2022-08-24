@@ -39,7 +39,7 @@ class UserModifyAcceptanceTest extends InitAcceptanceTest {
             .body(userModifyRequest)
 
         .when()
-            .put("/api/user")
+            .put("/api/users")
 
         .then()
             .statusCode(HttpStatus.OK.value())
@@ -68,7 +68,7 @@ class UserModifyAcceptanceTest extends InitAcceptanceTest {
             .body(userModifyRequest)
 
         .when()
-            .put("/api/user")
+            .put("/api/users")
 
         .then()
             .statusCode(HttpStatus.UNAUTHORIZED.value())

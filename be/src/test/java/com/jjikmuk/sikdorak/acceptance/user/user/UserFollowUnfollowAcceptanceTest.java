@@ -37,7 +37,7 @@ class UserFollowUnfollowAcceptanceTest extends InitAcceptanceTest {
             .body(userFollowAndUnfollowRequest)
 
         .when()
-            .put("/api/user/follow")
+            .put("/api/users/follow")
 
         .then()
             .statusCode(HttpStatus.OK.value())
@@ -63,7 +63,7 @@ class UserFollowUnfollowAcceptanceTest extends InitAcceptanceTest {
             .body(userFollowAndUnfollowRequest)
 
         .when()
-            .put("/api/user/unfollow")
+            .put("/api/users/unfollow")
 
         .then()
             .statusCode(HttpStatus.OK.value())
@@ -89,7 +89,7 @@ class UserFollowUnfollowAcceptanceTest extends InitAcceptanceTest {
             .body(userFollowAndUnfollowRequest)
 
         .when()
-            .put("/api/user/follow")
+            .put("/api/users/follow")
 
         .then()
             .statusCode(HttpStatus.UNAUTHORIZED.value())
@@ -116,7 +116,7 @@ class UserFollowUnfollowAcceptanceTest extends InitAcceptanceTest {
             .body(userFollowAndUnfollowRequest)
 
         .when()
-            .put("/api/user/unfollow")
+            .put("/api/users/unfollow")
 
         .then()
             .statusCode(HttpStatus.UNAUTHORIZED.value())
