@@ -36,7 +36,7 @@ class UserSearchAcceptanceTest extends InitAcceptanceTest {
             .body("data.id", equalTo(testData.user2.getId().intValue()))
             .body("data.nickname", equalTo(testData.user2.getNickname()))
             .body("data.email", equalTo(testData.user2.getEmail()))
-            .body("data.followStatus", equalTo(testData.user1.isFollowing(testData.user2)));
+            .body("data.relationStatus.followStatus", equalTo(testData.user1.isFollowing(testData.user2)));
     }
 
     @Test
@@ -58,7 +58,7 @@ class UserSearchAcceptanceTest extends InitAcceptanceTest {
             .body("data.id", equalTo(testData.user2.getId().intValue()))
             .body("data.nickname", equalTo(testData.user2.getNickname()))
             .body("data.email", equalTo(testData.user2.getEmail()))
-            .body("data.followStatus", equalTo(false))
+            .body("data.relationStatus.followStatus", equalTo(false))
             .body("data.reviewCount", equalTo(0));
     }
 

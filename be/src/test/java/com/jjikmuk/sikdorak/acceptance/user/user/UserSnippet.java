@@ -62,8 +62,8 @@ public interface UserSnippet {
         fieldWithPath("nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
         fieldWithPath("email").type(JsonFieldType.STRING).description("유저 이메일"),
         fieldWithPath("profileImage").type(JsonFieldType.STRING).description("유저 프로필 이미지"),
-        fieldWithPath("isViewer").type(JsonFieldType.BOOLEAN).description("요청자의 프로필 여부"),
-        fieldWithPath("followStatus").type(JsonFieldType.BOOLEAN).description("요청자의 팔로우 상태"),
+        fieldWithPath("relationStatus.isViewer").type(JsonFieldType.BOOLEAN).description("요청자의 프로필 여부"),
+        fieldWithPath("relationStatus.followStatus").type(JsonFieldType.BOOLEAN).description("요청자의 팔로우 상태"),
         fieldWithPath("followersCount").type(JsonFieldType.NUMBER).description("유저 팔로워 수"),
         fieldWithPath("followingCount").type(JsonFieldType.NUMBER).description("유저 팔로잉 수"),
         fieldWithPath("reviewCount").type(JsonFieldType.NUMBER).description("유저 게시물 수")

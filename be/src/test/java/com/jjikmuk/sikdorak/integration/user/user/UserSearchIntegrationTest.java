@@ -33,8 +33,8 @@ class UserSearchIntegrationTest extends InitIntegrationTest {
 
         assertThat(userProfileResponse.id()).isEqualTo(testData.user1.getId());
         assertThat(userProfileResponse.nickname()).isEqualTo(testData.user1.getNickname());
-        assertThat(userProfileResponse.isViewer()).isTrue();
-        assertThat(userProfileResponse.followStatus()).isFalse();
+        assertThat(userProfileResponse.relationStatus().isViewer()).isTrue();
+        assertThat(userProfileResponse.relationStatus().followStatus()).isFalse();
         assertThat(userProfileResponse.reviewCount()).isEqualTo(1);
     }
 
@@ -48,8 +48,8 @@ class UserSearchIntegrationTest extends InitIntegrationTest {
 
         assertThat(userProfileResponse.id()).isEqualTo(testData.user1.getId());
         assertThat(userProfileResponse.nickname()).isEqualTo(testData.user1.getNickname());
-        assertThat(userProfileResponse.isViewer()).isFalse();
-        assertThat(userProfileResponse.followStatus()).isFalse();
+        assertThat(userProfileResponse.relationStatus().isViewer()).isFalse();
+        assertThat(userProfileResponse.relationStatus().followStatus()).isFalse();
         assertThat(userProfileResponse.reviewCount()).isEqualTo(1);
     }
 
@@ -63,8 +63,8 @@ class UserSearchIntegrationTest extends InitIntegrationTest {
 
         assertThat(userProfileResponse.id()).isEqualTo(testData.followAcceptUser.getId());
         assertThat(userProfileResponse.nickname()).isEqualTo(testData.followAcceptUser.getNickname());
-        assertThat(userProfileResponse.isViewer()).isFalse();
-        assertThat(userProfileResponse.followStatus()).isTrue();
+        assertThat(userProfileResponse.relationStatus().isViewer()).isFalse();
+        assertThat(userProfileResponse.relationStatus().followStatus()).isTrue();
         assertThat(userProfileResponse.reviewCount()).isEqualTo(3);
     }
 
@@ -78,8 +78,8 @@ class UserSearchIntegrationTest extends InitIntegrationTest {
 
         assertThat(userProfileResponse.id()).isEqualTo(testData.user2.getId());
         assertThat(userProfileResponse.nickname()).isEqualTo(testData.user2.getNickname());
-        assertThat(userProfileResponse.isViewer()).isFalse();
-        assertThat(userProfileResponse.followStatus()).isFalse();
+        assertThat(userProfileResponse.relationStatus().isViewer()).isFalse();
+        assertThat(userProfileResponse.relationStatus().followStatus()).isFalse();
         assertThat(userProfileResponse.reviewCount()).isEqualTo(0);
     }
 

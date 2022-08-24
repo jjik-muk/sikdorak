@@ -4,6 +4,7 @@ import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
+import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileRelationStatusResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
 import com.jjikmuk.sikdorak.user.user.domain.RelationType;
@@ -54,31 +55,20 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserProfileResponse searchUserProfile(Long userId, LoginUser loginUser) {
-
         User searchUser = userRespository.findById(userId)
             .orElseThrow(NotFoundUserException::new);
+        RelationType relationType = searchUser.relationTypeTo(loginUser);
         int reviewCount = reviewRepository.countByUserId(searchUser.getId());
 
-        RelationType relationType = searchUser.relationTypeTo(loginUser);
-        boolean isViewer = relationType.equals(RelationType.SELF);
-        boolean followStatus = relationType.equals(RelationType.CONNECTION);
-
-        return new UserProfileResponse(
-            searchUser.getId(),
-            searchUser.getNickname(),
-            searchUser.getProfileImage(),
-            searchUser.getEmail(),
-            isViewer,
-            followStatus,
-            searchUser.getFollowers().size(),
-            searchUser.getFollowings().size(),
+        return UserProfileResponse.of(
+            searchUser,
+            UserProfileRelationStatusResponse.of(relationType),
             reviewCount
         );
     }
 
     @Transactional
     public long createUser(User user) {
-
         if (isExistingByUniqueId(user.getUniqueId())) {
             throw new DuplicateUserException();
         }
@@ -101,7 +91,6 @@ public class UserService {
 
     @Transactional
     public void followUser(LoginUser loginUser, UserFollowAndUnfollowRequest userFollowAndUnfollowRequest) {
-
         User sendUser = userRespository.findById(loginUser.getId())
             .orElseThrow(NotFoundUserException::new);
         User acceptUser = userRespository.findById(userFollowAndUnfollowRequest.getUserId())
@@ -115,7 +104,6 @@ public class UserService {
 
     @Transactional
     public void unfollowUser(LoginUser loginUser, UserFollowAndUnfollowRequest userFollowAndUnfollowRequest) {
-
         User sendUser = userRespository.findById(loginUser.getId())
             .orElseThrow(NotFoundUserException::new);
         User acceptUser = userRespository.findById(userFollowAndUnfollowRequest.getUserId())

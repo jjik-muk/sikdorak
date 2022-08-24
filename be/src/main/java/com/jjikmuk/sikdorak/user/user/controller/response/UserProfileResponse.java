@@ -21,9 +21,7 @@ public record UserProfileResponse(
 
     String email,
 
-    boolean isViewer,
-
-    boolean followStatus,
+    UserProfileRelationStatusResponse relationStatus,
 
     @NotNull
     @Min(0)
@@ -39,14 +37,13 @@ public record UserProfileResponse(
 
 ) {
 
-    public static UserProfileResponse from(User user, boolean isViewer, boolean followStatus, int reviewCount) {
+    public static UserProfileResponse of(User user, UserProfileRelationStatusResponse userProfileRelationStatusResponse, int reviewCount) {
         return new UserProfileResponse(
             user.getId(),
             user.getNickname(),
             user.getProfileImage(),
             user.getEmail(),
-            isViewer,
-            followStatus,
+            userProfileRelationStatusResponse,
             user.getFollowers().size(),
             user.getFollowings().size(),
             reviewCount
