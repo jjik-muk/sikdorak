@@ -6,6 +6,7 @@ import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRe
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
+import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateFollowingException;
@@ -57,13 +58,10 @@ public class UserService {
         User searchUser = userRespository.findById(userId)
             .orElseThrow(NotFoundUserException::new);
         int reviewCount = reviewRepository.countByUserId(searchUser.getId());
-        boolean isViewer = false;
-        boolean followStatus = false;
 
-        switch (searchUser.relationTypeTo(loginUser)) {
-            case SELF -> isViewer = true;
-            case CONNECTION ->  followStatus = true;
-        }
+        RelationType relationType = searchUser.relationTypeTo(loginUser);
+        boolean isViewer = relationType.equals(RelationType.SELF);
+        boolean followStatus = relationType.equals(RelationType.CONNECTION);
 
         return new UserProfileResponse(
             searchUser.getId(),
