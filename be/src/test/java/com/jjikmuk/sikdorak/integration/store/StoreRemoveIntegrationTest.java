@@ -38,7 +38,7 @@ public class StoreRemoveIntegrationTest extends InitIntegrationTest {
 
             // then
             Optional<Store> findResult = storeRepository.findById(deleteTargetStoreId);
-            assertThat(findResult.isPresent()).isFalse();
+            assertThat(findResult).isEmpty();
         }
 
         @Test

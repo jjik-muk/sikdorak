@@ -51,14 +51,16 @@ public class StoreSearchIntegrationTest extends InitIntegrationTest {
             String partOfStoreName = storeFullName.substring(0, storeFullName.length() / 2);
 
             // when
-            List<StoreSearchResponse> stores = storeService.searchStoresByStoreNameContaining(partOfStoreName);
+            List<StoreSearchResponse> storeSearchResponses = storeService.searchStoresByStoreNameContaining(partOfStoreName);
 
             // then
-            assertThat(stores).isNotNull();
-            assertThat(stores).isNotEmpty();
-            for (StoreSearchResponse store : stores) {
-                assertThat(store.storeName()).contains(partOfStoreName);
-            }
+            assertThat(storeSearchResponses).isNotNull()
+                .satisfies(searchResponses -> {
+                    assertThat(searchResponses).isNotEmpty();
+                    for (StoreSearchResponse response : searchResponses) {
+                        assertThat(response.storeName()).contains(partOfStoreName);
+                    }
+                });
         }
 
         @Test
@@ -68,11 +70,11 @@ public class StoreSearchIntegrationTest extends InitIntegrationTest {
             String storeName = null;
 
             // when
-            List<StoreSearchResponse> stores = storeService.searchStoresByStoreNameContaining(storeName);
+            List<StoreSearchResponse> storeSearchResponses = storeService.searchStoresByStoreNameContaining(storeName);
 
             // then
-            assertThat(stores).isNotNull();
-            assertThat(stores).isEmpty();
+            assertThat(storeSearchResponses).isNotNull()
+                .satisfies(response -> assertThat(response).isEmpty());
         }
 
         @Test
@@ -82,11 +84,11 @@ public class StoreSearchIntegrationTest extends InitIntegrationTest {
             String storeName = "존재하지않는가게이름";
 
             // when
-            List<StoreSearchResponse> stores = storeService.searchStoresByStoreNameContaining(storeName);
+            List<StoreSearchResponse> storeSearchResponses = storeService.searchStoresByStoreNameContaining(storeName);
 
             // then
-            assertThat(stores).isNotNull();
-            assertThat(stores).isEmpty();
+            assertThat(storeSearchResponses).isNotNull()
+                .satisfies(response -> assertThat(response).isEmpty());
         }
 
         @Test
@@ -101,8 +103,8 @@ public class StoreSearchIntegrationTest extends InitIntegrationTest {
                 deletedStore.getStoreName());
 
             // then
-            assertThat(storeSearchResponses).isNotNull();
-            assertThat(storeSearchResponses).isEmpty();
+            assertThat(storeSearchResponses).isNotNull()
+                .satisfies(response -> assertThat(response).isEmpty());
         }
     }
 }
