@@ -57,12 +57,12 @@ public class UserService {
         User searchUser = userRespository.findById(userId)
             .orElseThrow(NotFoundUserException::new);
         int reviewCount = reviewRepository.countByUserId(searchUser.getId());
-        boolean isViewer = false, followStatus = false;
+        boolean isViewer = false;
+        boolean followStatus = false;
 
         switch (searchUser.relationTypeTo(loginUser)) {
             case SELF -> isViewer = true;
             case CONNECTION ->  followStatus = true;
-            case DISCONNECTION -> {}
         }
 
         return new UserProfileResponse(

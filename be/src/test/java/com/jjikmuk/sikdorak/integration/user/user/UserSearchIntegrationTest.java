@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 
 @DisplayName("유저 프로필 조회 통합 테스트")
-public class UserSearchIntegrationTest extends InitIntegrationTest {
+class UserSearchIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     private UserService userService;

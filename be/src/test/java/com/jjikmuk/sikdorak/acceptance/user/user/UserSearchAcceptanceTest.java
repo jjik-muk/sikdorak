@@ -14,7 +14,7 @@ import org.springframework.http.MediaType;
 
 
 @DisplayName("유저 조회 인수테스트")
-public class UserSearchAcceptanceTest extends InitAcceptanceTest {
+class UserSearchAcceptanceTest extends InitAcceptanceTest {
 
     @Test
     @DisplayName("회원인 유저의 유저 조회 요청이 올바르다면 유저 정보를 반환한다.")
@@ -50,10 +50,10 @@ public class UserSearchAcceptanceTest extends InitAcceptanceTest {
             )
             .accept(MediaType.APPLICATION_JSON_VALUE)
 
-            .when()
+        .when()
             .get("/api/users/{userId}", testData.user2.getId())
 
-            .then()
+        .then()
             .statusCode(HttpStatus.OK.value())
             .body("data.id", equalTo(testData.user2.getId().intValue()))
             .body("data.nickname", equalTo(testData.user2.getNickname()))
