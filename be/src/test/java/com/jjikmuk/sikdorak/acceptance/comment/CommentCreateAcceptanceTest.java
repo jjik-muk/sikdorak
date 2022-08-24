@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-public class CommentCreateAcceptanceTest extends InitAcceptanceTest {
+class CommentCreateAcceptanceTest extends InitAcceptanceTest {
 
 
 	@Test
