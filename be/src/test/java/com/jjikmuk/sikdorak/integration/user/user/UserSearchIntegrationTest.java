@@ -41,7 +41,7 @@ class UserSearchIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("비회원이 유저의 정보를 조회할 경우 유저 정보를 반환한다.")
     void anonymous_user_search_user_profile() {
-        LoginUser loginUser = new LoginUser(null, Authority.ANONYMOUS);
+        LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
         UserProfileResponse userProfileResponse = userService.searchUserProfile(
             testData.user1.getId(), loginUser);
