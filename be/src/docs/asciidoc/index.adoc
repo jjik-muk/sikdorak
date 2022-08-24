@@ -15,10 +15,13 @@ notification-api-docs
 API : `GET /api/docs/info`
 
 
-== 이슈 API
+== 리뷰 API
 
 include::{docdir}/review/review.adoc[]
 
+== 댓글 API
+
+include::{docdir}/comment/comment.adoc[]
 
 == 가게 API
 
