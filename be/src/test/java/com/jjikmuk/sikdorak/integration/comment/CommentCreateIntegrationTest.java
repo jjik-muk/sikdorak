@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@DisplayName("CommentCreate 통합테스트")
 class CommentCreateIntegrationTest extends InitIntegrationTest {
 
 	@Autowired
