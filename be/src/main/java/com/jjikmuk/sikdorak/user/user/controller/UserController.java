@@ -17,28 +17,30 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/api/users/{userId}/reviews")
+    @GetMapping("/{userId}/reviews")
     public CommonResponseEntity<List<UserReviewResponse>> searchReviewsByUserId(
         @PathVariable Long userId,
         @AuthenticatedUser LoginUser loginUser) {
 
-        List<UserReviewResponse> userReviewResponse = userService.searchUserReviewsByUserIdAndRelationType(userId, loginUser);
+        List<UserReviewResponse> userReviewResponses = userService.searchUserReviewsByUserIdAndRelationType(userId, loginUser);
 
         return new CommonResponseEntity<>(
             ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS,
-            userReviewResponse,
+            userReviewResponses,
             HttpStatus.OK);
     }
 
-    @GetMapping("/api/users/{userId}")
+    @GetMapping("/{userId}")
     public CommonResponseEntity<UserProfileResponse> searchUserProfileByUserID(@AuthenticatedUser LoginUser loginUser,
         @PathVariable Long userId
     ) {
@@ -51,7 +53,7 @@ public class UserController {
     }
 
     @UserOnly
-    @PutMapping("/api/user")
+    @PutMapping("")
     public CommonResponseEntity<Void> modifyUserProfile(@AuthenticatedUser LoginUser loginUser,
         @RequestBody UserModifyRequest userModifyRequest) {
 
@@ -63,7 +65,7 @@ public class UserController {
     }
 
     @UserOnly
-    @PutMapping("/api/user/follow")
+    @PutMapping("/follow")
     public CommonResponseEntity<Void> follow(@AuthenticatedUser LoginUser loginUser,
         @RequestBody UserFollowAndUnfollowRequest userFollowAndUnfollowRequest) {
 
@@ -74,7 +76,7 @@ public class UserController {
     }
 
     @UserOnly
-    @PutMapping("/api/user/unfollow")
+    @PutMapping("/unfollow")
     public CommonResponseEntity<Void> unfollow(@AuthenticatedUser LoginUser loginUser,
         @RequestBody UserFollowAndUnfollowRequest userFollowAndUnfollowRequest) {
 
