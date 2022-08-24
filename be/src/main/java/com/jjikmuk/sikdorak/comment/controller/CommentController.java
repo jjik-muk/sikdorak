@@ -31,6 +31,7 @@ public class CommentController {
 	) {
 		commentService.createComment(reviewId, loginUser, commentCreateRequest);
 
-		return new CommonResponseEntity(ResponseCodeAndMessages.COMMENT_CREATE_SUCCESS, HttpStatus.CREATED);
+		return new CommonResponseEntity<>(ResponseCodeAndMessages.COMMENT_CREATE_SUCCESS,
+			HttpStatus.CREATED);
 	}
 }
