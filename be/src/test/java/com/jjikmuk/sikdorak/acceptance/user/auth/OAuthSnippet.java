@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.acceptance.user.auth;
 
-import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonResponseNonFields;
-import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.commonSingleResponseFieldsWithValidConstraints;
+import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.responseSnippetOfCommonNonData;
+import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.responseSnippetOfCommonWithConstraints;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -19,7 +19,7 @@ public interface OAuthSnippet {
             parameterWithName("code").description("Kakao Authorization Code")
     );
 
-    Snippet LOGIN_SUCCESS_RESPONSE_SNIPPET = commonSingleResponseFieldsWithValidConstraints(
+    Snippet LOGIN_SUCCESS_RESPONSE_SNIPPET = responseSnippetOfCommonWithConstraints(
             JwtTokenPair.class,
             fieldWithPath("accessToken").type(JsonFieldType.STRING).description("액세스 토큰")
     );
@@ -29,10 +29,10 @@ public interface OAuthSnippet {
     );
 
 
-    Snippet UPDATE_ACCESS_TOKEN_SUCCESS_RESPONSE_SNIPPET = commonSingleResponseFieldsWithValidConstraints(
+    Snippet UPDATE_ACCESS_TOKEN_SUCCESS_RESPONSE_SNIPPET = responseSnippetOfCommonWithConstraints(
         AccessTokenResponse.class,
         fieldWithPath("accessToken").type(JsonFieldType.STRING).description("액세스 토큰")
     );
 
-    Snippet UPDATE_ACCESS_TOKEN_FAIL_RESPONSE_SNIPPET = commonResponseNonFields();
+    Snippet UPDATE_ACCESS_TOKEN_FAIL_RESPONSE_SNIPPET = responseSnippetOfCommonNonData();
 }

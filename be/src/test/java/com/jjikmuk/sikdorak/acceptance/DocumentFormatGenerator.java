@@ -25,7 +25,12 @@ public interface DocumentFormatGenerator {
 			.type(JsonFieldType.STRING)
 			.description("자세한 응답 메세지");
 
-	static Snippet commonRequestFieldsWithValidConstraints(Class<?> clazz,
+	FieldDescriptor DEFAULT_NON_DATA_RESPONSE_FIELD_DESCRIPTORS =
+		fieldWithPath("data")
+			.type(JsonFieldType.NULL)
+			.description("데이터는 없습니다.");
+
+	static Snippet requestSnippetWithConstraintsAndFields(Class<?> clazz,
 		FieldDescriptor... fields) {
 		List<FieldDescriptor> commonRequestFields = new ArrayList<>();
 		for (FieldDescriptor field : fields) {
@@ -37,57 +42,90 @@ public interface DocumentFormatGenerator {
 		return requestFields(commonRequestFields);
 	}
 
-	static Snippet commonSingleResponseFieldsWithValidConstraints(Class<?> clazz,
-																  FieldDescriptor... fields) {
-		final String dataPrefix = "data.";
-		List<FieldDescriptor> commonResponseFields = getCommonResponseFields();
+	// https://icarus8050.tistory.com/88
+	@SafeVarargs
+	static Snippet createResponseSnippetWithFields(List<FieldDescriptor>... fieldsList) {
+		List<FieldDescriptor> mergedFields = new ArrayList<>();
 
-		for (FieldDescriptor field : fields) {
-			commonResponseFields.add(
-					fieldWithPath(dataPrefix + field.getPath())
-							.type(field.getType())
-							.description(field.getDescription())
-							.attributes(getFieldConstraints(clazz, field.getPath()))
-			);
+		for (List<FieldDescriptor> fields : fieldsList) {
+			mergedFields.addAll(fields);
 		}
 
-		return responseFields(commonResponseFields);
+		return responseFields(mergedFields);
 	}
 
-	static Snippet commonListResponseFieldsWithValidConstraints(Class<?> clazz,
-																FieldDescriptor... fields) {
-		final String dataPrefix = "data.[].";
-		List<FieldDescriptor> commonResponseFields = getCommonResponseFields();
-
-		for (FieldDescriptor field : fields) {
-			commonResponseFields.add(
-				fieldWithPath(dataPrefix + field.getPath())
-					.type(field.getType())
-					.description(field.getDescription())
-					.attributes(getFieldConstraints(clazz, field.getPath()))
-			);
-		}
-
-		return responseFields(commonResponseFields);
-	}
-
-	private static List<FieldDescriptor> getCommonResponseFields() {
+	static List<FieldDescriptor> responseFieldsOfCommon() {
 		List<FieldDescriptor> fieldDescriptors = new ArrayList<>();
 		fieldDescriptors.add(DEFAULT_CODE_RESPONSE_FIELD_DESCRIPTOR);
 		fieldDescriptors.add(DEFAULT_MESSAGE_RESPONSE_FIELD_DESCRIPTORS);
 		return fieldDescriptors;
 	}
 
-	static Snippet commonResponseNonFields() {
-		List<FieldDescriptor> commonResponseFields = getCommonResponseFields();
+	static List<FieldDescriptor> responseFieldsOfCommonNonData() {
+		List<FieldDescriptor> fieldDescriptors = new ArrayList<>();
+		fieldDescriptors.add(DEFAULT_CODE_RESPONSE_FIELD_DESCRIPTOR);
+		fieldDescriptors.add(DEFAULT_MESSAGE_RESPONSE_FIELD_DESCRIPTORS);
+		fieldDescriptors.add(DEFAULT_NON_DATA_RESPONSE_FIELD_DESCRIPTORS);
+		return fieldDescriptors;
+	}
 
-		commonResponseFields.add(
-			fieldWithPath("data")
-				.type(JsonFieldType.NULL)
-				.description("데이터는 없습니다.")
-		);
+	static List<FieldDescriptor> responseFieldsOfObjectWithConstraintsAndFields(Class<?> clazz,
+		FieldDescriptor... fields) {
+		final String dataPrefix = "data.";
+		List<FieldDescriptor> responseFields = new ArrayList<>();
 
-		return responseFields(commonResponseFields);
+		for (FieldDescriptor field : fields) {
+			if (field.getPath().contains(".")) { // sub class
+				responseFields.add(
+					fieldWithPath(dataPrefix + field.getPath())
+						.type(field.getType())
+						.description(field.getDescription())
+						.attributes(getFieldConstraints(clazz, field.getPath().split("\\.")[1])));
+			} else {
+				responseFields.add(
+					fieldWithPath(dataPrefix + field.getPath())
+						.type(field.getType())
+						.description(field.getDescription())
+						.attributes(getFieldConstraints(clazz, field.getPath())));
+			}
+		}
+		return responseFields;
+	}
+
+	static List<FieldDescriptor> responseFieldsOfListWithConstraintsAndFields(Class<?> clazz,
+		FieldDescriptor... fields) {
+		final String dataPrefix = "data.[].";
+		List<FieldDescriptor> responseFields = new ArrayList<>();
+
+		for (FieldDescriptor field : fields) {
+			responseFields.add(
+				fieldWithPath(dataPrefix + field.getPath())
+					.type(field.getType())
+					.description(field.getDescription())
+					.attributes(getFieldConstraints(clazz, field.getPath())));
+		}
+		return responseFields;
+	}
+
+	@Deprecated
+	static Snippet responseSnippetOfCommonWithConstraints(Class<?> clazz,
+		FieldDescriptor... fields) {
+		return createResponseSnippetWithFields(
+			responseFieldsOfCommon(),
+			responseFieldsOfObjectWithConstraintsAndFields(clazz, fields));
+	}
+
+	@Deprecated
+	static Snippet responseSnippetOfCommonAndListWithConstraints(Class<?> clazz,
+		FieldDescriptor... fields) {
+		return createResponseSnippetWithFields(
+			responseFieldsOfCommon(),
+			responseFieldsOfListWithConstraintsAndFields(clazz, fields));
+	}
+
+	@Deprecated
+	static Snippet responseSnippetOfCommonNonData() {
+		return createResponseSnippetWithFields(responseFieldsOfCommonNonData());
 	}
 
 	private static Attribute getFieldConstraints(Class<?> clazz, String path) {
@@ -96,3 +134,4 @@ public interface DocumentFormatGenerator {
 			constraintDescriptions.descriptionsForProperty(path));
 	}
 }
+
