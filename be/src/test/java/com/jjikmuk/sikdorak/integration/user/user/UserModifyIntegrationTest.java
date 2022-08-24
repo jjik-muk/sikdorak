@@ -28,7 +28,7 @@ class UserModifyIntegrationTest extends InitIntegrationTest {
     @DisplayName("올바른 입력값이 들어오면 유저의 정보를 수정한다.")
     void user_modify_success() {
 
-        LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
+        LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
         UserModifyRequest userModifyRequest = new UserModifyRequest(
             "포키",
             "forkyy@gmail.com",

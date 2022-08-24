@@ -38,7 +38,7 @@ public class UserCreateIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("유저의 고유Id가 중복된다면 예외를 발생시킨다.")
     void duplicatedUserException() {
-        User user2 = new User(12345678L, "test-user", "https://profile.com", "sikdorak@gmail.com");
+        User user2 = new User(testData.jay.getUniqueId(), "test-user", "https://profile.com", "sikdorak@gmail.com");
 
         assertThatThrownBy(() -> userService.createUser(user2))
                 .isInstanceOf(DuplicateUserException.class);

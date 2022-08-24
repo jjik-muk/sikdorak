@@ -31,7 +31,7 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("만약 회원이 정상적인 리뷰 생성 요청이 주어진다면 리뷰를 등록할 수 있다.")
 	void create_review_valid_user_store() {
-		LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
+		LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
 		ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(
 			"Test review contents",
 			testData.store.getId(),
@@ -44,13 +44,13 @@ public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 		Review saveReview = reviewService.createReview(loginUser, reviewCreateRequest);
 
 		assertThat(saveReview.getId()).isNotNull();
-		assertThat(saveReview.getUserId()).isEqualTo(testData.user1.getId());
+		assertThat(saveReview.getUserId()).isEqualTo(testData.kukim.getId());
 	}
 
 	@Test
 	@DisplayName("만약 회원이 존재하지 않은 상점 id의 리뷰 생성 요청이 주어진다면 예외를 발생시킨다.")
 	void create_review_valid_user_invalid_store() {
-		LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
+		LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
 		Long invalidStoreId = Long.MAX_VALUE;
 		ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(
 			"Test review contents",

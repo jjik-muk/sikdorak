@@ -29,14 +29,14 @@ class UserSearchAcceptanceTest extends InitAcceptanceTest {
             .header("Authorization", testData.user1ValidAuthorizationHeader)
 
         .when()
-            .get("/api/users/{userId}", testData.user2.getId())
+            .get("/api/users/{userId}", testData.jay.getId())
 
         .then()
             .statusCode(HttpStatus.OK.value())
-            .body("data.id", equalTo(testData.user2.getId().intValue()))
-            .body("data.nickname", equalTo(testData.user2.getNickname()))
-            .body("data.email", equalTo(testData.user2.getEmail()))
-            .body("data.relationStatus.followStatus", equalTo(testData.user1.isFollowing(testData.user2)));
+            .body("data.id", equalTo(testData.jay.getId().intValue()))
+            .body("data.nickname", equalTo(testData.jay.getNickname()))
+            .body("data.email", equalTo(testData.jay.getEmail()))
+            .body("data.relationStatus.followStatus", equalTo(testData.kukim.isFollowing(testData.jay)));
     }
 
     @Test
@@ -51,13 +51,13 @@ class UserSearchAcceptanceTest extends InitAcceptanceTest {
             .accept(MediaType.APPLICATION_JSON_VALUE)
 
         .when()
-            .get("/api/users/{userId}", testData.user2.getId())
+            .get("/api/users/{userId}", testData.jay.getId())
 
         .then()
             .statusCode(HttpStatus.OK.value())
-            .body("data.id", equalTo(testData.user2.getId().intValue()))
-            .body("data.nickname", equalTo(testData.user2.getNickname()))
-            .body("data.email", equalTo(testData.user2.getEmail()))
+            .body("data.id", equalTo(testData.jay.getId().intValue()))
+            .body("data.nickname", equalTo(testData.jay.getNickname()))
+            .body("data.email", equalTo(testData.jay.getEmail()))
             .body("data.relationStatus.followStatus", equalTo(false))
             .body("data.reviewCount", equalTo(0));
     }

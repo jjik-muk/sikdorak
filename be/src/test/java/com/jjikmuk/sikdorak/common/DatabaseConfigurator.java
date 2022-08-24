@@ -42,10 +42,11 @@ public class DatabaseConfigurator implements InitializingBean {
     private JwtProvider jwtProvider;
 
     public Store store;
-    public User user1;
-    public User user2;
-    public User followSendUser;
-    public User followAcceptUser;
+    public User kukim;
+    public User jay;
+    public User forky;
+    public User hoi;
+    public User rumka;
     public String user1ValidAuthorizationHeader;
     public String user2ValidAuthorizationHeader;
     public String followSendUserValidAuthorizationHeader;
@@ -115,31 +116,36 @@ public class DatabaseConfigurator implements InitializingBean {
     }
 
     private void initBasicUserData() {
-        this.user1 = userRespository.save(
-            new User(12345678L, "test-user1", "https://profile1.com", "sikdorak1@gmail.com"));
-        this.user2 = userRespository.save(
-            new User(87654321L, "test-user2", "https://profile2.com", "sikdorak2@gmail.com"));
+        this.kukim = userRespository.save(
+            new User(1000000L, "쿠킴", "https://s3.ap-northeast-2.amazonaws.com/user/kukim.jpg",
+                "kukim@gmail.com"));
+        this.jay = userRespository.save(
+            new User(2000000L, "제이", "https://s3.ap-northeast-2.amazonaws.com/user/jay.jpg",
+                "jay@gmail.com"));
+        this.forky = userRespository.save(
+            new User(3000000L, "포키", "https://s3.ap-northeast-2.amazonaws.com/user/forky.jpg",
+                "forky@gmail.com"));
+        this.hoi = userRespository.save(
+            new User(4000000L, "호이", "https://s3.ap-northeast-2.amazonaws.com/user/hoi.jpg",
+                "hoi@gmail.com"));
+        this.rumka = userRespository.save(
+            new User(5000000L, "럼카", "https://s3.ap-northeast-2.amazonaws.com/user/rumka.jpg",
+                "rumka@gmail.com"));
     }
 
 
     private void initFollowingUserData() {
-        User sendUser = userRespository.save(
-            new User(23456781L, "test-user3", "https://profile3.com", "sikdorak3@gmail.com"));
-        User acceptUser = userRespository.save(
-            new User(76543218L, "test-user4", "https://profile4.com", "sikdorak4@gmail.com"));
-
-        sendUser.follow(acceptUser);
-
-        this.followSendUser = userRespository.save(sendUser);
-        this.followAcceptUser = userRespository.save(acceptUser);
-
+        this.forky.follow(this.hoi);
+        this.forky.follow(this.rumka);
+        this.forky = userRespository.save(this.forky);
+        this.hoi = userRespository.save(this.hoi);
     }
 
     private void initUserAuthorizationData() {
-        String user1Payload = String.valueOf(this.user1.getId());
-        String user2Payload = String.valueOf(this.user2.getId());
-        String followSendUserPayload = String.valueOf(this.followSendUser.getId());
-        String followAcceptUserPayload = String.valueOf(this.followAcceptUser.getId());
+        String user1Payload = String.valueOf(this.kukim.getId());
+        String user2Payload = String.valueOf(this.jay.getId());
+        String followSendUserPayload = String.valueOf(this.forky.getId());
+        String followAcceptUserPayload = String.valueOf(this.hoi.getId());
 
         Date now = new Date();
         Date accessTokenExpiredTime = new Date(now.getTime() + 1800000);
@@ -158,7 +164,7 @@ public class DatabaseConfigurator implements InitializingBean {
     }
 
     private void initReviewData() {
-        this.user1PublicReview = reviewRepository.save(new Review(this.user1.getId(),
+        this.user1PublicReview = reviewRepository.save(new Review(this.kukim.getId(),
             this.store.getId(),
             "Test review contents",
             3.f,
@@ -167,7 +173,7 @@ public class DatabaseConfigurator implements InitializingBean {
             List.of("tag1", "tag2"),
             List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
 
-        this.followAcceptUserPublicReview = reviewRepository.save(new Review(this.followAcceptUser.getId(),
+        this.followAcceptUserPublicReview = reviewRepository.save(new Review(this.hoi.getId(),
             this.store.getId(),
             "전체 공개된 리뷰 게시물",
             3.f,
@@ -176,7 +182,8 @@ public class DatabaseConfigurator implements InitializingBean {
             List.of("tag1", "tag2"),
             List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
 
-        this.followAcceptUserProtectedReview = reviewRepository.save(new Review(this.followAcceptUser.getId(),
+
+        this.followAcceptUserProtectedReview = reviewRepository.save(new Review(this.hoi.getId(),
             this.store.getId(),
             "친구 공개된 리뷰 게시물",
             3.f,
@@ -185,7 +192,7 @@ public class DatabaseConfigurator implements InitializingBean {
             List.of("tag1", "tag2"),
             List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
 
-        this.followAcceptUserPrivateReview = reviewRepository.save(new Review(this.followAcceptUser.getId(),
+        this.followAcceptUserPrivateReview = reviewRepository.save(new Review(this.hoi.getId(),
             this.store.getId(),
             "비공개된 리뷰 게시물",
             3.f,

@@ -29,7 +29,7 @@ class ReviewModifyIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("만약 유저가 본인 리뷰에 대한 수정 요청이 주어진다면 리뷰를 수정할 수 있다.")
 	void modify_review_valid() {
-		LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
+		LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
 		ReviewModifyRequest reviewModifyRequest = new ReviewModifyRequest(
 			"Modify Test review contents",
 			testData.store.getId(),
@@ -44,14 +44,14 @@ class ReviewModifyIntegrationTest extends InitIntegrationTest {
 
 		assertThat(modifyReview.getReviewContent()).isEqualTo(
 			reviewModifyRequest.getReviewContent());
-		assertThat(modifyReview.getUserId()).isEqualTo(testData.user1.getId());
+		assertThat(modifyReview.getUserId()).isEqualTo(testData.kukim.getId());
 	}
 
 	@Test
 	@DisplayName("존재하지 않는 리뷰에 대해 수정 요청이 주어진다면 예외를 발생시킨다.")
 	void modify_review_invalid_review() {
 		long invalidReviewId = Long.MAX_VALUE;
-		LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
+		LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
 		ReviewModifyRequest reviewModifyRequest = new ReviewModifyRequest(
 			"Modify Test review contents",
 			testData.store.getId(),
@@ -70,7 +70,7 @@ class ReviewModifyIntegrationTest extends InitIntegrationTest {
 	@DisplayName("존재하지 않는 스토어에 대한 수정 요청이 주어진다면 예외를 발생시킨다.")
 	void modify_review_invalid_store() {
 		long invalidStoreId = Long.MAX_VALUE;
-		LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
+		LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
 		ReviewModifyRequest reviewModifyRequest = new ReviewModifyRequest(
 			"Modify Test review contents",
 			invalidStoreId,

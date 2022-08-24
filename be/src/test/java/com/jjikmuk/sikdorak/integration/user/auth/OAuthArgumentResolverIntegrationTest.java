@@ -34,7 +34,7 @@ class OAuthArgumentResolverIntegrationTest extends InitIntegrationTest {
 		LoginUser loginUser = (LoginUser) oAuthUserArgumentResolver.resolveArgument(null, null,
 			new ServletWebRequest(mockHttpServletRequest), null);
 
-		assertThat(loginUser.getId()).isEqualTo(testData.user1.getId());
+		assertThat(loginUser.getId()).isEqualTo(testData.kukim.getId());
 		assertThat(loginUser.getAuthority()).isEqualTo(Authority.USER);
 	}
 

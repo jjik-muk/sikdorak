@@ -25,7 +25,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	void guest_search_user_reviews_success() {
 		LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
-		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.followAcceptUser.getId(), loginUser);
+		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
 
 		assertThat(reviews).hasSize(1);
 	}
@@ -33,9 +33,9 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("친구가 아닌 유저가 특정 유저의 리뷰를 조회한다면 public 리뷰들만 반환한다.")
 	void disconnection_user_search_user_reviews_success() {
-		LoginUser loginUser = new LoginUser(testData.user2.getId(), Authority.USER);
+		LoginUser loginUser = new LoginUser(testData.jay.getId(), Authority.USER);
 
-		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.followAcceptUser.getId(), loginUser);
+		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
 
 		assertThat(reviews).hasSize(1);
 	}
@@ -43,9 +43,9 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("친구인 유저가 특정 유저의 리뷰를 조회한다면 public|protected 리뷰들을 반환한다.")
 	void connection_user_search_user_reviews_success() {
-		LoginUser loginUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
+		LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
 
-		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.followAcceptUser.getId(), loginUser);
+		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
 
 		assertThat(reviews).hasSize(2);
 	}
@@ -53,9 +53,9 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("스스로 자신의 리뷰를 조회한다면 public|protected|private 전체 리뷰를 반환한다.")
 	void user_search_user_reviews_success() {
-		LoginUser loginUser = new LoginUser(testData.followAcceptUser.getId(), Authority.USER);
+		LoginUser loginUser = new LoginUser(testData.hoi.getId(), Authority.USER);
 
-		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.followAcceptUser.getId(), loginUser);
+		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
 
 		assertThat(reviews).hasSize(3);
 	}
@@ -77,7 +77,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
 		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(
-			testData.user2.getId(), loginUser);
+			testData.jay.getId(), loginUser);
 
 		assertThat(reviews).isEmpty();
 	}
