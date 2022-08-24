@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface UserRespository extends JpaRepository<User, Long> {
 
@@ -14,9 +15,9 @@ public interface UserRespository extends JpaRepository<User, Long> {
     boolean existsByUniqueId(long uniqueId);
 
     @Query("select f from User as u join u.followers.follower f where u.id = :userId")
-    Set<Long> findFollowers(long userId);
+    Set<Long> findFollowers(@Param("userId") long userId);
 
     @Query("select f from User as u join u.followings.following f where u.id = :userId")
-    Set<Long> findFollowings(long userId);
+    Set<Long> findFollowings(@Param("userId")long userId);
 
 }
