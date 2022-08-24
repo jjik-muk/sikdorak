@@ -55,6 +55,12 @@ public interface StoreSnippet {
 
 	Snippet STORE_MODIFY_RESPONSE_SNIPPET = commonResponseNonFields();
 
+	Snippet STORE_REMOVE_REQUEST_PARAM_SNIPPET = pathParameters(
+		parameterWithName("storeId").description(Constants.ID_DESCRIPTION)
+	);
+
+	Snippet STORE_REMOVE_RESPONSE_SNIPPET = commonResponseNonFields();
+
 	class Constants {
 		private static final String ID_DESCRIPTION = "가게 아이디";
 		private static final String STORENAME_DESCRIPTION = "가게 이름";

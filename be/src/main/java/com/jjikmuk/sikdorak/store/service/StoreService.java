@@ -71,4 +71,12 @@ public class StoreService {
 
 		return store.getId();
 	}
+
+	@Transactional
+	public void removeStore(Long storeId) {
+		Store store = storeRepository.findById(storeId)
+			.orElseThrow(NotFoundStoreException::new);
+
+		store.delete();
+	}
 }

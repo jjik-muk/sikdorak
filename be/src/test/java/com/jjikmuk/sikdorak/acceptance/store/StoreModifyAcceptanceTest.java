@@ -20,7 +20,7 @@ import org.springframework.http.MediaType;
 class StoreModifyAcceptanceTest extends InitAcceptanceTest {
 
 	@Test
-	@DisplayName("가게 수정 요청이 정상적인 경우라면, 리뷰 생성 후 정상 상태 코드를 반환한다.")
+	@DisplayName("가게 수정 요청이 정상적인 경우라면, 가게 수정 후 정상 상태 코드를 반환한다.")
 	void modify_store_success() {
 		Long savedStoreId = testData.store.getId();
 
@@ -35,7 +35,7 @@ class StoreModifyAcceptanceTest extends InitAcceptanceTest {
 
 		ResponseCodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.STORE_MODIFY_SUCCESS;
 
-		given(this.spec).log().all()
+		given(this.spec)
 			.filter(document(DEFAULT_RESTDOC_PATH,
 				STORE_MODIFY_REQUEST_PARAM_SNIPPET,
 				STORE_MODIFY_REQUEST_SNIPPET,

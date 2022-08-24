@@ -1,17 +1,21 @@
 package com.jjikmuk.sikdorak.store.domain;
 
 import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
-import lombok.NoArgsConstructor;
-
+import com.jjikmuk.sikdorak.common.domain.Deleted;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @NoArgsConstructor // for @Entity
+@SQLDelete(sql = "UPDATE store SET deleted = true WHERE store_id = ?")
+@Where(clause = "deleted = false")
 public class Store extends BaseTimeEntity {
 
     @Id
@@ -30,6 +34,9 @@ public class Store extends BaseTimeEntity {
 
     @Embedded
     private StoreLocation location; // Float latitude, Float longitude
+
+    @Embedded
+    private Deleted deleted = Deleted.FALSE;
 
     public Store(String storeName, String contactNumber, String baseAddress, String detailAddress, Double latitude, Double longitude) {
         this.storeName = new StoreName(storeName);
@@ -71,5 +78,9 @@ public class Store extends BaseTimeEntity {
         this.contactNumber = new ContactNumber(contactNumber);
         this.address = new Address(baseAddress, detailAddress);
         this.location = new StoreLocation(latitude, longitude);
+    }
+
+    public void delete() {
+        deleted.delete();
     }
 }

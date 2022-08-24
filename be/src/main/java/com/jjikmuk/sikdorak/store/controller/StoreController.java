@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.store.controller;
 
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_CREATE_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_MODIFY_SUCCESS;
+import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_REMOVE_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_SUCCESS;
 
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
@@ -12,6 +13,7 @@ import com.jjikmuk.sikdorak.store.service.StoreService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,5 +51,12 @@ public class StoreController {
 		storeService.modifyStore(storeId, modifyRequest);
 
 		return new CommonResponseEntity<>(STORE_MODIFY_SUCCESS, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{storeId}")
+	public CommonResponseEntity<Void> removeStore(@PathVariable("storeId") Long storeId) {
+		storeService.removeStore(storeId);
+
+		return new CommonResponseEntity<>(STORE_REMOVE_SUCCESS, HttpStatus.OK);
 	}
 }
