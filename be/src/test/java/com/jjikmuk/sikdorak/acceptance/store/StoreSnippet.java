@@ -86,7 +86,8 @@ public interface StoreSnippet {
 		parameterWithName("storeId").description(Constants.ID_DESCRIPTION)
 	);
 
-	Snippet STORE_REMOVE_RESPONSE_SNIPPET = commonResponseNonFields();
+	Snippet STORE_REMOVE_RESPONSE_SNIPPET =  createResponseSnippetWithFields(
+		responseFieldsOfCommonNonData());
 
 	class Constants {
 
