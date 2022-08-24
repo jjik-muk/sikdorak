@@ -53,7 +53,10 @@ public class DatabaseConfigurator implements InitializingBean {
     public String user1RefreshToken;
     public String user1ExpiredRefreshToken;
     public String user1InvalidRefreshToken;
-    public Review review;
+    public Review user1PublicReview;
+    public Review follwAcceptUserPublicReview;
+    public Review follwAcceptUserProtectedReview;
+    public Review follwAcceptUserPrivateReview;
 
     public void initDataSource() {
         initStoreData();
@@ -155,7 +158,7 @@ public class DatabaseConfigurator implements InitializingBean {
     }
 
     private void initReviewData() {
-        this.review = reviewRepository.save(new Review(this.user1.getId(),
+        this.user1PublicReview = reviewRepository.save(new Review(this.user1.getId(),
             this.store.getId(),
             "Test review contents",
             3.f,
@@ -164,7 +167,7 @@ public class DatabaseConfigurator implements InitializingBean {
             List.of("tag1", "tag2"),
             List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
 
-        reviewRepository.save(new Review(this.followAcceptUser.getId(),
+        this.follwAcceptUserPublicReview = reviewRepository.save(new Review(this.followAcceptUser.getId(),
             this.store.getId(),
             "전체 공개된 리뷰 게시물",
             3.f,
@@ -173,7 +176,7 @@ public class DatabaseConfigurator implements InitializingBean {
             List.of("tag1", "tag2"),
             List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
 
-        reviewRepository.save(new Review(this.followAcceptUser.getId(),
+        this.follwAcceptUserProtectedReview = reviewRepository.save(new Review(this.followAcceptUser.getId(),
             this.store.getId(),
             "친구 공개된 리뷰 게시물",
             3.f,
@@ -182,7 +185,7 @@ public class DatabaseConfigurator implements InitializingBean {
             List.of("tag1", "tag2"),
             List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
 
-        reviewRepository.save(new Review(this.followAcceptUser.getId(),
+        this.follwAcceptUserPrivateReview = reviewRepository.save(new Review(this.followAcceptUser.getId(),
             this.store.getId(),
             "비공개된 리뷰 게시물",
             3.f,

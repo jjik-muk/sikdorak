@@ -32,7 +32,7 @@ class ReviewSearchAcceptanceTest extends InitAcceptanceTest {
 			.header("Authorization", testData.user1ValidAuthorizationHeader)
 
 		.when()
-			.get("/api/reviews/{reviewId}", testData.review.getId())
+			.get("/api/reviews/{reviewId}", testData.user1PublicReview.getId())
 
 		.then()
 			.log().all()
