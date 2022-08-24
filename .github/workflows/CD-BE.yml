@@ -55,6 +55,19 @@ jobs:
         run: |
           ./gradlew jib
           heroku container:release web -a sikdorak-test
+  server-health-check:
+    needs: be-build-test
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Check the deployed service URL
+        uses: jtalk/url-health-check-action@v2
+        with:
+          url: https://sikdorak-test.herokuapp.com/docs/index.html|http://sikdorak-test.herokuapp.com/docs/index.html
+          follow-redirect: false
+          max-attempts: 3
+          retry-delay: 10s
+          retry-all: false
 
       - name: Noti Discord - Test Success
         uses: rjstone/discord-webhook-notify@v1
