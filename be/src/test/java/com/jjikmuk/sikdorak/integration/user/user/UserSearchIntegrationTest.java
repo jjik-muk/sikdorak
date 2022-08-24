@@ -54,8 +54,8 @@ class UserSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    @DisplayName("회원이 유저의 정보를 조회할 경우 유저 정보를 반환한다.")
-    void user_search_another_user_profile() {
+    @DisplayName("팔로우 되어 있는 회원이 유저의 정보를 조회할 경우 유저 정보를 반환한다.")
+    void user_search_following_user_profile() {
         LoginUser loginUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
 
         UserProfileResponse userProfileResponse = userService.searchUserProfile(
@@ -66,6 +66,21 @@ class UserSearchIntegrationTest extends InitIntegrationTest {
         assertThat(userProfileResponse.isViewer()).isFalse();
         assertThat(userProfileResponse.followStatus()).isTrue();
         assertThat(userProfileResponse.reviewCount()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("팔로우 되어 있는 회원이 유저의 정보를 조회할 경우 유저 정보를 반환한다.")
+    void user_search_unfollowing_user_profile() {
+        LoginUser loginUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
+
+        UserProfileResponse userProfileResponse = userService.searchUserProfile(
+            testData.user2.getId(), loginUser);
+
+        assertThat(userProfileResponse.id()).isEqualTo(testData.user2.getId());
+        assertThat(userProfileResponse.nickname()).isEqualTo(testData.user2.getNickname());
+        assertThat(userProfileResponse.isViewer()).isFalse();
+        assertThat(userProfileResponse.followStatus()).isFalse();
+        assertThat(userProfileResponse.reviewCount()).isEqualTo(0);
     }
 
     @Test
