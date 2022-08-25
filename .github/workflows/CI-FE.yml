@@ -1,0 +1,83 @@
+name: FE Test
+
+on:
+  push:
+    branches: [dev, FE-dev, FE-deploy]
+  pull_request:
+    branches: [dev, FE-dev]
+    paths: ["fe/**"]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+# https://create-react-app.dev/docs/running-tests/
+
+defaults:
+  run:
+    working-directory: ./fe
+
+jobs:
+  fe-test:
+    name: Test React
+    runs-on: ubuntu-20.04
+    env:
+      CI: true
+    steps:
+      - name: setup repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBMODULES_ACCESS_TOKEN }}
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: install npm dependencies
+        run: npm ci
+
+      - name: Test React
+        run: npm run coverage
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FE }}
+
+      - name: Noti Discord - Test Success
+        uses: rjstone/discord-webhook-notify@v1
+        if: success()
+        with:
+          severity: info
+          details: Test Succeeded!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Noti Discord - Test Failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: failure()
+        with:
+          severity: error
+          details: Test Failed!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Noti Discord - Test Cancelled
+        uses: rjstone/discord-webhook-notify@v1
+        if: cancelled()
+        with:
+          severity: warn
+          details: Test Cancelled!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
