@@ -24,11 +24,11 @@ class CommentCreateIntegrationTest extends InitIntegrationTest {
 
 	@Nested
 	@DisplayName("댓글을 작성할 때")
-	class CreateStoreTest {
+	class CreateCommentTest {
 
 		@Test
 		@DisplayName("정상적인 댓글 작성 요청이 주어진다면, 댓글이 생성된다.")
-		void create_store_success() {
+		void create_comment_success() {
 			// given
 			long reviewId = testData.user1PublicReview.getId();
 			LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
