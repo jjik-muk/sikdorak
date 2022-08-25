@@ -3,6 +3,7 @@ package com.jjikmuk.sikdorak.user.user.domain;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
@@ -20,6 +21,7 @@ public class Followings {
         name = "user_following",
         joinColumns = @JoinColumn(name = "user_id")
     )
+    @Column(name = "following_id")
     private Set<Long> following = new HashSet<>();
 
 }

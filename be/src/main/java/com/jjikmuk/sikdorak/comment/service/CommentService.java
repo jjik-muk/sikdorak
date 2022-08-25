@@ -8,7 +8,7 @@ import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
+import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,14 +17,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CommentService {
 	private final CommentRepository commentRepository;
-	private final UserRespository userRespository;
+	private final UserRepository userRepository;
 	private final ReviewRepository reviewRepository;
 
 	public Comment createComment(
 		long reviewId,
 		LoginUser loginUser,
 		CommentCreateRequest commentCreateRequest) {
-		User user = userRespository.findById(loginUser.getId())
+		User user = userRepository.findById(loginUser.getId())
 			.orElseThrow(NotFoundUserException::new);
 
 		Review review = reviewRepository.findById(reviewId)

@@ -12,11 +12,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@SQLDelete(sql = "update user set deleted = true where user_id = ?")
+@Where(clause = "deleted = false")
 public class User extends BaseTimeEntity {
 
     @Id
@@ -41,6 +45,8 @@ public class User extends BaseTimeEntity {
 
     @Embedded
     private Followers followers;
+
+    private boolean deleted = false;
 
     public User(Long uniqueId, String nickname, String profileImage, String email) {
         this(null, uniqueId, nickname, profileImage, email);
@@ -100,8 +106,20 @@ public class User extends BaseTimeEntity {
         this.removeFollowing(acceptUser);
     }
 
+    public void delete() {
+        this.deleted = true;
+    }
+
     public boolean isFollowing(User acceptUser) {
-        return this.getFollowings().contains(acceptUser.getId());
+        return this.getFollowings().contains(acceptUser.id) && acceptUser.getFollowers().contains(this.id);
+    }
+
+    public boolean isFollowedBy(User sendUser) {
+        return this.getFollowers().contains(sendUser.id) && sendUser.getFollowings().contains(this.id);
+    }
+
+    public boolean isDeleted() {
+        return deleted;
     }
 
     private void addFollower(User sendUser) {

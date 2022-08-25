@@ -35,7 +35,7 @@ class UserReviewsSearchByUserIdAcceptanceTest extends InitAcceptanceTest {
 			.header("Content-type", "application/json")
 
 		.when()
-			.get("/api/users/{userId}/reviews", testData.followAcceptUser.getId())
+			.get("/api/users/{userId}/reviews", testData.hoi.getId())
 
 		.then()
 			.statusCode(HttpStatus.OK.value())
@@ -53,7 +53,7 @@ class UserReviewsSearchByUserIdAcceptanceTest extends InitAcceptanceTest {
 			.header("Authorization", testData.followSendUserValidAuthorizationHeader)
 
 		.when()
-			.get("/api/users/{userId}/reviews", testData.followAcceptUser.getId())
+			.get("/api/users/{userId}/reviews", testData.hoi.getId())
 
 		.then()
 			.statusCode(HttpStatus.OK.value())
@@ -76,7 +76,7 @@ class UserReviewsSearchByUserIdAcceptanceTest extends InitAcceptanceTest {
 			.header("Authorization", testData.followAcceptUserValidAuthorizationHeader)
 
 		.when()
-			.get("/api/users/{userId}/reviews", testData.followAcceptUser.getId())
+			.get("/api/users/{userId}/reviews", testData.hoi.getId())
 
 		.then()
 			.statusCode(HttpStatus.OK.value())

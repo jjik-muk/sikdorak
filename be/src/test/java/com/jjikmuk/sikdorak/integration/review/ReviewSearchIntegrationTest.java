@@ -24,7 +24,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("유저가 본인의 전체 공개 리뷰를 조회한 경우 디테일 리뷰응답 객체를 반환한다.")
 	void search_public_review_detail_with_owner_user() {
-		LoginUser reviewOwnerUser = new LoginUser(testData.followAcceptUser.getId(),
+		LoginUser reviewOwnerUser = new LoginUser(testData.hoi.getId(),
 			Authority.USER);
 		Long searchReviewId = testData.followAcceptUserPublicReview.getId();
 
@@ -39,7 +39,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("유저가 본인의 비공개 리뷰를 조회한 경우 디테일 리뷰응답 객체를 반환한다.")
 	void search_private_review_detail_with_owner_user() {
-		LoginUser reviewOwnerUser = new LoginUser(testData.followAcceptUser.getId(),
+		LoginUser reviewOwnerUser = new LoginUser(testData.hoi.getId(),
 			Authority.USER);
 		Long searchReviewId = testData.followAcceptUserPrivateReview.getId();
 
@@ -55,14 +55,14 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("유저가 친구의 친구 공개 리뷰를 조회한 경우 리뷰응답 객체를 반환한다")
 	void search_protected_review_detail_with_friend_User() {
-		LoginUser reviewFriendUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
+		LoginUser reviewFriendUser = new LoginUser(testData.forky.getId(), Authority.USER);
 		Long searchReviewId = testData.followAcceptUserProtectedReview.getId();
 
 		ReviewDetailResponse reviewDetailResponse = reviewService.searchReviewDetail(
 			reviewFriendUser, searchReviewId);
 
 		assertThat(reviewDetailResponse.reviewId()).isEqualTo(searchReviewId);
-		assertThat(reviewDetailResponse.user().userId()).isEqualTo(testData.followAcceptUser.getId());
+		assertThat(reviewDetailResponse.user().userId()).isEqualTo(testData.hoi.getId());
 		assertThat(reviewDetailResponse.reviewVisibility()).isEqualTo("PROTECTED");
 	}
 

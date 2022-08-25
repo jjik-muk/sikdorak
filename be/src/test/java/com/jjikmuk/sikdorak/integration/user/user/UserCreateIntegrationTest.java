@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
+import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +19,7 @@ public class UserCreateIntegrationTest extends InitIntegrationTest {
     private UserService userService;
 
     @Autowired
-    private UserRespository userRespository;
+    private UserRepository userRepository;
 
 
     @Test
@@ -28,7 +28,7 @@ public class UserCreateIntegrationTest extends InitIntegrationTest {
         User user = new User(232323L, "Forky-Ham", "https://profile-img.com", "forky@sikdorak.com");
 
         Long id = userService.createUser(user);
-        User findUser = userRespository.findById(id).get();
+        User findUser = userRepository.findById(id).get();
 
         assertThat(user.getUniqueId()).isEqualTo(findUser.getUniqueId());
         assertThat(user.getNickname()).isEqualTo(findUser.getNickname());
@@ -38,7 +38,7 @@ public class UserCreateIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("유저의 고유Id가 중복된다면 예외를 발생시킨다.")
     void duplicatedUserException() {
-        User user2 = new User(12345678L, "test-user", "https://profile.com", "sikdorak@gmail.com");
+        User user2 = new User(testData.jay.getUniqueId(), "test-user", "https://profile.com", "sikdorak@gmail.com");
 
         assertThatThrownBy(() -> userService.createUser(user2))
                 .isInstanceOf(DuplicateUserException.class);

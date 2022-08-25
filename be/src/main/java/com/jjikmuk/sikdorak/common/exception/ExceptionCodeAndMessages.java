@@ -66,7 +66,7 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NOT_FOUND_USER("F-U007", "존재하지 않는 유저입니다.", NotFoundUserException.class),
     UNAUTHORIZED_USER("F-U008", "권한이 없는 유저입니다.", UnauthorizedUserException.class),
     DUPLICATE_SEND_ACCEPT_USER("F-U009", "팔로우 요청자와 대상자의 정보가 중복됩니다.", DuplicateSendAcceptUserException.class),
-    DUPLICATE_FOLLOWING_USER("F-U0010", "이미 팔로우 된 유저입니다", DuplicateFollowingException.class),
+    DUPLICATE_FOLLOWING_USER("F-U010", "이미 팔로우 된 유저입니다", DuplicateFollowingException.class),
     NOT_FOUND_FOLLOWING_USER("F-U011","존재하지 않는 팔로우 정보 입니다.", NotFoundFollowException.class),
 
     //OAuth

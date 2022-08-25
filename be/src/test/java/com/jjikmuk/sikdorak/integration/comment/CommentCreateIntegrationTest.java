@@ -30,7 +30,7 @@ class CommentCreateIntegrationTest extends InitIntegrationTest {
 		void create_store_success() {
 			// given
 			long reviewId = testData.user1PublicReview.getId();
-			LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
+			LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
 			CommentCreateRequest createRequest = new CommentCreateRequest(
 				"맛집이네요!"
 			);
@@ -49,7 +49,7 @@ class CommentCreateIntegrationTest extends InitIntegrationTest {
 		void create_comment_with_not_existing_review_will_failed() {
 			// given
 			long notExistsReviewId = Long.MIN_VALUE;
-			LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
+			LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
 			CommentCreateRequest createRequest = new CommentCreateRequest(
 				"맛집이네요!"
 			);
