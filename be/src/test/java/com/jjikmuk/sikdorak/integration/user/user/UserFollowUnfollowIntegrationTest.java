@@ -7,7 +7,7 @@ import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.auth.controller.Authority;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
-import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
+import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateFollowingException;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateSendAcceptUserException;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundFollowException;
@@ -25,7 +25,7 @@ class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
     private UserService userService;
 
     @Autowired
-    private UserRespository userRespository;
+    private UserRepository userRepository;
 
     @Test
     @DisplayName("팔로우 되어 있지 않은 유저에 대한 팔로우 요청이 들어오면 유저를 팔로우 한다.")
@@ -37,8 +37,8 @@ class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
 
         userService.followUser(loginUser, request);
 
-        Set<Long> sendUserFollowings = userRespository.findFollowings(testData.forky.getId());
-        Set<Long> acceptUserFollowers = userRespository.findFollowers(testData.kukim.getId());
+        Set<Long> sendUserFollowings = userRepository.findFollowings(testData.forky.getId());
+        Set<Long> acceptUserFollowers = userRepository.findFollowers(testData.kukim.getId());
 
         assertThat(sendUserFollowings).contains(testData.kukim.getId());
         assertThat(acceptUserFollowers).contains(testData.forky.getId());
@@ -90,8 +90,8 @@ class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
 
         userService.unfollowUser(loginUser, unfollowRequest);
 
-        Set<Long> sendUserFollowings = userRespository.findFollowings(testData.forky.getId());
-        Set<Long> acceptUserFollowers = userRespository.findFollowers(testData.jay.getId());
+        Set<Long> sendUserFollowings = userRepository.findFollowings(testData.forky.getId());
+        Set<Long> acceptUserFollowers = userRepository.findFollowers(testData.jay.getId());
 
         assertThat(sendUserFollowings).doesNotContain(testData.jay.getId());
         assertThat(acceptUserFollowers).doesNotContain(testData.forky.getId());

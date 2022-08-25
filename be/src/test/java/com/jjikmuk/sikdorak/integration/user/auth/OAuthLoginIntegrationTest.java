@@ -9,7 +9,7 @@ import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.auth.service.OAuthService;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
+import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import java.io.IOException;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +34,7 @@ public class OAuthLoginIntegrationTest extends InitIntegrationTest {
     private JwtProvider jwtProvider;
 
     @Autowired
-    private UserRespository userRespository;
+    private UserRepository userRepository;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -48,7 +48,7 @@ public class OAuthLoginIntegrationTest extends InitIntegrationTest {
 
         JwtTokenPair code = oAuthService.login("code");
         String userId = jwtProvider.decodeToken(code.getAccessToken());
-        User user = userRespository.findById(Long.parseLong(userId)).orElseThrow();
+        User user = userRepository.findById(Long.parseLong(userId)).orElseThrow();
 
         assertThat(code.getAccessToken()).isNotNull();
         assertThat(user).isNotNull();
@@ -63,7 +63,7 @@ public class OAuthLoginIntegrationTest extends InitIntegrationTest {
         JwtTokenPair code = oAuthService.login("code");
         String userId = jwtProvider.decodeToken(code.getAccessToken());
 
-        User user = userRespository.findById(Long.parseLong(userId)).orElseThrow();
+        User user = userRepository.findById(Long.parseLong(userId)).orElseThrow();
 
         assertThat(code.getAccessToken()).isNotNull();
         assertThat(user).isNotNull();

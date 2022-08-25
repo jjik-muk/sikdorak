@@ -6,7 +6,7 @@ import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
+import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,7 +33,7 @@ public class DatabaseConfigurator implements InitializingBean {
     private StoreRepository storeRepository;
 
     @Autowired
-    private UserRespository userRespository;
+    private UserRepository userRepository;
 
     @Autowired
     private ReviewRepository reviewRepository;
@@ -41,7 +41,15 @@ public class DatabaseConfigurator implements InitializingBean {
     @Autowired
     private JwtProvider jwtProvider;
 
+    @Autowired
+    private UserDataConfigurator userDataConfigurator;
+
     public Store store;
+//    public TUser kukim;
+//    public TUser jay;
+//    public TUser forky;
+//    public TUser hoi;
+//    public TUser rumka;
     public User kukim;
     public User jay;
     public User forky;
@@ -116,29 +124,47 @@ public class DatabaseConfigurator implements InitializingBean {
     }
 
     private void initBasicUserData() {
-        this.kukim = userRespository.save(
+        this.kukim = userRepository.save(
             new User(1000000L, "쿠킴", "https://s3.ap-northeast-2.amazonaws.com/user/kukim.jpg",
                 "kukim@gmail.com"));
-        this.jay = userRespository.save(
+        this.jay = userRepository.save(
             new User(2000000L, "제이", "https://s3.ap-northeast-2.amazonaws.com/user/jay.jpg",
                 "jay@gmail.com"));
-        this.forky = userRespository.save(
+        this.forky = userRepository.save(
             new User(3000000L, "포키", "https://s3.ap-northeast-2.amazonaws.com/user/forky.jpg",
                 "forky@gmail.com"));
-        this.hoi = userRespository.save(
+        this.hoi = userRepository.save(
             new User(4000000L, "호이", "https://s3.ap-northeast-2.amazonaws.com/user/hoi.jpg",
                 "hoi@gmail.com"));
-        this.rumka = userRespository.save(
+        this.rumka = userRepository.save(
             new User(5000000L, "럼카", "https://s3.ap-northeast-2.amazonaws.com/user/rumka.jpg",
                 "rumka@gmail.com"));
-    }
 
+//        this.kukim = userDataConfigurator.createTUser(1000000L, "쿠킴",
+//            "https://s3.ap-northeast-2.amazonaws.com/user/kukim.jpg",
+//            "kukim@gmail.com");
+//        this.jay = userDataConfigurator.createTUser(2000000L, "제이",
+//            "https://s3.ap-northeast-2.amazonaws.com/user/jay.jpg",
+//            "jay@gmail.com");
+//        this.forky = userDataConfigurator.createTUser(3000000L, "포키",
+//            "https://s3.ap-northeast-2.amazonaws.com/user/forky.jpg",
+//            "forky@gmail.com");
+//        this.hoi = userDataConfigurator.createTUser(4000000L, "호이",
+//            "https://s3.ap-northeast-2.amazonaws.com/user/hoi.jpg",
+//            "hoi@gmail.com");
+//        this.rumka = userDataConfigurator.createTUser(5000000L, "럼카",
+//            "https://s3.ap-northeast-2.amazonaws.com/user/rumka.jpg",
+//            "rumka@gmail.com");
+    }
 
     private void initFollowingUserData() {
         this.forky.follow(this.hoi);
         this.forky.follow(this.rumka);
-        this.forky = userRespository.save(this.forky);
-        this.hoi = userRespository.save(this.hoi);
+        this.hoi.follow(this.forky);
+        this.hoi.follow(this.rumka);
+        this.forky = userRepository.save(this.forky);
+        this.hoi = userRepository.save(this.hoi);
+        this.rumka = userRepository.save(this.rumka);
     }
 
     private void initUserAuthorizationData() {
@@ -200,5 +226,37 @@ public class DatabaseConfigurator implements InitializingBean {
             LocalDate.of(2022, 1, 1),
             List.of("tag1", "tag2"),
             List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
+
+//        this.review = kukim.publishReview(this.store.getId(),
+//            "Test review contents",
+//            3.f,
+//            "public",
+//            LocalDate.of(2022, 1, 1),
+//            List.of("tag1", "tag2"),
+//            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
+//
+//        hoi.publishReview(this.store.getId(),
+//            "전체 공개된 리뷰 게시물",
+//            3.f,
+//            "public",
+//            LocalDate.of(2022, 1, 1),
+//            List.of("tag1", "tag2"),
+//            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
+//
+//        hoi.publishReview(this.store.getId(),
+//            "친구 공개된 리뷰 게시물",
+//            3.f,
+//            "protected",
+//            LocalDate.of(2022, 1, 1),
+//            List.of("tag1", "tag2"),
+//            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
+//
+//        hoi.publishReview(this.store.getId(),
+//            "비공개된 리뷰 게시물",
+//            3.f,
+//            "private",
+//            LocalDate.of(2022, 1, 1),
+//            List.of("tag1", "tag2"),
+//            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
     }
 }

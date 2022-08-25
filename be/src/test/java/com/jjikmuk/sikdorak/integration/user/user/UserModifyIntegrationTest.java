@@ -8,7 +8,7 @@ import com.jjikmuk.sikdorak.user.auth.controller.Authority;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
+import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,7 @@ class UserModifyIntegrationTest extends InitIntegrationTest {
     private UserService userService;
 
     @Autowired
-    private UserRespository userRespository;
+    private UserRepository userRepository;
 
     @Test
     @DisplayName("올바른 입력값이 들어오면 유저의 정보를 수정한다.")
@@ -36,7 +36,7 @@ class UserModifyIntegrationTest extends InitIntegrationTest {
         );
 
         Long id = userService.modifyUser(loginUser, userModifyRequest);
-        User user = userRespository.findById(id).orElseThrow();
+        User user = userRepository.findById(id).orElseThrow();
 
         assertThat(user.getNickname()).isEqualTo(userModifyRequest.getNickname());
         assertThat(user.getEmail()).isEqualTo(userModifyRequest.getEmail());
