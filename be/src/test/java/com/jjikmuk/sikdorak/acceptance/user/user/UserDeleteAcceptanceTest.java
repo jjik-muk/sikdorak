@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("유저 탈퇴 인수 테스트")
-public class UserDeleteAcceptanceTest extends InitAcceptanceTest {
+class UserDeleteAcceptanceTest extends InitAcceptanceTest {
 
     @Test
     @DisplayName("유저의 탈퇴 요청이 올바르면 성공 응답 코드를 반환한다.")
