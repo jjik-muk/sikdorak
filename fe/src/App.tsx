@@ -1,4 +1,5 @@
 import Portal from 'common/Portal/Portal';
+import Callback from 'pages/Callback/Callback';
 import Login from 'pages/Login/Login';
 import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
 import ReviewList from 'pages/ReviewList/ReviewList';
@@ -42,6 +43,7 @@ function App() {
           <Route path="/userDetail" element={<UserDetail />} />
           <Route path="/storeDetail" element={<StoreDetail />} />
           <Route path="/reviewList" element={<ReviewList />} />
+          <Route path="/api/oauth/callback" element={<Callback />} />
         </Routes>
       </BrowserRouter>
     </>

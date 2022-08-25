@@ -71,9 +71,7 @@ function StoreDetail() {
 
   function getImagesOfStore({ pictures, defaultImg }) {
     const ARR_LEN = 5;
-    return Array(ARR_LEN)
-      .fill(0)
-      .map((_, i) => pictures[i] || defaultImg);
+    return Array.from({ length: ARR_LEN }).map((_, i) => pictures[i] || defaultImg);
   }
 }
 

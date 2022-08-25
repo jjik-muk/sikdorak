@@ -5,6 +5,7 @@ import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/Restaurant
 import TotalRating from 'components/ReviewDetail/TotalRating/TotalRating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
 import useToggle from 'hooks/useToggle';
+import { createKey } from 'utils/utils';
 import {
   ButtonWrapper,
   Contents,
@@ -37,8 +38,14 @@ function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps)
           <Contents>{contents}</Contents>
           <Pictures>
             {pictures &&
-              pictures.map((picture) => (
-                <img src={picture} alt="음식" width={FEED.IMG.WIDTH} height={FEED.IMG.HEIGHT} />
+              pictures.map((picture, i) => (
+                <img
+                  key={createKey(picture, i)}
+                  src={picture}
+                  alt="음식"
+                  width={FEED.IMG.WIDTH}
+                  height={FEED.IMG.HEIGHT}
+                />
               ))}
           </Pictures>
           <TotalRating taste={taste} price={price} service={service} />
