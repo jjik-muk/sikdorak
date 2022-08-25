@@ -133,7 +133,7 @@ public class Review extends BaseTimeEntity {
 		this.deleted = true;
 	}
 
-	public boolean isRead(RelationType relationType) {
+	public boolean isReadable(RelationType relationType) {
 		return reviewVisibility.isRead(relationType);
 	}
 }

@@ -39,7 +39,7 @@ public class ReviewService {
 
 		RelationType relationType = reviewOwner.relationTypeTo(loginUser);
 
-		if (!review.isRead(relationType)) {
+		if (!review.isReadable(relationType)) {
 			throw new UnauthorizedUserException();
 		}
 
