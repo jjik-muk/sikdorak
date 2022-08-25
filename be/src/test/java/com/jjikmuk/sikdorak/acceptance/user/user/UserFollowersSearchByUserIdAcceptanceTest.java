@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @DisplayName("유저 팔로워 목록 조회 인수 테스트")
-public class UserFollowersSearchByUserIdAcceptanceTest extends InitAcceptanceTest {
+class UserFollowersSearchByUserIdAcceptanceTest extends InitAcceptanceTest {
 
     @Test
     @DisplayName("회원의 특정 유저에 대한 팔로워 조회 요청이 올바를 경우 성공 상태코드를 반환한다.")
