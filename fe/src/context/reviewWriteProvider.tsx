@@ -79,7 +79,7 @@ type ActionType = {
   restaurant?: string;
   text?: string;
   rating?: number;
-  scope?: 'all' | 'friends';
+  scope?: 'public' | 'private';
   id?: number;
   address?: string;
   tags?: [];
