@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
-public record UserProfileResponse(
+public record UserDetailProfileResponse(
 
     @NotNull
     long id,
@@ -37,8 +37,8 @@ public record UserProfileResponse(
 
 ) {
 
-    public static UserProfileResponse of(User user, UserProfileRelationStatusResponse userProfileRelationStatusResponse, int reviewCount) {
-        return new UserProfileResponse(
+    public static UserDetailProfileResponse of(User user, UserProfileRelationStatusResponse userProfileRelationStatusResponse, int reviewCount) {
+        return new UserDetailProfileResponse(
             user.getId(),
             user.getNickname(),
             user.getProfileImage(),
