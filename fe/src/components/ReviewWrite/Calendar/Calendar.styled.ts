@@ -33,8 +33,30 @@ export const DayWrapper = styled.div`
   margin-top: 30px;
 `;
 
-export const Day = styled.div`
+export const Day = styled.div<{ day: string }>`
   padding: 4px;
   font-size: 14px;
   text-align: center;
+  ${({ day }) => getDayColor(day)};
+  cursor: pointer;
 `;
+
+export const ToDay = styled.div`
+  padding: 4px;
+  border-radius: 50%;
+  background-color: red;
+  font-size: 14px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+`;
+
+const getDayColor = (day) => {
+  if (day === 'SAT') {
+    return `color:blue`;
+  }
+  if (day === 'SUN') {
+    return `color:red`;
+  }
+  return '';
+};

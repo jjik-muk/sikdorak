@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
-import { CalendarHead, Day, DayWrapper, Title, Wrap } from './Calendar.styled';
+import { DispatchReviewWriteContext } from 'context/reviewWriteProvider';
+import { useContext, useEffect, useState } from 'react';
+import { CalendarHead, Day, DayWrapper, Title, ToDay, Wrap } from './Calendar.styled';
 
 const MONTH_LIST = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 const dayList = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 const createKey = (value, idx) => `${value}-${idx}`;
 
-export default function Calendar() {
+export default function Calendar({ setIsCalendarOpen }: CalendarProps) {
+  const dispatchCalendar = useContext(DispatchReviewWriteContext);
+
   const todayDate = new Date();
   const [todayYear, todayMonth] = [todayDate.getFullYear(), todayDate.getMonth()];
   const [calendarDate, setCalendarDate] = useState(new Date(todayYear, todayMonth));
@@ -20,6 +23,15 @@ export default function Calendar() {
 
     const [prevYear, prevMonth] = [calendarDate.getFullYear(), calendarDate.getMonth() - 1];
     setCalendarDate(new Date(prevYear, prevMonth));
+  };
+
+  const clickDay = ({ target }) => {
+    const { innerHTML: date, dataset } = target;
+    const { year, month, day } = dataset;
+    if (Number(date)) {
+      dispatchCalendar({ type: 'SET_DATE', date, year, month, day });
+      setIsCalendarOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -45,11 +57,64 @@ export default function Calendar() {
         </button>
       </CalendarHead>
       <DayWrapper>
-        {allDayInfoForRender.map((week, i) => week.map((date, j) => <Day key={createKey(date, i + j)}>{date}</Day>))}
+        {isTodayInMonth(calendarDate, todayDate) &&
+          allDayInfoForRender.map((week, i) =>
+            week.map((date, j) =>
+              isToday(date, todayDate) ? (
+                <ToDay
+                  data-year={calendarDate.getFullYear()}
+                  data-month={calendarDate.getMonth() + 1}
+                  data-day={dayList[j]}
+                  onClick={clickDay}
+                  key={createKey(date, i + j)}
+                >
+                  {date}
+                </ToDay>
+              ) : (
+                <Day
+                  data-year={calendarDate.getFullYear()}
+                  data-month={calendarDate.getMonth() + 1}
+                  data-day={dayList[j]}
+                  onClick={clickDay}
+                  day={dayList[j]}
+                  key={createKey(date, i + j)}
+                >
+                  {date}
+                </Day>
+              ),
+            ),
+          )}
+        {!isTodayInMonth(calendarDate, todayDate) &&
+          allDayInfoForRender.map((week, i) =>
+            week.map((date, j) => (
+              <Day
+                data-year={calendarDate.getFullYear()}
+                data-month={calendarDate.getMonth() + 1}
+                data-day={dayList[j]}
+                onClick={clickDay}
+                day={dayList[j]}
+                key={createKey(date, i + j)}
+              >
+                {date}
+              </Day>
+            )),
+          )}
       </DayWrapper>
     </Wrap>
   );
 }
+
+const isTodayInMonth = (calendarDate: Date, todayDate: Date) => {
+  if (calendarDate.getFullYear() !== todayDate.getFullYear()) {
+    return false;
+  }
+  if (calendarDate.getMonth() !== todayDate.getMonth()) {
+    return false;
+  }
+  return true;
+};
+
+const isToday = (today: number, todayDate: Date) => today === todayDate.getDate();
 
 const createWeekArray = (firstDay, lastDay) => {
   const allWeekArray = [];
@@ -71,4 +136,8 @@ const createWeekArray = (firstDay, lastDay) => {
     allWeekArray.push(currentWeek);
   }
   return allWeekArray;
+};
+
+type CalendarProps = {
+  setIsCalendarOpen: Function;
 };
