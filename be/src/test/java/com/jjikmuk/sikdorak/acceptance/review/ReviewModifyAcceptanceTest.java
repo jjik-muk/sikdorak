@@ -50,7 +50,7 @@ class ReviewModifyAcceptanceTest extends InitAcceptanceTest {
 			.body(reviewModifyRequest)
 
 		.when()
-			.put("/api/reviews/{reviewId}", testData.review.getId())
+			.put("/api/reviews/{reviewId}", testData.user1PublicReview.getId())
 
 		.then()
 			.statusCode(HttpStatus.OK.value())
@@ -83,7 +83,7 @@ class ReviewModifyAcceptanceTest extends InitAcceptanceTest {
 			.body(reviewModifyRequest)
 
 		.when()
-			.put("/api/reviews/{reviewId}", testData.review.getId())
+			.put("/api/reviews/{reviewId}", testData.user1PublicReview.getId())
 
 		.then()
 			.statusCode(HttpStatus.UNAUTHORIZED.value())

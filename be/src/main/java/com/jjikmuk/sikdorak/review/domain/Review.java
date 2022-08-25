@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.review.domain;
 
 import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
+import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import java.time.LocalDate;
 import java.util.List;
@@ -132,4 +133,7 @@ public class Review extends BaseTimeEntity {
 		this.deleted = true;
 	}
 
+	public boolean isReadable(RelationType relationType) {
+		return reviewVisibility.isRead(relationType);
+	}
 }

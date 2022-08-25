@@ -35,7 +35,7 @@ class ReviewRemoveAccecptanceTest extends InitAcceptanceTest {
 			.header("Authorization", testData.user1ValidAuthorizationHeader)
 
 		.when()
-			.delete("/api/reviews/{reviewId}", testData.review.getId())
+			.delete("/api/reviews/{reviewId}", testData.user1PublicReview.getId())
 
 		.then()
 			.statusCode(HttpStatus.OK.value())
@@ -56,7 +56,7 @@ class ReviewRemoveAccecptanceTest extends InitAcceptanceTest {
 			.header("Content-type", "application/json")
 
 		.when()
-			.delete("/api/reviews/{reviewId}", testData.review.getId())
+			.delete("/api/reviews/{reviewId}", testData.user1PublicReview.getId())
 
 		.then()
 			.statusCode(HttpStatus.UNAUTHORIZED.value())

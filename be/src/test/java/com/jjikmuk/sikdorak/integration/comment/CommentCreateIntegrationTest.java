@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.comment.controller.request.CommentCreateRequest;
 import com.jjikmuk.sikdorak.comment.domain.Comment;
-import com.jjikmuk.sikdorak.comment.repository.CommentRepository;
 import com.jjikmuk.sikdorak.comment.service.CommentService;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
@@ -30,7 +29,7 @@ class CommentCreateIntegrationTest extends InitIntegrationTest {
 		@DisplayName("정상적인 댓글 작성 요청이 주어진다면, 댓글이 생성된다.")
 		void create_store_success() {
 			// given
-			long reviewId = testData.review.getId();
+			long reviewId = testData.user1PublicReview.getId();
 			LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
 			CommentCreateRequest createRequest = new CommentCreateRequest(
 				"맛집이네요!"
@@ -65,7 +64,7 @@ class CommentCreateIntegrationTest extends InitIntegrationTest {
 		@DisplayName("존재하지 않는 유저가 댓글 생성 요청을 한다면 예외를 발생시킨다")
 		void create_comment_with_not_existing_user_will_failed() {
 			// given
-			long reviewId = testData.review.getId();
+			long reviewId = testData.user1PublicReview.getId();
 			long notExistingUserId = Long.MIN_VALUE;
 			LoginUser loginUser = new LoginUser(notExistingUserId, Authority.USER);
 			CommentCreateRequest createRequest = new CommentCreateRequest(

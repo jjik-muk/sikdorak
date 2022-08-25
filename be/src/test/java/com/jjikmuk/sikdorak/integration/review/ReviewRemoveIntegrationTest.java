@@ -26,7 +26,7 @@ class ReviewRemoveIntegrationTest extends InitIntegrationTest {
 	void remove_review_valid() {
 		LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
 
-		Review removeReview = reviewService.removeReview(loginUser, testData.review.getId());
+		Review removeReview = reviewService.removeReview(loginUser, testData.user1PublicReview.getId());
 
 		assertThat(removeReview.isDeleted()).isTrue();
 	}
@@ -46,9 +46,9 @@ class ReviewRemoveIntegrationTest extends InitIntegrationTest {
 	@DisplayName("만약 유저가 이미 삭제된 리뷰에 대한 삭제 요청이 주어진다면 예외를 발생시킨다")
 	void remove_review_invalid_exist2() {
 		LoginUser loginUser = new LoginUser(testData.user1.getId(), Authority.USER);
-		reviewService.removeReview(loginUser, testData.review.getId());
+		reviewService.removeReview(loginUser, testData.user1PublicReview.getId());
 
-		assertThatThrownBy(() -> reviewService.removeReview(loginUser, testData.review.getId()))
+		assertThatThrownBy(() -> reviewService.removeReview(loginUser, testData.user1PublicReview.getId()))
 			.isInstanceOf(NotFoundReviewException.class);
 	}
 
@@ -58,7 +58,7 @@ class ReviewRemoveIntegrationTest extends InitIntegrationTest {
 		long invalidUserId = Long.MAX_VALUE;
 		LoginUser loginUser = new LoginUser(invalidUserId, Authority.USER);
 
-		assertThatThrownBy(() -> reviewService.removeReview(loginUser, testData.review.getId()))
+		assertThatThrownBy(() -> reviewService.removeReview(loginUser, testData.user1PublicReview.getId()))
 			.isInstanceOf(NotFoundUserException.class);
 	}
 
@@ -67,7 +67,7 @@ class ReviewRemoveIntegrationTest extends InitIntegrationTest {
 	void remove_review_invalid_authorized() {
 		LoginUser loginUser = new LoginUser(testData.user2.getId(), Authority.USER);
 
-		assertThatThrownBy(() -> reviewService.removeReview(loginUser, testData.review.getId()))
+		assertThatThrownBy(() -> reviewService.removeReview(loginUser, testData.user1PublicReview.getId()))
 			.isInstanceOf(UnauthorizedUserException.class);
 	}
 

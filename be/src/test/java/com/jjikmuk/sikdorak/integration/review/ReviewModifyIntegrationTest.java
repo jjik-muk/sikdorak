@@ -39,7 +39,7 @@ class ReviewModifyIntegrationTest extends InitIntegrationTest {
 			List.of("tag1", "tag2"),
 			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
 
-		Review modifyReview = reviewService.modifyReview(loginUser, testData.review.getId(),
+		Review modifyReview = reviewService.modifyReview(loginUser, testData.user1PublicReview.getId(),
 			reviewModifyRequest);
 
 		assertThat(modifyReview.getReviewContent()).isEqualTo(
@@ -81,7 +81,7 @@ class ReviewModifyIntegrationTest extends InitIntegrationTest {
 			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
 
 		assertThatThrownBy(() ->
-			reviewService.modifyReview(loginUser, testData.review.getId(), reviewModifyRequest))
+			reviewService.modifyReview(loginUser, testData.user1PublicReview.getId(), reviewModifyRequest))
 			.isInstanceOf(NotFoundStoreException.class);
 	}
 
@@ -100,7 +100,7 @@ class ReviewModifyIntegrationTest extends InitIntegrationTest {
 			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
 
 		assertThatThrownBy(() ->
-			reviewService.modifyReview(loginUser, testData.review.getId(), reviewModifyRequest))
+			reviewService.modifyReview(loginUser, testData.user1PublicReview.getId(), reviewModifyRequest))
 			.isInstanceOf(NotFoundUserException.class);
 	}
 

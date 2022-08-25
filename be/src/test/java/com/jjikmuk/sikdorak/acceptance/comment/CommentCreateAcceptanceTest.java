@@ -19,7 +19,7 @@ class CommentCreateAcceptanceTest extends InitAcceptanceTest {
 	@Test
 	@DisplayName("댓글 생성 요청이 정상적인 경우라면 댓글 생성 후 정상 상태 코드를 반환한다")
 	void create_comment_success() {
-		Long reviewId = testData.review.getId();
+		Long reviewId = testData.user1PublicReview.getId();
 
 		CommentCreateRequest commentCreateRequest = new CommentCreateRequest(
 			"좋은 리뷰 감사합니다"
