@@ -35,7 +35,7 @@ class ReviewSearchAcceptanceTest extends InitAcceptanceTest {
 			.header("Authorization", testData.followAcceptUserValidAuthorizationHeader)
 
 		.when()
-			.get("/api/reviews/{reviewId}", testData.follwAcceptUserPublicReview.getId())
+			.get("/api/reviews/{reviewId}", testData.followAcceptUserPublicReview.getId())
 
 		.then()
 			.statusCode(HttpStatus.OK.value())
@@ -58,7 +58,7 @@ class ReviewSearchAcceptanceTest extends InitAcceptanceTest {
 			.header("Content-type", "application/json")
 
 		.when()
-			.get("/api/reviews/{reviewId}", testData.follwAcceptUserPrivateReview.getId())
+			.get("/api/reviews/{reviewId}", testData.followAcceptUserPrivateReview.getId())
 
 		.then()
 			.statusCode(HttpStatus.UNAUTHORIZED.value())

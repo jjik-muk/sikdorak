@@ -26,7 +26,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 	void search_public_review_detail_with_owner_user() {
 		LoginUser reviewOwnerUser = new LoginUser(testData.followAcceptUser.getId(),
 			Authority.USER);
-		Long searchReviewId = testData.follwAcceptUserPublicReview.getId();
+		Long searchReviewId = testData.followAcceptUserPublicReview.getId();
 
 		ReviewDetailResponse reviewDetailResponse = reviewService.searchReviewDetail(
 			reviewOwnerUser, searchReviewId);
@@ -41,7 +41,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 	void search_private_review_detail_with_owner_user() {
 		LoginUser reviewOwnerUser = new LoginUser(testData.followAcceptUser.getId(),
 			Authority.USER);
-		Long searchReviewId = testData.follwAcceptUserPrivateReview.getId();
+		Long searchReviewId = testData.followAcceptUserPrivateReview.getId();
 
 		ReviewDetailResponse reviewDetailResponse = reviewService.searchReviewDetail(
 			reviewOwnerUser, searchReviewId);
@@ -56,7 +56,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 	@DisplayName("유저가 친구의 친구 공개 리뷰를 조회한 경우 리뷰응답 객체를 반환한다")
 	void search_protected_review_detail_with_friend_User() {
 		LoginUser reviewFriendUser = new LoginUser(testData.followSendUser.getId(), Authority.USER);
-		Long searchReviewId = testData.follwAcceptUserProtectedReview.getId();
+		Long searchReviewId = testData.followAcceptUserProtectedReview.getId();
 
 		ReviewDetailResponse reviewDetailResponse = reviewService.searchReviewDetail(
 			reviewFriendUser, searchReviewId);
@@ -81,7 +81,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 	@DisplayName("유저가 읽을 권한이 없는 리뷰를 조회한 경우 예외를 발생시킨다")
 	void search_private_review_detail_with_guest() {
 		LoginUser guestUser = new LoginUser(Authority.ANONYMOUS);
-		Long searchReviewId = testData.follwAcceptUserPrivateReview.getId();
+		Long searchReviewId = testData.followAcceptUserPrivateReview.getId();
 
 		assertThatThrownBy(() ->  reviewService.searchReviewDetail(
 			guestUser, searchReviewId))
