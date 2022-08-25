@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.acceptance.user.user;
 
-import static com.jjikmuk.sikdorak.acceptance.user.user.UserSnippet.USER_SEARCH_RESPONSE_SNIPPET;
+import static com.jjikmuk.sikdorak.acceptance.user.user.UserSnippet.USER_SEARCH_SELF_PROFILE_RESPONSE_SNIPPET;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
@@ -13,15 +13,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @DisplayName("유저 본인 프로필 조회 인수 테스트")
-public class UserSearchSelfAcceptanceTest extends InitAcceptanceTest {
+public class UserSearchSelfProfileAcceptanceTest extends InitAcceptanceTest {
 
     @Test
     @DisplayName("유저 본인의 정보 요청이 들어오면 성공 상태코드를 반환한다.")
-    void search_self_profile() {
+    void search_self_profile_success() {
         given(this.spec)
             .filter(document(
                 DEFAULT_RESTDOC_PATH,
-                USER_SEARCH_RESPONSE_SNIPPET))
+                USER_SEARCH_SELF_PROFILE_RESPONSE_SNIPPET))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Authorization", testData.user1ValidAuthorizationHeader)
 
@@ -31,7 +31,10 @@ public class UserSearchSelfAcceptanceTest extends InitAcceptanceTest {
         .then()
             .statusCode(HttpStatus.OK.value())
             .body("code", equalTo(ResponseCodeAndMessages.USER_SEARCH_PROFILE_SUCCESS.getCode()))
-            .body("message", equalTo(ResponseCodeAndMessages.USER_SEARCH_PROFILE_SUCCESS.getCode()));
+            .body("message", equalTo(ResponseCodeAndMessages.USER_SEARCH_PROFILE_SUCCESS.getMessage()))
+            .body("data.id", equalTo(testData.kukim.getId().intValue()))
+            .body("data.nickname", equalTo(testData.kukim.getNickname()))
+            .body("data.profileImage", equalTo(testData.kukim.getProfileImage()));
     }
 
 }

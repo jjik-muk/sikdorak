@@ -86,11 +86,11 @@ API : `GET /api/users/{userId}`
 
 ==== `Request`
 
-operation::user_search_acceptance_test/search_user_profile_success[snippets='http-request,path-parameters']
+operation::user_search_profile_acceptance_test/search_user_profile_success[snippets='http-request,path-parameters']
 
 ==== `Response`
 
-operation::user_search_acceptance_test/search_user_profile_success[snippets='http-response,response-fields']
+operation::user_search_profile_acceptance_test/search_user_profile_success[snippets='http-response,response-fields']
 
 === 유저 탈퇴
 
@@ -105,3 +105,17 @@ operation::user_delete_acceptance_test/delete_user_success[snippets='http-reques
 ==== `Response`
 
 operation::user_delete_acceptance_test/delete_user_success[snippets='http-response']
+
+=== 유저 본인 프로필 조회
+
+API : `GET /api/users`
+
+=== `200 OK`
+
+==== `Request`
+
+operation::user_search_self_profile_acceptance_test/search_self_profile_success[snippets='http-request']
+
+==== `Response`
+
+operation::user_search_self_profile_acceptance_test/search_self_profile_success[snippets='http-response,response-fields']
