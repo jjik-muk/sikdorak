@@ -105,5 +105,5 @@ public interface UserSnippet {
 //
 //        )
 //    );
-    
+
 }

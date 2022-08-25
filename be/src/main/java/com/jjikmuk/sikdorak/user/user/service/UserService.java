@@ -70,10 +70,15 @@ public class UserService {
             .orElseThrow(NotFoundUserException::new);
         RelationType relationType = searchUser.relationTypeTo(loginUser);
         int reviewCount = reviewRepository.countByUserId(searchUser.getId());
+        int followerCount = userRepository.findFollowingsByUserId(userId).size();
+        int followingCount = userRepository.findFollowingsByUserId(userId).size();
+
 
         return UserDetailProfileResponse.of(
             searchUser,
             UserProfileRelationStatusResponse.of(relationType),
+            followerCount,
+            followingCount,
             reviewCount
         );
     }
@@ -136,6 +141,18 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public List<UserSimpleProfileResponse> searchFollowersByUserId(long userId, LoginUser loginUser) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(NotFoundUserException::new);
+
+        List<User> followers = userRepository.findFollowersByUserId(user.getId());
+        
+        return followers.stream()
+            .map(UserSimpleProfileResponse::from)
+            .toList();
+    }
+
+    @Transactional(readOnly = true)
     public User searchById(Long userId) {
         if (Objects.isNull(userId)) {
             throw new NotFoundUserException();
@@ -183,4 +200,5 @@ public class UserService {
             throw new DuplicateSendAcceptUserException();
         }
     }
+
 }
