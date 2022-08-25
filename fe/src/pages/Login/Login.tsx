@@ -20,7 +20,8 @@ function Login() {
   const modalRef = useRef(null);
   useOutsideClick(modalRef, toggleIsPortal);
 
-  const hasAccessToken = localStorage.getItem('accessToken') !== 'null';
+  const accessToken = localStorage.getItem('accessToken');
+  const hasAccessToken = accessToken && accessToken !== 'null';
 
   if (hasAccessToken) {
     return <Navigate to="/reviewList" />;
