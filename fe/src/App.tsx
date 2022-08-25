@@ -1,7 +1,6 @@
 import Portal from 'common/Portal/Portal';
 import Callback from 'pages/Callback/Callback';
 import Login from 'pages/Login/Login';
-import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
 import ReviewList from 'pages/ReviewList/ReviewList';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import StoreDetail from 'pages/StoreDetail/StoreDetail';
@@ -21,22 +20,6 @@ function App() {
             element={
               <Portal selector="#portal">
                 <ReviewWrite />
-              </Portal>
-            }
-          />
-          <Route
-            path="/reviewDetail1"
-            element={
-              <Portal selector="#portal">
-                <ReviewDetail />
-              </Portal>
-            }
-          />
-          <Route
-            path="/reviewDetail2"
-            element={
-              <Portal selector="#portal">
-                <ReviewDetail hasPicture />
               </Portal>
             }
           />
