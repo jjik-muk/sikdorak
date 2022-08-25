@@ -1,0 +1,67 @@
+=== 가게 이름으로 가게 조회
+
+API : `GET /api/stores`
+
+=== `200 OK`
+
+==== `Request`
+
+operation::store_search_acceptance_test/search_store_by_name_containing_success[snippets='http-request,request-parameters']
+
+==== `Response`
+
+operation::store_search_acceptance_test/search_store_by_name_containing_success[snippets='http-response,response-fields']
+
+=== 가게 추가
+
+API : `POST /api/stores`
+
+=== `201 CREATED`
+
+==== `Request`
+
+operation::store_create_acceptance_test/create_store_success[snippets='http-request,request-body']
+
+==== `Response`
+
+operation::store_create_acceptance_test/create_store_success[snippets='http-response,response-fields']
+
+=== 가게 수정
+
+API : `PUT /api/stores`
+
+=== `200 SUCCESS`
+
+==== `Request`
+
+operation::store_modify_acceptance_test/modify_store_success[snippets='http-request,path-parameters,request-body']
+
+==== `Response`
+
+operation::store_modify_acceptance_test/modify_store_success[snippets='http-response,response-fields']
+
+=== 가게 삭제
+
+API : `DELETE /api/stores`
+
+=== `200 SUCCESS`
+
+==== `Request`
+
+operation::store_remove_acceptance_test/remove_store_success[snippets='http-request,path-parameters']
+
+==== `Response`
+
+operation::store_remove_acceptance_test/remove_store_success[snippets='http-response,response-fields']
+
+=== `400 BAD REQUEST`
+
+존재하지 않는 가게를 삭제할 경우, 실패합니다.
+
+==== `Request`
+
+operation::store_remove_acceptance_test/remove_store_failed[snippets='http-request,path-parameters']
+
+==== `Response`
+
+operation::store_remove_acceptance_test/remove_store_failed[snippets='http-response,response-fields']
