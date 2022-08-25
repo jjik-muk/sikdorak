@@ -49,4 +49,12 @@ public class Comment extends BaseTimeEntity {
 	public String getCommentContent() {
 		return commentContent.getReviewContent();
 	}
+
+	public boolean isAuthor(long userId) {
+		return this.userId == userId;
+	}
+
+	public void updateComment(String content) {
+		this.commentContent = new CommentContent(content);
+	}
 }

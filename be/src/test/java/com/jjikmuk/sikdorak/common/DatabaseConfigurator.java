@@ -1,5 +1,7 @@
 package com.jjikmuk.sikdorak.common;
 
+import com.jjikmuk.sikdorak.comment.domain.Comment;
+import com.jjikmuk.sikdorak.comment.repository.CommentRepository;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.domain.Store;
@@ -37,6 +39,9 @@ public class DatabaseConfigurator implements InitializingBean {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Autowired
     private JwtProvider jwtProvider;
@@ -82,6 +87,10 @@ public class DatabaseConfigurator implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         entityManager.unwrap(Session.class).doWork(this::extractTableNames);
+    }
+
+    public Comment saveAndGetComment(Review review, User user, String content) {
+        return commentRepository.save(new Comment(review.getId(), user.getId(), content));
     }
 
 
