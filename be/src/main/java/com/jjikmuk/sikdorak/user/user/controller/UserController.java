@@ -13,6 +13,7 @@ import com.jjikmuk.sikdorak.user.user.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -53,7 +54,7 @@ public class UserController {
     }
 
     @UserOnly
-    @PutMapping("")
+    @PutMapping
     public CommonResponseEntity<Void> modifyUserProfile(@AuthenticatedUser LoginUser loginUser,
         @RequestBody UserModifyRequest userModifyRequest) {
 
@@ -83,6 +84,16 @@ public class UserController {
         userService.unfollowUser(loginUser, userFollowAndUnfollowRequest);
 
         return new CommonResponseEntity<>(ResponseCodeAndMessages.USER_UNFOLLOW_SUCCESS,
+            HttpStatus.OK);
+    }
+
+    @UserOnly
+    @DeleteMapping
+    public CommonResponseEntity<Void> deleteUser(@AuthenticatedUser LoginUser loginUser) {
+
+        userService.deleteUser(loginUser);
+
+        return new CommonResponseEntity<>(ResponseCodeAndMessages.USER_DELETE_SUCCESS,
             HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package com.jjikmuk.sikdorak.user.user.service;
 
+import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
@@ -9,7 +10,7 @@ import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
 import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRespository;
+import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateFollowingException;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateSendAcceptUserException;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
@@ -27,14 +28,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class UserService {
 
-    private final UserRespository userRespository;
+    private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
 
     @Transactional(readOnly = true)
     public List<UserReviewResponse> searchUserReviewsByUserIdAndRelationType(Long searchUserId, LoginUser loginUser) {
         log.debug("searchByUserReviews: searchUserId={}, loginUser.id={}, loginUser.authority={}", searchUserId, loginUser.getId(), loginUser.getAuthority());
 
-        User searchUser = userRespository.findById(searchUserId)
+        User searchUser = userRepository.findById(searchUserId)
             .orElseThrow(NotFoundUserException::new);
 
         return switch (searchUser.relationTypeTo(loginUser)) {
@@ -55,7 +56,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserProfileResponse searchUserProfile(Long userId, LoginUser loginUser) {
-        User searchUser = userRespository.findById(userId)
+        User searchUser = userRepository.findById(userId)
             .orElseThrow(NotFoundUserException::new);
         RelationType relationType = searchUser.relationTypeTo(loginUser);
         int reviewCount = reviewRepository.countByUserId(searchUser.getId());
@@ -72,13 +73,13 @@ public class UserService {
         if (isExistingByUniqueId(user.getUniqueId())) {
             throw new DuplicateUserException();
         }
-        userRespository.save(user);
+        userRepository.save(user);
         return user.getId();
     }
 
     @Transactional
     public Long modifyUser(LoginUser loginUser, UserModifyRequest userModifyRequest) {
-        User user = userRespository.findById(loginUser.getId())
+        User user = userRepository.findById(loginUser.getId())
             .orElseThrow(NotFoundUserException::new);
 
         user.editAll(
@@ -91,9 +92,9 @@ public class UserService {
 
     @Transactional
     public void followUser(LoginUser loginUser, UserFollowAndUnfollowRequest userFollowAndUnfollowRequest) {
-        User sendUser = userRespository.findById(loginUser.getId())
+        User sendUser = userRepository.findById(loginUser.getId())
             .orElseThrow(NotFoundUserException::new);
-        User acceptUser = userRespository.findById(userFollowAndUnfollowRequest.getUserId())
+        User acceptUser = userRepository.findById(userFollowAndUnfollowRequest.getUserId())
             .orElseThrow(NotFoundUserException::new);
 
         validateFollowUsers(sendUser, acceptUser);
@@ -104,14 +105,24 @@ public class UserService {
 
     @Transactional
     public void unfollowUser(LoginUser loginUser, UserFollowAndUnfollowRequest userFollowAndUnfollowRequest) {
-        User sendUser = userRespository.findById(loginUser.getId())
+        User sendUser = userRepository.findById(loginUser.getId())
             .orElseThrow(NotFoundUserException::new);
-        User acceptUser = userRespository.findById(userFollowAndUnfollowRequest.getUserId())
+        User acceptUser = userRepository.findById(userFollowAndUnfollowRequest.getUserId())
             .orElseThrow(NotFoundUserException::new);
 
         validateUnfollowUsers(sendUser, acceptUser);
 
         sendUser.unfollow(acceptUser);
+    }
+
+    @Transactional
+    public void deleteUser(LoginUser loginUser) {
+        User user = userRepository.findById(loginUser.getId())
+            .orElseThrow(NotFoundUserException::new);
+        List<Review> reviews = reviewRepository.findByUserId(user.getId());
+
+        reviews.forEach(Review::delete);
+        user.delete();
     }
 
     @Transactional(readOnly = true)
@@ -120,24 +131,24 @@ public class UserService {
             throw new NotFoundUserException();
         }
 
-        return userRespository.findById(userId)
+        return userRepository.findById(userId)
             .orElseThrow(NotFoundUserException::new);
     }
 
     @Transactional(readOnly = true)
     public User searchByUniqueId(long uniqueId) {
-        return userRespository.findByUniqueId(uniqueId)
+        return userRepository.findByUniqueId(uniqueId)
             .orElseThrow(NotFoundUserException::new);
     }
 
     @Transactional(readOnly = true)
     public boolean isExistingById(long userId) {
-        return userRespository.existsById(userId);
+        return userRepository.existsById(userId);
     }
 
     @Transactional(readOnly = true)
     public boolean isExistingByUniqueId(long userUniqueId) {
-        return userRespository.existsByUniqueId(userUniqueId);
+        return userRepository.existsByUniqueId(userUniqueId);
     }
 
 
