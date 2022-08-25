@@ -14,7 +14,6 @@ import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,11 +58,11 @@ class UserDeleteIntegrationTest extends InitIntegrationTest {
 
         userService.deleteUser(loginUser);
 
-        Set<Long> hoiFollowings = userRepository.findFollowings(testData.hoi.getId());
-        Set<Long> rumkaFollowers = userRepository.findFollowers(testData.rumka.getId());
+        List<User> hoiFollowings = userRepository.findFollowingsByUserId(testData.hoi.getId());
+        List<User> rumkaFollowers = userRepository.findFollowersByUserId(testData.rumka.getId());
 
-        assertThat(hoiFollowings).isNotEmpty().doesNotContain(loginUser.getId());
-        assertThat(rumkaFollowers).isNotEmpty().doesNotContain(loginUser.getId());
+        assertThat(hoiFollowings).isNotEmpty().noneMatch(u -> u.getId().equals(testData.forky.getId()));
+        assertThat(rumkaFollowers).isNotEmpty().noneMatch(u -> u.getId().equals(testData.forky.getId()));
     }
 
     @Test

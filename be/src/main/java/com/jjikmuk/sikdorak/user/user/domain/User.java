@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -18,7 +17,6 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
 @SQLDelete(sql = "update user set deleted = true where user_id = ?")
 @Where(clause = "deleted = false")
 public class User extends BaseTimeEntity {
@@ -136,6 +134,24 @@ public class User extends BaseTimeEntity {
 
     private void removeFollowing(User acceptUser) {
         this.getFollowings().remove(acceptUser.getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return id.equals(user.id) && uniqueId.equals(user.uniqueId)
+            && nickname.equals(user.nickname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, uniqueId, nickname);
     }
 
     /**

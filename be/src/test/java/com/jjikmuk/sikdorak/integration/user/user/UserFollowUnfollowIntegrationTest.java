@@ -7,13 +7,14 @@ import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.auth.controller.Authority;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
+import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateFollowingException;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateSendAcceptUserException;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundFollowException;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
-import java.util.Set;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +38,11 @@ class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
 
         userService.followUser(loginUser, request);
 
-        Set<Long> sendUserFollowings = userRepository.findFollowings(testData.forky.getId());
-        Set<Long> acceptUserFollowers = userRepository.findFollowers(testData.kukim.getId());
+        List<User> sendUserFollowings = userRepository.findFollowingsByUserId(testData.forky.getId());
+        List<User> acceptUserFollowers = userRepository.findFollowersByUserId(testData.kukim.getId());
 
-        assertThat(sendUserFollowings).contains(testData.kukim.getId());
-        assertThat(acceptUserFollowers).contains(testData.forky.getId());
+        assertThat(sendUserFollowings).anyMatch(u -> u.getId().equals(testData.kukim.getId()));
+        assertThat(acceptUserFollowers).anyMatch(u -> u.getId().equals(testData.forky.getId()));
     }
 
     @Test
@@ -90,11 +91,11 @@ class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
 
         userService.unfollowUser(loginUser, unfollowRequest);
 
-        Set<Long> sendUserFollowings = userRepository.findFollowings(testData.forky.getId());
-        Set<Long> acceptUserFollowers = userRepository.findFollowers(testData.jay.getId());
+        List<User> sendUserFollowings = userRepository.findFollowingsByUserId(testData.forky.getId());
+        List<User> acceptUserFollowers = userRepository.findFollowersByUserId(testData.jay.getId());
 
-        assertThat(sendUserFollowings).doesNotContain(testData.jay.getId());
-        assertThat(acceptUserFollowers).doesNotContain(testData.forky.getId());
+        assertThat(sendUserFollowings).noneMatch(u -> u.getId().equals(testData.jay.getId()));
+        assertThat(acceptUserFollowers).noneMatch( u -> u.getId().equals(testData.forky.getId()));
     }
 
     @Test
