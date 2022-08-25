@@ -5,6 +5,7 @@ import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
+import com.jjikmuk.sikdorak.user.user.controller.response.FollowUserProfile;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileRelationStatusResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserDetailProfileResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
@@ -17,6 +18,7 @@ import com.jjikmuk.sikdorak.user.user.exception.DuplicateSendAcceptUserException
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundFollowException;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -141,14 +143,34 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<UserSimpleProfileResponse> searchFollowersByUserId(long userId, LoginUser loginUser) {
-        User user = userRepository.findById(userId)
+    public List<FollowUserProfile> searchFollowersByUserId(long targetUserId, LoginUser loginUser) {
+        User targetUser = userRepository.findById(targetUserId)
             .orElseThrow(NotFoundUserException::new);
 
-        List<User> followers = userRepository.findFollowersByUserId(user.getId());
-        
+        List<User> followers = userRepository.findFollowersByUserId(targetUser.getId());
+
+        if(followers.isEmpty()) return new ArrayList<>();
+
         return followers.stream()
-            .map(UserSimpleProfileResponse::from)
+            .map(user -> FollowUserProfile.of(
+                UserSimpleProfileResponse.from(user),
+                UserProfileRelationStatusResponse.of(user.relationTypeTo(loginUser))))
+            .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<FollowUserProfile> searchFollowingsByUserId(long targetUserId, LoginUser loginUser) {
+        User targetUser = userRepository.findById(targetUserId)
+            .orElseThrow(NotFoundUserException::new);
+
+        List<User> followings = userRepository.findFollowingsByUserId(targetUser.getId());
+
+        if(followings.isEmpty()) return new ArrayList<>();
+
+        return followings.stream()
+            .map(user -> FollowUserProfile.of(
+                UserSimpleProfileResponse.from(user),
+                UserProfileRelationStatusResponse.of(user.relationTypeTo(loginUser))))
             .toList();
     }
 
@@ -200,5 +222,4 @@ public class UserService {
             throw new DuplicateSendAcceptUserException();
         }
     }
-
 }
