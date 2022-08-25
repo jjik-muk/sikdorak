@@ -14,6 +14,7 @@ import {
   IconWrap,
   Main,
   MainFooter,
+  MenuWrap,
   Pictures,
   Wrap,
 } from './Feed.styled';
@@ -29,10 +30,10 @@ function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps)
       <ContentsWrap wrapWidth={DETAIL.WRAP.WIDTH_NO_IMG}>
         <Header>
           <UserProfile nickname={author} />
-          <div onClick={toggleIsActiveMenu}>
+          <MenuWrap onClick={toggleIsActiveMenu}>
             <Icon icon="MenuBtn" />
             {isActiveMenu && <Menu />}
-          </div>
+          </MenuWrap>
         </Header>
         <Main>
           <Contents>{contents}</Contents>

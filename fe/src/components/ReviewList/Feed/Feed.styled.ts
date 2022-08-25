@@ -24,6 +24,10 @@ export const MainFooter = styled.div`
 export const ButtonWrapper = styled.div`
   ${() => flexLayoutMixin('', 'space-between')};
   margin: 30px 0;
+
+  > div {
+    cursor: pointer;
+  }
 `;
 
 export const ContentsWrap = styled.div<{ wrapWidth: number }>`
@@ -53,4 +57,8 @@ export const IconWrap = styled.div<{ width: number; height: number }>`
 
 export const Pictures = styled.div`
   padding: 0 20px 0 20px;
+`;
+
+export const MenuWrap = styled.div`
+  cursor: pointer;
 `;

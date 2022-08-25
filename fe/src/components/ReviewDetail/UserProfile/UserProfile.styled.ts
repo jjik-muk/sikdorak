@@ -3,7 +3,8 @@ import styled from 'styled-components';
 export const Wrap = styled.div`
   display: flex;
   gap: 10px;
-  padding: 20px;
+  padding: 10px;
+  cursor: pointer;
 `;
 
 // TODO: width, height 매직 넘버 추출
