@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.integration.user.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.auth.controller.Authority;
@@ -31,11 +32,13 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
         UserDetailProfileResponse userDetailProfileResponse = userService.searchUserDetailProfile(
             testData.kukim.getId(), loginUser);
 
-        assertThat(userDetailProfileResponse.id()).isEqualTo(testData.kukim.getId());
-        assertThat(userDetailProfileResponse.nickname()).isEqualTo(testData.kukim.getNickname());
-        assertThat(userDetailProfileResponse.relationStatus().isViewer()).isTrue();
-        assertThat(userDetailProfileResponse.relationStatus().followStatus()).isFalse();
-        assertThat(userDetailProfileResponse.reviewCount()).isEqualTo(1);
+        assertAll(
+            () -> assertThat(userDetailProfileResponse.id()).isEqualTo(testData.kukim.getId()),
+            () -> assertThat(userDetailProfileResponse.nickname()).isEqualTo(testData.kukim.getNickname()),
+            () -> assertThat(userDetailProfileResponse.relationStatus().isViewer()).isTrue(),
+            () -> assertThat(userDetailProfileResponse.relationStatus().followStatus()).isFalse(),
+            () -> assertThat(userDetailProfileResponse.reviewCount()).isEqualTo(1)
+        );
     }
 
     @Test
@@ -46,11 +49,13 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
         UserDetailProfileResponse userDetailProfileResponse = userService.searchUserDetailProfile(
             testData.kukim.getId(), loginUser);
 
-        assertThat(userDetailProfileResponse.id()).isEqualTo(testData.kukim.getId());
-        assertThat(userDetailProfileResponse.nickname()).isEqualTo(testData.kukim.getNickname());
-        assertThat(userDetailProfileResponse.relationStatus().isViewer()).isFalse();
-        assertThat(userDetailProfileResponse.relationStatus().followStatus()).isFalse();
-        assertThat(userDetailProfileResponse.reviewCount()).isEqualTo(1);
+        assertAll(
+            () -> assertThat(userDetailProfileResponse.id()).isEqualTo(testData.kukim.getId()),
+            () -> assertThat(userDetailProfileResponse.nickname()).isEqualTo(testData.kukim.getNickname()),
+            () -> assertThat(userDetailProfileResponse.relationStatus().isViewer()).isFalse(),
+            () -> assertThat(userDetailProfileResponse.relationStatus().followStatus()).isFalse(),
+            () -> assertThat(userDetailProfileResponse.reviewCount()).isEqualTo(1)
+        );
     }
 
     @Test
@@ -61,11 +66,13 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
         UserDetailProfileResponse userDetailProfileResponse = userService.searchUserDetailProfile(
             testData.hoi.getId(), loginUser);
 
-        assertThat(userDetailProfileResponse.id()).isEqualTo(testData.hoi.getId());
-        assertThat(userDetailProfileResponse.nickname()).isEqualTo(testData.hoi.getNickname());
-        assertThat(userDetailProfileResponse.relationStatus().isViewer()).isFalse();
-        assertThat(userDetailProfileResponse.relationStatus().followStatus()).isTrue();
-        assertThat(userDetailProfileResponse.reviewCount()).isEqualTo(3);
+        assertAll(
+            () -> assertThat(userDetailProfileResponse.id()).isEqualTo(testData.hoi.getId()),
+            () -> assertThat(userDetailProfileResponse.nickname()).isEqualTo(testData.hoi.getNickname()),
+            () -> assertThat(userDetailProfileResponse.relationStatus().isViewer()).isFalse(),
+            () -> assertThat(userDetailProfileResponse.relationStatus().followStatus()).isTrue(),
+            () -> assertThat(userDetailProfileResponse.reviewCount()).isEqualTo(3)
+        );
     }
 
     @Test
@@ -76,11 +83,13 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
         UserDetailProfileResponse userDetailProfileResponse = userService.searchUserDetailProfile(
             testData.jay.getId(), loginUser);
 
-        assertThat(userDetailProfileResponse.id()).isEqualTo(testData.jay.getId());
-        assertThat(userDetailProfileResponse.nickname()).isEqualTo(testData.jay.getNickname());
-        assertThat(userDetailProfileResponse.relationStatus().isViewer()).isFalse();
-        assertThat(userDetailProfileResponse.relationStatus().followStatus()).isFalse();
-        assertThat(userDetailProfileResponse.reviewCount()).isZero();
+        assertAll(
+            () -> assertThat(userDetailProfileResponse.id()).isEqualTo(testData.jay.getId()),
+            () -> assertThat(userDetailProfileResponse.nickname()).isEqualTo(testData.jay.getNickname()),
+            () -> assertThat(userDetailProfileResponse.relationStatus().isViewer()).isFalse(),
+            () -> assertThat(userDetailProfileResponse.relationStatus().followStatus()).isFalse(),
+            () -> assertThat(userDetailProfileResponse.reviewCount()).isZero()
+        );
     }
 
     @Test
