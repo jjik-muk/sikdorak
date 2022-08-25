@@ -60,3 +60,5 @@ export const STORE = {
 };
 
 export const DEFAULT_IMG = 'http://www.mth.co.kr/wp-content/uploads/2014/12/default-placeholder-300x300.png';
+
+export const DOMAIN = 'https://sikdorak-test.herokuapp.com';
