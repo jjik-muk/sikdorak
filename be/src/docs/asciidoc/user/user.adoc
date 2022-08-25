@@ -1,6 +1,6 @@
 === 유저 프로필 수정 요청
 
-API : `PUT /api/user`
+API : `PUT /api/users`
 
 
 === `200 OK`
@@ -16,7 +16,7 @@ operation::user_modify_acceptance_test/modify_user_profile_success[snippets='htt
 
 === 유저 팔로우 요청
 
-API : `PUT /api/user/follow`
+API : `PUT /api/users/follow`
 
 
 === `200 OK`
@@ -32,7 +32,7 @@ operation::user_follow_unfollow_acceptance_test/user_follow_success[snippets='ht
 
 === 유저 언팔로우 요청
 
-API : `PUT /api/user/unfollow`
+API : `PUT /api/users/unfollow`
 
 
 === `200 OK`
@@ -47,7 +47,7 @@ operation::user_follow_unfollow_acceptance_test/user_unfollow_success[snippets='
 
 === 유저 리뷰 조회
 
-API : `GET /api/user/{userId}/reviews`
+API : `GET /api/users/{userId}/reviews`
 
 특정 유저의 모든 리뷰를 조회 기능
 
@@ -80,7 +80,7 @@ operation::user_reviews_search_by_user_id_acceptance_test/self_user_search_user_
 
 === 유저 프로필 조회
 
-API : `GET /api/user/{userId}`
+API : `GET /api/users/{userId}`
 
 === `200 OK`
 
@@ -91,3 +91,17 @@ operation::user_search_acceptance_test/search_user_profile_success[snippets='htt
 ==== `Response`
 
 operation::user_search_acceptance_test/search_user_profile_success[snippets='http-response,response-fields']
+
+=== 유저 탈퇴
+
+API : `DELETE /api/users`
+
+=== `200 OK`
+
+==== `Request`
+
+operation::user_delete_acceptance_test/delete_user_success[snippets='http-request']
+
+==== `Response`
+
+operation::user_delete_acceptance_test/delete_user_success[snippets='http-response']

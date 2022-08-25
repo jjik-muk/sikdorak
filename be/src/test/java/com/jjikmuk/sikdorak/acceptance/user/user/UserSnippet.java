@@ -79,4 +79,7 @@ public interface UserSnippet {
         )
     );
 
+    Snippet USER_DELETE_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+        responseFieldsOfCommonNonData());
+
 }
