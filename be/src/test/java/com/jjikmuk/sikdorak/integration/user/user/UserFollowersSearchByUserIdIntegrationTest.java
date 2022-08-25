@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayName("유저 팔로워 목록 조회 통합 테스트")
-public class UserFollowersSearchByUserIdIntegrationTest extends InitIntegrationTest {
+class UserFollowersSearchByUserIdIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     private UserService userService;
@@ -28,7 +28,7 @@ public class UserFollowersSearchByUserIdIntegrationTest extends InitIntegrationT
 
         List<FollowUserProfile> followers = userService.searchFollowersByUserId(testData.rumka.getId(), loginUser);
 
-        assertThat(followers.size()).isEqualTo(2);
+        assertThat(followers).hasSize(2);
     }
 
     @Test
