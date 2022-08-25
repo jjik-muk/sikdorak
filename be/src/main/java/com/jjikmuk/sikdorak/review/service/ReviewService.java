@@ -68,15 +68,8 @@ public class ReviewService {
 	@Transactional
 	public Review modifyReview(LoginUser loginUser, Long reviewId,
 		ReviewModifyRequest reviewModifyRequest) {
-<<<<<<< HEAD
-		Review review = reviewRepository.findById(reviewId)
-			.orElseThrow(NotFoundReviewException::new);
-		User user = userRespository.findById(loginUser.getId())
-			.orElseThrow(NotFoundUserException::new);
-=======
 		Review review = reviewRepository.findById(reviewId).orElseThrow(NotFoundReviewException::new);
 		User user = userRepository.findById(loginUser.getId()).orElseThrow(NotFoundUserException::new);
->>>>>>> 2808f07 (SDR-115 fix: userRepository 인터페이스명에 오타 수정)
 		Store store = storeRepository.findById(reviewModifyRequest.getStoreId()).orElseThrow(
 			NotFoundStoreException::new);
 

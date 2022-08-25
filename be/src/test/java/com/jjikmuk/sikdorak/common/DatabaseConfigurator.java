@@ -41,8 +41,8 @@ public class DatabaseConfigurator implements InitializingBean {
     @Autowired
     private JwtProvider jwtProvider;
 
-    @Autowired
-    private UserDataConfigurator userDataConfigurator;
+//    @Autowired
+//    private UserDataConfigurator userDataConfigurator;
 
     public Store store;
 //    public TUser kukim;
