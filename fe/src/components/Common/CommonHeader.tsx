@@ -38,8 +38,8 @@ function CommonHeader() {
         </SearchFormWrap>
         <ButtonWrap>
           {iconInfo.map(({ icon, handler }, idx) => (
-            <div onClick={handler}>
-              <Icon key={createKey(icon, idx)} icon={icon} width={24} height={24} />
+            <div key={createKey(icon, idx)} onClick={handler}>
+              <Icon icon={icon} width={24} height={24} />
             </div>
           ))}
         </ButtonWrap>
