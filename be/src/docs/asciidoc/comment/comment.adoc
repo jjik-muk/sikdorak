@@ -11,3 +11,18 @@ operation::comment_create_acceptance_test/create_comment_success[snippets='http-
 ==== `Response`
 
 operation::comment_create_acceptance_test/create_comment_success[snippets='http-response,response-fields']
+
+=== 댓글 수정
+
+API : `PUT /api/reviews/{reviewId}/comments{commentId}`
+
+=== `201 CREATED`
+
+==== `Request`
+
+operation::comment_modify_acceptance_test/modify_comment_success[snippets='http-request,request-body,path-parameters']
+
+==== `Response`
+
+operation::comment_modify_acceptance_test/modify_comment_success[snippets='http-response,response-fields']
+
