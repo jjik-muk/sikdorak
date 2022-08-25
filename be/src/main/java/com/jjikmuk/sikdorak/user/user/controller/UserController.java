@@ -110,10 +110,13 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/followers")
-    public CommonResponseEntity<Void> searchUserFollowers(@AuthenticatedUser LoginUser loginUser,
+    public CommonResponseEntity<List<UserSimpleProfileResponse>> searchUserFollowers(@AuthenticatedUser LoginUser loginUser,
         @PathVariable Long userId) {
 
+        List<UserSimpleProfileResponse> followersResponse = userService.searchFollowersByUserId(
+            userId, loginUser);
+
         return new CommonResponseEntity<>(ResponseCodeAndMessages.USER_SEARCH_FOLLOWERS_SUCCESS,
-            null, HttpStatus.OK);
+            followersResponse, HttpStatus.OK);
     }
 }
