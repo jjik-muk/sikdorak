@@ -119,3 +119,31 @@ operation::user_search_self_profile_acceptance_test/search_self_profile_success[
 ==== `Response`
 
 operation::user_search_self_profile_acceptance_test/search_self_profile_success[snippets='http-response,response-fields']
+
+=== 유저 팔로워 목록 조회
+
+API : `GET /api/users/{userId}/followers`
+
+=== `200 OK`
+
+==== `Request`
+
+operation::user_followers_search_by_user_id_acceptance_test/search_user_followers_success[snippets='http-request,path-parameters']
+
+==== `Response`
+
+operation::user_followers_search_by_user_id_acceptance_test/search_user_followers_success[snippets='http-response,response-fields']
+
+=== 유저 팔로잉 목록 조회
+
+API : `GET /api/users/{userId}/followings`
+
+=== `200 OK`
+
+==== `Request`
+
+operation::user_followings_search_by_user_id_acceptance_test/search_user_followings_success[snippets='http-request,path-parameters']
+
+==== `Response`
+
+operation::user_followings_search_by_user_id_acceptance_test/search_user_followings_success[snippets='http-response,response-fields']
