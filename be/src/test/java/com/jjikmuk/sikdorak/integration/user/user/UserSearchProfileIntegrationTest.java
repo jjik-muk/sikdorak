@@ -80,7 +80,7 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
         assertThat(userDetailProfileResponse.nickname()).isEqualTo(testData.jay.getNickname());
         assertThat(userDetailProfileResponse.relationStatus().isViewer()).isFalse();
         assertThat(userDetailProfileResponse.relationStatus().followStatus()).isFalse();
-        assertThat(userDetailProfileResponse.reviewCount()).isEqualTo(0);
+        assertThat(userDetailProfileResponse.reviewCount()).isZero();
     }
 
     @Test

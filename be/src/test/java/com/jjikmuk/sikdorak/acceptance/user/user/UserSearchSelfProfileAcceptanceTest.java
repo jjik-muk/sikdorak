@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @DisplayName("유저 본인 프로필 조회 인수 테스트")
-public class UserSearchSelfProfileAcceptanceTest extends InitAcceptanceTest {
+class UserSearchSelfProfileAcceptanceTest extends InitAcceptanceTest {
 
     @Test
     @DisplayName("유저 본인의 정보 요청이 들어오면 성공 상태코드를 반환한다.")
