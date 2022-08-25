@@ -108,4 +108,12 @@ public class UserController {
         return new CommonResponseEntity<>(ResponseCodeAndMessages.USER_DELETE_SUCCESS,
             HttpStatus.OK);
     }
+
+    @GetMapping("/{userId}/followers")
+    public CommonResponseEntity<Void> searchUserFollowers(@AuthenticatedUser LoginUser loginUser,
+        @PathVariable Long userId) {
+
+        return new CommonResponseEntity<>(ResponseCodeAndMessages.USER_SEARCH_FOLLOWERS_SUCCESS,
+            null, HttpStatus.OK);
+    }
 }

@@ -94,4 +94,16 @@ public interface UserSnippet {
         )
     );
 
+    Snippet USER_SEARCH_FOLLOWERS_REQUEST_SNIPPET = pathParameters(
+        parameterWithName("userId").description("팔로워 목록을 조회할 유저 아이디")
+    );
+
+//    Snippet USER_SEARCH_FOLLOWERS_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+//        responseFieldsOfCommon(),
+//
+//        responseFieldsOfListWithConstraintsAndFields(
+//
+//        )
+//    );
+    
 }
