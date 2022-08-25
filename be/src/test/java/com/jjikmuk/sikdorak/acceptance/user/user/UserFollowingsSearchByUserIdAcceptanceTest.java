@@ -50,7 +50,7 @@ public class UserFollowingsSearchByUserIdAcceptanceTest extends InitAcceptanceTe
             .accept(MediaType.APPLICATION_JSON_VALUE)
 
             .when()
-            .get("/api/users/{userId}/followings", testData.rumka.getId())
+            .get("/api/users/{userId}/followings", testData.forky.getId())
 
             .then()
             .statusCode(HttpStatus.OK.value())
