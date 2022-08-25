@@ -2,7 +2,7 @@ import { DOMAIN } from 'constants/dummyData';
 import Modal from 'common/Modal/Modal';
 import { useReviewWrite } from 'context/reviewWriteProvider';
 import { useEffect, useState } from 'react';
-import { debounce, httpRequest } from 'utils/utils';
+import { debounce, fetchData } from 'utils/utils';
 import { RestaurantSearchWrapper, SearchResult, Wrap } from './RestaurantSearch.styled';
 
 export default function RestaurantSearch() {
@@ -22,7 +22,7 @@ export default function RestaurantSearch() {
       setIsModalOpen(false);
       return;
     }
-    const { data } = await httpRequest(`${DOMAIN}/api/stores?storeName=${searchText}`);
+    const { data } = await fetchData(`${DOMAIN}/api/stores?storeName=${searchText}`);
     const searchResultData = data.map(({ id, storeName, baseAddress }) => (
       <SearchResult
         key={id}

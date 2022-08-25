@@ -1,6 +1,6 @@
 import { DOMAIN } from 'constants/dummyData';
 import { useReviewWrite } from 'context/reviewWriteProvider';
-import { httpRequest } from 'utils/utils';
+import { fetchData } from 'utils/utils';
 import { Wrap } from './RegistrationBtn.styled';
 
 function RegistrationBtn() {
@@ -38,7 +38,7 @@ function RegistrationBtn() {
     const headers = {
       Authorization: `Bearer ${accessToken}`,
     };
-    httpRequest(`${DOMAIN}/api/reviews`, { headers, method: 'POST', bodyData });
+    fetchData(`${DOMAIN}/api/reviews`, { headers, method: 'POST', bodyData });
   }
 }
 
