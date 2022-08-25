@@ -39,7 +39,7 @@ export const ScopeDescriptionArea = styled.div`
   color: #626262;
 `;
 
-const getScope = (scope: string) => scope === 'friends' && 'flex-end';
+const getScope = (scope: string) => scope === 'private' && 'flex-end';
 
 type ScopeButtonWrapperProps = {
   scope: string;
