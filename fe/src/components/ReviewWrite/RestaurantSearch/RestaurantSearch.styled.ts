@@ -3,6 +3,7 @@ import styled from 'styled-components';
 type RestaurantSearchWrapperProps = {
   type: string;
   placeholder: string;
+  selectedRestaurant?: string;
 };
 
 export const RestaurantSearchWrapper = styled.input.attrs<RestaurantSearchWrapperProps>({
@@ -21,4 +22,15 @@ export const RestaurantSearchWrapper = styled.input.attrs<RestaurantSearchWrappe
 export const Wrap = styled.div`
   width: 100%;
   padding: 12px;
+`;
+
+export const SearchResult = styled.div`
+  cursor: pointer;
+  border-bottom: 1px solid #000;
+  padding: 10px;
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
 `;
