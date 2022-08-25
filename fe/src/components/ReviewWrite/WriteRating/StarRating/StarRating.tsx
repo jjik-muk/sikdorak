@@ -1,16 +1,19 @@
 import StarIcon from 'components/ReviewWrite/WriteRating/StarRating/StarIcon/StarIcon';
-import { useState } from 'react';
+import { useReviewWrite } from 'context/reviewWriteProvider';
+import { createKey } from 'utils/utils';
 import { Wrap } from './StarRating.styled';
 
 const YELLOW = '#f1c40f';
 
 function StarRating() {
-  const [rating, setRating] = useState(0);
+  const [reviewWriteState, dispatchReviewWrite] = useReviewWrite();
 
+  const { rating } = reviewWriteState;
   return (
     <Wrap>
       {[...Array(rating)].map((_, i) => (
         <StarIcon
+          key={createKey(_, i)}
           onClick={() => {
             handleRating(i + 1);
           }}
@@ -19,6 +22,7 @@ function StarRating() {
       ))}
       {[...Array(5 - rating)].map((_, i) => (
         <StarIcon
+          key={createKey(_, i)}
           onClick={() => {
             handleRating(i + 1 + rating);
           }}
@@ -29,7 +33,7 @@ function StarRating() {
   );
 
   function handleRating(idx: number) {
-    setRating(idx);
+    dispatchReviewWrite({ type: 'RATE', rating: idx });
   }
 }
 
