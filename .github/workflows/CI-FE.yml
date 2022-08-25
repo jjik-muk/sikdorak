@@ -2,9 +2,9 @@ name: FE Test
 
 on:
   push:
-    branches: [FE-dev, FE-deploy]
+    branches: [dev, FE-dev, FE-deploy]
   pull_request:
-    branches: [FE-dev]
+    branches: [dev, FE-dev]
     paths: ["fe/**"]
     types: [opened, synchronize, reopened]
 
@@ -52,7 +52,7 @@ jobs:
         run: npm ci
 
       - name: Test React
-        run: npm run test
+        run: npm run coverage
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
