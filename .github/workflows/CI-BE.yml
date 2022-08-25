@@ -4,7 +4,7 @@ on:
   push:
     branches: [BE-dev]
   pull_request:
-    branches: [BE-dev]
+    branches: [dev, BE-dev]
     paths: ["be/**"]
     types: [opened, synchronize, reopened]
 
