@@ -8,3 +8,11 @@ export const flexLayoutMixin = (direction = 'row', justify = 'flex-start', align
 `;
 
 export const createKey = (value: string, idx: number) => `${value}_${idx}`;
+
+export const debounce = (fnc, delay: number = 1000) => {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fnc(...args), delay);
+  };
+};
