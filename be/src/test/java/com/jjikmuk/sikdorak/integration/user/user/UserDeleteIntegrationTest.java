@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 
 @DisplayName("유저 탈퇴 통합테스트")
-public class UserDeleteIntegrationTest extends InitIntegrationTest {
+class UserDeleteIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     private UserService userService;
@@ -45,7 +45,7 @@ public class UserDeleteIntegrationTest extends InitIntegrationTest {
         Optional<User> deletedUser = userRepository.findById(loginUser.getId());
         List<Review> deletedReviews = reviewRepository.findByUserId(loginUser.getId());
 
-        assertThat(deletedUser.isEmpty()).isTrue();
+        assertThat(deletedUser).isEmpty();
 
         for (Review deletedReview : deletedReviews) {
             assertThat(deletedReview.isDeleted()).isTrue();
@@ -62,8 +62,8 @@ public class UserDeleteIntegrationTest extends InitIntegrationTest {
         Set<Long> hoiFollowings = userRepository.findFollowings(testData.hoi.getId());
         Set<Long> rumkaFollowers = userRepository.findFollowers(testData.rumka.getId());
 
-        assertThat(hoiFollowings).doesNotContain(loginUser.getId());
-        assertThat(rumkaFollowers).doesNotContain(loginUser.getId());
+        assertThat(hoiFollowings).isNotEmpty().doesNotContain(loginUser.getId());
+        assertThat(rumkaFollowers).isNotEmpty().doesNotContain(loginUser.getId());
     }
 
     @Test
