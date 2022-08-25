@@ -1,8 +1,11 @@
+import { FEEDS } from 'constants/dummyData';
 import CommonHeader from 'components/Common/CommonHeader';
+import Feed from 'components/ReviewList/Feed/Feed';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
 import {
   ActivityInfoWrap,
+  FeedWrap,
   ProfileInfoWrap,
   UserDetailWrap,
   UserInfoHeader,
@@ -41,6 +44,18 @@ function UserDetail() {
           </ProfileInfoWrap>
         </UserInfoWrap>
       </UserDetailWrap>
+      <FeedWrap>
+        {FEEDS.map(({ author, contents, rating, store, likeCnt, pictures }) => (
+          <Feed
+            author={author}
+            contents={contents}
+            rating={rating}
+            store={store}
+            likeCnt={likeCnt}
+            pictures={pictures}
+          />
+        ))}
+      </FeedWrap>
     </Wrap>
   );
 }
