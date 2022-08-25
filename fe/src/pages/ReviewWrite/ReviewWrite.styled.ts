@@ -21,6 +21,7 @@ export const Title = styled.div`
 `;
 
 export const ImgWrap = styled.div`
+  position: relative;
   ${() => flexLayoutMixin('row', 'space-between', 'center')}
   width: 1000px;
   height: 660px;
@@ -38,4 +39,10 @@ export const InputWrap = styled.div`
   > div:not(:last-child) {
     border-bottom: 1px solid grey;
   }
+`;
+
+export const PostBtnWrap = styled.div`
+  position: absolute;
+  bottom: 50px;
+  right: 20px;
 `;
