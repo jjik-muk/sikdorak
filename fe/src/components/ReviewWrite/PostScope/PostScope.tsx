@@ -21,13 +21,14 @@ export default function PostScope() {
   const [reviewWriteState, dispatchReviewWriteState] = useReviewWrite();
 
   const { scope: currentScope } = reviewWriteState;
+  const isPublicScope = currentScope === 'public';
 
   const handleSetModal = () => {
     setIsOpenModal(!isOpenModal);
   };
 
   const handleSetScope = () => {
-    const nextScope = currentScope === 'public' ? 'private' : 'public';
+    const nextScope = isPublicScope ? 'private' : 'public';
     dispatchReviewWriteState({ type: 'SET_SCOPE', scope: nextScope });
   };
   return (
@@ -39,7 +40,7 @@ export default function PostScope() {
       {isOpenModal && (
         <Modal height="150px">
           <ScopeWrapper>
-            <div>{currentScope === 'public' ? '전체 공개' : '친구 공개'}</div>
+            <div>{isPublicScope ? '전체 공개' : '친구 공개'}</div>
             <ScopeButtonWrapper scope={currentScope} onClick={handleSetScope}>
               <Circle />
             </ScopeButtonWrapper>

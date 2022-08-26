@@ -1,5 +1,5 @@
 import { DispatchReviewWriteContext } from 'context/reviewWriteProvider';
-import { useContext, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { CalendarHead, Day, DayWrapper, Title, ToDay, Wrap } from './Calendar.styled';
 
 const MONTH_LIST = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
@@ -28,7 +28,9 @@ export default function Calendar({ setIsCalendarOpen }: CalendarProps) {
   const clickDay = ({ target }) => {
     const { innerHTML: date, dataset } = target;
     const { year, month, day } = dataset;
-    if (Number(date)) {
+    const isSelectedDate = Number(date);
+
+    if (isSelectedDate) {
       dispatchCalendar({ type: 'SET_DATE', date, year, month, day });
       setIsCalendarOpen(false);
     }
@@ -105,13 +107,9 @@ export default function Calendar({ setIsCalendarOpen }: CalendarProps) {
 }
 
 const isTodayInMonth = (calendarDate: Date, todayDate: Date) => {
-  if (calendarDate.getFullYear() !== todayDate.getFullYear()) {
-    return false;
-  }
-  if (calendarDate.getMonth() !== todayDate.getMonth()) {
-    return false;
-  }
-  return true;
+  const isEqualYear = calendarDate.getFullYear() !== todayDate.getFullYear();
+  const isEqualMonth = calendarDate.getMonth() !== todayDate.getMonth();
+  return isEqualYear && isEqualMonth;
 };
 
 const isToday = (today: number, todayDate: Date) => today === todayDate.getDate();
@@ -139,5 +137,5 @@ const createWeekArray = (firstDay, lastDay) => {
 };
 
 type CalendarProps = {
-  setIsCalendarOpen: Function;
+  setIsCalendarOpen: Dispatch<SetStateAction<boolean>>;
 };
