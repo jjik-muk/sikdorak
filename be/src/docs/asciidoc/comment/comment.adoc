@@ -14,9 +14,9 @@ operation::comment_create_acceptance_test/create_comment_success[snippets='http-
 
 === 댓글 수정
 
-API : `PUT /api/reviews/{reviewId}/comments{commentId}`
+API : `PUT /api/reviews/{reviewId}/comments/{commentId}`
 
-=== `201 CREATED`
+=== `200 OK`
 
 ==== `Request`
 
@@ -26,3 +26,16 @@ operation::comment_modify_acceptance_test/modify_comment_success[snippets='http-
 
 operation::comment_modify_acceptance_test/modify_comment_success[snippets='http-response,response-fields']
 
+=== 댓글 삭제
+
+API : `DELETE /api/reviews/{reviewId}/comments/{commentId}`
+
+=== `200 OK`
+
+==== `Request`
+
+operation::comment_remove_acceptance_test/remove_comment_success[snippets='http-request,path-parameters']
+
+==== `Response`
+
+operation::comment_remove_acceptance_test/remove_comment_success[snippets='http-response,response-fields']
