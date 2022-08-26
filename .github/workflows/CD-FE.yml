@@ -1,0 +1,97 @@
+name: FE Deploy in AWS CloudFront
+
+on:
+  pull_request:
+    branches: [tmp] # BE 실서버가 없기 때문에 사용 시 tmp -> dev로 변경해야 한다.
+    paths: ["fe/**"]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: ./fe
+
+jobs:
+  fe-test:
+    name: Test React
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: setup repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBMODULES_ACCESS_TOKEN }}
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: setup Node
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: install npm dependencies
+        run: npm ci
+
+      - name: Test React
+        run: npm run coverage
+
+      - name: Build react
+        run: npm run build
+
+      # aws user 연결
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Upload /build to S3
+        env:
+          BUCKET_NAME: ${{ secrets.AWS_FE_S3_BUCKET_NAME}}
+        run: |
+          aws s3 sync \
+            ./build s3://$BUCKET_NAME
+
+      - name: CloudFront Invalidation
+        env:
+          CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID}}
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id $CLOUD_FRONT_ID --paths "/*"
+
+      - name: Noti Discord - Test Success
+        uses: rjstone/discord-webhook-notify@v1
+        if: success()
+        with:
+          severity: info
+          details: Test Succeeded!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Noti Discord - Test Failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: failure()
+        with:
+          severity: error
+          details: Test Failed!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Noti Discord - Test Cancelled
+        uses: rjstone/discord-webhook-notify@v1
+        if: cancelled()
+        with:
+          severity: warn
+          details: Test Cancelled!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
