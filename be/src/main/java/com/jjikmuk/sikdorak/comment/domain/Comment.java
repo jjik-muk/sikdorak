@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-import org.springframework.context.annotation.EnableMBeanExport;
 
 
 @Entity

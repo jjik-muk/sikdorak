@@ -15,6 +15,7 @@ import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class CommentService {
 	private final UserRepository userRepository;
 	private final ReviewRepository reviewRepository;
 
+	@Transactional
 	public Comment createComment(long reviewId, LoginUser loginUser,
 		CommentCreateRequest commentCreateRequest) {
 
@@ -41,25 +43,28 @@ public class CommentService {
 		return commentRepository.save(comment);
 	}
 
+	@Transactional
 	public void modifyComment(long reviewId, long commentId, LoginUser loginUser,
 		CommentModifyRequest modifyRequest) {
+
+		loginUser.ifAnonymousThrowException();
+
+		reviewRepository.findById(reviewId)
+			.orElseThrow(NotFoundReviewException::new);
 
 		User currentUser = userRespository.findById(loginUser.getId())
 			.orElseThrow(NotFoundUserException::new);
 
-		Review review = reviewRepository.findById(reviewId)
-			.orElseThrow(NotFoundReviewException::new);
 
-		Comment savedComment = commentRepository.findById(commentId)
+		Comment comment = commentRepository.findById(commentId)
 			.orElseThrow(NotFoundCommentException::new);
 
-		validateCommentModifiableOrThrow(savedComment, currentUser);
+		validateModifiableUserOrThrow(comment, currentUser);
 
-		savedComment.updateComment(modifyRequest.getContent());
-
+		comment.updateComment(modifyRequest.getContent());
 	}
 
-	private void validateCommentModifiableOrThrow(Comment comment, User currentUser) {
+	private void validateModifiableUserOrThrow(Comment comment, User currentUser) {
 		if (!comment.isAuthor(currentUser.getId())) {
 			throw new UnauthorizedUserException();
 		}
