@@ -23,7 +23,7 @@ class CommentModifyAcceptanceTest extends InitAcceptanceTest {
 
 
 	@Test
-	@DisplayName("댓글 수정 요청이 정상적인 경우라면 댓글 생성 후 정상 상태 코드를 반환한다")
+	@DisplayName("댓글 수정 요청이 정상적인 경우라면 댓글 수정 후 정상 상태 코드를 반환한다")
 	void modify_comment_success() {
 		Review review = testData.user1PublicReview;
 		User kukim = testData.kukim;
