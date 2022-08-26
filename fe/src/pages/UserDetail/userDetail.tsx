@@ -3,6 +3,7 @@ import CommonHeader from 'components/Common/CommonHeader';
 import Feed from 'components/ReviewList/Feed/Feed';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
+import { createKey } from 'utils/utils';
 import {
   ActivityInfoWrap,
   FeedWrap,
@@ -45,8 +46,9 @@ function UserDetail() {
         </UserInfoWrap>
       </UserDetailWrap>
       <FeedWrap>
-        {FEEDS.map(({ author, contents, rating, store, likeCnt, pictures }) => (
+        {FEEDS.map(({ author, contents, rating, store, likeCnt, pictures }, idx) => (
           <Feed
+            key={createKey(author, idx)}
             author={author}
             contents={contents}
             rating={rating}
