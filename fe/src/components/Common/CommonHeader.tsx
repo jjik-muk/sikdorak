@@ -1,6 +1,7 @@
 import Icon, { IconComponentsKeys } from 'common/Icon';
 import Logo from 'common/Logo/Logo';
 import Portal from 'common/Portal/Portal';
+import { useUserInfo } from 'context/userInfoProvider';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
@@ -14,6 +15,9 @@ function CommonHeader() {
   const [, toggleIsUserProfile] = useToggle(false);
   const reviewWriteModalRef = useRef(null);
   const userDetailModalRef = useRef(null);
+  const [userInfo] = useUserInfo();
+  const { profileImageUrl } = userInfo;
+  console.log('profileImageUrl', profileImageUrl);
 
   const iconInfo: IconInfoProps[] = [
     { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
@@ -37,6 +41,7 @@ function CommonHeader() {
           </IconWrap>
         </SearchFormWrap>
         <ButtonWrap>
+          {/* TODO: 로그인하면 프로필 사진으로 Icon 대체 */}
           {iconInfo.map(({ icon, handler, to }, idx) => (
             <Link to={to}>
               <div key={createKey(icon, idx)} onClick={handler}>

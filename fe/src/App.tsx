@@ -1,4 +1,5 @@
 import Portal from 'common/Portal/Portal';
+import UserInfoProvider from 'context/userInfoProvider';
 import Callback from 'pages/Callback/Callback';
 import Login from 'pages/Login/Login';
 import ReviewList from 'pages/ReviewList/ReviewList';
@@ -10,7 +11,7 @@ import GlobalStyle from 'styles/GlobalStyle';
 
 function App() {
   return (
-    <>
+    <UserInfoProvider>
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
@@ -29,7 +30,7 @@ function App() {
           <Route path="/api/oauth/callback" element={<Callback />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </UserInfoProvider>
   );
 }
 

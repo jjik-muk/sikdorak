@@ -35,6 +35,14 @@ export const FEEDS = [
     store: { name: '호이 초밥', region: '부산' },
     likeCnt: 20,
   },
+  {
+    author: '갓호이',
+    contents: '너무 맛있어서 초밥하면 여기만 찾아와요!!!!',
+    rating: [5, 5, 5],
+    pictures: [],
+    store: { name: '호이 초밥', region: '부산' },
+    likeCnt: 20,
+  },
 ];
 
 export const COMMENTS = [
