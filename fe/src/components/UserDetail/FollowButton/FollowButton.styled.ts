@@ -1,7 +1,7 @@
 import { STYLE } from 'constants/style';
 import styled from 'styled-components';
 
-export const Wrap = styled.div`
+export const Wrap = styled.button`
   width: 120px;
   background-color: blue;
   color: #fff;

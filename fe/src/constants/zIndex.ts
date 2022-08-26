@@ -1,7 +1,7 @@
 export const Z_INDEX = {
   MODAL: {
-    DIM: 10,
+    DIM: 20,
     CONTENTS: 100,
   },
-  COMMON_HEADER: 20,
+  COMMON_HEADER: 0,
 };

@@ -28,18 +28,21 @@ export const FEEDS = [
     contents: '너무 맛있어서 초밥하면 여기만 찾아와요!!!!',
     rating: [5, 5, 5],
     pictures: [
-      'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA3MTNfMjY1%2FMDAxNjU3Njc0NDEzNzAx.2cG_vAuOibqzlW6ZzBKCnyc6C5DJQvPPK0Lu9GoRti0g.fueGxlQgfllbs3pi5j4y5pNMgmA5TMLLcvex7nV87nIg.JPEG.hyukbinu%2FIMG_9920.jpg&type=sc960_832',
-      'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA3MDZfMjU2%2FMDAxNjU3MDc5MjQwMjAw.PhCzHQ9upr8FKcdNFUMOc6VqomUDGt5EY1cZDUjInKQg.jT0QhPBhVwkLN_wVJiH-GGnQIdBRQ3L3jbxy8Ib2In0g.JPEG.jangcong%2F20220706%25A3%25DF114552.jpg&type=sc960_832',
+      'https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20201002142956&q=80&rw=750&rh=536',
+      'https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000881/img/ko/a0000881_parts_586c7364bbcdc.jpg?20200630185341&q=80&rw=686&rh=490',
+      'https://blog.kakaocdn.net/dn/u8bU3/btq9nhUNEgR/kBXjA4SUp2WFK3AiXRzN4k/img.png',
     ],
     store: { name: '호이 초밥', region: '부산' },
     likeCnt: 20,
   },
-];
-
-export const IMAGE_URLS = [
-  'https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20201002142956&q=80&rw=750&rh=536',
-  'https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000881/img/ko/a0000881_parts_586c7364bbcdc.jpg?20200630185341&q=80&rw=686&rh=490',
-  'https://blog.kakaocdn.net/dn/u8bU3/btq9nhUNEgR/kBXjA4SUp2WFK3AiXRzN4k/img.png',
+  {
+    author: '갓호이',
+    contents: '너무 맛있어서 초밥하면 여기만 찾아와요!!!!',
+    rating: [5, 5, 5],
+    pictures: [],
+    store: { name: '호이 초밥', region: '부산' },
+    likeCnt: 20,
+  },
 ];
 
 export const COMMENTS = [
@@ -53,7 +56,11 @@ export const COMMENTS = [
 export const STORE = {
   storeName: '호이 초밥',
   storeRating: 4.5,
-  storePictures: IMAGE_URLS,
+  storePictures: [
+    'https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20201002142956&q=80&rw=750&rh=536',
+    'https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000881/img/ko/a0000881_parts_586c7364bbcdc.jpg?20200630185341&q=80&rw=686&rh=490',
+    'https://blog.kakaocdn.net/dn/u8bU3/btq9nhUNEgR/kBXjA4SUp2WFK3AiXRzN4k/img.png',
+  ],
   reviewCnt: 451,
   address: '인천 계양구 봉오대로 559 1층',
   phoneNumber: '010-1234-5678',

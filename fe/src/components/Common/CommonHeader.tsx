@@ -1,26 +1,30 @@
 import Icon, { IconComponentsKeys } from 'common/Icon';
 import Logo from 'common/Logo/Logo';
 import Portal from 'common/Portal/Portal';
+import { useUserInfo } from 'context/userInfoProvider';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
-import UserDetail from 'pages/UserDetail/userDetail';
 import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { createKey } from 'utils/utils';
 import { ButtonWrap, IconWrap, Input, SearchFormWrap, Header, Wrap } from './CommonHeader.styled';
 
 function CommonHeader() {
   const [isReviewWrite, setIsReviewWrite] = useState(false);
-  const [isUserProfile, toggleIsUserProfile] = useToggle(false);
+  const [, toggleIsUserProfile] = useToggle(false);
   const reviewWriteModalRef = useRef(null);
   const userDetailModalRef = useRef(null);
+  const [userInfo] = useUserInfo();
+  const { profileImageUrl } = userInfo;
+  console.log('profileImageUrl', profileImageUrl);
 
   const iconInfo: IconInfoProps[] = [
-    { icon: 'Home', handler: toggleIsUserProfile },
-    { icon: 'Map' },
-    { icon: 'PostBtn', handler: handleReviewWrite },
-    { icon: 'Alarm' },
-    { icon: 'Profile' },
+    { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
+    { icon: 'Map', to: '/map' },
+    { icon: 'PostBtn', handler: handleReviewWrite, to: '' },
+    { icon: 'Alarm', to: '' },
+    { icon: 'Profile', to: '/userDetail' },
   ];
 
   useOutsideClick(reviewWriteModalRef, handleReviewWrite);
@@ -37,20 +41,18 @@ function CommonHeader() {
           </IconWrap>
         </SearchFormWrap>
         <ButtonWrap>
-          {iconInfo.map(({ icon, handler }, idx) => (
-            <div key={createKey(icon, idx)} onClick={handler}>
-              <Icon icon={icon} width={24} height={24} />
-            </div>
+          {/* TODO: 로그인하면 프로필 사진으로 Icon 대체 */}
+          {iconInfo.map(({ icon, handler, to }, idx) => (
+            <Link to={to}>
+              <div key={createKey(icon, idx)} onClick={handler}>
+                <Icon icon={icon} width={24} height={24} />
+              </div>
+            </Link>
           ))}
         </ButtonWrap>
         {isReviewWrite && (
           <Portal selector="#portal" ref={reviewWriteModalRef}>
             <ReviewWrite />
-          </Portal>
-        )}
-        {isUserProfile && (
-          <Portal selector="#portal" ref={userDetailModalRef}>
-            <UserDetail />
           </Portal>
         )}
       </Header>
@@ -65,6 +67,7 @@ function CommonHeader() {
 type IconInfoProps = {
   icon: IconComponentsKeys;
   handler?: React.MouseEventHandler<HTMLDivElement>;
+  to?: string;
 };
 
 export default CommonHeader;

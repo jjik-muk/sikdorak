@@ -1,7 +1,7 @@
 import Portal from 'common/Portal/Portal';
+import UserInfoProvider from 'context/userInfoProvider';
 import Callback from 'pages/Callback/Callback';
 import Login from 'pages/Login/Login';
-import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
 import ReviewList from 'pages/ReviewList/ReviewList';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import StoreDetail from 'pages/StoreDetail/StoreDetail';
@@ -11,7 +11,7 @@ import GlobalStyle from 'styles/GlobalStyle';
 
 function App() {
   return (
-    <>
+    <UserInfoProvider>
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
@@ -24,29 +24,13 @@ function App() {
               </Portal>
             }
           />
-          <Route
-            path="/reviewDetail1"
-            element={
-              <Portal selector="#portal">
-                <ReviewDetail />
-              </Portal>
-            }
-          />
-          <Route
-            path="/reviewDetail2"
-            element={
-              <Portal selector="#portal">
-                <ReviewDetail hasPicture />
-              </Portal>
-            }
-          />
           <Route path="/userDetail" element={<UserDetail />} />
           <Route path="/storeDetail" element={<StoreDetail />} />
           <Route path="/reviewList" element={<ReviewList />} />
           <Route path="/api/oauth/callback" element={<Callback />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </UserInfoProvider>
   );
 }
 

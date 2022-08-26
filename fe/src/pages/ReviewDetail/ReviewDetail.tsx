@@ -1,4 +1,4 @@
-import { COMMENTS, IMAGE_URLS } from 'constants/dummyData';
+import { COMMENTS } from 'constants/dummyData';
 import { DETAIL, FEED } from 'constants/size';
 import Icon from 'common/Icon';
 import Carousel from 'components/ReviewDetail/Carousel/Carousel';
@@ -8,19 +8,23 @@ import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/Restaurant
 import TotalRating from 'components/ReviewDetail/TotalRating/TotalRating';
 import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
+import { FeedProps } from 'components/ReviewList/Feed/Feed';
 import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
 import useToggle from 'hooks/useToggle';
 import { useId, useRef } from 'react';
 import { createKey } from 'utils/utils';
 import { ButtonWrapper, Contents, ContentsWrap, Header, IconWrap, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
-function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
+function ReviewDetail({ author, contents, rating, pictures, store, likeCnt }: FeedProps) {
   const commentRef = useRef<HTMLTextAreaElement>(null);
+  const hasPicture = pictures.length > 0;
   const wrapWidth = hasPicture ? DETAIL.WRAP.WIDTH_WITH_IMG : DETAIL.WRAP.WIDTH_NO_IMG;
   const btnWidth = hasPicture ? FEED.BTN.WIDTH_WITH_IMG : FEED.BTN.WIDTH_NO_IMG;
   const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const id = useId();
+  const [taste, price, service] = rating;
+  const { name, region } = store;
 
   const clickCreateComment = () => {
     commentRef.current.focus();
@@ -28,26 +32,27 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
 
   return (
     <Wrap>
-      {hasPicture && <Carousel urls={IMAGE_URLS} />}
+      {hasPicture && <Carousel urls={pictures} />}
       <ContentsWrap wrapWidth={wrapWidth}>
         <Header>
-          <Profile nickname="Dashawn" />
+          <Profile nickname={author} />
           <div onClick={toggleIsActiveMenu}>
             <Icon icon="MenuBtn" />
             {isActiveMenu && <Menu />}
           </div>
         </Header>
         <Main>
-          <Contents>..흠... 할머니가 북어를 복어로 하셔서 그런지 목숨의 위험이 느껴지는 맛이었습니다.</Contents>
-          <TotalRating taste={5} price={3} service={1} />
+          <Contents>{contents}</Contents>
+          <TotalRating taste={taste} price={price} service={service} />
           <MainFooter>
-            <CompnayProfile company="호이 초밥" region="부산" />
+            <CompnayProfile company={name} region={region} />
           </MainFooter>
         </Main>
         <ButtonWrapper>
           <div onClick={toggleIsActiveHeart}>
             <IconWrap width={btnWidth} height={FEED.BTN.HEIGHT}>
               <Icon icon="Heart" fill={isActiveHeart ? 'red' : '#FFF'} />
+              {likeCnt}
             </IconWrap>
           </div>
           <div onClick={clickCreateComment}>
@@ -77,4 +82,4 @@ function ReviewDetailWithPicture({ hasPicture }: { hasPicture?: boolean }) {
   }
 }
 
-export default ReviewDetailWithPicture;
+export default ReviewDetail;
