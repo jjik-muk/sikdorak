@@ -2,16 +2,15 @@ name: FE Test
 
 on:
   push:
-    branches: [dev, FE-dev, FE-deploy]
+    branches: [dev]
+    paths: ["fe/**"]
   pull_request:
-    branches: [dev, FE-dev]
+    branches: [dev]
     paths: ["fe/**"]
     types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
-
-# https://create-react-app.dev/docs/running-tests/
 
 defaults:
   run:
