@@ -52,7 +52,7 @@ public class CommentService {
 		reviewRepository.findById(reviewId)
 			.orElseThrow(NotFoundReviewException::new);
 
-		User currentUser = userRespository.findById(loginUser.getId())
+		User currentUser = userRepository.findById(loginUser.getId())
 			.orElseThrow(NotFoundUserException::new);
 
 
