@@ -1,5 +1,6 @@
 package com.jjikmuk.sikdorak.integration.comment;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -16,6 +17,7 @@ import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.exception.NeedLoginException;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -44,7 +46,6 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 			Review review = testData.user1PublicReview;
 			User user1 = testData.forky;
 			Comment comment = testData.generator.comment(review, user1, "잘보고가요");
-			String updatedContent = "정말 맛있겠네요";
 
 			// when
 			commentService.removeComment(review.getId(),
@@ -52,11 +53,8 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 				createLoginUserWithUserId(user1.getId()));
 
 			// then
-			Comment updatedComment = commentRepository.findById(comment.getId()).orElseThrow();
-			assertThat(updatedComment.getId()).isEqualTo(comment.getId());
-			assertThat(updatedComment.getUserId()).isEqualTo(comment.getUserId());
-			assertThat(updatedComment.getReviewId()).isEqualTo(comment.getReviewId());
-			assertThat(updatedComment.getCommentContent()).isEqualTo(updatedContent);
+			Optional<Comment> findResult = commentRepository.findById(comment.getId());
+			assertThat(findResult).isEmpty();
 		}
 
 		@Test
