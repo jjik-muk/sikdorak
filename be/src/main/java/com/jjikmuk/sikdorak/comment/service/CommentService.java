@@ -49,12 +49,10 @@ public class CommentService {
 
 		loginUser.ifAnonymousThrowException();
 
-		reviewRepository.findById(reviewId)
-			.orElseThrow(NotFoundReviewException::new);
+		validateReviewExists(reviewId);
 
 		User currentUser = userRepository.findById(loginUser.getId())
 			.orElseThrow(NotFoundUserException::new);
-
 
 		Comment comment = commentRepository.findById(commentId)
 			.orElseThrow(NotFoundCommentException::new);
@@ -62,6 +60,12 @@ public class CommentService {
 		validateModifiableUserOrThrow(comment, currentUser);
 
 		comment.updateComment(modifyRequest.getContent());
+	}
+
+	private void validateReviewExists(long reviewId) {
+		if (!reviewRepository.existsById(reviewId)) {
+			throw new NotFoundReviewException();
+		}
 	}
 
 	private void validateModifiableUserOrThrow(Comment comment, User currentUser) {
