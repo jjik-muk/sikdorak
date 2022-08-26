@@ -108,7 +108,7 @@ operation::user_delete_acceptance_test/delete_user_success[snippets='http-respon
 
 === 유저 본인 프로필 조회
 
-API : `GET /api/users`
+API : `GET /api/users/me`
 
 === `200 OK`
 
