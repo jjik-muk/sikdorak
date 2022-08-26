@@ -12,8 +12,10 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
-import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileResponse;
+import com.jjikmuk.sikdorak.user.user.controller.response.FollowUserProfile;
+import com.jjikmuk.sikdorak.user.user.controller.response.UserDetailProfileResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
+import com.jjikmuk.sikdorak.user.user.controller.response.UserSimpleProfileResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 
@@ -58,15 +60,15 @@ public interface UserSnippet {
         )
     );
 
-    Snippet USER_SEARCH_REQUEST_SNIPPET = pathParameters(
+    Snippet USER_SEARCH_PROFILE_REQUEST_SNIPPET = pathParameters(
         parameterWithName("userId").description("프로필을 조회할 유저 아이디")
     );
 
-    Snippet USER_SEARCH_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+    Snippet USER_SEARCH_PROFILE_RESPONSE_SNIPPET = createResponseSnippetWithFields(
         responseFieldsOfCommon(),
 
         responseFieldsOfObjectWithConstraintsAndFields(
-            UserProfileResponse.class,
+            UserDetailProfileResponse.class,
             fieldWithPath("id").type(JsonFieldType.NUMBER).description("유저 아이디"),
             fieldWithPath("nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
             fieldWithPath("email").type(JsonFieldType.STRING).description("유저 이메일"),
@@ -81,5 +83,33 @@ public interface UserSnippet {
 
     Snippet USER_DELETE_RESPONSE_SNIPPET = createResponseSnippetWithFields(
         responseFieldsOfCommonNonData());
+
+    Snippet USER_SEARCH_SELF_PROFILE_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+        responseFieldsOfCommon(),
+
+        responseFieldsOfObjectWithConstraintsAndFields(
+            UserSimpleProfileResponse.class,
+            fieldWithPath("id").type(JsonFieldType.NUMBER).description("유저 아이디"),
+            fieldWithPath("nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
+            fieldWithPath("profileImage").type(JsonFieldType.STRING).description("유저 프로필 이미지")
+        )
+    );
+
+    Snippet USER_SEARCH_FOLLOWERS_FOLLOWINGS_REQUEST_SNIPPET = pathParameters(
+        parameterWithName("userId").description("팔로워/팔로워 목록을 조회할 유저 아이디")
+    );
+
+    Snippet USER_SEARCH_FOLLOWERS_FOLLOWINGS_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+        responseFieldsOfCommon(),
+
+        responseFieldsOfListWithConstraintsAndFields(
+            FollowUserProfile.class,
+            fieldWithPath("id").type(JsonFieldType.NUMBER).description("유저 아이디"),
+            fieldWithPath("nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
+            fieldWithPath("profileImage").type(JsonFieldType.STRING).description("유저 프로필 이미지"),
+            fieldWithPath("isViewer").type(JsonFieldType.BOOLEAN).description("자신의 프로필 여부"),
+            fieldWithPath("followStatus").type(JsonFieldType.BOOLEAN).description("유저와의 관계")
+        )
+    );
 
 }

@@ -7,8 +7,10 @@ import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
-import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileResponse;
+import com.jjikmuk.sikdorak.user.user.controller.response.FollowUserProfile;
+import com.jjikmuk.sikdorak.user.user.controller.response.UserDetailProfileResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
+import com.jjikmuk.sikdorak.user.user.controller.response.UserSimpleProfileResponse;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -42,14 +44,25 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public CommonResponseEntity<UserProfileResponse> searchUserProfileByUserID(@AuthenticatedUser LoginUser loginUser,
+    public CommonResponseEntity<UserDetailProfileResponse> searchUserProfileByUserID(@AuthenticatedUser LoginUser loginUser,
         @PathVariable Long userId
     ) {
 
-        UserProfileResponse userProfileResponse = userService.searchUserProfile(userId, loginUser);
+        UserDetailProfileResponse userDetailProfileResponse = userService.searchUserDetailProfile(userId, loginUser);
 
         return new CommonResponseEntity<>(ResponseCodeAndMessages.USER_SEARCH_PROFILE_SUCCESS,
-            userProfileResponse,
+            userDetailProfileResponse,
+            HttpStatus.OK);
+    }
+
+    @UserOnly
+    @GetMapping("/me")
+    public CommonResponseEntity<UserSimpleProfileResponse> searchSelfProfile(@AuthenticatedUser LoginUser loginUser) {
+
+        UserSimpleProfileResponse userSimpleProfileResponse = userService.searchSelfProfile(loginUser);
+
+        return new CommonResponseEntity<>(ResponseCodeAndMessages.USER_SEARCH_PROFILE_SUCCESS,
+            userSimpleProfileResponse,
             HttpStatus.OK);
     }
 
@@ -96,4 +109,27 @@ public class UserController {
         return new CommonResponseEntity<>(ResponseCodeAndMessages.USER_DELETE_SUCCESS,
             HttpStatus.OK);
     }
+
+    @GetMapping("/{userId}/followers")
+    public CommonResponseEntity<List<FollowUserProfile>> searchUserFollowers(@AuthenticatedUser LoginUser loginUser,
+        @PathVariable Long userId) {
+
+        List<FollowUserProfile> followersResponse = userService.searchFollowersByUserId(
+            userId, loginUser);
+
+        return new CommonResponseEntity<>(ResponseCodeAndMessages.USER_SEARCH_FOLLOWERS_SUCCESS,
+            followersResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}/followings")
+    public CommonResponseEntity<List<FollowUserProfile>> searchUserFollowings(@AuthenticatedUser LoginUser loginUser,
+        @PathVariable Long userId) {
+
+        List<FollowUserProfile> followingsResponse = userService.searchFollowingsByUserId(
+            userId, loginUser);
+
+        return new CommonResponseEntity<>(ResponseCodeAndMessages.USER_SEARCH_FOLLOWINGS_SUCCESS,
+            followingsResponse, HttpStatus.OK);
+    }
+
 }

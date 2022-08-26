@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.acceptance.user.user;
 
-import static com.jjikmuk.sikdorak.acceptance.user.user.UserSnippet.USER_SEARCH_REQUEST_SNIPPET;
-import static com.jjikmuk.sikdorak.acceptance.user.user.UserSnippet.USER_SEARCH_RESPONSE_SNIPPET;
+import static com.jjikmuk.sikdorak.acceptance.user.user.UserSnippet.USER_SEARCH_PROFILE_REQUEST_SNIPPET;
+import static com.jjikmuk.sikdorak.acceptance.user.user.UserSnippet.USER_SEARCH_PROFILE_RESPONSE_SNIPPET;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
@@ -14,7 +14,7 @@ import org.springframework.http.MediaType;
 
 
 @DisplayName("유저 조회 인수테스트")
-class UserSearchAcceptanceTest extends InitAcceptanceTest {
+class UserSearchProfileAcceptanceTest extends InitAcceptanceTest {
 
     @Test
     @DisplayName("회원인 유저의 유저 조회 요청이 올바르다면 유저 정보를 반환한다.")
@@ -22,8 +22,8 @@ class UserSearchAcceptanceTest extends InitAcceptanceTest {
         given(this.spec)
             .filter(document(
                 DEFAULT_RESTDOC_PATH,
-                USER_SEARCH_REQUEST_SNIPPET,
-                USER_SEARCH_RESPONSE_SNIPPET)
+                USER_SEARCH_PROFILE_REQUEST_SNIPPET,
+                USER_SEARCH_PROFILE_RESPONSE_SNIPPET)
             )
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Authorization", testData.user1ValidAuthorizationHeader)
@@ -45,8 +45,8 @@ class UserSearchAcceptanceTest extends InitAcceptanceTest {
         given(this.spec)
             .filter(document(
                 DEFAULT_RESTDOC_PATH,
-                USER_SEARCH_REQUEST_SNIPPET,
-                USER_SEARCH_RESPONSE_SNIPPET)
+                USER_SEARCH_PROFILE_REQUEST_SNIPPET,
+                USER_SEARCH_PROFILE_RESPONSE_SNIPPET)
             )
             .accept(MediaType.APPLICATION_JSON_VALUE)
 
