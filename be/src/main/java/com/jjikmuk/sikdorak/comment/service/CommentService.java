@@ -29,12 +29,13 @@ public class CommentService {
 	public Comment createComment(long reviewId, LoginUser loginUser,
 		CommentCreateRequest commentCreateRequest) {
 
+		// 검증
 		User user = userRepository.findById(loginUser.getId())
 			.orElseThrow(NotFoundUserException::new);
-
 		Review review = reviewRepository.findById(reviewId)
 			.orElseThrow(NotFoundReviewException::new);
 
+		// 댓글 생성
 		Comment comment = new Comment(
 			review.getId(),
 			user.getId(),
@@ -47,18 +48,16 @@ public class CommentService {
 	public void modifyComment(long reviewId, long commentId, LoginUser loginUser,
 		CommentModifyRequest modifyRequest) {
 
+		// 검증
 		loginUser.ifAnonymousThrowException();
-
 		validateReviewExists(reviewId);
-
 		User currentUser = userRepository.findById(loginUser.getId())
 			.orElseThrow(NotFoundUserException::new);
-
 		Comment comment = commentRepository.findById(commentId)
 			.orElseThrow(NotFoundCommentException::new);
-
 		validateModifiableUserOrThrow(comment, currentUser);
 
+		// 댓글 수정
 		comment.updateComment(modifyRequest.getContent());
 	}
 
@@ -72,5 +71,10 @@ public class CommentService {
 		if (!comment.isAuthor(currentUser.getId())) {
 			throw new UnauthorizedUserException();
 		}
+	}
+
+	@Transactional
+	public void removeComment(Long reviewId, Long commentId, LoginUser loginUser) {
+
 	}
 }
