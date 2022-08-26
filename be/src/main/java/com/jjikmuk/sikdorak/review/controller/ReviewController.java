@@ -9,6 +9,7 @@ import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetail
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,6 +39,17 @@ public class ReviewController {
 			ResponseCodeAndMessages.REVIEW_SEARCH_DETAIL_SUCCESS,
 			reviewDetailResponse,
 			HttpStatus.OK);
+	}
+
+	@GetMapping
+	public CommonResponseEntity<List<ReviewDetailResponse>> getReviewsFeed(@AuthenticatedUser LoginUser loginUser) {
+
+
+		return new CommonResponseEntity<>(
+			ResponseCodeAndMessages.REVIEWS_FEED_SUCCESS,
+			null,
+			HttpStatus.OK
+		);
 	}
 
 	@PostMapping
