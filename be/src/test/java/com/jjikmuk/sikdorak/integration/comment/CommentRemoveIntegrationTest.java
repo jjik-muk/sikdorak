@@ -1,6 +1,5 @@
 package com.jjikmuk.sikdorak.integration.comment;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -44,13 +43,13 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 		void create_comment_success() {
 			// given
 			Review review = testData.user1PublicReview;
-			User user1 = testData.forky;
-			Comment comment = testData.generator.comment(review, user1, "잘보고가요");
+			User forky = testData.forky;
+			Comment comment = testData.generator.comment(review, forky, "잘보고가요");
 
 			// when
 			commentService.removeComment(review.getId(),
 				comment.getId(),
-				createLoginUserWithUserId(user1.getId()));
+				createLoginUserWithUserId(forky.getId()));
 
 			// then
 			Optional<Comment> findResult = commentRepository.findById(comment.getId());
@@ -62,8 +61,8 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 		void remove_comment_with_deleted_review_will_failed() {
 			// given
 			Review review = testData.user1PublicReview;
-			User user1 = testData.forky;
-			Comment comment = testData.generator.comment(review, user1, "잘보고가요");
+			User forky = testData.forky;
+			Comment comment = testData.generator.comment(review, forky, "잘보고가요");
 
 			reviewRepository.delete(review);
 
@@ -71,7 +70,7 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 			assertThatThrownBy(
 				() -> commentService.removeComment(review.getId(),
 					comment.getId(),
-					createLoginUserWithUserId(user1.getId())
+					createLoginUserWithUserId(forky.getId())
 				))
 				.isInstanceOf(NotFoundReviewException.class);
 		}
@@ -81,14 +80,14 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 		void remove_comment_with_not_existing_comment_will_failed() {
 			// given
 			Review review = testData.user1PublicReview;
-			User user1 = testData.forky;
+			User forky = testData.forky;
 			long notExistingCommentId = Long.MIN_VALUE;
 
 			// then
 			assertThatThrownBy(
 				() -> commentService.removeComment(review.getId(),
 					notExistingCommentId,
-					createLoginUserWithUserId(user1.getId())
+					createLoginUserWithUserId(forky.getId())
 				))
 				.isInstanceOf(NotFoundCommentException.class);
 		}
@@ -98,15 +97,15 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 		void remove_comment_with_deleted_comment_will_failed() {
 			// given
 			Review review = testData.user1PublicReview;
-			User user1 = testData.forky;
-			Comment comment = testData.generator.comment(review, user1, "잘보고가요");
+			User forky = testData.forky;
+			Comment comment = testData.generator.comment(review, forky, "잘보고가요");
 			commentRepository.delete(comment);
 
 			// then
 			assertThatThrownBy(
 				() -> commentService.removeComment(review.getId(),
 					comment.getId(),
-					createLoginUserWithUserId(user1.getId())
+					createLoginUserWithUserId(forky.getId())
 				))
 				.isInstanceOf(NotFoundCommentException.class);
 		}
@@ -116,8 +115,8 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 		void remove_comment_with_not_existing_user_will_failed() {
 			// given
 			Review review = testData.user1PublicReview;
-			User user1 = testData.forky;
-			Comment comment = testData.generator.comment(review, user1, "잘보고가요");
+			User forky = testData.forky;
+			Comment comment = testData.generator.comment(review, forky, "잘보고가요");
 
 			// then
 			assertThatThrownBy(
@@ -133,8 +132,8 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 		void remove_comment_with_not_autor_will_failed() {
 			// given
 			Review review = testData.user1PublicReview;
-			User user1 = testData.forky;
-			Comment comment = testData.generator.comment(review, user1, "잘보고가요");
+			User forky = testData.forky;
+			Comment comment = testData.generator.comment(review, forky, "잘보고가요");
 
 			// then
 			assertThatThrownBy(
