@@ -4,7 +4,6 @@ import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
-import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import java.sql.Connection;
@@ -38,11 +37,11 @@ public class DatabaseConfigurator implements InitializingBean {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    @Autowired
-    private JwtProvider jwtProvider;
-
 //    @Autowired
 //    private UserDataConfigurator userDataConfigurator;
+
+    @Autowired
+    public DataGenerator generator;
 
     public Store store;
 //    public TUser kukim;
@@ -83,7 +82,6 @@ public class DatabaseConfigurator implements InitializingBean {
     public void afterPropertiesSet() {
         entityManager.unwrap(Session.class).doWork(this::extractTableNames);
     }
-
 
     // reference : https://www.baeldung.com/jdbc-database-metadata
     private void extractTableNames(Connection connection) throws SQLException {
@@ -168,24 +166,15 @@ public class DatabaseConfigurator implements InitializingBean {
     }
 
     private void initUserAuthorizationData() {
-        String user1Payload = String.valueOf(this.kukim.getId());
-        String user2Payload = String.valueOf(this.jay.getId());
-        String followSendUserPayload = String.valueOf(this.forky.getId());
-        String followAcceptUserPayload = String.valueOf(this.hoi.getId());
-
         Date now = new Date();
         Date accessTokenExpiredTime = new Date(now.getTime() + 1800000);
 
-        this.user1ValidAuthorizationHeader =
-            "Bearer " + jwtProvider.createAccessToken(user1Payload, accessTokenExpiredTime);
-        this.user2ValidAuthorizationHeader =
-            "Bearer " + jwtProvider.createAccessToken(user2Payload,accessTokenExpiredTime);
-        this.followSendUserValidAuthorizationHeader =
-            "Bearer " + jwtProvider.createAccessToken(followSendUserPayload, accessTokenExpiredTime);
-        this.followAcceptUserValidAuthorizationHeader =
-            "Bearer " + jwtProvider.createAccessToken(followAcceptUserPayload, accessTokenExpiredTime);
-        this.user1RefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime()+8000000));
-        this.user1ExpiredRefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime() - 1000));
+        this.user1ValidAuthorizationHeader = generator.validAuthorizationHeader(kukim, accessTokenExpiredTime);
+        this.user2ValidAuthorizationHeader = generator.validAuthorizationHeader(jay, accessTokenExpiredTime);
+        this.followSendUserValidAuthorizationHeader = generator.validAuthorizationHeader(forky, accessTokenExpiredTime);
+        this.followAcceptUserValidAuthorizationHeader = generator.validAuthorizationHeader(hoi, accessTokenExpiredTime);
+        this.user1RefreshToken = generator.refreshToken(kukim, new Date(now.getTime()+8000000));
+        this.user1ExpiredRefreshToken = generator.refreshToken(kukim, new Date(now.getTime() - 1000));
         this.user1InvalidRefreshToken = user1RefreshToken + "invalid";
     }
 

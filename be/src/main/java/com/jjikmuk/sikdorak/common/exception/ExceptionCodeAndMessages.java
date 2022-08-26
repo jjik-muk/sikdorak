@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.common.exception;
 
 import com.jjikmuk.sikdorak.comment.exception.InvalidCommentContentException;
+import com.jjikmuk.sikdorak.comment.exception.NotFoundCommentException;
 import com.jjikmuk.sikdorak.common.CodeAndMessages;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewImageException;
@@ -76,7 +77,8 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NEED_LOGIN("F-O004", "로그인이 필요한 서비스입니다.", NeedLoginException.class),
 
     // Comment
-    INVALID_COMMENT_CONTENT_EXCEPTION("F-C001", "유효하지 않은 댓글 내용입니다.", InvalidCommentContentException.class);
+    INVALID_COMMENT_CONTENT_EXCEPTION("F-C001", "유효하지 않은 댓글 내용입니다.", InvalidCommentContentException.class),
+    NOT_FOUND_COMMENT_EXCEPTION("F-C002", "댓글을 찾을 수 없습니다.", NotFoundCommentException.class);
 
     private final String code;
 

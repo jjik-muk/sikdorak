@@ -23,4 +23,16 @@ interface CommentSnippet {
 	);
 
 	Snippet COMMENT_CREATE_RESPONSE_SNIPPET = createResponseSnippetWithFields(responseFieldsOfCommonNonData());
+
+	Snippet COMMENT_MODIFY_PATH_VARIABLE_SNIPPET = pathParameters(
+		parameterWithName("reviewId").description("리뷰 아이디"),
+		parameterWithName("commentId").description("댓글 아이디")
+	);
+
+	Snippet COMMENT_MODIFY_REQUEST_SNIPPET = requestSnippetWithConstraintsAndFields(
+		CommentCreateRequest.class,
+		fieldWithPath("content").type(JsonFieldType.STRING).description("댓글 내용")
+	);
+
+	Snippet COMMENT_MODIFY_RESPONSE_SNIPPET = createResponseSnippetWithFields(responseFieldsOfCommonNonData());
 }
