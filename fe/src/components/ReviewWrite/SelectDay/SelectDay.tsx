@@ -16,7 +16,7 @@ export default function SelectDay() {
     <Wrap>
       <div onClick={openCalendar}>
         <SelectDayWrapper>
-          {!year ? '방문일 선택' : <div>{`${year}년 ${month}월 ${date}일 (${day})요일`}</div>}
+          {year ? <div>{`${year}년 ${month}월 ${date}일 (${day})요일`}</div> : '방문일 선택'}
         </SelectDayWrapper>
       </div>
       {isCalendarOpen && <Calendar setIsCalendarOpen={setIsCalendarOpen} />}

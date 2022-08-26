@@ -43,7 +43,7 @@ function CommonHeader() {
         <ButtonWrap>
           {/* TODO: 로그인하면 프로필 사진으로 Icon 대체 */}
           {iconInfo.map(({ icon, handler, to }, idx) => (
-            <Link to={to}>
+            <Link key={createKey(icon, idx)} to={to}>
               <div key={createKey(icon, idx)} onClick={handler}>
                 <Icon icon={icon} width={24} height={24} />
               </div>
