@@ -75,6 +75,16 @@ public class CommentService {
 
 	@Transactional
 	public void removeComment(Long reviewId, Long commentId, LoginUser loginUser) {
+		// 검증
+		loginUser.ifAnonymousThrowException();
+		validateReviewExists(reviewId);
+		User currentUser = userRepository.findById(loginUser.getId())
+			.orElseThrow(NotFoundUserException::new);
+		Comment comment = commentRepository.findById(commentId)
+			.orElseThrow(NotFoundCommentException::new);
+		validateModifiableUserOrThrow(comment, currentUser);
 
+		// 댓글 삭제
+		comment.delete();
 	}
 }

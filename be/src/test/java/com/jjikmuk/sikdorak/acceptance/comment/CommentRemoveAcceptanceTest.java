@@ -27,7 +27,7 @@ class CommentRemoveAcceptanceTest extends InitAcceptanceTest {
 		User kukim = testData.kukim;
 		Comment savedComment = testData.generator.comment(review, kukim, "안녕하세요");
 
-		ResponseCodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.COMMENT_DELETE_SUCCESS;
+		ResponseCodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.COMMENT_REMOVE_SUCCESS;
 
 		given(this.spec)
 			.filter(document(DEFAULT_RESTDOC_PATH,
