@@ -14,7 +14,6 @@ import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.Authority;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.auth.exception.NeedLoginException;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import org.junit.jupiter.api.DisplayName;
@@ -117,24 +116,6 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
 					new CommentModifyRequest("맛집이네요!")
 				))
 				.isInstanceOf(NotFoundCommentException.class);
-		}
-
-		@Test
-		@DisplayName("로그인 하지 않은 유저가 댓글 수정 요청을 한다면 예외를 발생시킨다")
-		void modify_comment_with_not_existing_user_will_failed() {
-			// given
-			Review review = testData.user1PublicReview;
-			User user1 = testData.forky;
-			Comment comment = testData.generator.comment(review, user1, "잘보고가요");
-
-			// then
-			assertThatThrownBy(
-				() -> commentService.modifyComment(review.getId(),
-					comment.getId(),
-					new LoginUser(Authority.ANONYMOUS),
-					new CommentModifyRequest("맛집이네요!")
-				))
-				.isInstanceOf(NeedLoginException.class);
 		}
 
 		@Test

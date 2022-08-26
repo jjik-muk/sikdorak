@@ -47,9 +47,7 @@ public class CommentService {
 	@Transactional
 	public void modifyComment(long reviewId, long commentId, LoginUser loginUser,
 		CommentModifyRequest modifyRequest) {
-
 		// 검증
-		loginUser.ifAnonymousThrowException();
 		validateReviewExists(reviewId);
 		User currentUser = userRepository.findById(loginUser.getId())
 			.orElseThrow(NotFoundUserException::new);
@@ -76,7 +74,6 @@ public class CommentService {
 	@Transactional
 	public void removeComment(Long reviewId, Long commentId, LoginUser loginUser) {
 		// 검증
-		loginUser.ifAnonymousThrowException();
 		validateReviewExists(reviewId);
 		User currentUser = userRepository.findById(loginUser.getId())
 			.orElseThrow(NotFoundUserException::new);

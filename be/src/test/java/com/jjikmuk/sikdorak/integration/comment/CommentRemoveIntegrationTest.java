@@ -13,7 +13,6 @@ import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.Authority;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.auth.exception.NeedLoginException;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import java.util.Optional;
@@ -108,23 +107,6 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 					createLoginUserWithUserId(forky.getId())
 				))
 				.isInstanceOf(NotFoundCommentException.class);
-		}
-
-		@Test
-		@DisplayName("로그인 하지 않은 유저가 댓글 삭제 요청을 한다면 예외를 발생시킨다")
-		void remove_comment_with_not_existing_user_will_failed() {
-			// given
-			Review review = testData.user1PublicReview;
-			User forky = testData.forky;
-			Comment comment = testData.generator.comment(review, forky, "잘보고가요");
-
-			// then
-			assertThatThrownBy(
-				() -> commentService.removeComment(review.getId(),
-					comment.getId(),
-					new LoginUser(Authority.ANONYMOUS)
-				))
-				.isInstanceOf(NeedLoginException.class);
 		}
 
 		@Test
