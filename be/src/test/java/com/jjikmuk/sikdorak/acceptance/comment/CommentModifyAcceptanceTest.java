@@ -26,8 +26,8 @@ class CommentModifyAcceptanceTest extends InitAcceptanceTest {
 	@DisplayName("댓글 수정 요청이 정상적인 경우라면 댓글 생성 후 정상 상태 코드를 반환한다")
 	void modify_comment_success() {
 		Review review = testData.user1PublicReview;
-		User user1 = testData.user1;
-		Comment savedComment = testData.saveAndGetComment(review, user1, "안녕하세요");
+		User kukim = testData.kukim;
+		Comment savedComment = testData.generator.comment(review, kukim, "안녕하세요");
 
 		CommentModifyRequest commentModifyRequest = new CommentModifyRequest(
 			"좋은 리뷰 감사합니다"
@@ -42,7 +42,7 @@ class CommentModifyAcceptanceTest extends InitAcceptanceTest {
 				COMMENT_MODIFY_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
-			.header("Authorization", testData.user1ValidAuthorizationHeader)
+			.header("Authorization", testData.generator.validAuthorizationHeader(kukim))
 			.body(commentModifyRequest)
 
 		.when()

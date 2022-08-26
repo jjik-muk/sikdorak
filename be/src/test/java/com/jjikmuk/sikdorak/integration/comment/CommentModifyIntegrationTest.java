@@ -43,8 +43,8 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
 		void create_comment_success() {
 			// given
 			Review review = testData.user1PublicReview;
-			User user1 = testData.user1;
-			Comment comment = testData.saveAndGetComment(review, user1, "잘보고가요");
+			User user1 = testData.forky;
+			Comment comment = testData.generator.comment(review, user1, "잘보고가요");
 			String updatedContent = "정말 맛있겠네요";
 
 			// when
@@ -67,8 +67,8 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
 		void modify_comment_with_deleted_review_will_failed() {
 			// given
 			Review review = testData.user1PublicReview;
-			User user1 = testData.user1;
-			Comment comment = testData.saveAndGetComment(review, user1, "잘보고가요");
+			User user1 = testData.forky;
+			Comment comment = testData.generator.comment(review, user1, "잘보고가요");
 
 			reviewRepository.delete(review);
 
@@ -87,7 +87,7 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
 		void modify_comment_with_not_existing_comment_will_failed() {
 			// given
 			Review review = testData.user1PublicReview;
-			User user1 = testData.user1;
+			User user1 = testData.forky;
 			long notExistingCommentId = Long.MIN_VALUE;
 
 			// then
@@ -105,8 +105,8 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
 		void modify_comment_with_deleted_comment_will_failed() {
 			// given
 			Review review = testData.user1PublicReview;
-			User user1 = testData.user1;
-			Comment comment = testData.saveAndGetComment(review, user1, "잘보고가요");
+			User user1 = testData.forky;
+			Comment comment = testData.generator.comment(review, user1, "잘보고가요");
 			commentRepository.delete(comment);
 
 			// then
@@ -124,8 +124,8 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
 		void modify_comment_with_not_existing_user_will_failed() {
 			// given
 			Review review = testData.user1PublicReview;
-			User user1 = testData.user1;
-			Comment comment = testData.saveAndGetComment(review, user1, "잘보고가요");
+			User user1 = testData.forky;
+			Comment comment = testData.generator.comment(review, user1, "잘보고가요");
 
 			// then
 			assertThatThrownBy(
@@ -142,14 +142,14 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
 		void modify_comment_with_not_autor_will_failed() {
 			// given
 			Review review = testData.user1PublicReview;
-			User user1 = testData.user1;
-			Comment comment = testData.saveAndGetComment(review, user1, "잘보고가요");
+			User user1 = testData.forky;
+			Comment comment = testData.generator.comment(review, user1, "잘보고가요");
 
 			// then
 			assertThatThrownBy(
 				() -> commentService.modifyComment(review.getId(),
 					comment.getId(),
-					createLoginUserWithUserId(testData.user2.getId()),
+					createLoginUserWithUserId(testData.kukim.getId()),
 					new CommentModifyRequest("맛집이네요!")
 				))
 				.isInstanceOf(UnauthorizedUserException.class);
