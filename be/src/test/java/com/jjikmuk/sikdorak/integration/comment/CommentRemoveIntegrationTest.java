@@ -44,11 +44,13 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 			Review review = testData.user1PublicReview;
 			User forky = testData.forky;
 			Comment comment = testData.generator.comment(review, forky, "잘보고가요");
+			LoginUser forkyLoginUser = createLoginUserWithUserId(forky.getId());
 
 			// when
 			commentService.removeComment(review.getId(),
 				comment.getId(),
-				createLoginUserWithUserId(forky.getId()));
+				forkyLoginUser
+				);
 
 			// then
 			Optional<Comment> findResult = commentRepository.findById(comment.getId());
@@ -65,11 +67,15 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 
 			reviewRepository.delete(review);
 
+			long reviewId = review.getId();
+			long commentId = comment.getId();
+			LoginUser forkyLoginUser = createLoginUserWithUserId(forky.getId());
+
 			// then
 			assertThatThrownBy(
-				() -> commentService.removeComment(review.getId(),
-					comment.getId(),
-					createLoginUserWithUserId(forky.getId())
+				() -> commentService.removeComment(reviewId,
+					commentId,
+					forkyLoginUser
 				))
 				.isInstanceOf(NotFoundReviewException.class);
 		}
@@ -78,15 +84,16 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 		@DisplayName("존재하지 않는 댓글에 대해 삭제 요청이 주어진다면 예외를 발생시킨다")
 		void remove_comment_with_not_existing_comment_will_failed() {
 			// given
-			Review review = testData.user1PublicReview;
-			User forky = testData.forky;
+			long reviewId = testData.user1PublicReview.getId();
 			long notExistingCommentId = Long.MIN_VALUE;
+			long forkyId = testData.forky.getId();
+			LoginUser forkyLoginUser = createLoginUserWithUserId(forkyId);
 
 			// then
 			assertThatThrownBy(
-				() -> commentService.removeComment(review.getId(),
+				() -> commentService.removeComment(reviewId,
 					notExistingCommentId,
-					createLoginUserWithUserId(forky.getId())
+					forkyLoginUser
 				))
 				.isInstanceOf(NotFoundCommentException.class);
 		}
@@ -100,11 +107,15 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 			Comment comment = testData.generator.comment(review, forky, "잘보고가요");
 			commentRepository.delete(comment);
 
+			long reviewId = review.getId();
+			long commentId = comment.getId();
+			LoginUser forkyLoginUser = createLoginUserWithUserId(forky.getId());
+
 			// then
 			assertThatThrownBy(
-				() -> commentService.removeComment(review.getId(),
-					comment.getId(),
-					createLoginUserWithUserId(forky.getId())
+				() -> commentService.removeComment(reviewId,
+					commentId,
+					forkyLoginUser
 				))
 				.isInstanceOf(NotFoundCommentException.class);
 		}
@@ -117,11 +128,15 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 			User forky = testData.forky;
 			Comment comment = testData.generator.comment(review, forky, "잘보고가요");
 
+			long reviewId = review.getId();
+			long commentId = comment.getId();
+			LoginUser kukimLoginUser = createLoginUserWithUserId(testData.kukim.getId());
+
 			// then
 			assertThatThrownBy(
-				() -> commentService.removeComment(review.getId(),
-					comment.getId(),
-					createLoginUserWithUserId(testData.kukim.getId())
+				() -> commentService.removeComment(reviewId,
+					commentId,
+					kukimLoginUser
 				))
 				.isInstanceOf(UnauthorizedUserException.class);
 		}
