@@ -1,9 +1,10 @@
 name: CD - BE
 
 on:
-  push:
-    branches:
-      - BE-deploy
+  pull_request:
+    branches: [dev]
+    paths: ["be/**"]
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
