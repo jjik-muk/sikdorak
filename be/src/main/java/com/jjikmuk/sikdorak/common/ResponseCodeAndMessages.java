@@ -31,6 +31,7 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
     // Comment
     COMMENT_CREATE_SUCCESS("T-C001", "댓글 작성에 성공했습니다."),
     COMMENT_MODIFY_SUCCESS("T-C002", "댓글 수정에 성공했습니다."),
+    COMMENT_REMOVE_SUCCESS("T-C003", "댓글 삭제에 성공했습니다."),
 
     // ETC
     SYSTEMINFO_SEARCH_API_DOCS_INFO("T-S001", "API 문서 코드/메세지 검색 성공했습니다.");

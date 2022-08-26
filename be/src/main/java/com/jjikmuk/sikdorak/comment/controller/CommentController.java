@@ -1,15 +1,19 @@
 package com.jjikmuk.sikdorak.comment.controller;
 
+import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.COMMENT_CREATE_SUCCESS;
+import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.COMMENT_MODIFY_SUCCESS;
+import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.COMMENT_REMOVE_SUCCESS;
+
 import com.jjikmuk.sikdorak.comment.controller.request.CommentCreateRequest;
 import com.jjikmuk.sikdorak.comment.controller.request.CommentModifyRequest;
 import com.jjikmuk.sikdorak.comment.service.CommentService;
-import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.aop.UserOnly;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,8 +37,7 @@ public class CommentController {
 	) {
 		commentService.createComment(reviewId, loginUser, commentCreateRequest);
 
-		return new CommonResponseEntity<>(ResponseCodeAndMessages.COMMENT_CREATE_SUCCESS,
-			HttpStatus.CREATED);
+		return new CommonResponseEntity<>(COMMENT_CREATE_SUCCESS, HttpStatus.CREATED);
 	}
 
 	@UserOnly
@@ -47,7 +50,18 @@ public class CommentController {
 	) {
 		commentService.modifyComment(reviewId, commentId, loginUser, commentModifyRequest);
 
-		return new CommonResponseEntity<>(ResponseCodeAndMessages.COMMENT_MODIFY_SUCCESS,
-			HttpStatus.OK);
+		return new CommonResponseEntity<>(COMMENT_MODIFY_SUCCESS, HttpStatus.OK);
+	}
+
+	@UserOnly
+	@DeleteMapping("/{commentId}")
+	public CommonResponseEntity<Void> removeComment(
+		@PathVariable long reviewId,
+		@PathVariable long commentId,
+		@AuthenticatedUser LoginUser loginUser
+	) {
+		commentService.removeComment(reviewId, commentId, loginUser);
+
+		return new CommonResponseEntity<>(COMMENT_REMOVE_SUCCESS, HttpStatus.OK);
 	}
 }

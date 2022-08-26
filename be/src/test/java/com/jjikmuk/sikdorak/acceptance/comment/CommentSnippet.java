@@ -35,4 +35,12 @@ interface CommentSnippet {
 	);
 
 	Snippet COMMENT_MODIFY_RESPONSE_SNIPPET = createResponseSnippetWithFields(responseFieldsOfCommonNonData());
+
+	Snippet COMMENT_REMOVE_PATH_VARIABLE_SNIPPET = pathParameters(
+		parameterWithName("reviewId").description("리뷰 아이디"),
+		parameterWithName("commentId").description("댓글 아이디")
+	);
+
+	Snippet COMMENT_REMOVE_RESPONSE_SNIPPET = createResponseSnippetWithFields(responseFieldsOfCommonNonData());
+
 }
