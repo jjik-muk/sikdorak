@@ -1,17 +1,19 @@
 buildscript {
-	ext {
-		springCloudVersion = '2021.0.3'
-	}
+    ext {
+        springCloudVersion = '2021.0.3'
+    }
 }
 
 plugins {
-	id 'org.springframework.boot' version '2.7.1'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'org.asciidoctor.jvm.convert' version '3.3.2'
-	id "org.sonarqube" version "3.4.0.2513"
-	id "jacoco"
-	id 'java'
-	id 'com.google.cloud.tools.jib' version '3.2.1'
+    id 'org.springframework.boot' version '2.7.1'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
+    id "org.sonarqube" version "3.4.0.2513"
+    id "jacoco"
+    id 'java'
+    id 'com.google.cloud.tools.jib' version '3.2.1'
+    id 'checkstyle'
+    id 'pmd'
 }
 
 group = 'com.jjikmuk'
@@ -19,81 +21,67 @@ version = '0.0.1'
 sourceCompatibility = '17'
 
 dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 configurations {
-	asciidoctorExtensions // dependencies 에서 적용한 것 추가
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    asciidoctorExtensions // dependencies 에서 적용한 것 추가
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 jar {
-	enabled = false
+    enabled = false
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
-}
-
-sonarqube {
-	properties {
-		property "sonar.projectKey", "jjik-muk_sikdorak"
-		property "sonar.organization", "jjik-muk"
-		property "sonar.host.url", "https://sonarcloud.io"
-	}
-}
-
-jacocoTestReport {
-	reports {
-		xml.enabled true
-	}
+    mavenCentral()
 }
 
 dependencies {
-	// Web
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // Web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	// Database
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'mysql:mysql-connector-java'
+    // Database
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'mysql:mysql-connector-java'
 
-	// Dev
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+    // Dev
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
-	// Test
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.rest-assured:rest-assured'
+    // Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.rest-assured:rest-assured'
 
-	// API Docs
-	testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
-	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    // API Docs
+    testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
+    asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
-	// TestContainers
-	testImplementation "org.testcontainers:junit-jupiter:1.17.2"
-	testImplementation "org.testcontainers:mysql:1.17.2"
+    // TestContainers
+    testImplementation "org.testcontainers:junit-jupiter:1.17.2"
+    testImplementation "org.testcontainers:mysql:1.17.2"
 
-	// Feign
-	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    // Feign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
-	//Jwt
-	compileOnly 'io.jsonwebtoken:jjwt-api:0.11.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5','io.jsonwebtoken:jjwt-jackson:0.11.5'
+    //Jwt
+    compileOnly 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5', 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-	// WireMock
-	testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
+    // WireMock
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
 
 }
 
@@ -107,66 +95,107 @@ test {
 processResources.dependsOn('copyGitSubmodule')
 
 task copyGitSubmodule(type: Copy) {
-	from './config'
-	into './src/main/resources'
-	include '*.yml'
-	include 'db/**'
+    from './config'
+    into './src/main/resources'
+    include '*.yml'
+    include 'db/**'
 }
 
 //-- API 문서 관련 설정 -------------------------------------------------------
 ext {
-	snippetsDir = file("${project.buildDir}/generated-snippets")
+    snippetsDir = file("${project.buildDir}/generated-snippets")
 }
 
 asciidoctor {
-	dependsOn test
-	configurations 'asciidoctorExtensions'
-	inputs.dir snippetsDir
+    dependsOn test
+    configurations 'asciidoctorExtensions'
+    inputs.dir snippetsDir
 
-	sources {
-		include '**/index.adoc'
-	}
+    sources {
+        include '**/index.adoc'
+    }
 
-	baseDirFollowsSourceFile()
+    baseDirFollowsSourceFile()
 }
 
 asciidoctor.doFirst {
-	delete file("${project.rootDir}/src/main/resources/static/docs")
+    delete file("${project.rootDir}/src/main/resources/static/docs")
 }
 
 task copyDocument(type: Copy) {
-	dependsOn asciidoctor
+    dependsOn asciidoctor
 
-	from "${project.buildDir}/docs/asciidoc"
-	into "${project.rootDir}/src/main/resources/static/docs"
+    from "${project.buildDir}/docs/asciidoc"
+    into "${project.rootDir}/src/main/resources/static/docs"
 }
 
 bootJar {
-	dependsOn copyDocument
-	copy {
-		from "${project.buildDir}/docs/asciidoc"
-		into "${project.buildDir}/resources/main/static/docs"
-	}
+    dependsOn copyDocument
+    copy {
+        from "${project.buildDir}/docs/asciidoc"
+        into "${project.buildDir}/resources/main/static/docs"
+    }
 }
 //-- jib 관련 설정 -------------------------------------------------------
 
 jib {
-	from {
-		image = "eclipse-temurin:17-jre" // java 17
-	}
+    from {
+        image = "eclipse-temurin:17-jre" // java 17
+    }
 
-	to {
-		image = "registry.heroku.com/sikdorak-test/web" // docker image push into heroku container registry
-		tags = ["latest"]
+    to {
+        image = "registry.heroku.com/sikdorak-test/web"
+        // docker image push into heroku container registry
+        tags = ["latest"]
 
-		auth {
-			username = 'heroku whoami'.execute().text.trim()
-			password = 'heroku auth:token'.execute().text.trim()
-		}
-	}
-	container {
-		mainClass = 'com.jjikmuk.sikdorak.SikdorakApplication' // entry point java class
-		jvmFlags = ["-Dspring.profiles.active=dev", "-Xms128m", "-Xmx128m"] // setup JVM Options
-	}
+        auth {
+            username = 'heroku whoami'.execute().text.trim()
+            password = 'heroku auth:token'.execute().text.trim()
+        }
+    }
+    container {
+        mainClass = 'com.jjikmuk.sikdorak.SikdorakApplication' // entry point java class
+        jvmFlags = ["-Dspring.profiles.active=dev", "-Xms128m", "-Xmx128m"] // setup JVM Options
+    }
 }
 
+//-- 코드 분석 관련 task ------------------------------------------------------
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "jjik-muk_sikdorak"
+        property "sonar.organization", "jjik-muk"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
+checkstyle {
+    toolVersion = '10.3.2'
+    ignoreFailures = true
+    showViolations = false
+    checkstyleTest.enabled = false
+    configFile = file("${project.rootDir}/config-static-analysis/checkstyle/custom-google-checkstyle.xml")
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+pmd {
+    toolVersion = "6.48.0"
+//    consoleOutput = true
+    ignoreFailures = true
+    pmdTest.enabled = false
+    ruleSetFiles = files("config-static-analysis/pmd/custom-pmd-rules.xml")
+    ruleSets = []
+//    ruleSets = ["category/java/bestpractices.xml", "category/java/errorprone.xml"]
+}

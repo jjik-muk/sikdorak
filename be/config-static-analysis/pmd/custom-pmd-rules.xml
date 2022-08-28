@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<ruleset name="Custom ruleset"
+  xmlns="http://pmd.sourceforge.netruleset/2.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://pmd.sourceforge.netruleset/2.0.0 http://pmd.sourceforge.netruleset_2_0_0.xsd">
+  <description>
+    식도락 백엔드 팀 커스텀 PMD Rules
+  </description>
+
+  <rule ref="category/java/bestpractices.xml">
+    <exclude name="ConstantsInInterface"/>
+    <exclude name="JUnitTestsShouldIncludeAssert"/>
+    <exclude name="JUnitTestContainsTooManyAsserts"/>
+
+  </rule>
+
+</ruleset>
+
