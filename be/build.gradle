@@ -98,7 +98,9 @@ dependencies {
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
+
+    finalizedBy 'jacocoTestReport' // test -> jacocoTestReport
 }
 
 //-- Git submodule 관련 task ------------------------------------------------------
