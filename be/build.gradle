@@ -166,6 +166,8 @@ sonarqube {
         property "sonar.projectKey", "jjik-muk_sikdorak"
         property "sonar.organization", "jjik-muk"
         property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.java.checkstyle.reportPaths", "${project.buildDir}/reports/checkstyle/main.xml"
+        property "sonar.java.pmd.reportPaths", "${project.buildDir}/reports/pmd/main.xml"
     }
 }
 
