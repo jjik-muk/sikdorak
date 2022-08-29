@@ -39,7 +39,7 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 
 		@Test
 		@DisplayName("정상적인 댓글 삭제 요청이 주어진다면, 댓글이 삭제된다.")
-		void create_comment_success() {
+		void remove_comment_success() {
 			// given
 			Review review = testData.user1PublicReview;
 			User forky = testData.forky;
