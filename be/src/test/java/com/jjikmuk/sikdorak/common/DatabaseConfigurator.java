@@ -72,6 +72,7 @@ public class DatabaseConfigurator implements InitializingBean {
         initFollowingUserData();
         initUserAuthorizationData();
         initReviewData();
+        postReviews();
     }
 
     public void clear() {
@@ -247,5 +248,19 @@ public class DatabaseConfigurator implements InitializingBean {
 //            LocalDate.of(2022, 1, 1),
 //            List.of("tag1", "tag2"),
 //            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
+    }
+
+    private void postReviews() {
+        for (int i = 0; i < 20; i++) {
+            reviewRepository.save(new Review(this.forky.getId(),
+                this.store.getId(),
+                "전체 공개된 리뷰 게시물 " + i,
+                3.f,
+                "public",
+                LocalDate.of(2022, 1, 1),
+                List.of("tag1", "tag2"),
+                List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
+
+        }
     }
 }
