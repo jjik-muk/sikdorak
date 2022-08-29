@@ -5,6 +5,7 @@ import com.jjikmuk.sikdorak.common.aop.UserOnly;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
+import com.jjikmuk.sikdorak.review.controller.request.ReviewPagingRequest;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -42,12 +44,18 @@ public class ReviewController {
 	}
 
 	@GetMapping
-	public CommonResponseEntity<List<ReviewDetailResponse>> getReviewsFeed(@AuthenticatedUser LoginUser loginUser) {
+	public CommonResponseEntity<List<ReviewDetailResponse>> getReviewsFeed(@AuthenticatedUser LoginUser loginUser,
+		@RequestParam long targetId,
+		@RequestParam int size) {
 
+		ReviewPagingRequest reviewPagingRequest = new ReviewPagingRequest(targetId, size);
+
+		List<ReviewDetailResponse> recommendedReviews = reviewService.getRecommendedReviews(
+			loginUser, reviewPagingRequest);
 
 		return new CommonResponseEntity<>(
 			ResponseCodeAndMessages.REVIEWS_FEED_SUCCESS,
-			null,
+			recommendedReviews,
 			HttpStatus.OK
 		);
 	}
