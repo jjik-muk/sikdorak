@@ -2,9 +2,13 @@ package com.jjikmuk.sikdorak.comment.service;
 
 import com.jjikmuk.sikdorak.comment.controller.request.CommentCreateRequest;
 import com.jjikmuk.sikdorak.comment.controller.request.CommentModifyRequest;
+import com.jjikmuk.sikdorak.comment.controller.response.CommentSearchPagingResponse;
+import com.jjikmuk.sikdorak.comment.controller.response.CommentSearchResponse;
 import com.jjikmuk.sikdorak.comment.domain.Comment;
 import com.jjikmuk.sikdorak.comment.exception.NotFoundCommentException;
 import com.jjikmuk.sikdorak.comment.repository.CommentRepository;
+import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
+import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
@@ -13,7 +17,12 @@ import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -83,5 +92,71 @@ public class CommentService {
 
 		// 댓글 삭제
 		comment.delete();
+	}
+
+	public CommentSearchPagingResponse searchCommentsByReviewIdWithPaging(long reviewId,
+		CursorPageRequest pagingRequest) {
+		// 검증
+		validateReviewExists(reviewId);
+
+		// 페이지 가져오기
+		List<Comment> comments = getCommentsByReviewIdWithPaging(reviewId, pagingRequest);
+
+		// 사용자 정보 가져오기
+		Map<Long, User> usersMap = getUsersMap(getCommentUserIds(comments));
+
+		// 응답 객체 반환
+		long prev = getFirstCommentId(comments);
+		long next = getLastCommentId(comments);
+
+		return new CommentSearchPagingResponse(
+			getCommentSearchResponses(comments, usersMap),
+			new CursorPageResponse(pagingRequest.getSize(), prev, next)
+		);
+	}
+
+	private List<Comment> getCommentsByReviewIdWithPaging(long reviewId,
+		CursorPageRequest pagingRequest) {
+		Pageable size = Pageable.ofSize(pagingRequest.getSize());
+		if (pagingRequest.isAfter()) {
+			return commentRepository.findCommentsByReviewIdWithPagingAfter(reviewId,
+				pagingRequest.getAfter(), size);
+		}
+
+		return commentRepository.findCommentsByReviewIdWithPagingBefore(reviewId,
+			pagingRequest.getAfter(), size);
+	}
+
+	private Map<Long, User> getUsersMap(List<Long> commentUserIds) {
+		return userRepository.findAllById(commentUserIds)
+			.stream()
+			.collect(Collectors.toMap(User::getId, Function.identity()));
+	}
+
+	private static List<Long> getCommentUserIds(List<Comment> comments) {
+		return comments.stream()
+			.map(Comment::getUserId)
+			.toList();
+	}
+
+	private static List<CommentSearchResponse> getCommentSearchResponses(List<Comment> comments,
+		Map<Long, User> usersMap) {
+		return comments.stream()
+			.map(comment -> CommentSearchResponse.of(comment, usersMap.get(comment.getUserId())))
+			.toList();
+	}
+
+	private long getFirstCommentId(List<Comment> comments) {
+		return comments.stream()
+			.findFirst()
+			.map(Comment::getId)
+			.orElse(0L);
+	}
+
+	private long getLastCommentId(List<Comment> comments) {
+		return comments.stream()
+			.reduce((first, second) -> second)
+			.map(Comment::getId)
+			.orElse(0L);
 	}
 }
