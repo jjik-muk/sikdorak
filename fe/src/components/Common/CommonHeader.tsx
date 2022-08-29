@@ -8,7 +8,7 @@ import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createKey } from 'utils/utils';
-import { ButtonWrap, IconWrap, Input, SearchFormWrap, Header, Wrap } from './CommonHeader.styled';
+import { ButtonWrap, IconWrap, Input, SearchFormWrap, Header, Wrap, ProfileImageWrap } from './CommonHeader.styled';
 
 function CommonHeader() {
   const [isReviewWrite, setIsReviewWrite] = useState(false);
@@ -17,14 +17,13 @@ function CommonHeader() {
   const userDetailModalRef = useRef(null);
   const [userInfo] = useUserInfo();
   const { profileImageUrl } = userInfo;
-  console.log('profileImageUrl', profileImageUrl);
 
   const iconInfo: IconInfoProps[] = [
     { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
     { icon: 'Map', to: '/map' },
     { icon: 'PostBtn', handler: handleReviewWrite, to: '' },
-    { icon: 'Alarm', to: '' },
-    { icon: 'Profile', to: '/userDetail' },
+    { icon: 'Alarm', to: `${profileImageUrl}` },
+    // { icon: 'Profile', to: '/userDetail' },
   ];
 
   useOutsideClick(reviewWriteModalRef, handleReviewWrite);
@@ -43,12 +42,17 @@ function CommonHeader() {
         <ButtonWrap>
           {/* TODO: 로그인하면 프로필 사진으로 Icon 대체 */}
           {iconInfo.map(({ icon, handler, to }, idx) => (
-            <Link to={to}>
-              <div key={createKey(icon, idx)} onClick={handler}>
+            <Link key={createKey(icon, idx)} to={to}>
+              <div onClick={handler}>
                 <Icon icon={icon} width={24} height={24} />
               </div>
             </Link>
           ))}
+          <Link to="/userDetail">
+            <ProfileImageWrap>
+              <img src={profileImageUrl} alt="profile" width={24} height={24} />
+            </ProfileImageWrap>
+          </Link>
         </ButtonWrap>
         {isReviewWrite && (
           <Portal selector="#portal" ref={reviewWriteModalRef}>
