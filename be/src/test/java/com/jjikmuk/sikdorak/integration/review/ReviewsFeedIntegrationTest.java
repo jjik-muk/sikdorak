@@ -59,4 +59,21 @@ class ReviewsFeedIntegrationTest extends InitIntegrationTest {
 
         assertThat(recommendedReviews).hasSize(0);
     }
+
+    @Test
+    @DisplayName("리뷰 피드 목록 조회 시 요청한 페이지부터 요청한 사이즈 개수의 데이터를 반환한다.")
+    void get_recommended_reviews_with_page_and_size() {
+
+        long targetId = 11;
+        int size = 7;
+
+        LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+        ReviewPagingRequest pagingRequest = new ReviewPagingRequest(targetId, size);
+
+        List<ReviewDetailResponse> recommendedReviews = reviewService.getRecommendedReviews(
+            loginUser, pagingRequest);
+
+        assertThat(recommendedReviews).hasSize(size);
+        assertThat(recommendedReviews.get(size-1).reviewId()).isEqualTo(targetId);
+    }
 }

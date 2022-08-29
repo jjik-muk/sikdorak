@@ -20,6 +20,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
 	Integer countByUserId(Long userId);
 
-	@Query("select r from Review r where r.reviewVisibility = :reviewVisibility and r.id > :targetId order by r.createdAt desc")
+	@Query("select r from Review r where r.reviewVisibility = :reviewVisibility and r.id >= :targetId")
     List<Review> findRecommendedReviews(@Param("reviewVisibility") ReviewVisibility reviewVisibility, @Param("targetId") long targetId ,Pageable pageable);
 }

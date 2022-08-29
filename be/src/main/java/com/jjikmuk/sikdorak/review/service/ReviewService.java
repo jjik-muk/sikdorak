@@ -17,6 +17,7 @@ import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
+import java.util.Comparator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -77,6 +78,7 @@ public class ReviewService {
 					.orElseThrow(NotFoundReviewException::new);
 				return ReviewDetailResponse.of(review, store, reviewOwner);
 			})
+			.sorted(Comparator.comparing((ReviewDetailResponse::createdAt)).reversed())
 			.toList();
 	}
 
