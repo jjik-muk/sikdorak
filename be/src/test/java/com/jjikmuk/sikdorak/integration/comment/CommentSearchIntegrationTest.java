@@ -12,8 +12,6 @@ import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.domain.ReviewVisibility;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
-import com.jjikmuk.sikdorak.user.auth.controller.Authority;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserSimpleProfileResponse;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
@@ -49,7 +47,7 @@ class CommentSearchIntegrationTest extends InitIntegrationTest {
 			// when
 			CommentSearchPagingResponse response = commentService.searchCommentsByReviewIdWithPaging(
 				review.getId(),
-				createLoginUserWithUserId(forky.getId()),
+				testData.generator.createLoginUserWithUserId(forky.getId()),
 				FIRST_PAGE_REQUEST
 			);
 
@@ -81,7 +79,7 @@ class CommentSearchIntegrationTest extends InitIntegrationTest {
 			// then
 			assertThatThrownBy(
 				() -> commentService.searchCommentsByReviewIdWithPaging(review.getId(),
-					createLoginUserWithUserId(testData.kukim.getId()),
+					testData.generator.createLoginUserWithUserId(testData.kukim.getId()),
 					FIRST_PAGE_REQUEST))
 				.isInstanceOf(NotFoundReviewException.class);
 		}
@@ -101,13 +99,9 @@ class CommentSearchIntegrationTest extends InitIntegrationTest {
 			assertThatThrownBy(
 				() -> commentService.searchCommentsByReviewIdWithPaging(
 					review.getId(),
-					createLoginUserWithUserId(forky.getId()),
+					testData.generator.createLoginUserWithUserId(forky.getId()),
 					FIRST_PAGE_REQUEST))
 				.isInstanceOf(UnauthorizedUserException.class);
 		}
-	}
-
-	private static LoginUser createLoginUserWithUserId(long userId) {
-		return new LoginUser(userId, Authority.USER);
 	}
 }

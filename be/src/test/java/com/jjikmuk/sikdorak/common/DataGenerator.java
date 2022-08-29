@@ -5,6 +5,8 @@ import com.jjikmuk.sikdorak.comment.repository.CommentRepository;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.domain.ReviewVisibility;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
+import com.jjikmuk.sikdorak.user.auth.controller.Authority;
+import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import java.time.LocalDate;
@@ -59,5 +61,9 @@ public class DataGenerator {
 			LocalDate.of(2022, 1, 1),
 			List.of("tag1", "tag2"),
 			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
+	}
+
+	public LoginUser createLoginUserWithUserId(long userId) {
+		return new LoginUser(userId, Authority.USER);
 	}
 }
