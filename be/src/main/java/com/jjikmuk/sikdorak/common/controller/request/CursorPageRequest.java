@@ -12,20 +12,15 @@ import lombok.ToString;
 @ToString
 public class CursorPageRequest {
 
-	private static final long DEFAULT_CURSOR = 1;
-	private static final int DEFAULT_SIZE = 10;
-	private static final boolean DEFAULT_IS_AFTER = true;
-
+	@NotNull
+	@Min(0)
+	@Max(Long.MAX_VALUE)
+	private Long before;
 
 	@NotNull
 	@Min(0)
 	@Max(Long.MAX_VALUE)
-	private long before;
-
-	@NotNull
-	@Min(0)
-	@Max(Long.MAX_VALUE)
-	private long after;
+	private Long after;
 
 	@NotNull
 	@Min(10)
@@ -34,10 +29,14 @@ public class CursorPageRequest {
 
 	private boolean isAfter;
 
-	public CursorPageRequest(long before, long after, int size, boolean isAfter) {
+	public CursorPageRequest(Long before, Long after, int size, boolean isAfter) {
 		this.before = before;
 		this.after = after;
 		this.size = size;
 		this.isAfter = isAfter;
+	}
+
+	public boolean isAfter() {
+		return isAfter;
 	}
 }
