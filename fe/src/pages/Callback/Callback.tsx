@@ -1,8 +1,9 @@
 import { DOMAIN } from 'constants/dummyData';
 import { STATUS_CODE } from 'constants/statusCode';
 import Loading from 'common/Loading/Loading';
+import Login from 'pages/Login/Login';
 import { useEffect, useState } from 'react';
-import { Navigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 function Callback() {
   const [searchParams] = useSearchParams();
@@ -19,15 +20,12 @@ function Callback() {
       const resJson = await res.json();
       const { code, data } = resJson;
 
-      if (code === STATUS_CODE.SUCCESS_LOGIN) {
-        setAccessToken(data.accessToken);
-        localStorage.setItem('accessToken', data.accessToken);
-        return;
-      }
       if (code === STATUS_CODE.FAIL_COMMUNICATION_WITH_OAUTH_SERVER) {
         // TODO: 내부 에러 처리 시도 및 유저에게 알려주기
         throw new Error('OAuth 서버와의 통신이 원할하지 않습니다.');
       }
+      setAccessToken(data.accessToken);
+      localStorage.setItem('accessToken', data.accessToken);
     }
   }, []);
 
@@ -35,7 +33,7 @@ function Callback() {
     return <Loading />;
   }
 
-  return <Navigate to="/reviewList" />;
+  return <Login />;
 }
 
 export default Callback;
