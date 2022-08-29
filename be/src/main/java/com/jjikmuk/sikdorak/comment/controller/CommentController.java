@@ -73,11 +73,12 @@ public class CommentController {
 	@GetMapping
 	public CommonResponseEntity<CommentSearchPagingResponse> searchComment(
 		@PathVariable long reviewId,
+		@AuthenticatedUser LoginUser loginUser,
 		@CursorPageable CursorPageRequest pagingRequest
 	) {
 		return new CommonResponseEntity<>(
 			COMMENT_SEARCH_SUCCESS,
-			commentService.searchCommentsByReviewIdWithPaging(reviewId, pagingRequest),
+			commentService.searchCommentsByReviewIdWithPaging(reviewId, loginUser, pagingRequest),
 			HttpStatus.OK);
 	}
 }

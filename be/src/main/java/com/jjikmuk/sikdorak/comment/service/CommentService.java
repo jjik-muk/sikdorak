@@ -13,6 +13,7 @@ import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
+import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
@@ -94,10 +95,14 @@ public class CommentService {
 		comment.delete();
 	}
 
+	@Transactional(readOnly = true)
 	public CommentSearchPagingResponse searchCommentsByReviewIdWithPaging(long reviewId,
+		LoginUser loginUser,
 		CursorPageRequest pagingRequest) {
 		// 검증
-		validateReviewExists(reviewId);
+		Review review = reviewRepository.findById(reviewId)
+			.orElseThrow(NotFoundReviewException::new);
+		validateReviewReadable(review, loginUser);
 
 		// 페이지 가져오기
 		List<Comment> comments = getCommentsByReviewIdWithPaging(reviewId, pagingRequest);
@@ -113,6 +118,17 @@ public class CommentService {
 			getCommentSearchResponses(comments, usersMap),
 			new CursorPageResponse(pagingRequest.getSize(), prev, next)
 		);
+	}
+
+	private void validateReviewReadable(Review review, LoginUser loginUser) {
+		User reviewAuthor = userRepository.findById(review.getUserId())
+			.orElseThrow(NotFoundUserException::new);
+
+		RelationType relationType = reviewAuthor.relationTypeTo(loginUser);
+
+		if (!review.isReadable(relationType)) {
+			throw new UnauthorizedUserException();
+		}
 	}
 
 	private List<Comment> getCommentsByReviewIdWithPaging(long reviewId,
