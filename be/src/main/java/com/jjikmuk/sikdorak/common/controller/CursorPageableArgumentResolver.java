@@ -27,7 +27,7 @@ public class CursorPageableArgumentResolver implements HandlerMethodArgumentReso
 		NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
 
 		// CursorPaging 어노테이션 붙어있는지 확인
-		validateParameterType(parameter);
+		validateParameter(parameter);
 
 		String beforeParam = webRequest.getParameter(BEFORE_PARAMETER);
 		String afterParam = webRequest.getParameter(AFTER_PARAMETER);
@@ -44,8 +44,8 @@ public class CursorPageableArgumentResolver implements HandlerMethodArgumentReso
 		);
 	}
 
-	private void validateParameterType(MethodParameter parameter) {
-		if (parameter.getParameterType().equals(CursorPageable.class)) {
+	private void validateParameter(MethodParameter parameter) {
+		if (!parameter.getParameterType().equals(CursorPageRequest.class)) {
 			 throw new UnsupportedParameterTypeException();
 		}
 	}
@@ -59,13 +59,13 @@ public class CursorPageableArgumentResolver implements HandlerMethodArgumentReso
 	private int getSizeOrDefault(NativeWebRequest webRequest, CursorPageable cursorPageable) {
 		String sizeParam = webRequest.getParameter(SIZE_PARAMETER);
 
-		if (sizeParam == null) {
-			return cursorPageable.sizeDefaultValue();
-		}
-
 		try {
+			if (sizeParam == null) {
+				return cursorPageable.sizeDefaultValue();
+			}
+
 			return Integer.parseInt(sizeParam);
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | NullPointerException e) {
 			throw new InvalidPageParameterException(e);
 		}
 	}
