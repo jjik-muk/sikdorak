@@ -23,8 +23,7 @@ public class CursorPageRequest {
 	private Long after;
 
 	@NotNull
-	@Min(10)
-	@Max(20)
+	@Min(1)
 	private int size;
 
 	private boolean isAfter;
