@@ -1,7 +1,6 @@
 package com.jjikmuk.sikdorak.review.repository;
 
 import com.jjikmuk.sikdorak.review.domain.Review;
-import com.jjikmuk.sikdorak.review.domain.ReviewVisibility;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +19,16 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
 	Integer countByUserId(Long userId);
 
-	@Query("select r from Review r where r.reviewVisibility = :reviewVisibility and r.id >= :targetId")
-    List<Review> findRecommendedReviews(@Param("reviewVisibility") ReviewVisibility reviewVisibility, @Param("targetId") long targetId ,Pageable pageable);
+	@Query("select r from Review r where r.reviewVisibility = 'PUBLIC' and r.id < :targetId order by r.createdAt desc")
+    List<Review> findPublicRecommendedReviewsInRecentOrder(
+		@Param("targetId") long targetId ,
+		Pageable pageable);
+
+	@Query("select r "
+		+ "from Review r "
+		+ "where r.reviewVisibility = 'PROTECTED' or r.reviewVisibility = 'PUBLIC' and r.id < :targetId "
+		+ "order by field(r.reviewVisibility, 'PROTECTED','PUBLIC'),r.createdAt desc")
+	List<Review> findPublicAndProtectedRecommendedReviewsInRecentOrder(
+		@Param("targetId") long targetId ,
+		Pageable pageable);
 }

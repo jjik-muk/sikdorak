@@ -37,18 +37,10 @@ public class DatabaseConfigurator implements InitializingBean {
     @Autowired
     private ReviewRepository reviewRepository;
 
-//    @Autowired
-//    private UserDataConfigurator userDataConfigurator;
-
     @Autowired
     public DataGenerator generator;
 
     public Store store;
-//    public TUser kukim;
-//    public TUser jay;
-//    public TUser forky;
-//    public TUser hoi;
-//    public TUser rumka;
     public User kukim;
     public User jay;
     public User forky;
@@ -138,22 +130,6 @@ public class DatabaseConfigurator implements InitializingBean {
         this.rumka = userRepository.save(
             new User(5000000L, "럼카", "https://s3.ap-northeast-2.amazonaws.com/user/rumka.jpg",
                 "rumka@gmail.com"));
-
-//        this.kukim = userDataConfigurator.createTUser(1000000L, "쿠킴",
-//            "https://s3.ap-northeast-2.amazonaws.com/user/kukim.jpg",
-//            "kukim@gmail.com");
-//        this.jay = userDataConfigurator.createTUser(2000000L, "제이",
-//            "https://s3.ap-northeast-2.amazonaws.com/user/jay.jpg",
-//            "jay@gmail.com");
-//        this.forky = userDataConfigurator.createTUser(3000000L, "포키",
-//            "https://s3.ap-northeast-2.amazonaws.com/user/forky.jpg",
-//            "forky@gmail.com");
-//        this.hoi = userDataConfigurator.createTUser(4000000L, "호이",
-//            "https://s3.ap-northeast-2.amazonaws.com/user/hoi.jpg",
-//            "hoi@gmail.com");
-//        this.rumka = userDataConfigurator.createTUser(5000000L, "럼카",
-//            "https://s3.ap-northeast-2.amazonaws.com/user/rumka.jpg",
-//            "rumka@gmail.com");
     }
 
     private void initFollowingUserData() {
@@ -216,38 +192,6 @@ public class DatabaseConfigurator implements InitializingBean {
             LocalDate.of(2022, 1, 1),
             List.of("tag1", "tag2"),
             List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
-
-//        this.review = kukim.publishReview(this.store.getId(),
-//            "Test review contents",
-//            3.f,
-//            "public",
-//            LocalDate.of(2022, 1, 1),
-//            List.of("tag1", "tag2"),
-//            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
-//
-//        hoi.publishReview(this.store.getId(),
-//            "전체 공개된 리뷰 게시물",
-//            3.f,
-//            "public",
-//            LocalDate.of(2022, 1, 1),
-//            List.of("tag1", "tag2"),
-//            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
-//
-//        hoi.publishReview(this.store.getId(),
-//            "친구 공개된 리뷰 게시물",
-//            3.f,
-//            "protected",
-//            LocalDate.of(2022, 1, 1),
-//            List.of("tag1", "tag2"),
-//            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
-//
-//        hoi.publishReview(this.store.getId(),
-//            "비공개된 리뷰 게시물",
-//            3.f,
-//            "private",
-//            LocalDate.of(2022, 1, 1),
-//            List.of("tag1", "tag2"),
-//            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
     }
 
     private void postReviews() {
@@ -260,7 +204,6 @@ public class DatabaseConfigurator implements InitializingBean {
                 LocalDate.of(2022, 1, 1),
                 List.of("tag1", "tag2"),
                 List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
-
         }
     }
 }

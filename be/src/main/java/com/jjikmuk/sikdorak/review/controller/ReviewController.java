@@ -44,14 +44,16 @@ public class ReviewController {
 	}
 
 	@GetMapping
-	public CommonResponseEntity<List<ReviewDetailResponse>> getReviewsFeed(@AuthenticatedUser LoginUser loginUser,
+	public CommonResponseEntity<List<ReviewDetailResponse>> getRecommendedReviews(
+		@AuthenticatedUser LoginUser loginUser,
+//		@RequestParam RecommendationType recommendationType, -> 아키텍처 변경되면 사용하지 않을것으로 판단되어 주석처리
 		@RequestParam long targetId,
 		@RequestParam int size) {
 
 		ReviewPagingRequest reviewPagingRequest = new ReviewPagingRequest(targetId, size);
 
 		List<ReviewDetailResponse> recommendedReviews = reviewService.getRecommendedReviews(
-			loginUser, reviewPagingRequest);
+			loginUser,reviewPagingRequest);
 
 		return new CommonResponseEntity<>(
 			ResponseCodeAndMessages.REVIEWS_FEED_SUCCESS,
