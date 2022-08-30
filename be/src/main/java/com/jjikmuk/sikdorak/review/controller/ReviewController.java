@@ -49,8 +49,8 @@ public class ReviewController {
 //		@RequestParam RecommendationType recommendationType, -> 아키텍처 변경되면 사용하지 않을것으로 판단되어 주석처리
 		@CursorPageable CursorPageRequest cursorPageRequest) {
 
-		RecommendedReviewResponse recommendedReviews = reviewService.getRecommendedReviews(
-			loginUser,cursorPageRequest);
+		RecommendedReviewResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
+			loginUser, cursorPageRequest);
 
 		return new CommonResponseEntity<>(
 			ResponseCodeAndMessages.REVIEWS_FEED_SUCCESS,

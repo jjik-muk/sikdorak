@@ -72,7 +72,7 @@ public class ReviewService {
         [] 추천 조건을 변경해서 피드들을 따로 볼 수 있다. (비회원의 추천 피드와 동일하게)
      */
     @Transactional(readOnly = true)
-    public RecommendedReviewResponse getRecommendedReviews(LoginUser loginUser,
+    public RecommendedReviewResponse getRecentRecommendedReviews(LoginUser loginUser,
         CursorPageRequest cursorPageRequest) {
 
         if (cursorPageRequest.getSize() > PAGING_LIMIT_SIZE) {
@@ -86,7 +86,9 @@ public class ReviewService {
         List<Review> reviews = getRecommendedReviews(loginUser, cursor, pageable);
 
         if (reviews.isEmpty()) {
-            return RecommendedReviewResponse.of(new ArrayList<>(), new CursorPageResponse(0, FIRST_CURSOR_ID, LAST_CURSOR_ID));
+            return RecommendedReviewResponse.of(
+                new ArrayList<>(),
+                new CursorPageResponse(0, FIRST_CURSOR_ID, LAST_CURSOR_ID));
         }
 
         List<ReviewDetailResponse> recommendedReviewsResponse = getRecommendedReviewsResponse(
