@@ -144,13 +144,20 @@ public class CommentService {
 	private List<Comment> getCommentsByReviewIdWithPaging(long reviewId,
 		CursorPageRequest pagingRequest) {
 		Pageable size = Pageable.ofSize(pagingRequest.getSize());
+		if (pagingRequest.isFirstPage()) {
+			return commentRepository.findCommentsByReviewIdWithFirstPage(reviewId, size);
+		}
+
 		if (pagingRequest.isAfter()) {
 			return commentRepository.findCommentsByReviewIdWithPagingAfter(reviewId,
 				pagingRequest.getAfter(), size);
 		}
 
 		return commentRepository.findCommentsByReviewIdWithPagingBefore(reviewId,
-			pagingRequest.getAfter(), size);
+				pagingRequest.getBefore(), size)
+			.stream()
+			.sorted((c1, c2) -> c2.getCreatedAt().compareTo(c1.getCreatedAt()))
+			.toList();
 	}
 
 	private Map<Long, User> getUsersMap(List<Long> commentUserIds) {

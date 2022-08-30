@@ -1,5 +1,6 @@
 package com.jjikmuk.sikdorak.common.controller.request;
 
+import java.util.Objects;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -37,5 +38,9 @@ public class CursorPageRequest {
 
 	public boolean isAfter() {
 		return isAfter;
+	}
+
+	public boolean isFirstPage() {
+		return isAfter && Objects.nonNull(after) && (after == 0L);
 	}
 }

@@ -7,6 +7,7 @@ import com.jjikmuk.sikdorak.comment.controller.response.CommentSearchPagingRespo
 import com.jjikmuk.sikdorak.comment.domain.Comment;
 import com.jjikmuk.sikdorak.comment.service.CommentService;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
+import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
 import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.review.domain.Review;
@@ -120,6 +121,55 @@ class CommentSearchIntegrationTest extends InitIntegrationTest {
 					testData.generator.createLoginUserWithUserId(forky.getId()),
 					new CursorPageRequest(0L, 0L, Integer.MAX_VALUE, true)))
 				.isInstanceOf(InvalidPageParameterException.class);
+		}
+
+		@Test
+		@DisplayName("이전 이후 페이지가 정상적으로 조회된다.")
+		void search_comment_with_paging_success() {
+			User jay = testData.jay;
+			Review review = testData.generator.review(testData.jay, ReviewVisibility.PRIVATE);
+			for (int i = 0; i < 15; i++) {
+				testData.generator.comment(review, jay, "내용 " + i);
+			}
+
+			CommentSearchPagingResponse response = commentService.searchCommentsByReviewIdWithPaging(
+				review.getId(),
+				testData.generator.createLoginUserWithUserId(jay.getId()),
+				new CursorPageRequest(0L, 0L, 5, true));
+
+			CursorPageResponse page = response.page();
+
+			CommentSearchPagingResponse response2 = commentService.searchCommentsByReviewIdWithPaging(
+				review.getId(),
+				testData.generator.createLoginUserWithUserId(jay.getId()),
+				new CursorPageRequest(0L, page.next(), 5, true));
+
+			page = response2.page();
+
+			CommentSearchPagingResponse response3 = commentService.searchCommentsByReviewIdWithPaging(
+				review.getId(),
+				testData.generator.createLoginUserWithUserId(jay.getId()),
+				new CursorPageRequest(0L, page.next(), 5, true));
+
+			page = response3.page();
+
+			CommentSearchPagingResponse response4 = commentService.searchCommentsByReviewIdWithPaging(
+				review.getId(),
+				testData.generator.createLoginUserWithUserId(jay.getId()),
+				new CursorPageRequest(page.prev(), 0L, 5, false));
+
+			page = response4.page();
+
+			CommentSearchPagingResponse response5 = commentService.searchCommentsByReviewIdWithPaging(
+				review.getId(),
+				testData.generator.createLoginUserWithUserId(jay.getId()),
+				new CursorPageRequest(page.prev(), page.next(), 5, false));
+
+			assertThat(response.comments()).size().isEqualTo(5);
+			assertThat(response2.comments()).size().isEqualTo(5);
+			assertThat(response3.comments()).size().isEqualTo(5);
+			assertThat(response4.comments()).size().isEqualTo(5);
+			assertThat(response5.comments()).size().isEqualTo(5);
 		}
 	}
 }
