@@ -7,11 +7,11 @@ import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
+import com.jjikmuk.sikdorak.review.controller.response.RecommendedReviewResponse;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,12 +44,12 @@ public class ReviewController {
 	}
 
 	@GetMapping
-	public CommonResponseEntity<List<ReviewDetailResponse>> getRecommendedReviews(
+	public CommonResponseEntity<RecommendedReviewResponse> getRecommendedReviews(
 		@AuthenticatedUser LoginUser loginUser,
 //		@RequestParam RecommendationType recommendationType, -> 아키텍처 변경되면 사용하지 않을것으로 판단되어 주석처리
 		@CursorPageable CursorPageRequest cursorPageRequest) {
 
-		List<ReviewDetailResponse> recommendedReviews = reviewService.getRecommendedReviews(
+		RecommendedReviewResponse recommendedReviews = reviewService.getRecommendedReviews(
 			loginUser,cursorPageRequest);
 
 		return new CommonResponseEntity<>(

@@ -1,9 +1,11 @@
 package com.jjikmuk.sikdorak.review.service;
 
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
+import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
 import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
+import com.jjikmuk.sikdorak.review.controller.response.RecommendedReviewResponse;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
@@ -32,6 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ReviewService {
 
+    private static final long FIRST_CURSOR_ID = 0L;
+    private static final long LAST_CURSOR_ID = 1L;
     private static final int PAGING_LIMIT_SIZE = 15;
 
     private final StoreRepository storeRepository;
@@ -68,29 +72,33 @@ public class ReviewService {
         [] 추천 조건을 변경해서 피드들을 따로 볼 수 있다. (비회원의 추천 피드와 동일하게)
      */
     @Transactional(readOnly = true)
-    public List<ReviewDetailResponse> getRecommendedReviews(LoginUser loginUser,
+    public RecommendedReviewResponse getRecommendedReviews(LoginUser loginUser,
         CursorPageRequest cursorPageRequest) {
 
         if (cursorPageRequest.getSize() > PAGING_LIMIT_SIZE) {
             throw new InvalidPageParameterException();
         }
 
-        if (isCursorLast(cursorPageRequest.getAfter())) {
-            return new ArrayList<>();
+        long cursor = getCursorOrDefaultCursor(cursorPageRequest);
+        int size = cursorPageRequest.getSize();
+        Pageable pageable = Pageable.ofSize(size);
+
+        List<Review> reviews = getRecommendedReviews(loginUser, cursor, pageable);
+
+        if (reviews.isEmpty()) {
+            return RecommendedReviewResponse.of(new ArrayList<>(), new CursorPageResponse(0, FIRST_CURSOR_ID, LAST_CURSOR_ID));
         }
 
-        long targetReviewId = getCursorOrDefaultCursor(cursorPageRequest);
-        int limitSize = cursorPageRequest.getSize();
-        Pageable pageable = Pageable.ofSize(limitSize);
+        List<ReviewDetailResponse> recommendedReviewsResponse = getRecommendedReviewsResponse(
+            reviews,
+            getReviewAuthors(getAuthorIds(reviews)),
+            getReviewStores(getStoreIds(reviews)));
+        long nextCursorId = recommendedReviewsResponse.get(recommendedReviewsResponse.size() - 1)
+            .reviewId();
+        CursorPageResponse cursorPageResponse = new CursorPageResponse(size, FIRST_CURSOR_ID, nextCursorId);
 
-        List<Review> reviews = getRecommendedReviews(loginUser, targetReviewId, pageable);
+        return RecommendedReviewResponse.of(recommendedReviewsResponse, cursorPageResponse);
 
-        if (!reviews.isEmpty()) {
-            return getRecommendedReviewsResponse(reviews,
-                getReviewAuthors(getAuthorIds(reviews)),
-                getReviewStores(getStoreIds(reviews)));
-        }
-        return new ArrayList<>();
     }
 
     @Transactional
@@ -154,10 +162,6 @@ public class ReviewService {
         if (!review.isAuthor(user)) {
             throw new UnauthorizedUserException();
         }
-    }
-
-    private boolean isCursorLast(Long cursor) {
-        return cursor == 1;
     }
 
     private long getCursorOrDefaultCursor(CursorPageRequest cursorPageRequest) {

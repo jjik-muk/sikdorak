@@ -28,7 +28,7 @@ class ReviewsRecommendAcceptanceTest extends InitAcceptanceTest {
             .statusCode(HttpStatus.OK)
             .body("code", equalTo(ResponseCodeAndMessages.REVIEWS_FEED_SUCCESS.getCode()))
             .body("message", equalTo(ResponseCodeAndMessages.REVIEWS_FEED_SUCCESS.getMessage()))
-            .body("data", hasSize(10));
+            .body("data.reviews", hasSize(10));
     }
 
 }

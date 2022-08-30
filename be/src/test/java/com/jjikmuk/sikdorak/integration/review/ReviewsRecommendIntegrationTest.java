@@ -6,12 +6,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
+import com.jjikmuk.sikdorak.review.controller.response.RecommendedReviewResponse;
 import com.jjikmuk.sikdorak.review.domain.ReviewVisibility;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.Authority;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +31,11 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
-        List<ReviewDetailResponse> recommendedReviews = reviewService.getRecommendedReviews(
+        RecommendedReviewResponse recommendedReviews = reviewService.getRecommendedReviews(
             loginUser, cursorPageRequest);
 
-        assertThat(recommendedReviews).hasSize(5);
-        assertThat(recommendedReviews.stream()
+        assertThat(recommendedReviews.reviews()).hasSize(5);
+        assertThat(recommendedReviews.reviews().stream()
             .anyMatch(r -> r.reviewVisibility().equals(ReviewVisibility.PROTECTED.name()))).isFalse();
     }
 
@@ -50,11 +49,11 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
-        List<ReviewDetailResponse> recommendedReviews = reviewService.getRecommendedReviews(
+        RecommendedReviewResponse recommendedReviews = reviewService.getRecommendedReviews(
             loginUser, cursorPageRequest);
 
-        assertThat(recommendedReviews).hasSize(5);
-        assertThat(recommendedReviews.stream().anyMatch(
+        assertThat(recommendedReviews.reviews()).hasSize(5);
+        assertThat(recommendedReviews.reviews().stream().anyMatch(
             r -> r.reviewVisibility().equals(ReviewVisibility.PROTECTED.name()))).isTrue();
     }
 
@@ -68,10 +67,10 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, invalidPage, size, true);
 
-        List<ReviewDetailResponse> recommendedReviews = reviewService.getRecommendedReviews(
+        RecommendedReviewResponse recommendedReviews = reviewService.getRecommendedReviews(
             loginUser, cursorPageRequest);
 
-        assertThat(recommendedReviews).hasSize(0);
+        assertThat(recommendedReviews.reviews()).hasSize(0);
     }
 
     @Test
@@ -84,10 +83,10 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
-        List<ReviewDetailResponse> recommendedReviews = reviewService.getRecommendedReviews(
+        RecommendedReviewResponse recommendedReviews = reviewService.getRecommendedReviews(
             loginUser, cursorPageRequest);
 
-        assertThat(recommendedReviews).hasSize(size);
+        assertThat(recommendedReviews.reviews()).hasSize(size);
     }
 
     @Test
@@ -100,11 +99,11 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
-        List<ReviewDetailResponse> recommendedReviews = reviewService.getRecommendedReviews(
+        RecommendedReviewResponse recommendedReviews = reviewService.getRecommendedReviews(
             loginUser, cursorPageRequest);
 
-        assertThat(recommendedReviews).hasSize(size);
-        assertThat(recommendedReviews.stream().allMatch(r -> r.reviewId() < cursorPage)).isTrue();
+        assertThat(recommendedReviews.reviews()).hasSize(size);
+        assertThat(recommendedReviews.reviews().stream().allMatch(r -> r.reviewId() < cursorPage)).isTrue();
     }
 
     @Test
