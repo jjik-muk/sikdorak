@@ -1,9 +1,10 @@
-import { FEEDS } from 'constants/dummyData';
+import { DOMAIN } from 'constants/dummyData';
 import CommonHeader from 'components/Common/CommonHeader';
 import Feed from 'components/ReviewList/Feed/Feed';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
-import { createKey } from 'utils/utils';
+import { useEffect, useState } from 'react';
+import { createKey, fetchDataThatNeedToLogin } from 'utils/utils';
 import {
   ActivityInfoWrap,
   FeedWrap,
@@ -24,6 +25,19 @@ const MockUserInfo = {
 };
 
 function UserDetail() {
+  const [reviews, setReviews] = useState([]);
+  const myInfo = JSON.parse(localStorage.getItem('MY_INFO'));
+
+  useEffect(() => {
+    fetchReviewDetail();
+
+    async function fetchReviewDetail() {
+      const { userId } = myInfo;
+      const reviewDetailRes = await fetchDataThatNeedToLogin(`${DOMAIN}/api/users/${userId}/reviews`);
+      setReviews(reviewDetailRes.data);
+    }
+  }, []);
+
   return (
     <Wrap>
       <CommonHeader />
@@ -46,17 +60,17 @@ function UserDetail() {
         </UserInfoWrap>
       </UserDetailWrap>
       <FeedWrap>
-        {FEEDS.map(({ author, contents, rating, store, likeCnt, pictures }, idx) => (
-          <Feed
-            key={createKey(author, idx)}
-            author={author}
-            contents={contents}
-            rating={rating}
-            store={store}
-            likeCnt={likeCnt}
-            pictures={pictures}
-          />
-        ))}
+        {reviews &&
+          reviews.map(({ reviewContent, images }, idx) => (
+            <Feed
+              key={createKey(myInfo.nickname, idx)}
+              author={myInfo.nickname}
+              contents={reviewContent}
+              store={{ name: '호이 초밥', region: '부산' }}
+              likeCnt={0}
+              pictures={images}
+            />
+          ))}
       </FeedWrap>
     </Wrap>
   );
