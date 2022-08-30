@@ -31,7 +31,7 @@ public interface DocumentFormatGenerator {
 
 	ParameterDescriptor DEFAULT_PAGING_SIZE_REQUEST_PARAMETER =
 		parameterWithName("size")
-			.description("페이지 크기 입니다.")
+			.description("페이지 크기")
 			.optional();
 
 	FieldDescriptor DEFAULT_CODE_RESPONSE_FIELD_DESCRIPTOR =
@@ -96,7 +96,7 @@ public interface DocumentFormatGenerator {
 
 	/**
 	 * 응답 필드 설명 리스트로 Snippet 을 생성한다.<br>
-	 * 참고 : https://icarus8050.tistory.com/88
+	 * 참고 : <a href="https://icarus8050.tistory.com/88">https://icarus8050.tistory.com/88</a>
 	 * @param fieldsList
 	 * @return Snippet
 	 */
@@ -159,21 +159,33 @@ public interface DocumentFormatGenerator {
 		List<FieldDescriptor> responseFields = new ArrayList<>();
 
 		for (FieldDescriptor field : fields) {
+			Attribute constraints = null;
+
 			if (field.getPath().contains(".")) { // sub class
-				responseFields.add(
-					fieldWithPath(dataPrefix + field.getPath())
-						.type(field.getType())
-						.description(field.getDescription())
-						.attributes(getFieldConstraints(clazz, field.getPath().split("\\.")[1])));
+				String fieldName = getLast(field.getPath().split("\\."));
+				constraints = getFieldConstraints(clazz, fieldName);
 			} else {
-				responseFields.add(
-					fieldWithPath(dataPrefix + field.getPath())
-						.type(field.getType())
-						.description(field.getDescription())
-						.attributes(getFieldConstraints(clazz, field.getPath())));
+				constraints = getFieldConstraints(clazz, field.getPath());
 			}
+
+			responseFields.add(
+				fieldWithPath(dataPrefix + field.getPath())
+					.type(field.getType())
+					.description(field.getDescription())
+					.attributes(constraints));
 		}
+
 		return responseFields;
+	}
+
+	private static String getLast(String[] array) {
+		int length = array.length;
+
+		if (length > 0) {
+			return array[length - 1];
+		}
+
+		return null;
 	}
 
 	/**
