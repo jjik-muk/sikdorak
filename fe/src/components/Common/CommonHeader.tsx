@@ -1,32 +1,32 @@
 import Icon, { IconComponentsKeys } from 'common/Icon';
 import Logo from 'common/Logo/Logo';
 import Portal from 'common/Portal/Portal';
+import { useReviewDetail } from 'context/reviewDetailProvider';
 import { useUserInfo } from 'context/userInfoProvider';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { createKey } from 'utils/utils';
 import { ButtonWrap, IconWrap, Input, SearchFormWrap, Header, Wrap, ProfileImageWrap } from './CommonHeader.styled';
 
 function CommonHeader() {
-  const [isReviewWrite, setIsReviewWrite] = useState(false);
+  const [isReviewWrite, toggleIsReviewWrite] = useToggle(false);
   const [, toggleIsUserProfile] = useToggle(false);
   const reviewWriteModalRef = useRef(null);
   const userDetailModalRef = useRef(null);
+  const [, dispatchReviewDetail] = useReviewDetail();
   const [userInfo] = useUserInfo();
   const { profileImageUrl } = userInfo;
 
   const iconInfo: IconInfoProps[] = [
     { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
     { icon: 'Map', to: '/map' },
-    { icon: 'PostBtn', handler: handleReviewWrite, to: '' },
-    { icon: 'Alarm', to: `${profileImageUrl}` },
-    // { icon: 'Profile', to: '/userDetail' },
+    { icon: 'PostBtn', handler: toggleIsReviewWrite, to: '' },
   ];
 
-  useOutsideClick(reviewWriteModalRef, handleReviewWrite);
+  useOutsideClick(reviewWriteModalRef, toggleIsReviewWrite);
   useOutsideClick(userDetailModalRef, toggleIsUserProfile);
 
   return (
@@ -40,7 +40,6 @@ function CommonHeader() {
           </IconWrap>
         </SearchFormWrap>
         <ButtonWrap>
-          {/* TODO: 로그인하면 프로필 사진으로 Icon 대체 */}
           {iconInfo.map(({ icon, handler, to }, idx) => (
             <Link key={createKey(icon, idx)} to={to}>
               <div onClick={handler}>
@@ -49,7 +48,12 @@ function CommonHeader() {
             </Link>
           ))}
           <Link to="/userDetail">
-            <ProfileImageWrap>
+            <ProfileImageWrap
+              onClick={() => {
+                const myUserId = JSON.parse(localStorage.getItem('MY_INFO')).userId;
+                dispatchReviewDetail({ type: 'SET_USER', userId: myUserId });
+              }}
+            >
               <img src={profileImageUrl} alt="profile" width={24} height={24} />
             </ProfileImageWrap>
           </Link>
@@ -62,10 +66,6 @@ function CommonHeader() {
       </Header>
     </Wrap>
   );
-
-  function handleReviewWrite() {
-    setIsReviewWrite(!isReviewWrite);
-  }
 }
 
 type IconInfoProps = {

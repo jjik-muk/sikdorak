@@ -17,7 +17,7 @@ function TagInput() {
 
   function handleTagAddition(e) {
     if (e.key === 'Enter') {
-      dispatchReviewWriteState({ type: 'SET_TAGS', tags: `#${value}` });
+      dispatchReviewWriteState({ type: 'SET_TAGS', tags: `${value}` });
       setValue('');
     }
   }
