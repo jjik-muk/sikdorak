@@ -26,15 +26,18 @@ const MockUserInfo = {
 
 function UserDetail() {
   const [reviews, setReviews] = useState([]);
+  const [reviewCnt, setReviewCnt] = useState(0);
   const myInfo = JSON.parse(localStorage.getItem('MY_INFO'));
+  const { userId, nickname, profileImageUrl } = myInfo;
 
   useEffect(() => {
     fetchReviewDetail();
 
     async function fetchReviewDetail() {
-      const { userId } = myInfo;
       const reviewDetailRes = await fetchDataThatNeedToLogin(`${DOMAIN}/api/users/${userId}/reviews`);
-      setReviews(reviewDetailRes.data);
+      const fetchedReviews = reviewDetailRes.data;
+      setReviews(fetchedReviews);
+      setReviewCnt(fetchedReviews.length);
     }
   }, []);
 
@@ -42,14 +45,14 @@ function UserDetail() {
     <Wrap>
       <CommonHeader />
       <UserDetailWrap>
-        <UserProfilePhoto src={MockUserInfo.profileImg} />
+        <UserProfilePhoto src={profileImageUrl} />
         <UserInfoWrap>
           <UserInfoHeader>
-            {MockUserInfo.name}
+            {nickname}
             <FollowButton />
           </UserInfoHeader>
           <ActivityInfoWrap>
-            <div>게시물 {MockUserInfo.postCnt}</div>
+            <div>게시물 {reviewCnt}</div>
             <div>팔로우 {MockUserInfo.followCnt}</div>
             <div>팔로워 {MockUserInfo.followerCnt}</div>
           </ActivityInfoWrap>
