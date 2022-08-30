@@ -7,6 +7,7 @@ import com.jjikmuk.sikdorak.comment.controller.response.CommentSearchPagingRespo
 import com.jjikmuk.sikdorak.comment.domain.Comment;
 import com.jjikmuk.sikdorak.comment.service.CommentService;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
+import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.domain.ReviewVisibility;
@@ -102,6 +103,23 @@ class CommentSearchIntegrationTest extends InitIntegrationTest {
 					testData.generator.createLoginUserWithUserId(forky.getId()),
 					FIRST_PAGE_REQUEST))
 				.isInstanceOf(UnauthorizedUserException.class);
+		}
+
+		@Test
+		@DisplayName("페이지 크기 최대값을 넘으면 예외가 발생한다.")
+		void search_comment_with_size_max_over_failed() {
+			// given
+			User forky = testData.forky;
+
+			Review review = testData.generator.review(forky, ReviewVisibility.PROTECTED);
+
+			// then
+			assertThatThrownBy(
+				() -> commentService.searchCommentsByReviewIdWithPaging(
+					review.getId(),
+					testData.generator.createLoginUserWithUserId(forky.getId()),
+					new CursorPageRequest(0L, 0L, Integer.MAX_VALUE, true)))
+				.isInstanceOf(InvalidPageParameterException.class);
 		}
 	}
 }

@@ -9,6 +9,7 @@ import com.jjikmuk.sikdorak.comment.exception.NotFoundCommentException;
 import com.jjikmuk.sikdorak.comment.repository.CommentRepository;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
+import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
@@ -30,6 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class CommentService {
+
+	private static final int COMMENT_PAGE_MAX_SIZE = 50;
 
 	private final CommentRepository commentRepository;
 	private final UserRepository userRepository;
@@ -98,14 +101,15 @@ public class CommentService {
 	@Transactional(readOnly = true)
 	public CommentSearchPagingResponse searchCommentsByReviewIdWithPaging(long reviewId,
 		LoginUser loginUser,
-		CursorPageRequest pagingRequest) {
+		CursorPageRequest pageRequest) {
 		// 검증
 		Review review = reviewRepository.findById(reviewId)
 			.orElseThrow(NotFoundReviewException::new);
 		validateReviewReadable(review, loginUser);
+		validatePageSize(pageRequest);
 
 		// 페이지 가져오기
-		List<Comment> comments = getCommentsByReviewIdWithPaging(reviewId, pagingRequest);
+		List<Comment> comments = getCommentsByReviewIdWithPaging(reviewId, pageRequest);
 
 		// 사용자 정보 가져오기
 		Map<Long, User> usersMap = getUsersMap(getCommentUserIds(comments));
@@ -116,7 +120,7 @@ public class CommentService {
 
 		return new CommentSearchPagingResponse(
 			getCommentSearchResponses(comments, usersMap),
-			new CursorPageResponse(pagingRequest.getSize(), prev, next)
+			new CursorPageResponse(pageRequest.getSize(), prev, next)
 		);
 	}
 
@@ -128,6 +132,12 @@ public class CommentService {
 
 		if (!review.isReadable(relationType)) {
 			throw new UnauthorizedUserException();
+		}
+	}
+
+	private void validatePageSize(CursorPageRequest pageRequest) {
+		if (pageRequest.getSize() > COMMENT_PAGE_MAX_SIZE) {
+			throw new InvalidPageParameterException();
 		}
 	}
 
