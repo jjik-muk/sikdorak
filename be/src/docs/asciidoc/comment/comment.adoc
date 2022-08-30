@@ -39,3 +39,17 @@ operation::comment_remove_acceptance_test/remove_comment_success[snippets='http-
 ==== `Response`
 
 operation::comment_remove_acceptance_test/remove_comment_success[snippets='http-response,response-fields']
+
+=== 댓글 조회
+
+API : `GET /api/reviews/{reviewId}/comments`
+
+=== `200 OK`
+
+==== `Request`
+
+operation::comment_search_acceptance_test/search_comment_success[snippets='http-request,path-parameters,request-parameters']
+
+==== `Response`
+
+operation::comment_search_acceptance_test/search_comment_success[snippets='http-response,response-fields']
