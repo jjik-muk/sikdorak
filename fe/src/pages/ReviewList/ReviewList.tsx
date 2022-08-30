@@ -12,12 +12,11 @@ function ReviewList() {
     <>
       <CommonHeader />
       <Wrap>
-        {FEEDS.map(({ author, contents, rating, pictures, store, likeCnt }, i) => (
+        {FEEDS.map(({ author, contents, pictures, store, likeCnt }, i) => (
           <Feed
             key={createKey(id, i)}
             author={author}
             contents={contents}
-            rating={rating}
             pictures={pictures}
             store={store}
             likeCnt={likeCnt}

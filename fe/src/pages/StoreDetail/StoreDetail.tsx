@@ -55,15 +55,8 @@ function StoreDetail() {
             </Row>
           </InfoWrap>
         </StoreInfo>
-        {FEEDS.map(({ author, contents, rating, store, likeCnt, pictures }) => (
-          <Feed
-            author={author}
-            contents={contents}
-            rating={rating}
-            store={store}
-            likeCnt={likeCnt}
-            pictures={pictures}
-          />
+        {FEEDS.map(({ author, contents, store, likeCnt, pictures }) => (
+          <Feed author={author} contents={contents} store={store} likeCnt={likeCnt} pictures={pictures} />
         ))}
       </Wrap>
     </>
