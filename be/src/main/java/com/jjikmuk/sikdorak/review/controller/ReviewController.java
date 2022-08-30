@@ -2,10 +2,11 @@ package com.jjikmuk.sikdorak.review.controller;
 
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.aop.UserOnly;
+import com.jjikmuk.sikdorak.common.controller.CursorPageable;
+import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
-import com.jjikmuk.sikdorak.review.controller.request.ReviewPagingRequest;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -47,13 +47,10 @@ public class ReviewController {
 	public CommonResponseEntity<List<ReviewDetailResponse>> getRecommendedReviews(
 		@AuthenticatedUser LoginUser loginUser,
 //		@RequestParam RecommendationType recommendationType, -> 아키텍처 변경되면 사용하지 않을것으로 판단되어 주석처리
-		@RequestParam long targetId,
-		@RequestParam int size) {
-
-		ReviewPagingRequest reviewPagingRequest = new ReviewPagingRequest(targetId, size);
+		@CursorPageable CursorPageRequest cursorPageRequest) {
 
 		List<ReviewDetailResponse> recommendedReviews = reviewService.getRecommendedReviews(
-			loginUser,reviewPagingRequest);
+			loginUser,cursorPageRequest);
 
 		return new CommonResponseEntity<>(
 			ResponseCodeAndMessages.REVIEWS_FEED_SUCCESS,

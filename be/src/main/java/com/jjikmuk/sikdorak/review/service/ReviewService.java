@@ -1,8 +1,9 @@
 package com.jjikmuk.sikdorak.review.service;
 
+import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
+import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
-import com.jjikmuk.sikdorak.review.controller.request.ReviewPagingRequest;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
@@ -18,6 +19,9 @@ import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,6 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
+
+    private static final int PAGING_LIMIT_SIZE = 15;
 
     private final StoreRepository storeRepository;
     private final UserRepository userRepository;
@@ -63,25 +69,29 @@ public class ReviewService {
      */
     @Transactional(readOnly = true)
     public List<ReviewDetailResponse> getRecommendedReviews(LoginUser loginUser,
-        ReviewPagingRequest pagingRequest) {
+        CursorPageRequest cursorPageRequest) {
 
-        long targetReviewId = pagingRequest.getLimitSize() == 0 ? reviewRepository.count()
-            : pagingRequest.getTargetReviewId();
-        int limitSize = pagingRequest.getLimitSize();
+        if (cursorPageRequest.getSize() > PAGING_LIMIT_SIZE) {
+            throw new InvalidPageParameterException();
+        }
+
+        if (isCursorLast(cursorPageRequest.getAfter())) {
+            return new ArrayList<>();
+        }
+
+        long targetReviewId = getCursorOrDefaultCursor(cursorPageRequest);
+        int limitSize = cursorPageRequest.getSize();
         Pageable pageable = Pageable.ofSize(limitSize);
 
         List<Review> reviews = getRecommendedReviews(loginUser, targetReviewId, pageable);
 
         if (!reviews.isEmpty()) {
-            List<User> authors = getReviewAuthors(reviews);
-            List<Store> stores = getReviewStores(reviews);
-            return getRecommendedReviewsResponse(reviews, authors, stores);
+            return getRecommendedReviewsResponse(reviews,
+                getReviewAuthors(getAuthorIds(reviews)),
+                getReviewStores(getStoreIds(reviews)));
         }
-
         return new ArrayList<>();
     }
-
-
 
     @Transactional
     public Review createReview(LoginUser loginUser, ReviewCreateRequest reviewCreateRequest) {
@@ -146,20 +156,22 @@ public class ReviewService {
         }
     }
 
+    private boolean isCursorLast(Long cursor) {
+        return cursor == 1;
+    }
+
+    private long getCursorOrDefaultCursor(CursorPageRequest cursorPageRequest) {
+        return cursorPageRequest.getAfter() == 0 ? reviewRepository.count()
+            : cursorPageRequest.getAfter();
+    }
+
     private List<ReviewDetailResponse> getRecommendedReviewsResponse(List<Review> reviews,
-        List<User> authors, List<Store> stores) {
+        Map<Long, User> authors, Map<Long, Store> stores) {
 
-        List<ReviewDetailResponse> result = new ArrayList<>();
-
-        for (int i = 0; i < reviews.size(); i++) {
-            Review review = reviews.get(i);
-            Store store = stores.get(i);
-            User user = authors.get(i);
-
-            result.add(ReviewDetailResponse.of(review, store, user));
-        }
-
-        return result;
+        return reviews.stream()
+            .map(review -> ReviewDetailResponse.of(review, stores.get(review.getStoreId()),
+                authors.get(review.getUserId())))
+            .toList();
     }
 
     private List<Review> getRecommendedReviews(LoginUser loginUser, long targetReviewId,
@@ -172,14 +184,14 @@ public class ReviewService {
             targetReviewId, pageable);
     }
 
-    private List<Store> getReviewStores(List<Review> reviews) {
-        List<Long> storeIds = getStoreIds(reviews);
-        return storeRepository.findAllById(storeIds);
+    private Map<Long, Store> getReviewStores(List<Long> storeIds) {
+        return storeRepository.findAllById(storeIds).stream()
+            .collect(Collectors.toMap(Store::getId, Function.identity()));
     }
 
-    private List<User> getReviewAuthors(List<Review> reviews) {
-        List<Long> authorIds = getAuthorIds(reviews);
-        return userRepository.findAllById(authorIds);
+    private Map<Long, User> getReviewAuthors(List<Long> authorIds) {
+        return userRepository.findAllById(authorIds).stream()
+            .collect(Collectors.toMap(User::getId, Function.identity()));
     }
 
     private List<Long> getStoreIds(List<Review> reviews) {
