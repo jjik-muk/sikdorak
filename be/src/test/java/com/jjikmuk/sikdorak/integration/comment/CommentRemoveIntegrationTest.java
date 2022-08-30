@@ -11,7 +11,6 @@ import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
-import com.jjikmuk.sikdorak.user.auth.controller.Authority;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
@@ -39,12 +38,12 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 
 		@Test
 		@DisplayName("정상적인 댓글 삭제 요청이 주어진다면, 댓글이 삭제된다.")
-		void create_comment_success() {
+		void remove_comment_success() {
 			// given
 			Review review = testData.user1PublicReview;
 			User forky = testData.forky;
 			Comment comment = testData.generator.comment(review, forky, "잘보고가요");
-			LoginUser forkyLoginUser = createLoginUserWithUserId(forky.getId());
+			LoginUser forkyLoginUser = testData.generator.createLoginUserWithUserId(forky.getId());
 
 			// when
 			commentService.removeComment(review.getId(),
@@ -69,7 +68,7 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 
 			long reviewId = review.getId();
 			long commentId = comment.getId();
-			LoginUser forkyLoginUser = createLoginUserWithUserId(forky.getId());
+			LoginUser forkyLoginUser = testData.generator.createLoginUserWithUserId(forky.getId());
 
 			// then
 			assertThatThrownBy(
@@ -87,7 +86,7 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 			long reviewId = testData.user1PublicReview.getId();
 			long notExistingCommentId = Long.MIN_VALUE;
 			long forkyId = testData.forky.getId();
-			LoginUser forkyLoginUser = createLoginUserWithUserId(forkyId);
+			LoginUser forkyLoginUser = testData.generator.createLoginUserWithUserId(forkyId);
 
 			// then
 			assertThatThrownBy(
@@ -109,7 +108,7 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 
 			long reviewId = review.getId();
 			long commentId = comment.getId();
-			LoginUser forkyLoginUser = createLoginUserWithUserId(forky.getId());
+			LoginUser forkyLoginUser = testData.generator.createLoginUserWithUserId(forky.getId());
 
 			// then
 			assertThatThrownBy(
@@ -130,7 +129,7 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 
 			long reviewId = review.getId();
 			long commentId = comment.getId();
-			LoginUser kukimLoginUser = createLoginUserWithUserId(testData.kukim.getId());
+			LoginUser kukimLoginUser = testData.generator.createLoginUserWithUserId(testData.kukim.getId());
 
 			// then
 			assertThatThrownBy(
@@ -140,9 +139,5 @@ class CommentRemoveIntegrationTest extends InitIntegrationTest {
 				))
 				.isInstanceOf(UnauthorizedUserException.class);
 		}
-	}
-
-	private static LoginUser createLoginUserWithUserId(long userId) {
-		return new LoginUser(userId, Authority.USER);
 	}
 }

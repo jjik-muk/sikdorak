@@ -12,8 +12,6 @@ import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
-import com.jjikmuk.sikdorak.user.auth.controller.Authority;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import org.junit.jupiter.api.DisplayName;
@@ -49,7 +47,7 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
 			// when
 			commentService.modifyComment(review.getId(),
 				comment.getId(),
-				createLoginUserWithUserId(user1.getId()),
+				testData.generator.createLoginUserWithUserId(user1.getId()),
 				new CommentModifyRequest(updatedContent)
 			);
 
@@ -75,7 +73,7 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
 			assertThatThrownBy(
 				() -> commentService.modifyComment(review.getId(),
 					comment.getId(),
-					createLoginUserWithUserId(user1.getId()),
+					testData.generator.createLoginUserWithUserId(user1.getId()),
 					new CommentModifyRequest("맛집이네요!")
 				))
 				.isInstanceOf(NotFoundReviewException.class);
@@ -93,7 +91,7 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
 			assertThatThrownBy(
 				() -> commentService.modifyComment(review.getId(),
 					notExistingCommentId,
-					createLoginUserWithUserId(user1.getId()),
+					testData.generator.createLoginUserWithUserId(user1.getId()),
 					new CommentModifyRequest("맛집이네요!")
 				))
 				.isInstanceOf(NotFoundCommentException.class);
@@ -112,7 +110,7 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
 			assertThatThrownBy(
 				() -> commentService.modifyComment(review.getId(),
 					comment.getId(),
-					createLoginUserWithUserId(user1.getId()),
+					testData.generator.createLoginUserWithUserId(user1.getId()),
 					new CommentModifyRequest("맛집이네요!")
 				))
 				.isInstanceOf(NotFoundCommentException.class);
@@ -130,14 +128,10 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
 			assertThatThrownBy(
 				() -> commentService.modifyComment(review.getId(),
 					comment.getId(),
-					createLoginUserWithUserId(testData.kukim.getId()),
+					testData.generator.createLoginUserWithUserId(testData.kukim.getId()),
 					new CommentModifyRequest("맛집이네요!")
 				))
 				.isInstanceOf(UnauthorizedUserException.class);
 		}
-	}
-
-	private static LoginUser createLoginUserWithUserId(long userId) {
-		return new LoginUser(userId, Authority.USER);
 	}
 }
