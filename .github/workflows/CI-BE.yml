@@ -1,12 +1,24 @@
-name: CI - BE
+name: BE - CI(CheckStyle, PMD -> Test -> Build -> SonarCloud)
 
 on:
   push:
     branches: [dev]
-    paths: ["be/**"]
+    paths:
+      [
+        "be/src/**",
+        "be/build.gradle",
+        "be/config",
+        "be/config-static-analyzer/**",
+      ]
   pull_request:
     branches: [dev]
-    paths: ["be/**"]
+    paths:
+      [
+        "be/src/**",
+        "be/build.gradle",
+        "be/config",
+        "be/config-static-analyzer/**",
+      ]
     types: [opened, synchronize, reopened]
 
 defaults:
@@ -60,7 +72,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew build sonarqube --info
+        run: ./gradlew build sonarqube
 
       # 참고 : https://github.com/marketplace/actions/discord-webhook-notify
       - name: Noti Discord - Test Success

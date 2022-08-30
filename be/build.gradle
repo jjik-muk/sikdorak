@@ -182,7 +182,7 @@ checkstyle {
     ignoreFailures = true
     showViolations = false
     checkstyleTest.enabled = false
-    configFile = file("${project.rootDir}/config-static-analysis/checkstyle/custom-google-checkstyle.xml")
+    configFile = file("${project.rootDir}/config-static-analyzer/checkstyle/custom-google-checkstyle.xml")
 }
 
 tasks.withType(Checkstyle) {
@@ -197,7 +197,7 @@ pmd {
 //    consoleOutput = true
     ignoreFailures = true
     pmdTest.enabled = false
-    ruleSetFiles = files("config-static-analysis/pmd/custom-pmd-rules.xml")
+    ruleSetFiles = files("config-static-analyzer/pmd/custom-pmd-rules.xml")
     ruleSets = []
 //    ruleSets = ["category/java/bestpractices.xml", "category/java/errorprone.xml"]
 }
