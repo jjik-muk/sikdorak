@@ -95,3 +95,20 @@ operation::review_remove_accecptance_test/remove_review_failed_need_login[snippe
 ==== `Response`
 
 operation::review_remove_accecptance_test/remove_review_failed_need_login[snippets='http-response,response-fields']
+
+=== 리뷰 추천 목록 조회
+
+API : `GET /api/reviews`
+
+=== `200 OK`
+
+비회원인 경우
+
+==== `Request`
+
+operation::reviews_recommend_acceptance_test/review_recommend_success[snippets='http-request,request-parameters']
+
+==== `Response`
+
+operation::reviews_recommend_acceptance_test/review_recommend_success[snippets='http-response,response-fields']
+
