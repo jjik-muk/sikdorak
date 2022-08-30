@@ -16,6 +16,7 @@ import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -71,16 +72,16 @@ public class ReviewService {
 
         List<Review> reviews = getRecommendedReviews(loginUser, targetReviewId, pageable);
 
-        return reviews.stream()
-            .map(review -> {
-                User reviewOwner = userRepository.findById(review.getUserId())
-                    .orElseThrow(NotFoundUserException::new);
-                Store store = storeRepository.findById(review.getStoreId())
-                    .orElseThrow(NotFoundReviewException::new);
-                return ReviewDetailResponse.of(review, store, reviewOwner);
-            })
-            .toList();
+        if (!reviews.isEmpty()) {
+            List<User> authors = getReviewAuthors(reviews);
+            List<Store> stores = getReviewStores(reviews);
+            return getRecommendedReviewsResponse(reviews, authors, stores);
+        }
+
+        return new ArrayList<>();
     }
+
+
 
     @Transactional
     public Review createReview(LoginUser loginUser, ReviewCreateRequest reviewCreateRequest) {
@@ -145,6 +146,22 @@ public class ReviewService {
         }
     }
 
+    private List<ReviewDetailResponse> getRecommendedReviewsResponse(List<Review> reviews,
+        List<User> authors, List<Store> stores) {
+
+        List<ReviewDetailResponse> result = new ArrayList<>();
+
+        for (int i = 0; i < reviews.size(); i++) {
+            Review review = reviews.get(i);
+            Store store = stores.get(i);
+            User user = authors.get(i);
+
+            result.add(ReviewDetailResponse.of(review, store, user));
+        }
+
+        return result;
+    }
+
     private List<Review> getRecommendedReviews(LoginUser loginUser, long targetReviewId,
         Pageable pageable) {
         if (loginUser.isAnonymous()) {
@@ -153,6 +170,28 @@ public class ReviewService {
         }
         return reviewRepository.findPublicAndProtectedRecommendedReviewsInRecentOrder(
             targetReviewId, pageable);
+    }
+
+    private List<Store> getReviewStores(List<Review> reviews) {
+        List<Long> storeIds = getStoreIds(reviews);
+        return storeRepository.findAllById(storeIds);
+    }
+
+    private List<User> getReviewAuthors(List<Review> reviews) {
+        List<Long> authorIds = getAuthorIds(reviews);
+        return userRepository.findAllById(authorIds);
+    }
+
+    private List<Long> getStoreIds(List<Review> reviews) {
+        return reviews.stream()
+            .map(Review::getStoreId)
+            .toList();
+    }
+
+    private List<Long> getAuthorIds(List<Review> reviews) {
+        return reviews.stream()
+            .map(Review::getUserId)
+            .toList();
     }
 
 }
