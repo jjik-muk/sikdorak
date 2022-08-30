@@ -1,9 +1,9 @@
-name: CD - BE
+name: BE - 테스트 서버 배포(헤로쿠 컨테이너)
 
 on:
   pull_request:
     branches: [dev]
-    paths: ["be/**"]
+    paths: ["be/src/**", "be/build.gradle", "be/config"]
     types: [opened, synchronize, reopened]
 
 permissions:
@@ -13,6 +13,7 @@ jobs:
   be-build-test:
     name: Test & Deploy SpringBoot
     runs-on: ubuntu-20.04
+    environment: TestServer
     defaults:
       run:
         working-directory: ./be
@@ -52,10 +53,12 @@ jobs:
           heroku_app_name: "sikdorak-test"
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           justlogin: true
+
       - name: Deploy Spring Boot image into heroku registry
         run: |
           ./gradlew jib
           heroku container:release web -a sikdorak-test
+
   server-health-check:
     needs: be-build-test
     runs-on: ubuntu-20.04
