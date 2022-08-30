@@ -15,29 +15,35 @@ import {
   Wrap,
 } from './userDetail.styled';
 
-const MockUserInfo = {
-  name: 'Dashawn',
-  postCnt: 10,
-  followCnt: 1101,
-  followerCnt: 333,
-  profileMessage: '맛잘알 리스트는 아닙니다.. 그냥 기록용 입니다',
-  profileImg: 'https://avatars.githubusercontent.com/u/87521172?v=4',
-};
-
 function UserDetail() {
   const [reviews, setReviews] = useState([]);
   const [reviewCnt, setReviewCnt] = useState(0);
+  const [followerCnt, setFollowerCnt] = useState(0);
+  const [followingCnt, setFollowingCnt] = useState(0);
   const myInfo = JSON.parse(localStorage.getItem('MY_INFO'));
   const { userId, nickname, profileImageUrl } = myInfo;
 
   useEffect(() => {
     fetchReviewDetail();
+    fetchMyFollower();
+    fetchMyFollowing();
 
+    // TODO: 중복 코드 제거
     async function fetchReviewDetail() {
       const reviewDetailRes = await fetchDataThatNeedToLogin(`${DOMAIN}/api/users/${userId}/reviews`);
       const fetchedReviews = reviewDetailRes.data;
       setReviews(fetchedReviews);
       setReviewCnt(fetchedReviews.length);
+    }
+    async function fetchMyFollower() {
+      const myFollowerRes = await fetchDataThatNeedToLogin(`${DOMAIN}/api/users/${userId}/followers`);
+      const fetchedMyFollower = myFollowerRes.data;
+      setFollowerCnt(fetchedMyFollower.length);
+    }
+    async function fetchMyFollowing() {
+      const myFollowingRes = await fetchDataThatNeedToLogin(`${DOMAIN}/api/users/${userId}/followings`);
+      const fetchedMyFollowing = myFollowingRes.data;
+      setFollowingCnt(fetchedMyFollowing.length);
     }
   }, []);
 
@@ -53,13 +59,10 @@ function UserDetail() {
           </UserInfoHeader>
           <ActivityInfoWrap>
             <div>게시물 {reviewCnt}</div>
-            <div>팔로우 {MockUserInfo.followCnt}</div>
-            <div>팔로워 {MockUserInfo.followerCnt}</div>
+            <div>팔로우 {followingCnt}</div>
+            <div>팔로워 {followerCnt}</div>
           </ActivityInfoWrap>
-          <ProfileInfoWrap>
-            {MockUserInfo.name}
-            {MockUserInfo.profileMessage}
-          </ProfileInfoWrap>
+          <ProfileInfoWrap>자신을 소개해주세요.</ProfileInfoWrap>
         </UserInfoWrap>
       </UserDetailWrap>
       <FeedWrap>

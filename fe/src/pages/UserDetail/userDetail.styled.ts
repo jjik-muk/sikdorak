@@ -17,6 +17,7 @@ export const UserDetailWrap = styled.div`
 `;
 
 export const UserInfoWrap = styled.div`
+  width: 500px;
   margin-left: 40px;
 `;
 
