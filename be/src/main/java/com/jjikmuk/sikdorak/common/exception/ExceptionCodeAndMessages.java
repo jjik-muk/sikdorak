@@ -38,7 +38,7 @@ import lombok.Getter;
 @Getter
 public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NOT_FOUND_ERROR_CODE("F-G001", "에러 코드를 찾을 수 없습니다.", NotFoundErrorCodeException.class),
-    INVALID_PAGING("F-G002", "유효하지 않은 페이징 값 입니다.", InvalidCursorException.class),
+    INVALID_PAGE_PARAMETER("F-G002", "유효하지 않은 페이징 값 입니다.", InvalidPageParameterException.class),
     INTERNAL_SERVER_ERROR("F-G003", "서버 에러입니다.(관리자에게 문의하세요)", UnsupportedParameterTypeException.class),
 
     // Review

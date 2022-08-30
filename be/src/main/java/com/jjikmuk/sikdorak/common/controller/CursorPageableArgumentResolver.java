@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.common.controller;
 
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
-import com.jjikmuk.sikdorak.common.exception.InvalidCursorException;
+import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
 import com.jjikmuk.sikdorak.common.exception.UnsupportedParameterTypeException;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ public class CursorPageableArgumentResolver implements HandlerMethodArgumentReso
 		NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
 
 		// CursorPaging 어노테이션 붙어있는지 확인
-		validateParameterType(parameter, CursorPageable.class);
+		validateParameterType(parameter);
 
 		String beforeParam = webRequest.getParameter(BEFORE_PARAMETER);
 		String afterParam = webRequest.getParameter(AFTER_PARAMETER);
@@ -44,23 +44,29 @@ public class CursorPageableArgumentResolver implements HandlerMethodArgumentReso
 		);
 	}
 
-	private void validateParameterType(MethodParameter parameter, Class<?> type) {
-		if (parameter.getParameterType().equals(type)) {
+	private void validateParameterType(MethodParameter parameter) {
+		if (parameter.getParameterType().equals(CursorPageable.class)) {
 			 throw new UnsupportedParameterTypeException();
 		}
 	}
 
 	private void validateBeforeAfterParameter(String before, String after) {
 		if ((before == null && after == null) || (before != null && after != null)) {
-			 throw new InvalidCursorException();
+			 throw new InvalidPageParameterException();
 		}
 	}
 
 	private int getSizeOrDefault(NativeWebRequest webRequest, CursorPageable cursorPageable) {
-		try {
-			return Integer.parseInt(webRequest.getParameter(SIZE_PARAMETER));
-		} catch (NumberFormatException | NullPointerException e) {
+		String sizeParam = webRequest.getParameter(SIZE_PARAMETER);
+
+		if (sizeParam == null) {
 			return cursorPageable.sizeDefaultValue();
+		}
+
+		try {
+			return Integer.parseInt(sizeParam);
+		} catch (NumberFormatException e) {
+			throw new InvalidPageParameterException(e);
 		}
 	}
 
@@ -70,7 +76,7 @@ public class CursorPageableArgumentResolver implements HandlerMethodArgumentReso
 		try {
 			return Long.parseLong(cursorParam);
 		} catch (NumberFormatException e) {
-			 throw new InvalidCursorException();
+			 throw new InvalidPageParameterException(e);
 		}
 	}
 }
