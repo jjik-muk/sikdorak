@@ -5,7 +5,6 @@ export const Wrap = styled.div`
   width: 300px;
   height: 300px;
   margin: 30px;
-  padding: 20px;
   border: 1px solid #000;
 `;
 
@@ -20,6 +19,7 @@ export const CalendarHead = styled.div`
 export const Title = styled.div`
   ${() => flexLayoutMixin('', 'space-between', 'center')};
   font-size: 18px;
+
   div:first-child {
     margin-right: 10px;
   }
@@ -27,24 +27,27 @@ export const Title = styled.div`
 
 export const DayWrapper = styled.div`
   display: grid;
-  grid-template-rows: 48px repeat(4, 24px);
-  grid-template-columns: repeat(7, 1fr);
-  grid-auto-rows: 24px;
-  margin-top: 30px;
+  width: 294px;
+  height: 252px;
+  grid-template-rows: repeat(4, 42px);
+  grid-template-columns: repeat(7, 42px);
+  margin-top: 10px;
 `;
 
 export const Day = styled.div<{ day: string }>`
-  padding: 4px;
+  width: 100%;
+  height: 100%;
   font-size: 14px;
-  text-align: center;
   ${({ day }) => getDayColor(day)};
+  ${flexLayoutMixin('', 'center', 'center')};
   cursor: pointer;
 `;
 
 export const ToDay = styled.div`
-  padding: 4px;
+  ${flexLayoutMixin('', 'center', 'center')};
+  border: 1px solid black;
   border-radius: 50%;
-  background-color: red;
+  background-color: grey;
   font-size: 14px;
   text-align: center;
   color: #fff;
