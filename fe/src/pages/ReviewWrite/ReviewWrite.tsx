@@ -9,11 +9,14 @@ import TagContainer from 'components/ReviewWrite/Tag/TagContainer/TagContainer';
 import Textarea from 'components/ReviewWrite/Textarea/Textarea';
 import WriteRating from 'components/ReviewWrite/WriteRating/WriteRating';
 import ReviewWriteProvider from 'context/reviewWriteProvider';
+import { useUserInfo } from 'context/userInfoProvider';
 import { useState } from 'react';
 import { Content, Img, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
 
 function ReviewWrite() {
   const [selectedImg, setSelectedImg] = useState(null);
+  const [userInfo] = useUserInfo();
+  const { nickname, profileImageUrl } = userInfo;
 
   return (
     <ReviewWriteProvider>
@@ -33,7 +36,7 @@ function ReviewWrite() {
             )}
           </ImgWrap>
           <InputWrap>
-            <Profile nickname="호이" />
+            <Profile imgUrl={profileImageUrl} nickname={nickname} />
             <Textarea />
             <RestaurantSearch />
             <SelectDay />

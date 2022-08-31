@@ -6,7 +6,7 @@ import Login from 'pages/Login/Login';
 import ReviewList from 'pages/ReviewList/ReviewList';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import StoreDetail from 'pages/StoreDetail/StoreDetail';
-import UserDetail from 'pages/UserDetail/userDetail';
+import UserDetail from 'pages/UserDetail/UserDetail';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalStyle from 'styles/GlobalStyle';
 

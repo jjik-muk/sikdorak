@@ -34,13 +34,14 @@ export const DayWrapper = styled.div`
   margin-top: 10px;
 `;
 
-export const Day = styled.div<{ day: string }>`
+export const Day = styled.button<{ day: string }>`
   width: 100%;
   height: 100%;
   font-size: 14px;
   ${({ day }) => getDayColor(day)};
   ${flexLayoutMixin('', 'center', 'center')};
   cursor: pointer;
+  background-color: white;
 `;
 
 const getDayColor = (day) => {

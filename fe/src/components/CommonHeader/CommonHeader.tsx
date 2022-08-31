@@ -1,7 +1,6 @@
 import Icon, { IconComponentsKeys } from 'common/Icon';
 import Logo from 'common/Logo/Logo';
 import Portal from 'common/Portal/Portal';
-import { useReviewDetail } from 'context/reviewDetailProvider';
 import { useUserInfo } from 'context/userInfoProvider';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
@@ -16,7 +15,6 @@ function CommonHeader() {
   const [, toggleIsUserProfile] = useToggle(false);
   const reviewWriteModalRef = useRef(null);
   const userDetailModalRef = useRef(null);
-  const [, dispatchReviewDetail] = useReviewDetail();
   const [userInfo] = useUserInfo();
   const { userId, profileImageUrl } = userInfo;
 
@@ -48,12 +46,7 @@ function CommonHeader() {
             </Link>
           ))}
           <Link to={`/userDetail/${userId}`}>
-            <ProfileImageWrap
-              onClick={() => {
-                const myUserId = JSON.parse(localStorage.getItem('MY_INFO')).userId;
-                dispatchReviewDetail({ type: 'SET_USER', userId: myUserId });
-              }}
-            >
+            <ProfileImageWrap>
               <img src={profileImageUrl} alt="profile" width={24} height={24} />
             </ProfileImageWrap>
           </Link>

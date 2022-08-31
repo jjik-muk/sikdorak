@@ -1,5 +1,5 @@
 import { FEEDS } from 'constants/dummyData';
-import CommonHeader from 'components/Common/CommonHeader';
+import CommonHeader from 'components/CommonHeader/CommonHeader';
 import Feed from 'components/ReviewList/Feed/Feed';
 import { useId } from 'react';
 import { createKey } from 'utils/utils';

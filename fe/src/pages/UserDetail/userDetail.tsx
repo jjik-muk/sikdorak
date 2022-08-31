@@ -1,5 +1,5 @@
 import { DOMAIN } from 'constants/dummyData';
-import CommonHeader from 'components/Common/CommonHeader';
+import CommonHeader from 'components/CommonHeader/CommonHeader';
 import Feed from 'components/ReviewList/Feed/Feed';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
@@ -14,7 +14,7 @@ import {
   UserInfoHeader,
   UserInfoWrap,
   Wrap,
-} from './userDetail.styled';
+} from './UserDetail.styled';
 
 function UserDetail() {
   const [reviews, setReviews] = useState([]);
