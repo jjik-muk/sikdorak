@@ -35,6 +35,11 @@ export const InputWrap = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   overflow-y: auto;
+  overflow-x: hidden;
+
+  ::-webkit-scrollbar {
+    width: 0;
+  }
 
   > div:not(:last-child) {
     border-bottom: 1px solid grey;
