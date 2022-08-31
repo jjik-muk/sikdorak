@@ -16,7 +16,9 @@ function TagInput() {
   );
 
   function handleTagAddition(e) {
-    if (e.key === 'Enter') {
+    const isPressEnter = e.key === 'Enter';
+    const hasInputValue = value.length > 0;
+    if (isPressEnter && hasInputValue) {
       dispatchReviewWriteState({ type: 'SET_TAGS', tags: `${value}` });
       setValue('');
     }
