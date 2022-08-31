@@ -26,7 +26,9 @@ function App() {
                 </Portal>
               }
             />
-            <Route path="/userDetail" element={<UserDetail />} />
+            <Route path="/userDetail">
+              <Route path=":userId" element={<UserDetail />} />
+            </Route>
             <Route path="/storeDetail" element={<StoreDetail />} />
             <Route path="/reviewList" element={<ReviewList />} />
             <Route path="/api/oauth/callback" element={<Callback />} />

@@ -18,7 +18,7 @@ function CommonHeader() {
   const userDetailModalRef = useRef(null);
   const [, dispatchReviewDetail] = useReviewDetail();
   const [userInfo] = useUserInfo();
-  const { profileImageUrl } = userInfo;
+  const { userId, profileImageUrl } = userInfo;
 
   const iconInfo: IconInfoProps[] = [
     { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
@@ -47,7 +47,7 @@ function CommonHeader() {
               </div>
             </Link>
           ))}
-          <Link to="/userDetail">
+          <Link to={`/userDetail/${userId}`}>
             <ProfileImageWrap
               onClick={() => {
                 const myUserId = JSON.parse(localStorage.getItem('MY_INFO')).userId;

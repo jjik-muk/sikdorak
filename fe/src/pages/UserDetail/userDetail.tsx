@@ -4,6 +4,7 @@ import Feed from 'components/ReviewList/Feed/Feed';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { createKey, fetchDataThatNeedToLogin } from 'utils/utils';
 import {
   ActivityInfoWrap,
@@ -22,6 +23,9 @@ function UserDetail() {
   const [followingCnt, setFollowingCnt] = useState(0);
   const myInfo = JSON.parse(localStorage.getItem('MY_INFO'));
   const { userId, nickname, profileImageUrl } = myInfo;
+  const { pathname } = useLocation();
+  const ID = Number(pathname.split('/').at(-1));
+  const isMyUserDetailPage = userId === ID;
 
   useEffect(() => {
     fetchReviewDetail();
@@ -55,7 +59,7 @@ function UserDetail() {
         <UserInfoWrap>
           <UserInfoHeader>
             {nickname}
-            <FollowButton />
+            {!isMyUserDetailPage && <FollowButton />}
           </UserInfoHeader>
           <ActivityInfoWrap>
             <div>게시물 {reviewCnt}</div>
