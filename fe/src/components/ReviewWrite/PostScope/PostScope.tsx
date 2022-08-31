@@ -41,7 +41,7 @@ export default function PostScope() {
           <ScopeWrapper>
             <div>{currentScope === 'public' ? '전체 공개' : '친구 공개'}</div>
             <ScopeButtonWrapper scope={currentScope} onClick={handleSetScope}>
-              <Circle />
+              <Circle scope={currentScope} />
             </ScopeButtonWrapper>
           </ScopeWrapper>
           <ScopeDescriptionArea>{scope[currentScope]}</ScopeDescriptionArea>
