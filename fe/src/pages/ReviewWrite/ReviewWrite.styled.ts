@@ -25,6 +25,8 @@ export const ImgWrap = styled.div`
   ${() => flexLayoutMixin('row', 'space-between', 'center')}
   width: 1000px;
   height: 660px;
+  border-radius: 10px;
+  margin-left: 10px;
 `;
 
 export const InputWrap = styled.div`
@@ -50,4 +52,8 @@ export const PostBtnWrap = styled.div`
   position: absolute;
   bottom: 50px;
   right: 20px;
+`;
+
+export const Img = styled.img`
+  object-fit: cover;
 `;

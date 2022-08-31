@@ -10,7 +10,15 @@ export const ImgUploadWrapper = styled.div`
   margin: auto auto;
 `;
 
-export const ButtonWrapper = styled.button`
+export const ButtonWrapper = styled.input`
+  display: none;
+
+  ::file-selector-button {
+    display: none;
+  }
+`;
+
+export const Label = styled.label`
   background-color: #7d91d9;
   color: #fff;
   font-size: 14px;
