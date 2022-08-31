@@ -43,17 +43,6 @@ export const Day = styled.div<{ day: string }>`
   cursor: pointer;
 `;
 
-export const ToDay = styled.div`
-  ${flexLayoutMixin('', 'center', 'center')};
-  border: 1px solid black;
-  border-radius: 50%;
-  background-color: grey;
-  font-size: 14px;
-  text-align: center;
-  color: #fff;
-  cursor: pointer;
-`;
-
 const getDayColor = (day) => {
   if (day === 'SAT') {
     return `color:blue`;
