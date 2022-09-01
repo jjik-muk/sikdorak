@@ -92,4 +92,28 @@ public class ReviewController {
 		return new CommonResponseEntity<>(ResponseCodeAndMessages.REVIEW_REMOVE_SUCCESS,
 			HttpStatus.OK);
 	}
+
+	@PutMapping("/{reviewId}/like")
+	@UserOnly
+	public CommonResponseEntity<Void> likeReview(
+		@PathVariable Long reviewId,
+		@AuthenticatedUser LoginUser loginUser
+	) {
+
+		reviewService.likeReview(reviewId, loginUser);
+
+		return new CommonResponseEntity<>(ResponseCodeAndMessages.REVIEW_LIKE_SUCCESS,
+			HttpStatus.OK);
+	}
+
+	@PutMapping("/{reviewId}/unlike")
+	@UserOnly
+	public CommonResponseEntity<Void> unlikeReview(
+		@PathVariable Long reviewId,
+		@AuthenticatedUser LoginUser loginUser
+	) {
+
+		return new CommonResponseEntity<>(ResponseCodeAndMessages.REVIEW_UNLIKE_SUCCESS,
+			HttpStatus.OK);
+	}
 }

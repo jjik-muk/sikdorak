@@ -51,6 +51,9 @@ public class Review extends BaseTimeEntity {
 	@Embedded
 	private Images images = new Images();
 
+	@Embedded
+	private Likes likes = new Likes();
+
 	private boolean deleted = Boolean.FALSE;
 
 	public Review(Long id, Long userId, Long storeId, String reviewContent, Float reviewScore,
@@ -106,6 +109,8 @@ public class Review extends BaseTimeEntity {
 		return images.getImages();
 	}
 
+	public Set<Long> getLikes() { return likes.getLikes(); }
+
 	public String getReviewContent() {
 		return reviewContent.getReviewContent();
 	}
@@ -135,5 +140,17 @@ public class Review extends BaseTimeEntity {
 
 	public boolean isReadable(RelationType relationType) {
 		return reviewVisibility.isRead(relationType);
+	}
+
+	public void like(User user) {
+		likes.add(user.getId());
+	}
+
+	public void unlike(User user) {
+		likes.remove(user.getId());
+	}
+
+	public boolean isLikedBy(Long userId) {
+		return likes.contains(userId);
 	}
 }

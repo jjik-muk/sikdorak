@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.review.repository;
 
 import com.jjikmuk.sikdorak.review.domain.Review;
 import java.util.List;
+import java.util.Set;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -36,4 +37,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findPublicAndProtectedRecommendedReviewsInRecentOrder(
         @Param("targetId") long targetId,
         Pageable pageable);
+
+    @Query("select l from Review r join r.likes.likes l where r.id = :reviewId")
+    Set<Long> findLikeUsersByReviewId(@Param("reviewId") Long reviewId);
 }

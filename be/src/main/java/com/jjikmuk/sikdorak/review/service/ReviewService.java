@@ -8,6 +8,7 @@ import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
 import com.jjikmuk.sikdorak.review.controller.response.RecommendedReviewResponse;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.domain.Review;
+import com.jjikmuk.sikdorak.review.exception.DuplicateLikeUserException;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.domain.Store;
@@ -159,6 +160,22 @@ public class ReviewService {
 
         return review;
     }
+
+    @Transactional
+    public void likeReview(Long reviewId, LoginUser loginUser) {
+        Review review = reviewRepository.findById(reviewId)
+            .orElseThrow(NotFoundReviewException::new);
+        User user = userRepository.findById(loginUser.getId())
+            .orElseThrow(NotFoundUserException::new);
+
+        if (review.isLikedBy(user.getId())) {
+            throw new DuplicateLikeUserException();
+        }
+
+        review.like(user);
+    }
+
+
 
     private void validateReviewWithUser(Review review, User user) {
         if (!review.isAuthor(user)) {
