@@ -12,8 +12,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-@DisplayName("리뷰 좋아요 인수 테스트")
-public class ReviewLikeAcceptanceTest extends InitAcceptanceTest {
+@DisplayName("리뷰 좋아요 인수테스트")
+class ReviewLikeAcceptanceTest extends InitAcceptanceTest {
 
     @Test
     @DisplayName("유저의 좋아요 요청이 올바를 경우 성공 상태코드를 반환한다.")
