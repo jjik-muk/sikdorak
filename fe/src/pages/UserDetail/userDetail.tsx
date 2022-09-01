@@ -63,12 +63,12 @@ function UserDetail() {
       </UserDetailWrap>
       <FeedWrap>
         {reviews &&
-          reviews.map(({ reviewContent, images }, idx) => (
+          reviews.map(({ reviewContent, store, images }, idx) => (
             <Feed
               key={createKey(userProfile?.nickname, idx)}
               author={userProfile?.nickname}
               contents={reviewContent}
-              store={{ name: '호이 초밥', region: '부산' }}
+              store={store}
               likeCnt={0}
               pictures={images}
             />

@@ -22,14 +22,11 @@ function ReviewDetail({ author, contents, pictures, store, likeCnt }: FeedProps)
   const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const id = useId();
-  const { name, region } = store;
+  const { storeName, storeAddress } = store;
 
   const clickCreateComment = () => {
     commentRef.current.focus();
   };
-
-  // const USER_ID = 1;
-  // const reviewDetailRes = fetchDataThatNeedToLogin(`${DOMAIN}/api/reviews/${USER_ID}`);
 
   return (
     <Wrap>
@@ -45,7 +42,7 @@ function ReviewDetail({ author, contents, pictures, store, likeCnt }: FeedProps)
         <Main>
           <Contents>{contents}</Contents>
           <MainFooter>
-            <CompnayProfile company={name} region={region} />
+            <CompnayProfile company={storeName} region={storeAddress} />
           </MainFooter>
         </Main>
         <ButtonWrapper>

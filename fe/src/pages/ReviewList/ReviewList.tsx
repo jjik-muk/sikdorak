@@ -1,4 +1,4 @@
-import { DOMAIN, FEEDS } from 'constants/dummyData';
+import { DOMAIN } from 'constants/dummyData';
 import CommonHeader from 'components/CommonHeader/CommonHeader';
 import Feed from 'components/ReviewList/Feed/Feed';
 import { useEffect, useId, useState } from 'react';
@@ -9,48 +9,47 @@ function ReviewList() {
   const id = useId();
   const [reviews, setReviews] = useState([]);
   const [afterParam, setAfterParam] = useState(0);
-  const REVIEW_SIZE = 1;
+  const REVIEW_SIZE = 5;
 
   useEffect(() => {
-    const hasNextPage = afterParam !== 1;
-    if (!hasNextPage) return;
-
-    fetchRecommendReviews();
-
-    async function fetchRecommendReviews() {
-      const res = await fetchDataThatNeedToLogin(`${DOMAIN}/api/reviews?after=${afterParam}&size=${REVIEW_SIZE}`);
-      const resJson = await res.json();
-      const nextReviews = resJson.data.reviews;
-      const nextAfterParam = resJson.data.page.next;
-      setReviews([...reviews, ...nextReviews]);
-      setAfterParam(nextAfterParam);
-    }
+    fetchNextRecommendReviews();
   }, []);
 
   return (
     <ReviewListWrap onScroll={handleScroll}>
       <CommonHeader />
       <Wrap>
-        {FEEDS.map(({ author, contents, pictures, store, likeCnt }, i) => (
-          <Feed
-            key={createKey(id, i)}
-            author={author}
-            contents={contents}
-            pictures={pictures}
-            store={store}
-            likeCnt={likeCnt}
-          />
-        ))}
+        {reviews &&
+          reviews.map(({ user, store, images, reviewContent }, i) => (
+            <Feed
+              key={createKey(id, i)}
+              author={user.userNickname}
+              contents={reviewContent}
+              pictures={images}
+              store={store}
+              likeCnt={0}
+            />
+          ))}
       </Wrap>
     </ReviewListWrap>
   );
 
   function handleScroll(e) {
     const { scrollHeight, scrollTop, clientHeight } = e.target as HTMLDivElement;
+    const hasNextPage = afterParam !== 1;
     const isScrollEnd = scrollHeight - scrollTop === clientHeight;
-    if (isScrollEnd) {
-      console.log('끝');
+
+    if (hasNextPage && isScrollEnd) {
+      fetchNextRecommendReviews();
     }
+  }
+
+  async function fetchNextRecommendReviews() {
+    const res = await fetchDataThatNeedToLogin(`${DOMAIN}/api/reviews?after=${afterParam}&size=${REVIEW_SIZE}`);
+    const nextReviews = res.data.reviews;
+    const nextAfterParam = res.data.page.next;
+    setReviews([...reviews, ...nextReviews]);
+    setAfterParam(nextAfterParam);
   }
 }
 

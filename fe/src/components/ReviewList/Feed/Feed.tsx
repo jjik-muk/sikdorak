@@ -28,7 +28,7 @@ function Feed({ author, contents, pictures, store, likeCnt }: FeedProps) {
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const reviewDetailModalRef = useRef(null);
   useOutsideClick(reviewDetailModalRef, toggleIsClikedFeed);
-  const { name, region } = store;
+  const { storeName, storeAddress } = store;
 
   return (
     <>
@@ -56,7 +56,7 @@ function Feed({ author, contents, pictures, store, likeCnt }: FeedProps) {
                 ))}
             </Pictures>
             <MainFooter>
-              <CompnayProfile company={name} region={region} />
+              <CompnayProfile company={storeName} region={storeAddress} />
             </MainFooter>
           </Main>
           <ButtonWrapper>
@@ -100,6 +100,6 @@ export type FeedProps = {
   author: string;
   contents: string;
   pictures?: string[];
-  store: { name: string; region: string };
+  store: { storeId: number; storeName: string; storeAddress: string };
   likeCnt: number;
 };
