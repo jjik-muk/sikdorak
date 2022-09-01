@@ -132,4 +132,9 @@ interface ReviewSnippet {
 		)
 	);
 
+	Snippet REVIEW_LIKE_SUCCESS_REQUEST_SNIPPET = pathParameters(
+		parameterWithName("reviewId").description("리뷰 아이디")
+	);
+
+	Snippet REVIEW_LIKE_SUCCESS_RESPONSE_SNIPPET = createResponseSnippetWithFields(responseFieldsOfCommonNonData());
 }
