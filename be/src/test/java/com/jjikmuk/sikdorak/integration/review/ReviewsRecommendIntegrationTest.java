@@ -93,7 +93,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
     @DisplayName("리뷰 피드 목록 조회 시 요청한 페이지부터 요청한 사이즈 개수의 데이터를 반환한다.")
     void get_recommended_reviews_with_page_and_size() {
 
-        long cursorPage = 11;
+        long cursorPage = 20;
         int size = 7;
 
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
