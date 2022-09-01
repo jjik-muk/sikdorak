@@ -12,6 +12,7 @@ import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisibilityException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisitedDateException;
 import com.jjikmuk.sikdorak.review.exception.InvalidTagException;
 import com.jjikmuk.sikdorak.review.exception.InvalidTagsException;
+import com.jjikmuk.sikdorak.review.exception.NotFoundLikeUserException;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.store.exception.InvalidAddressException;
 import com.jjikmuk.sikdorak.store.exception.InvalidContactNumberException;
@@ -53,6 +54,7 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     INVALID_REVIEW_IMAGES("F-R008", "유효하지 않은 리뷰 이미지들 입니다.", InvalidReviewImagesException.class),
     INVALID_REVIEW_IMAGE("F-R009", "유효하지 않은 리뷰 이미지 입니다.", InvalidReviewImageException.class),
     DUPLICATE_LIKE_USER("F-R010", "이미 좋아요를 누른 리뷰입니다.", DuplicateLikeUserException.class),
+    NOT_FOUND_LIKE_USER("F-R011","존재하지 않는 좋아요 정보입니다.", NotFoundLikeUserException.class),
 
     // Store
     NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", NotFoundStoreException.class),

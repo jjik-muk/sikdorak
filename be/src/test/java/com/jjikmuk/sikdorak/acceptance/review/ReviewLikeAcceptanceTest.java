@@ -8,6 +8,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import com.jjikmuk.sikdorak.acceptance.InitAcceptanceTest;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
+import com.jjikmuk.sikdorak.common.exception.ExceptionCodeAndMessages;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -54,6 +55,21 @@ class ReviewLikeAcceptanceTest extends InitAcceptanceTest {
             .statusCode(HttpStatus.OK.value())
             .body("code", equalTo(ResponseCodeAndMessages.REVIEW_UNLIKE_SUCCESS.getCode()))
             .body("message", equalTo(ResponseCodeAndMessages.REVIEW_UNLIKE_SUCCESS.getMessage()));
+    }
+
+    @Test
+    @DisplayName("비회원의 좋아요 요청일 경우 실패 상태코드를 반환한다.")
+    void anonymous_like() {
+        given()
+
+        .when()
+            .put("/api/reviews/{reviewId}/like", testData.user1PublicReview.getId())
+
+        .then()
+            .statusCode(HttpStatus.UNAUTHORIZED.value())
+            .body("code", equalTo(ExceptionCodeAndMessages.NEED_LOGIN.getCode()))
+            .body("message", equalTo(ExceptionCodeAndMessages.NEED_LOGIN.getMessage()));
+
     }
 
 }
