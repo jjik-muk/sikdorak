@@ -7,6 +7,7 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
     REVIEW_MODIFY_SUCCESS("T-R002", "리뷰 수정 성공했습니다."),
     REVIEW_REMOVE_SUCCESS("T-R003", "리뷰 삭제 성공했습니다."),
     REVIEW_SEARCH_DETAIL_SUCCESS("T-R004", "리뷰 상세 조회 성공했습니다."),
+    REVIEWS_FEED_SUCCESS("T-R001", "리뷰 피드 목록 조회 성공했습니다."),
 
     // OAuth
     LOGIN_SUCCESS("T-O001", "로그인에 성공했습니다."),
@@ -30,6 +31,9 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
 
     // Comment
     COMMENT_CREATE_SUCCESS("T-C001", "댓글 작성에 성공했습니다."),
+    COMMENT_MODIFY_SUCCESS("T-C002", "댓글 수정에 성공했습니다."),
+    COMMENT_REMOVE_SUCCESS("T-C003", "댓글 삭제에 성공했습니다."),
+    COMMENT_SEARCH_SUCCESS("T-C004", "댓글 조회에 성공했습니다."),
 
     // ETC
     SYSTEMINFO_SEARCH_API_DOCS_INFO("T-S001", "API 문서 코드/메세지 검색 성공했습니다.");

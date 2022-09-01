@@ -1,5 +1,6 @@
 package com.jjikmuk.sikdorak.common.config;
 
+import com.jjikmuk.sikdorak.common.controller.CursorPageableArgumentResolver;
 import com.jjikmuk.sikdorak.user.auth.controller.OAuthUserArgumentResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	private final OAuthUserArgumentResolver oAuthUserArgumentResolver;
 
+	private final CursorPageableArgumentResolver cursorPageableArgumentResolver;
+
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
@@ -36,5 +39,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(oAuthUserArgumentResolver);
+		resolvers.add(cursorPageableArgumentResolver);
 	}
 }

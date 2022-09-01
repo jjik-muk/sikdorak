@@ -4,7 +4,6 @@ import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
-import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import java.sql.Connection;
@@ -39,17 +38,9 @@ public class DatabaseConfigurator implements InitializingBean {
     private ReviewRepository reviewRepository;
 
     @Autowired
-    private JwtProvider jwtProvider;
-
-//    @Autowired
-//    private UserDataConfigurator userDataConfigurator;
+    public DataGenerator generator;
 
     public Store store;
-//    public TUser kukim;
-//    public TUser jay;
-//    public TUser forky;
-//    public TUser hoi;
-//    public TUser rumka;
     public User kukim;
     public User jay;
     public User forky;
@@ -73,6 +64,7 @@ public class DatabaseConfigurator implements InitializingBean {
         initFollowingUserData();
         initUserAuthorizationData();
         initReviewData();
+        postReviews();
     }
 
     public void clear() {
@@ -83,7 +75,6 @@ public class DatabaseConfigurator implements InitializingBean {
     public void afterPropertiesSet() {
         entityManager.unwrap(Session.class).doWork(this::extractTableNames);
     }
-
 
     // reference : https://www.baeldung.com/jdbc-database-metadata
     private void extractTableNames(Connection connection) throws SQLException {
@@ -139,22 +130,6 @@ public class DatabaseConfigurator implements InitializingBean {
         this.rumka = userRepository.save(
             new User(5000000L, "럼카", "https://s3.ap-northeast-2.amazonaws.com/user/rumka.jpg",
                 "rumka@gmail.com"));
-
-//        this.kukim = userDataConfigurator.createTUser(1000000L, "쿠킴",
-//            "https://s3.ap-northeast-2.amazonaws.com/user/kukim.jpg",
-//            "kukim@gmail.com");
-//        this.jay = userDataConfigurator.createTUser(2000000L, "제이",
-//            "https://s3.ap-northeast-2.amazonaws.com/user/jay.jpg",
-//            "jay@gmail.com");
-//        this.forky = userDataConfigurator.createTUser(3000000L, "포키",
-//            "https://s3.ap-northeast-2.amazonaws.com/user/forky.jpg",
-//            "forky@gmail.com");
-//        this.hoi = userDataConfigurator.createTUser(4000000L, "호이",
-//            "https://s3.ap-northeast-2.amazonaws.com/user/hoi.jpg",
-//            "hoi@gmail.com");
-//        this.rumka = userDataConfigurator.createTUser(5000000L, "럼카",
-//            "https://s3.ap-northeast-2.amazonaws.com/user/rumka.jpg",
-//            "rumka@gmail.com");
     }
 
     private void initFollowingUserData() {
@@ -168,24 +143,15 @@ public class DatabaseConfigurator implements InitializingBean {
     }
 
     private void initUserAuthorizationData() {
-        String user1Payload = String.valueOf(this.kukim.getId());
-        String user2Payload = String.valueOf(this.jay.getId());
-        String followSendUserPayload = String.valueOf(this.forky.getId());
-        String followAcceptUserPayload = String.valueOf(this.hoi.getId());
-
         Date now = new Date();
         Date accessTokenExpiredTime = new Date(now.getTime() + 1800000);
 
-        this.user1ValidAuthorizationHeader =
-            "Bearer " + jwtProvider.createAccessToken(user1Payload, accessTokenExpiredTime);
-        this.user2ValidAuthorizationHeader =
-            "Bearer " + jwtProvider.createAccessToken(user2Payload,accessTokenExpiredTime);
-        this.followSendUserValidAuthorizationHeader =
-            "Bearer " + jwtProvider.createAccessToken(followSendUserPayload, accessTokenExpiredTime);
-        this.followAcceptUserValidAuthorizationHeader =
-            "Bearer " + jwtProvider.createAccessToken(followAcceptUserPayload, accessTokenExpiredTime);
-        this.user1RefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime()+8000000));
-        this.user1ExpiredRefreshToken = jwtProvider.createRefreshToken(user1Payload, new Date(now.getTime() - 1000));
+        this.user1ValidAuthorizationHeader = generator.validAuthorizationHeader(kukim, accessTokenExpiredTime);
+        this.user2ValidAuthorizationHeader = generator.validAuthorizationHeader(jay, accessTokenExpiredTime);
+        this.followSendUserValidAuthorizationHeader = generator.validAuthorizationHeader(forky, accessTokenExpiredTime);
+        this.followAcceptUserValidAuthorizationHeader = generator.validAuthorizationHeader(hoi, accessTokenExpiredTime);
+        this.user1RefreshToken = generator.refreshToken(kukim, new Date(now.getTime()+8000000));
+        this.user1ExpiredRefreshToken = generator.refreshToken(kukim, new Date(now.getTime() - 1000));
         this.user1InvalidRefreshToken = user1RefreshToken + "invalid";
     }
 
@@ -226,37 +192,18 @@ public class DatabaseConfigurator implements InitializingBean {
             LocalDate.of(2022, 1, 1),
             List.of("tag1", "tag2"),
             List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
+    }
 
-//        this.review = kukim.publishReview(this.store.getId(),
-//            "Test review contents",
-//            3.f,
-//            "public",
-//            LocalDate.of(2022, 1, 1),
-//            List.of("tag1", "tag2"),
-//            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
-//
-//        hoi.publishReview(this.store.getId(),
-//            "전체 공개된 리뷰 게시물",
-//            3.f,
-//            "public",
-//            LocalDate.of(2022, 1, 1),
-//            List.of("tag1", "tag2"),
-//            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
-//
-//        hoi.publishReview(this.store.getId(),
-//            "친구 공개된 리뷰 게시물",
-//            3.f,
-//            "protected",
-//            LocalDate.of(2022, 1, 1),
-//            List.of("tag1", "tag2"),
-//            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
-//
-//        hoi.publishReview(this.store.getId(),
-//            "비공개된 리뷰 게시물",
-//            3.f,
-//            "private",
-//            LocalDate.of(2022, 1, 1),
-//            List.of("tag1", "tag2"),
-//            List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
+    private void postReviews() {
+        for (int i = 0; i < 20; i++) {
+            reviewRepository.save(new Review(this.forky.getId(),
+                this.store.getId(),
+                "전체 공개된 리뷰 게시물 " + i,
+                3.f,
+                "public",
+                LocalDate.of(2022, 1, 1),
+                List.of("tag1", "tag2"),
+                List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
+        }
     }
 }

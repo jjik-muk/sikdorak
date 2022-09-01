@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer } from 'react';
 
-const initState = {
+const INIT_STATE = {
   year: 0,
   month: 0,
   date: 0,
@@ -15,36 +15,37 @@ const initState = {
 };
 
 const reducer = (state, action: ActionType) => {
+  const { year, month, date, day, restaurant, id, address, rating, scope, text } = action;
   switch (action.type) {
     case 'SET_DATE':
       return {
         ...state,
-        year: action.year,
-        month: action.month,
-        date: action.date,
-        day: action.day,
+        year,
+        month,
+        date,
+        day,
       };
     case 'SELECT_RESTAURANT':
       return {
         ...state,
-        restaurant: action.restaurant,
-        id: action.id,
-        address: action.address,
+        restaurant,
+        id,
+        address,
       };
     case 'TYPING_TEXT':
       return {
         ...state,
-        content: action.text,
+        content: text,
       };
     case 'RATE':
       return {
         ...state,
-        rating: action.rating,
+        rating,
       };
     case 'SET_SCOPE':
       return {
         ...state,
-        scope: action.scope,
+        scope,
       };
     case 'SET_TAGS':
       return {
@@ -60,7 +61,7 @@ export const ReviewWriteContext: React.Context<{}> = createContext({});
 export const DispatchReviewWriteContext = createContext(undefined);
 
 function ReviewWriteProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, initState);
+  const [state, dispatch] = useReducer(reducer, INIT_STATE);
   return (
     <DispatchReviewWriteContext.Provider value={dispatch}>
       <ReviewWriteContext.Provider value={state}>{children}</ReviewWriteContext.Provider>

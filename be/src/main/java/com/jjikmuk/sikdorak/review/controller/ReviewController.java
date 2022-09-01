@@ -2,9 +2,12 @@ package com.jjikmuk.sikdorak.review.controller;
 
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.aop.UserOnly;
+import com.jjikmuk.sikdorak.common.controller.CursorPageable;
+import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
+import com.jjikmuk.sikdorak.review.controller.response.RecommendedReviewResponse;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
@@ -38,6 +41,22 @@ public class ReviewController {
 			ResponseCodeAndMessages.REVIEW_SEARCH_DETAIL_SUCCESS,
 			reviewDetailResponse,
 			HttpStatus.OK);
+	}
+
+	@GetMapping
+	public CommonResponseEntity<RecommendedReviewResponse> getRecommendedReviews(
+		@AuthenticatedUser LoginUser loginUser,
+//		@RequestParam RecommendationType recommendationType, -> 아키텍처 변경되면 사용하지 않을것으로 판단되어 주석처리
+		@CursorPageable CursorPageRequest cursorPageRequest) {
+
+		RecommendedReviewResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
+			loginUser, cursorPageRequest);
+
+		return new CommonResponseEntity<>(
+			ResponseCodeAndMessages.REVIEWS_FEED_SUCCESS,
+			recommendedReviews,
+			HttpStatus.OK
+		);
 	}
 
 	@PostMapping

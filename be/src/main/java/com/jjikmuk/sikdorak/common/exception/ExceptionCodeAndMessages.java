@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.common.exception;
 
 import com.jjikmuk.sikdorak.comment.exception.InvalidCommentContentException;
+import com.jjikmuk.sikdorak.comment.exception.NotFoundCommentException;
 import com.jjikmuk.sikdorak.common.CodeAndMessages;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewImageException;
@@ -37,6 +38,8 @@ import lombok.Getter;
 @Getter
 public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NOT_FOUND_ERROR_CODE("F-G001", "에러 코드를 찾을 수 없습니다.", NotFoundErrorCodeException.class),
+    INVALID_PAGE_PARAMETER("F-G002", "유효하지 않은 페이징 값 입니다.", InvalidPageParameterException.class),
+    INTERNAL_SERVER_ERROR("F-G003", "서버 에러입니다.(관리자에게 문의하세요)", UnsupportedParameterTypeException.class),
 
     // Review
     INVALID_REVIEW_CONTENT("F-R001", "유효하지 않은 리뷰 컨텐츠 입니다.", InvalidReviewContentException.class),
@@ -76,7 +79,8 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NEED_LOGIN("F-O004", "로그인이 필요한 서비스입니다.", NeedLoginException.class),
 
     // Comment
-    INVALID_COMMENT_CONTENT_EXCEPTION("F-C001", "유효하지 않은 댓글 내용입니다.", InvalidCommentContentException.class);
+    INVALID_COMMENT_CONTENT_EXCEPTION("F-C001", "유효하지 않은 댓글 내용입니다.", InvalidCommentContentException.class),
+    NOT_FOUND_COMMENT_EXCEPTION("F-C002", "댓글을 찾을 수 없습니다.", NotFoundCommentException.class);
 
     private final String code;
 
