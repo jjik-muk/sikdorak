@@ -8,15 +8,22 @@ import { Wrap } from './ReviewList.styled';
 function ReviewList() {
   const id = useId();
   const [reviews, setReviews] = useState([]);
-  const REVIEW_SIZE = 1;
+  const [afterParam, setAfterParam] = useState(0);
+  const REVIEW_SIZE = 5;
 
   useEffect(() => {
+    const hasNextPage = afterParam !== 1;
+    if (!hasNextPage) return;
+
     fetchRecommendReviews();
 
     async function fetchRecommendReviews() {
-      const res = await fetchDataThatNeedToLogin(`${DOMAIN}/api/reviews?after=0&size=${REVIEW_SIZE}`);
+      const res = await fetchDataThatNeedToLogin(`${DOMAIN}/api/reviews?after=${afterParam}&size=${REVIEW_SIZE}`);
       const resJson = await res.json();
-      setReviews(resJson.data);
+      const nextReviews = resJson.data.reviews;
+      const nextAfterParam = resJson.data.page.next;
+      setReviews([...reviews, ...nextReviews]);
+      setAfterParam(nextAfterParam);
     }
   }, []);
 
