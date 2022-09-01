@@ -1,14 +1,12 @@
 import { DOMAIN } from 'constants/dummyData';
 import { STATUS_CODE } from 'constants/statusCode';
 import Loading from 'common/Loading/Loading';
-import Login from 'pages/Login/Login';
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Dispatch, useEffect } from 'react';
+import { Navigate, useSearchParams } from 'react-router-dom';
 
-function Callback() {
+function Callback({ accessToken, setAccessToken }: CallbackProps) {
   const [searchParams] = useSearchParams();
   const kakaoAuthorizationCode = searchParams.get('code');
-  const [accessToken, setAccessToken] = useState(null);
 
   useEffect(() => {
     fetchAccessToken();
@@ -33,7 +31,12 @@ function Callback() {
     return <Loading />;
   }
 
-  return <Login />;
+  return <Navigate to="/" />;
 }
+
+type CallbackProps = {
+  accessToken: string;
+  setAccessToken: Dispatch<any>;
+};
 
 export default Callback;

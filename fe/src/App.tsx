@@ -1,23 +1,53 @@
+import { DOMAIN } from 'constants/dummyData';
 import Portal from 'common/Portal/Portal';
+import MyUserInfoProvider, { useMyUserInfo } from 'context/MyUserInfoProvider';
 import ReviewDetailProvider from 'context/reviewDetailProvider';
-import UserInfoProvider from 'context/userInfoProvider';
 import Callback from 'pages/Callback/Callback';
 import Login from 'pages/Login/Login';
 import ReviewList from 'pages/ReviewList/ReviewList';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import StoreDetail from 'pages/StoreDetail/StoreDetail';
 import UserDetail from 'pages/UserDetail/UserDetail';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import GlobalStyle from 'styles/GlobalStyle';
+import { fetchDataThatNeedToLogin } from 'utils/utils';
 
 function App() {
+  const [, dispatchUserInfo] = useMyUserInfo();
+  const [accessToken, setAccessToken] = useState(null);
+  const hasAccessToken = () => localStorage.getItem('accessToken');
+
+  useEffect(() => {
+    if (hasAccessToken) {
+      setMyInfo();
+    }
+
+    async function setMyInfo() {
+      const myInfo = await fetchDataThatNeedToLogin(`${DOMAIN}/api/users/me`);
+      const { id, nickname, profileImage } = myInfo.data;
+      const myInfoJson = JSON.stringify({ userId: id, nickname, profileImageUrl: profileImage });
+      localStorage.setItem('MY_INFO', myInfoJson);
+      dispatchUserInfo({ type: 'SET_USER', userId: id, nickname, profileImageUrl: profileImage });
+    }
+  }, [accessToken]);
+
   return (
-    <UserInfoProvider>
+    <MyUserInfoProvider>
       <ReviewDetailProvider>
         <GlobalStyle />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={hasAccessToken() ? <ReviewList /> : <Navigate replace to="/login" />} />
+            <Route path="/login" element={hasAccessToken() ? <Navigate replace to="/" /> : <Login />} />
+            <Route path="/userDetail">
+              <Route path=":userId" element={hasAccessToken() ? <UserDetail /> : <Navigate replace to="/" />} />
+            </Route>
+            <Route path="/storeDetail" element={hasAccessToken() ? <StoreDetail /> : <Navigate replace to="/" />} />
+            <Route
+              path="/api/oauth/callback"
+              element={<Callback accessToken={accessToken} setAccessToken={setAccessToken} />}
+            />
             <Route
               path="/reviewWrite"
               element={
@@ -26,16 +56,10 @@ function App() {
                 </Portal>
               }
             />
-            <Route path="/userDetail">
-              <Route path=":userId" element={<UserDetail />} />
-            </Route>
-            <Route path="/storeDetail" element={<StoreDetail />} />
-            <Route path="/reviewList" element={<ReviewList />} />
-            <Route path="/api/oauth/callback" element={<Callback />} />
           </Routes>
         </BrowserRouter>
       </ReviewDetailProvider>
-    </UserInfoProvider>
+    </MyUserInfoProvider>
   );
 }
 
