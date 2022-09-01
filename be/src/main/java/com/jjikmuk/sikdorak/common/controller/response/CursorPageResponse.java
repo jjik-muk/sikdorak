@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 public record CursorPageResponse(
 
 	@NotNull
-	@Min(10)
+	@Min(0)
 	@Max(20)
 	int size,
 

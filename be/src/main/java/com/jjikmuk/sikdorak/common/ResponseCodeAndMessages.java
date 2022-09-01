@@ -7,6 +7,7 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
     REVIEW_MODIFY_SUCCESS("T-R002", "리뷰 수정 성공했습니다."),
     REVIEW_REMOVE_SUCCESS("T-R003", "리뷰 삭제 성공했습니다."),
     REVIEW_SEARCH_DETAIL_SUCCESS("T-R004", "리뷰 상세 조회 성공했습니다."),
+    REVIEWS_FEED_SUCCESS("T-R001", "리뷰 피드 목록 조회 성공했습니다."),
 
     // OAuth
     LOGIN_SUCCESS("T-O001", "로그인에 성공했습니다."),
