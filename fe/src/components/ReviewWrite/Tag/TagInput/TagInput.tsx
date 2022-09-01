@@ -1,4 +1,4 @@
-import { useReviewWrite } from 'context/reviewWriteProvider';
+import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { useState } from 'react';
 import { debounce } from 'utils/utils';
 import { Input } from './TagInput.styled';
@@ -16,8 +16,10 @@ function TagInput() {
   );
 
   function handleTagAddition(e) {
-    if (e.key === 'Enter') {
-      dispatchReviewWriteState({ type: 'SET_TAGS', tags: `#${value}` });
+    const isPressEnter = e.key === 'Enter';
+    const hasInputValue = value.length > 0;
+    if (isPressEnter && hasInputValue) {
+      dispatchReviewWriteState({ type: 'SET_TAGS', tags: `${value}` });
       setValue('');
     }
   }

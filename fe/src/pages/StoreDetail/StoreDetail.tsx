@@ -2,7 +2,7 @@ import { DEFAULT_IMG, FEEDS, STORE } from 'constants/dummyData';
 import { ICON, STORE_DETAIL } from 'constants/size';
 import TEXT from 'constants/text';
 import Icon from 'common/Icon';
-import CommonHeader from 'components/Common/CommonHeader';
+import CommonHeader from 'components/CommonHeader/CommonHeader';
 import Feed from 'components/ReviewList/Feed/Feed';
 import {
   DimText,
@@ -55,15 +55,8 @@ function StoreDetail() {
             </Row>
           </InfoWrap>
         </StoreInfo>
-        {FEEDS.map(({ author, contents, rating, store, likeCnt, pictures }) => (
-          <Feed
-            author={author}
-            contents={contents}
-            rating={rating}
-            store={store}
-            likeCnt={likeCnt}
-            pictures={pictures}
-          />
+        {FEEDS.map(({ author, contents, store, likeCnt, pictures }) => (
+          <Feed author={author} contents={contents} store={store} likeCnt={likeCnt} pictures={pictures} />
         ))}
       </Wrap>
     </>

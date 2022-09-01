@@ -3,7 +3,6 @@ import Icon from 'common/Icon';
 import Portal from 'common/Portal/Portal';
 import Menu from 'components/ReviewDetail/Menu/Menu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
-import TotalRating from 'components/ReviewDetail/TotalRating/TotalRating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
@@ -23,13 +22,12 @@ import {
   Wrap,
 } from './Feed.styled';
 
-function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps) {
+function Feed({ author, contents, pictures, store, likeCnt }: FeedProps) {
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
   const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const reviewDetailModalRef = useRef(null);
   useOutsideClick(reviewDetailModalRef, toggleIsClikedFeed);
-  const [taste, price, service] = rating;
   const { name, region } = store;
 
   return (
@@ -57,7 +55,6 @@ function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps)
                   />
                 ))}
             </Pictures>
-            <TotalRating taste={taste} price={price} service={service} />
             <MainFooter>
               <CompnayProfile company={name} region={region} />
             </MainFooter>
@@ -84,14 +81,7 @@ function Feed({ author, contents, rating, pictures, store, likeCnt }: FeedProps)
       </Wrap>
       {isClikedFeed && (
         <Portal selector="#portal" ref={reviewDetailModalRef}>
-          <ReviewDetail
-            author={author}
-            contents={contents}
-            rating={rating}
-            pictures={pictures}
-            store={store}
-            likeCnt={likeCnt}
-          />
+          <ReviewDetail author={author} contents={contents} pictures={pictures} store={store} likeCnt={likeCnt} />
         </Portal>
       )}
     </>
@@ -109,7 +99,6 @@ export default Feed;
 export type FeedProps = {
   author: string;
   contents: string;
-  rating: number[];
   pictures?: string[];
   store: { name: string; region: string };
   likeCnt: number;

@@ -1,5 +1,5 @@
 import { DOMAIN } from 'constants/dummyData';
-import { useReviewWrite } from 'context/reviewWriteProvider';
+import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { fetchData } from 'utils/utils';
 import { Wrap } from './RegistrationBtn.styled';
 

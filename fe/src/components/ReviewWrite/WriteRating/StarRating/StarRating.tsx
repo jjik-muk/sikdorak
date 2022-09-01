@@ -1,5 +1,5 @@
 import StarIcon from 'components/ReviewWrite/WriteRating/StarRating/StarIcon/StarIcon';
-import { useReviewWrite } from 'context/reviewWriteProvider';
+import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { createKey } from 'utils/utils';
 import { Wrap } from './StarRating.styled';
 

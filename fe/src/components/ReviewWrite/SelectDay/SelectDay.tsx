@@ -1,5 +1,5 @@
 import Calendar from 'components/ReviewWrite/Calendar/Calendar';
-import { useReviewWrite } from 'context/reviewWriteProvider';
+import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { useState } from 'react';
 import { SelectDayWrapper, Wrap } from './SelectDay.styled';
 

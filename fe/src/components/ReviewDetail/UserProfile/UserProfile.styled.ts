@@ -11,6 +11,8 @@ export const Wrap = styled.div`
 export const Picture = styled.img`
   width: 42px;
   height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
 `;
 
 export const Nickname = styled.div`

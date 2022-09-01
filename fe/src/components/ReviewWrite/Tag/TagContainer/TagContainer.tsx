@@ -1,8 +1,7 @@
-import { useReviewWrite } from 'context/reviewWriteProvider';
+import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { createKey } from 'utils/utils';
 import TagInput from '../TagInput/TagInput';
-import TagItem from '../TagItem/TagItem';
-import { Wrap } from './TagContainer.styled';
+import { Item, Wrap } from './TagContainer.styled';
 
 function TagContainer() {
   const [reviewWriteState] = useReviewWrite();
@@ -10,8 +9,8 @@ function TagContainer() {
 
   return (
     <Wrap>
-      {tags.map((tag, idx) => (
-        <TagItem key={createKey(tag, idx)} name={tag} />
+      {tags.map((tag: string, idx: number) => (
+        <Item key={createKey(tag, idx)}>#{tag}</Item>
       ))}
       <TagInput />
     </Wrap>

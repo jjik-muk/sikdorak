@@ -1,9 +1,12 @@
-import { FEEDS } from 'constants/dummyData';
-import CommonHeader from 'components/Common/CommonHeader';
+import { DOMAIN } from 'constants/dummyData';
+import CommonHeader from 'components/CommonHeader/CommonHeader';
 import Feed from 'components/ReviewList/Feed/Feed';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
-import { createKey } from 'utils/utils';
+import { useMyUserInfo } from 'context/MyUserInfoProvider';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { createKey, fetchDataThatNeedToLogin } from 'utils/utils';
 import {
   ActivityInfoWrap,
   FeedWrap,
@@ -12,51 +15,64 @@ import {
   UserInfoHeader,
   UserInfoWrap,
   Wrap,
-} from './userDetail.styled';
-
-const MockUserInfo = {
-  name: 'Dashawn',
-  postCnt: 10,
-  followCnt: 1101,
-  followerCnt: 333,
-  profileMessage: '맛잘알 리스트는 아닙니다.. 그냥 기록용 입니다',
-  profileImg: 'https://avatars.githubusercontent.com/u/87521172?v=4',
-};
+} from './UserDetail.styled';
 
 function UserDetail() {
+  const [reviews, setReviews] = useState([]);
+  const [userProfile, setUserProfile] = useState(null);
+  const [myInfo] = useMyUserInfo();
+  const { userId } = myInfo;
+  const { pathname } = useLocation();
+  const ID = Number(pathname.split('/').at(-1));
+  const isMyUserDetailPage = userId === ID;
+
+  useEffect(() => {
+    fetchUserProfile();
+    fetchReviewDetail();
+
+    // TODO: 중복 코드 제거
+    async function fetchReviewDetail() {
+      const reviewDetailRes = await fetchDataThatNeedToLogin(`${DOMAIN}/api/users/${ID}/reviews`);
+      const fetchedReviews = reviewDetailRes.data;
+      setReviews(fetchedReviews);
+    }
+    async function fetchUserProfile() {
+      const userProfileRes = await fetchDataThatNeedToLogin(`${DOMAIN}/api/users/${ID}`);
+      const fetchedUserProfile = userProfileRes.data;
+      setUserProfile(fetchedUserProfile);
+    }
+  }, []);
+
   return (
     <Wrap>
       <CommonHeader />
       <UserDetailWrap>
-        <UserProfilePhoto src={MockUserInfo.profileImg} />
+        <UserProfilePhoto src={userProfile?.profileImage} />
         <UserInfoWrap>
           <UserInfoHeader>
-            {MockUserInfo.name}
-            <FollowButton />
+            {userProfile?.nickname}
+            {!isMyUserDetailPage && <FollowButton />}
           </UserInfoHeader>
           <ActivityInfoWrap>
-            <div>게시물 {MockUserInfo.postCnt}</div>
-            <div>팔로우 {MockUserInfo.followCnt}</div>
-            <div>팔로워 {MockUserInfo.followerCnt}</div>
+            <div>게시물 {userProfile?.reviewCount}</div>
+            <div>팔로우 {userProfile?.followingCount}</div>
+            <div>팔로워 {userProfile?.followersCount}</div>
           </ActivityInfoWrap>
-          <ProfileInfoWrap>
-            {MockUserInfo.name}
-            {MockUserInfo.profileMessage}
-          </ProfileInfoWrap>
+          <ProfileInfoWrap>자신을 소개해주세요.</ProfileInfoWrap>
         </UserInfoWrap>
       </UserDetailWrap>
       <FeedWrap>
-        {FEEDS.map(({ author, contents, rating, store, likeCnt, pictures }, idx) => (
-          <Feed
-            key={createKey(author, idx)}
-            author={author}
-            contents={contents}
-            rating={rating}
-            store={store}
-            likeCnt={likeCnt}
-            pictures={pictures}
-          />
-        ))}
+        {reviews &&
+          reviews.map(({ reviewContent, images }, idx) => (
+            <Feed
+              key={createKey(userProfile?.nickname, idx)}
+              author={userProfile?.nickname}
+              contents={reviewContent}
+              store={{ name: '호이 초밥', region: '부산' }}
+              likeCnt={0}
+              pictures={images}
+            />
+          ))}
       </FeedWrap>
     </Wrap>
   );

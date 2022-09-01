@@ -25,6 +25,8 @@ export const ImgWrap = styled.div`
   ${() => flexLayoutMixin('row', 'space-between', 'center')}
   width: 1000px;
   height: 660px;
+  border-radius: 10px;
+  margin-left: 10px;
 `;
 
 export const InputWrap = styled.div`
@@ -35,6 +37,11 @@ export const InputWrap = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   overflow-y: auto;
+  overflow-x: hidden;
+
+  ::-webkit-scrollbar {
+    width: 0;
+  }
 
   > div:not(:last-child) {
     border-bottom: 1px solid grey;
@@ -45,4 +52,8 @@ export const PostBtnWrap = styled.div`
   position: absolute;
   bottom: 50px;
   right: 20px;
+`;
+
+export const Img = styled.img`
+  object-fit: cover;
 `;

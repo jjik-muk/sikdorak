@@ -1,6 +1,6 @@
 import Icon from 'common/Icon';
 import Modal from 'common/Modal/Modal';
-import { useReviewWrite } from 'context/reviewWriteProvider';
+import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { useState } from 'react';
 import {
   Circle,
@@ -42,7 +42,7 @@ export default function PostScope() {
           <ScopeWrapper>
             <div>{isPublicScope ? '전체 공개' : '친구 공개'}</div>
             <ScopeButtonWrapper scope={currentScope} onClick={handleSetScope}>
-              <Circle />
+              <Circle scope={currentScope} />
             </ScopeButtonWrapper>
           </ScopeWrapper>
           <ScopeDescriptionArea>{scope[currentScope]}</ScopeDescriptionArea>

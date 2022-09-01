@@ -5,7 +5,6 @@ import Carousel from 'components/ReviewDetail/Carousel/Carousel';
 import Comment from 'components/ReviewDetail/Comment/Comment';
 import Menu from 'components/ReviewDetail/Menu/Menu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
-import TotalRating from 'components/ReviewDetail/TotalRating/TotalRating';
 import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import { FeedProps } from 'components/ReviewList/Feed/Feed';
@@ -15,7 +14,7 @@ import { useId, useRef } from 'react';
 import { createKey } from 'utils/utils';
 import { ButtonWrapper, Contents, ContentsWrap, Header, IconWrap, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
-function ReviewDetail({ author, contents, rating, pictures, store, likeCnt }: FeedProps) {
+function ReviewDetail({ author, contents, pictures, store, likeCnt }: FeedProps) {
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const hasPicture = pictures.length > 0;
   const wrapWidth = hasPicture ? DETAIL.WRAP.WIDTH_WITH_IMG : DETAIL.WRAP.WIDTH_NO_IMG;
@@ -23,12 +22,14 @@ function ReviewDetail({ author, contents, rating, pictures, store, likeCnt }: Fe
   const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const id = useId();
-  const [taste, price, service] = rating;
   const { name, region } = store;
 
   const clickCreateComment = () => {
     commentRef.current.focus();
   };
+
+  // const USER_ID = 1;
+  // const reviewDetailRes = fetchDataThatNeedToLogin(`${DOMAIN}/api/reviews/${USER_ID}`);
 
   return (
     <Wrap>
@@ -43,7 +44,6 @@ function ReviewDetail({ author, contents, rating, pictures, store, likeCnt }: Fe
         </Header>
         <Main>
           <Contents>{contents}</Contents>
-          <TotalRating taste={taste} price={price} service={service} />
           <MainFooter>
             <CompnayProfile company={name} region={region} />
           </MainFooter>

@@ -16,6 +16,7 @@ export const PostScopeWrapper = styled.div`
   }
 `;
 export const ScopeWrapper = styled.div`
+  padding: 10px;
   ${() => flexLayoutMixin('row', 'space-between', 'center')}
 `;
 
@@ -23,19 +24,21 @@ export const ScopeButtonWrapper = styled.div<ScopeButtonWrapperProps>`
   border-radius: 20px;
   border: 2px solid #000;
   background-color: #d0cfce;
-  width: 60px;
-  height: 24px;
-  ${({ scope }) => flexLayoutMixin('row', getScope(scope))}
+  width: 52px;
+  height: 26px;
+  ${({ scope }) => flexLayoutMixin('row', getScope(scope))};
+  cursor: pointer;
 `;
 
-export const Circle = styled.div`
-  background-color: red;
-  width: 33%;
+export const Circle = styled.div<{ scope: string }>`
+  background-color: ${({ scope }) => (scope === 'public' ? 'black' : 'black')};
+  width: 50%;
   height: 100%;
   border-radius: 50%;
 `;
 
 export const ScopeDescriptionArea = styled.div`
+  padding: 10px;
   color: #626262;
 `;
 
