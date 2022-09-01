@@ -1,7 +1,7 @@
 import Icon, { IconComponentsKeys } from 'common/Icon';
 import Logo from 'common/Logo/Logo';
 import Portal from 'common/Portal/Portal';
-import { useUserInfo } from 'context/userInfoProvider';
+import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
@@ -15,7 +15,7 @@ function CommonHeader() {
   const [, toggleIsUserProfile] = useToggle(false);
   const reviewWriteModalRef = useRef(null);
   const userDetailModalRef = useRef(null);
-  const [userInfo] = useUserInfo();
+  const [userInfo] = useMyUserInfo();
   const { userId, profileImageUrl } = userInfo;
 
   const iconInfo: IconInfoProps[] = [

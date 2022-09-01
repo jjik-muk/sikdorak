@@ -1,6 +1,6 @@
 import Icon from 'common/Icon';
 import Modal from 'common/Modal/Modal';
-import { useReviewWrite } from 'context/reviewWriteProvider';
+import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { useState } from 'react';
 import {
   Circle,

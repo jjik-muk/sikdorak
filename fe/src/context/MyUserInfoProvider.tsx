@@ -1,6 +1,8 @@
 import { DEFAULT_IMG } from 'constants/dummyData';
 import { createContext, useContext, useReducer } from 'react';
 
+// const myInfo = JSON.parse(localStorage.getItem('MY_INFO'));
+
 const INIT_STATE = {
   userId: 0,
   nickname: '',
@@ -22,19 +24,19 @@ const reducer = (state, action: ActionType) => {
   }
 };
 
-export const UserInfoContext: React.Context<{}> = createContext({});
-export const DispatchUserInfoContext = createContext(undefined);
+export const MyUserInfoContext: React.Context<{}> = createContext({});
+export const DispatchMyUserInfoContext = createContext(undefined);
 
-function UserInfoProvider({ children }: { children: React.ReactNode }) {
+function MyUserInfoProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
   return (
-    <DispatchUserInfoContext.Provider value={dispatch}>
-      <UserInfoContext.Provider value={state}>{children}</UserInfoContext.Provider>
-    </DispatchUserInfoContext.Provider>
+    <DispatchMyUserInfoContext.Provider value={dispatch}>
+      <MyUserInfoContext.Provider value={state}>{children}</MyUserInfoContext.Provider>
+    </DispatchMyUserInfoContext.Provider>
   );
 }
 
-export const useUserInfo = () => [useContext(UserInfoContext), useContext(DispatchUserInfoContext)];
+export const useMyUserInfo = () => [useContext(MyUserInfoContext), useContext(DispatchMyUserInfoContext)];
 
 type ActionType = {
   type: string;
@@ -43,4 +45,4 @@ type ActionType = {
   profileImageUrl: string;
 };
 
-export default UserInfoProvider;
+export default MyUserInfoProvider;

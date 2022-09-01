@@ -1,4 +1,4 @@
-import { DispatchReviewWriteContext } from 'context/reviewWriteProvider';
+import { DispatchReviewWriteContext } from 'context/ReviewWriteProvider';
 import { useContext, useEffect, useState } from 'react';
 import { CalendarHead, Day, DayWrapper, Title, Wrap } from './Calendar.styled';
 

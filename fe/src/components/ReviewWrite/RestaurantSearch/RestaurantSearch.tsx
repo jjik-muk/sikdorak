@@ -1,6 +1,6 @@
 import { DOMAIN } from 'constants/dummyData';
 import Modal from 'common/Modal/Modal';
-import { useReviewWrite } from 'context/reviewWriteProvider';
+import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { useEffect, useState } from 'react';
 import { debounce, fetchData } from 'utils/utils';
 import { RestaurantSearchWrapper, SearchResult, Wrap } from './RestaurantSearch.styled';

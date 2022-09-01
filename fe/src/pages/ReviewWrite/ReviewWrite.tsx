@@ -8,14 +8,14 @@ import SelectDay from 'components/ReviewWrite/SelectDay/SelectDay';
 import TagContainer from 'components/ReviewWrite/Tag/TagContainer/TagContainer';
 import Textarea from 'components/ReviewWrite/Textarea/Textarea';
 import WriteRating from 'components/ReviewWrite/WriteRating/WriteRating';
-import ReviewWriteProvider from 'context/reviewWriteProvider';
-import { useUserInfo } from 'context/userInfoProvider';
+import { useMyUserInfo } from 'context/MyUserInfoProvider';
+import ReviewWriteProvider from 'context/ReviewWriteProvider';
 import { useState } from 'react';
 import { Content, Img, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
 
 function ReviewWrite() {
   const [selectedImg, setSelectedImg] = useState(null);
-  const [userInfo] = useUserInfo();
+  const [userInfo] = useMyUserInfo();
   const { nickname, profileImageUrl } = userInfo;
 
   return (

@@ -51,7 +51,6 @@ export async function fetchDataThatNeedToLogin(
 
   if (resJson.code === STATUS_CODE.EXPIRED_ACCESS_TOKEN) {
     reissueAccessToken();
-    // TODO: fetch 재시도
   }
   return resJson;
 
@@ -59,5 +58,6 @@ export async function fetchDataThatNeedToLogin(
     const refreshRes = await fetch(`${DOMAIN}/api/oauth/refresh`, { credentials: 'include' });
     const refreshResJson = await refreshRes.json();
     localStorage.setItem('accessToken', refreshResJson.data.accessToken);
+    window.location.reload();
   }
 }
