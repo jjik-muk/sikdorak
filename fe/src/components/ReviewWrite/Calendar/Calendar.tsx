@@ -1,5 +1,5 @@
 import { DispatchReviewWriteContext } from 'context/ReviewWriteProvider';
-import { useContext, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { CalendarHead, Day, DayWrapper, Title, Wrap } from './Calendar.styled';
 
 const MONTH_LIST = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
