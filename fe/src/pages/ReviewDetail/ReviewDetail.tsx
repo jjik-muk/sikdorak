@@ -5,6 +5,7 @@ import Carousel from 'components/ReviewDetail/Carousel/Carousel';
 import Comment from 'components/ReviewDetail/Comment/Comment';
 import Menu from 'components/ReviewDetail/Menu/Menu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
+import Rating from 'components/ReviewDetail/TotalRating/Rating';
 import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import { FeedProps } from 'components/ReviewList/Feed/Feed';
@@ -14,9 +15,9 @@ import { useEffect, useRef, useState } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import { ButtonWrapper, Contents, ContentsWrap, Header, IconWrap, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
-function ReviewDetail({ reviewId, userNickname, contents, pictures, store, likeCnt }: FeedProps) {
+function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, user, likeCnt }: FeedProps) {
   const commentRef = useRef<HTMLTextAreaElement>(null);
-  const hasPicture = pictures.length > 0;
+  const hasPicture = images.length > 0;
   const wrapWidth = hasPicture ? DETAIL.WRAP.WIDTH_WITH_IMG : DETAIL.WRAP.WIDTH_NO_IMG;
   const btnWidth = hasPicture ? FEED.BTN.WIDTH_WITH_IMG : FEED.BTN.WIDTH_NO_IMG;
   const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
@@ -24,7 +25,7 @@ function ReviewDetail({ reviewId, userNickname, contents, pictures, store, likeC
   const [comments, setComments] = useState([]);
   const [afterParam, setAfterParam] = useState(0);
   const COMMENT_SIZE = 2;
-  const hasNextComments = afterParam !== 1;
+  const hasNextComments = afterParam !== 1 && comments.length > 0;
 
   useEffect(() => {
     fetchNextComment();
@@ -32,17 +33,18 @@ function ReviewDetail({ reviewId, userNickname, contents, pictures, store, likeC
 
   return (
     <Wrap>
-      {hasPicture && <Carousel urls={pictures} />}
+      {hasPicture && <Carousel urls={images} />}
       <ContentsWrap wrapWidth={wrapWidth}>
         <Header>
-          <Profile nickname={userNickname} />
+          <Profile nickname={user.userNickname} />
           <div onClick={toggleIsActiveMenu}>
             <Icon icon="MenuBtn" />
             {isActiveMenu && <Menu />}
           </div>
         </Header>
         <Main>
-          <Contents>{contents}</Contents>
+          <Contents>{reviewContent}</Contents>
+          <Rating rating={reviewScore} />
           <MainFooter>
             <CompnayProfile company={store?.storeName} region={store?.storeAddress} />
           </MainFooter>

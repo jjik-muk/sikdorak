@@ -1,13 +1,12 @@
-import { useState } from 'react';
+import CommonHeader from 'components/Common/Header/CommonHeader';
 
 function Map() {
-  const [value, setValue] = useState('');
-  return <input onChange={handleChange} value={value} />;
-
-  function handleChange(e) {
-    setValue(e.target.value);
-    console.log(value);
-  }
+  return (
+    <>
+      <CommonHeader />
+      <div>지도 페이지입니다.</div>
+    </>
+  );
 }
 
 export default Map;

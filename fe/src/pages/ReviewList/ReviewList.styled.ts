@@ -7,6 +7,6 @@ export const Wrap = styled.div`
 
 export const ReviewListWrap = styled.div`
   width: 100%;
-  height: 1000px;
+  height: 100vh;
   overflow-y: scroll;
 `;

@@ -7,14 +7,15 @@ function Feeds({ reviews }: FeedsProps) {
   return (
     <Wrap>
       {reviews.length ? (
-        reviews.map(({ reviewId, user, store, images, reviewContent }) => (
+        reviews.map(({ images, reviewContent, reviewId, reviewScore, store, user }) => (
           <Feed
             key={reviewId}
+            images={images}
+            reviewContent={reviewContent}
             reviewId={reviewId}
-            userNickname={user.userNickname}
-            contents={reviewContent}
-            pictures={images}
+            reviewScore={reviewScore}
             store={store}
+            user={user}
             likeCnt={0}
           />
         ))

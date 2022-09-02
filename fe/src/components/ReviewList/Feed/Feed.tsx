@@ -3,6 +3,7 @@ import Icon from 'components/Common/Icon/Icon';
 import Portal from 'components/Common/Portal/Portal';
 import Menu from 'components/ReviewDetail/Menu/Menu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
+import Rating from 'components/ReviewDetail/TotalRating/Rating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
@@ -22,7 +23,7 @@ import {
   Wrap,
 } from './Feed.styled';
 
-function Feed({ reviewId, userNickname, contents, pictures, store, likeCnt }: FeedProps) {
+function Feed({ images, reviewContent, reviewId, reviewScore, store, user, likeCnt }: FeedProps) {
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
   const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
@@ -34,26 +35,27 @@ function Feed({ reviewId, userNickname, contents, pictures, store, likeCnt }: Fe
       <Wrap onClick={toggleIsClikedFeed}>
         <ContentsWrap wrapWidth={DETAIL.WRAP.WIDTH_NO_IMG}>
           <Header>
-            <UserProfile nickname={userNickname} />
+            <UserProfile nickname={user.userNickname} />
             <MenuWrap onClick={toggleIsActiveMenu}>
               <Icon icon="MenuBtn" />
               {isActiveMenu && <Menu />}
             </MenuWrap>
           </Header>
           <Main>
-            <Contents>{contents}</Contents>
+            <Contents>{reviewContent}</Contents>
             <Pictures>
-              {pictures &&
-                pictures.map((picture, i) => (
+              {images &&
+                images.map((image, i) => (
                   <img
-                    key={createKey(picture, i)}
-                    src={picture}
+                    key={createKey(image, i)}
+                    src={image}
                     alt="음식"
                     width={FEED.IMG.WIDTH}
                     height={FEED.IMG.HEIGHT}
                   />
                 ))}
             </Pictures>
+            <Rating rating={reviewScore} />
             <MainFooter>
               <CompnayProfile company={store?.storeName} region={store?.storeAddress} />
             </MainFooter>
@@ -81,12 +83,13 @@ function Feed({ reviewId, userNickname, contents, pictures, store, likeCnt }: Fe
       {isClikedFeed && (
         <Portal selector="#portal" ref={reviewDetailModalRef}>
           <ReviewDetail
+            images={images}
+            reviewContent={reviewContent}
             reviewId={reviewId}
-            userNickname={userNickname}
-            contents={contents}
-            pictures={pictures}
+            reviewScore={reviewScore}
             store={store}
-            likeCnt={likeCnt}
+            user={user}
+            likeCnt={0}
           />
         </Portal>
       )}
@@ -103,10 +106,11 @@ function Feed({ reviewId, userNickname, contents, pictures, store, likeCnt }: Fe
 export default Feed;
 
 export type FeedProps = {
+  images: string[];
+  reviewContent: string;
   reviewId: number;
-  userNickname: string;
-  contents: string;
-  pictures?: string[];
+  reviewScore: number;
   store: { storeId: number; storeName: string; storeAddress: string };
+  user: { userId: number; userNickname: string; userProfileImage: string };
   likeCnt: number;
 };
