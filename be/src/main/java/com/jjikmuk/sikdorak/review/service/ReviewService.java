@@ -163,7 +163,7 @@ public class ReviewService {
     }
 
     @Transactional
-    public void likeReview(Long reviewId, LoginUser loginUser) {
+    public Review likeReview(Long reviewId, LoginUser loginUser) {
         Review review = reviewRepository.findById(reviewId)
             .orElseThrow(NotFoundReviewException::new);
         User user = userRepository.findById(loginUser.getId())
@@ -174,10 +174,11 @@ public class ReviewService {
         }
 
         review.like(user);
+        return review;
     }
 
     @Transactional
-    public void unlikeReview(long reviewId, LoginUser loginUser) {
+    public Review unlikeReview(long reviewId, LoginUser loginUser) {
         Review review = reviewRepository.findById(reviewId)
             .orElseThrow(NotFoundReviewException::new);
         User user = userRepository.findById(loginUser.getId())
@@ -188,6 +189,7 @@ public class ReviewService {
         }
 
         review.unlike(user);
+        return review;
     }
 
 

@@ -37,6 +37,4 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
         @Param("targetId") long targetId,
         Pageable pageable);
 
-    @Query("select l from Review r join r.likes.likeUsers l where r.id = :reviewId")
-    List<Long> findLikeUsersByReviewId(@Param("reviewId") Long reviewId);
 }
