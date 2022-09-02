@@ -2,13 +2,16 @@ package com.jjikmuk.sikdorak.store.service;
 
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
+import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +41,25 @@ public class StoreService {
 			.stream()
 			.map(StoreSearchResponse::from)
 			.toList();
+	}
+
+	public List<StoreRadiusSearchResponse> searchStoresByRadius(double x, double y, int radius) {
+
+		List<StoreRadiusSearchResponse> result = new ArrayList<>();
+
+		Stream.iterate(1, i -> i <= 10, i -> i + 1)
+			.forEach(i-> result.add(new StoreRadiusSearchResponse(
+					i,
+					"맛있는가게" + i,
+					"02-0000-0000",
+					"서울시 송파구 송파동 35-1",
+					"서울시 송파구 좋은길 1",
+					37.509389,
+					127.105143
+				))
+			);
+
+		return result;
 	}
 
 	@Transactional
