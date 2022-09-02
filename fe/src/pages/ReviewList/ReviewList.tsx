@@ -1,12 +1,11 @@
 import { DOMAIN } from 'constants/dummyData';
+import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
-import Feed from 'components/ReviewList/Feed/Feed';
-import { useEffect, useId, useState } from 'react';
-import { createKey, fetchDataThatNeedToLogin } from 'utils/utils';
-import { ReviewListWrap, Wrap } from './ReviewList.styled';
+import { useEffect, useState } from 'react';
+import { fetchDataThatNeedToLogin } from 'utils/utils';
+import { ReviewListWrap } from './ReviewList.styled';
 
 function ReviewList() {
-  const id = useId();
   const [reviews, setReviews] = useState([]);
   const [afterParam, setAfterParam] = useState(0);
   const REVIEW_SIZE = 5;
@@ -18,20 +17,7 @@ function ReviewList() {
   return (
     <ReviewListWrap onScroll={handleScroll}>
       <CommonHeader />
-      <Wrap>
-        {reviews &&
-          reviews.map(({ reviewId, user, store, images, reviewContent }, i) => (
-            <Feed
-              key={createKey(id, i)}
-              reviewId={reviewId}
-              userNickname={user.userNickname}
-              contents={reviewContent}
-              pictures={images}
-              store={store}
-              likeCnt={0}
-            />
-          ))}
-      </Wrap>
+      <Feeds reviews={reviews} />
     </ReviewListWrap>
   );
 
