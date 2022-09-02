@@ -1,6 +1,3 @@
-import Icon, { IconComponentsKeys } from 'common/Icon';
-import Logo from 'common/Logo/Logo';
-import Portal from 'common/Portal/Portal';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
@@ -8,6 +5,9 @@ import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { createKey } from 'utils/utils';
+import Icon, { IconComponentsKeys } from '../Icon/Icon';
+import Logo from '../Logo/Logo';
+import Portal from '../Portal/Portal';
 import { ButtonWrap, IconWrap, Input, SearchFormWrap, Header, Wrap, ProfileImageWrap } from './CommonHeader.styled';
 
 function CommonHeader() {

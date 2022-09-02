@@ -1,6 +1,6 @@
 import { DOMAIN } from 'constants/dummyData';
 import { STATUS_CODE } from 'constants/statusCode';
-import Loading from 'common/Loading/Loading';
+import Loading from 'components/Common/Loading/Loading';
 import { Dispatch, useEffect } from 'react';
 import { Navigate, useSearchParams } from 'react-router-dom';
 

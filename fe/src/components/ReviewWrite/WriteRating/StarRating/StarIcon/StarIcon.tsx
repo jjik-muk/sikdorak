@@ -1,4 +1,4 @@
-import Icon from 'common/Icon';
+import Icon from 'components/Common/Icon/Icon';
 import { Wrap } from './StarIcon.styled';
 
 function StarIcon({ onClick, fill }: StarIconProps) {

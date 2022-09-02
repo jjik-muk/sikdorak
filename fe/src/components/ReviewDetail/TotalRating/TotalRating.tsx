@@ -1,4 +1,4 @@
-import Icon from 'common/Icon';
+import Icon from 'components/Common/Icon/Icon';
 import { Wrap } from './TotalRating.styled';
 
 function TotalRating({ taste, price, service }: TotalRatingProps) {

@@ -1,5 +1,5 @@
-import Icon from 'common/Icon';
-import Modal from 'common/Modal/Modal';
+import Icon from 'components/Common/Icon/Icon';
+import Modal from 'components/Common/Modal/Modal';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { useState } from 'react';
 import {

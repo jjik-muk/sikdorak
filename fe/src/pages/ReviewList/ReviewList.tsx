@@ -1,5 +1,5 @@
 import { DOMAIN } from 'constants/dummyData';
-import CommonHeader from 'components/CommonHeader/CommonHeader';
+import CommonHeader from 'components/Common/Header/CommonHeader';
 import Feed from 'components/ReviewList/Feed/Feed';
 import { useEffect, useId, useState } from 'react';
 import { createKey, fetchDataThatNeedToLogin } from 'utils/utils';

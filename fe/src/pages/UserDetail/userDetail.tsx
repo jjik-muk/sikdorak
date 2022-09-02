@@ -1,5 +1,5 @@
 import { DOMAIN } from 'constants/dummyData';
-import CommonHeader from 'components/CommonHeader/CommonHeader';
+import CommonHeader from 'components/Common/Header/CommonHeader';
 import Feed from 'components/ReviewList/Feed/Feed';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
@@ -27,19 +27,13 @@ function UserDetail() {
   const isMyUserDetailPage = userId === ID;
 
   useEffect(() => {
-    fetchUserProfile();
-    fetchReviewDetail();
+    fetchAndStoreData({ url: `${DOMAIN}/api/users/${ID}/reviews`, dispatch: setReviews });
+    fetchAndStoreData({ url: `${DOMAIN}/api/users/${ID}`, dispatch: setUserProfile });
 
-    // TODO: 중복 코드 제거
-    async function fetchReviewDetail() {
-      const reviewDetailRes = await fetchDataThatNeedToLogin(`${DOMAIN}/api/users/${ID}/reviews`);
-      const fetchedReviews = reviewDetailRes.data;
-      setReviews(fetchedReviews);
-    }
-    async function fetchUserProfile() {
-      const userProfileRes = await fetchDataThatNeedToLogin(`${DOMAIN}/api/users/${ID}`);
-      const fetchedUserProfile = userProfileRes.data;
-      setUserProfile(fetchedUserProfile);
+    async function fetchAndStoreData({ url, dispatch }) {
+      const res = await fetchDataThatNeedToLogin(url);
+      const reeData = res.data;
+      dispatch(reeData);
     }
   }, []);
 

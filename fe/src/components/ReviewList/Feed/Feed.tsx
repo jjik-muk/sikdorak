@@ -1,6 +1,6 @@
 import { DETAIL, FEED } from 'constants/size';
-import Icon from 'common/Icon';
-import Portal from 'common/Portal/Portal';
+import Icon from 'components/Common/Icon/Icon';
+import Portal from 'components/Common/Portal/Portal';
 import Menu from 'components/ReviewDetail/Menu/Menu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
@@ -28,7 +28,6 @@ function Feed({ reviewId, userNickname, contents, pictures, store, likeCnt }: Fe
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const reviewDetailModalRef = useRef(null);
   useOutsideClick(reviewDetailModalRef, toggleIsClikedFeed);
-  const { storeName, storeAddress } = store;
 
   return (
     <>
@@ -56,7 +55,7 @@ function Feed({ reviewId, userNickname, contents, pictures, store, likeCnt }: Fe
                 ))}
             </Pictures>
             <MainFooter>
-              <CompnayProfile company={storeName} region={storeAddress} />
+              <CompnayProfile company={store?.storeName} region={store?.storeAddress} />
             </MainFooter>
           </Main>
           <ButtonWrapper>

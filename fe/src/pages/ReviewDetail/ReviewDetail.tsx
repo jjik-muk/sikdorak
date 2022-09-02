@@ -1,6 +1,6 @@
 import { DOMAIN } from 'constants/dummyData';
 import { DETAIL, FEED } from 'constants/size';
-import Icon from 'common/Icon';
+import Icon from 'components/Common/Icon/Icon';
 import Carousel from 'components/ReviewDetail/Carousel/Carousel';
 import Comment from 'components/ReviewDetail/Comment/Comment';
 import Menu from 'components/ReviewDetail/Menu/Menu';
@@ -21,7 +21,6 @@ function ReviewDetail({ reviewId, userNickname, contents, pictures, store, likeC
   const btnWidth = hasPicture ? FEED.BTN.WIDTH_WITH_IMG : FEED.BTN.WIDTH_NO_IMG;
   const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
-  const { storeName, storeAddress } = store;
   const [comments, setComments] = useState([]);
   const [afterParam, setAfterParam] = useState(0);
   const COMMENT_SIZE = 2;
@@ -45,7 +44,7 @@ function ReviewDetail({ reviewId, userNickname, contents, pictures, store, likeC
         <Main>
           <Contents>{contents}</Contents>
           <MainFooter>
-            <CompnayProfile company={storeName} region={storeAddress} />
+            <CompnayProfile company={store?.storeName} region={store?.storeAddress} />
           </MainFooter>
         </Main>
         <ButtonWrapper>

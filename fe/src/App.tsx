@@ -1,5 +1,5 @@
 import { DOMAIN } from 'constants/dummyData';
-import Portal from 'common/Portal/Portal';
+import Portal from 'components/Common/Portal/Portal';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import ReviewDetailProvider from 'context/ReviewDetailProvider';
 import Callback from 'pages/Callback/Callback';
