@@ -3,11 +3,14 @@ package com.jjikmuk.sikdorak.store.controller;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_CREATE_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_MODIFY_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_REMOVE_SUCCESS;
+import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_BY_RADIUS_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_SUCCESS;
 
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
+import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfo;
+import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.service.StoreService;
 import java.util.List;
@@ -58,5 +61,13 @@ public class StoreController {
 		storeService.removeStore(storeId);
 
 		return new CommonResponseEntity<>(STORE_REMOVE_SUCCESS, HttpStatus.OK);
+	}
+
+	@GetMapping(params = {"type=maps"})
+	public CommonResponseEntity<List<StoreRadiusSearchResponse>> searchStoreByRadius(
+		UserLocationInfo userLocationInfo) {
+		List<StoreRadiusSearchResponse> stores = storeService.searchStoresByRadius(userLocationInfo);
+
+		return new CommonResponseEntity<>(STORE_SEARCH_BY_RADIUS_SUCCESS, stores, HttpStatus.OK);
 	}
 }
