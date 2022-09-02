@@ -33,6 +33,6 @@ public class AwsS3Controller {
 		return new CommonResponseEntity<>(
 			ResponseCodeAndMessages.IMAGES_UPLOAD_PRESIGNED_URL_CREATE_SUCCESS,
 			presignedUrlCreateResponse,
-			HttpStatus.OK);
+			HttpStatus.CREATED);
 	}
 }
