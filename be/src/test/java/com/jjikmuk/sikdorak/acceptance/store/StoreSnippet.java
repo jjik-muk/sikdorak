@@ -92,8 +92,8 @@ public interface StoreSnippet {
 
 	Snippet STORE_SEARCH_BY_RADIUS_REQUEST_SNIPPET = requestParameters(
 		parameterWithName("type").description(Constants.REQUEST_PAGE_TYPE_DESCRIPTION),
-		parameterWithName("x").description(Constants.LATITUDE_DESCRIPTION),
-		parameterWithName("y").description(Constants.LONGITUDE_DESCRIPTION),
+		parameterWithName("x").description(Constants.LONGITUDE_DESCRIPTION),
+		parameterWithName("y").description(Constants.LATITUDE_DESCRIPTION),
 		parameterWithName("radius").description(Constants.RADIUS_DESCRIPTION)
 	);
 
@@ -111,10 +111,10 @@ public interface StoreSnippet {
 				.description(Constants.BASEADDRESS_DESCRIPTION),
 			fieldWithPath("roadAddressName").type(JsonFieldType.STRING)
 				.description(Constants.DETAILADDRESS_DESCRIPTION).optional(),
-			fieldWithPath("y").type(JsonFieldType.NUMBER)
-				.description(Constants.LATITUDE_DESCRIPTION),
 			fieldWithPath("x").type(JsonFieldType.NUMBER)
-				.description(Constants.LONGITUDE_DESCRIPTION)
+				.description(Constants.LONGITUDE_DESCRIPTION),
+			fieldWithPath("y").type(JsonFieldType.NUMBER)
+				.description(Constants.LATITUDE_DESCRIPTION)
 		)
 	);
 

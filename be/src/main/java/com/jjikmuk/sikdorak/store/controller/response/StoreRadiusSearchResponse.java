@@ -7,8 +7,8 @@ public record StoreRadiusSearchResponse(
     String contactNumber,
     String addressName,
     String roadAddressName,
-    double y,
-    double x
+    double x,
+    double y
 
 ) {
 }

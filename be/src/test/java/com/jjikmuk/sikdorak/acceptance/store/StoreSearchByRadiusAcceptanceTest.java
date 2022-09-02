@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("위치기반 스토어 목록 조회 문서테스트")
-public class StoreSearchByRadiusAcceptanceTest extends InitAcceptanceTest {
+class StoreSearchByRadiusAcceptanceTest extends InitAcceptanceTest {
 
     @Test
     @DisplayName("위치기반 스토어 목록조회 요청이 올바른 경우 스토어 목록과 함께 성공 상태코드를 반환한다.")

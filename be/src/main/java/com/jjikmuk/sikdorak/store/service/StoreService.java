@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.store.service;
 
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
+import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfo;
 import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.domain.Store;
@@ -20,85 +21,85 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class StoreService {
 
-	private final StoreRepository storeRepository;
+    private final StoreRepository storeRepository;
 
-	@Transactional(readOnly = true)
-	public Store searchById(Long storeId) {
-		if (Objects.isNull(storeId)) {
-			throw new NotFoundStoreException();
-		}
+    @Transactional(readOnly = true)
+    public Store searchById(Long storeId) {
+        if (Objects.isNull(storeId)) {
+            throw new NotFoundStoreException();
+        }
 
-		return storeRepository.findById(storeId).orElseThrow(NotFoundStoreException::new);
-	}
+        return storeRepository.findById(storeId).orElseThrow(NotFoundStoreException::new);
+    }
 
-	@Transactional(readOnly = true)
-	public List<StoreSearchResponse> searchStoresByStoreNameContaining(String storeName) {
-		if (storeName == null) {
-			return Collections.emptyList();
-		}
+    @Transactional(readOnly = true)
+    public List<StoreSearchResponse> searchStoresByStoreNameContaining(String storeName) {
+        if (storeName == null) {
+            return Collections.emptyList();
+        }
 
-		return storeRepository.findStoresByStoreNameContaining(storeName)
-			.stream()
-			.map(StoreSearchResponse::from)
-			.toList();
-	}
+        return storeRepository.findStoresByStoreNameContaining(storeName)
+            .stream()
+            .map(StoreSearchResponse::from)
+            .toList();
+    }
 
-	public List<StoreRadiusSearchResponse> searchStoresByRadius(double x, double y, int radius) {
+    public List<StoreRadiusSearchResponse> searchStoresByRadius(UserLocationInfo userLocationInfo) {
 
-		List<StoreRadiusSearchResponse> result = new ArrayList<>();
+        List<StoreRadiusSearchResponse> result = new ArrayList<>();
 
-		Stream.iterate(1, i -> i <= 10, i -> i + 1)
-			.forEach(i-> result.add(new StoreRadiusSearchResponse(
-					i,
-					"맛있는가게" + i,
-					"02-0000-0000",
-					"서울시 송파구 송파동 35-1",
-					"서울시 송파구 좋은길 1",
-					37.509389,
-					127.105143
-				))
-			);
+        Stream.iterate(1, i -> i <= 10, i -> i + 1)
+            .forEach(i -> result.add(new StoreRadiusSearchResponse(
+                    i,
+                    "맛있는가게" + i,
+                    "02-0000-0000",
+                    "서울시 송파구 송파동 35-1",
+                    "서울시 송파구 좋은길 1",
+                    127.105143,
+                    37.509389
+                ))
+            );
 
-		return result;
-	}
+        return result;
+    }
 
-	@Transactional
-	public Long createStore(StoreCreateRequest createRequest) {
-		Store store = new Store(
-			createRequest.getStoreName(),
-			createRequest.getContactNumber(),
-			createRequest.getBaseAddress(),
-			createRequest.getDetailAddress(),
-			createRequest.getLatitude(),
-			createRequest.getLongitude()
-		);
+    @Transactional
+    public Long createStore(StoreCreateRequest createRequest) {
+        Store store = new Store(
+            createRequest.getStoreName(),
+            createRequest.getContactNumber(),
+            createRequest.getBaseAddress(),
+            createRequest.getDetailAddress(),
+            createRequest.getLatitude(),
+            createRequest.getLongitude()
+        );
 
-		return storeRepository.save(store)
-			.getId();
-	}
+        return storeRepository.save(store)
+            .getId();
+    }
 
-	@Transactional
-	public Long modifyStore(Long storeId, StoreModifyRequest modifyRequest) {
-		Store store = storeRepository.findById(storeId)
-			.orElseThrow(NotFoundStoreException::new);
+    @Transactional
+    public Long modifyStore(Long storeId, StoreModifyRequest modifyRequest) {
+        Store store = storeRepository.findById(storeId)
+            .orElseThrow(NotFoundStoreException::new);
 
-		store.editAll(
-			modifyRequest.getStoreName(),
-			modifyRequest.getContactNumber(),
-			modifyRequest.getBaseAddress(),
-			modifyRequest.getDetailAddress(),
-			modifyRequest.getLatitude(),
-			modifyRequest.getLongitude()
-		);
+        store.editAll(
+            modifyRequest.getStoreName(),
+            modifyRequest.getContactNumber(),
+            modifyRequest.getBaseAddress(),
+            modifyRequest.getDetailAddress(),
+            modifyRequest.getLatitude(),
+            modifyRequest.getLongitude()
+        );
 
-		return store.getId();
-	}
+        return store.getId();
+    }
 
-	@Transactional
-	public void removeStore(Long storeId) {
-		Store store = storeRepository.findById(storeId)
-			.orElseThrow(NotFoundStoreException::new);
+    @Transactional
+    public void removeStore(Long storeId) {
+        Store store = storeRepository.findById(storeId)
+            .orElseThrow(NotFoundStoreException::new);
 
-		store.delete();
-	}
+        store.delete();
+    }
 }
