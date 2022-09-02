@@ -22,7 +22,7 @@ import {
   Wrap,
 } from './Feed.styled';
 
-function Feed({ author, contents, pictures, store, likeCnt }: FeedProps) {
+function Feed({ reviewId, userNickname, contents, pictures, store, likeCnt }: FeedProps) {
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
   const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
@@ -35,7 +35,7 @@ function Feed({ author, contents, pictures, store, likeCnt }: FeedProps) {
       <Wrap onClick={toggleIsClikedFeed}>
         <ContentsWrap wrapWidth={DETAIL.WRAP.WIDTH_NO_IMG}>
           <Header>
-            <UserProfile nickname={author} />
+            <UserProfile nickname={userNickname} />
             <MenuWrap onClick={toggleIsActiveMenu}>
               <Icon icon="MenuBtn" />
               {isActiveMenu && <Menu />}
@@ -81,7 +81,14 @@ function Feed({ author, contents, pictures, store, likeCnt }: FeedProps) {
       </Wrap>
       {isClikedFeed && (
         <Portal selector="#portal" ref={reviewDetailModalRef}>
-          <ReviewDetail author={author} contents={contents} pictures={pictures} store={store} likeCnt={likeCnt} />
+          <ReviewDetail
+            reviewId={reviewId}
+            userNickname={userNickname}
+            contents={contents}
+            pictures={pictures}
+            store={store}
+            likeCnt={likeCnt}
+          />
         </Portal>
       )}
     </>
@@ -97,7 +104,8 @@ function Feed({ author, contents, pictures, store, likeCnt }: FeedProps) {
 export default Feed;
 
 export type FeedProps = {
-  author: string;
+  reviewId: number;
+  userNickname: string;
   contents: string;
   pictures?: string[];
   store: { storeId: number; storeName: string; storeAddress: string };

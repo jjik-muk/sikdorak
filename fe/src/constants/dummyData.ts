@@ -1,6 +1,7 @@
 export const FEEDS = [
   {
     author: '호이',
+    reviewId: 1,
     contents: '와~ 여기 계란초밥이 정말 맛있네요. 다음에 또 방문해야겠어요.',
     rating: [4, 5, 4],
     pictures: [
@@ -12,6 +13,7 @@ export const FEEDS = [
   },
   {
     author: '이호',
+    reviewId: 1,
     contents:
       '세상에 이렇게 맛있는 초밥이 있다니 정말 놀랍습니다. 세상에 이렇게 맛있는 초밥이 있다니 정말 놀랍습니다. 세상에 이렇게 맛있는 초밥이 있다니 정말 놀랍습니다. 세상에 이렇게 맛있는 초밥이 있다니 정말 놀랍습니다. 세상에 이렇게 맛있는 초밥이 있다니 정말 놀랍습니다. 너무 놀라워요. 111111111111111111111111111111111111112222222222222222222222222222222222111111',
     rating: [5, 5, 5],
@@ -25,6 +27,7 @@ export const FEEDS = [
   },
   {
     author: '갓호이',
+    reviewId: 1,
     contents: '너무 맛있어서 초밥하면 여기만 찾아와요!!!!',
     rating: [5, 5, 5],
     pictures: [
@@ -37,6 +40,7 @@ export const FEEDS = [
   },
   {
     author: '갓호이',
+    reviewId: 1,
     contents: '너무 맛있어서 초밥하면 여기만 찾아와요!!!!',
     rating: [5, 5, 5],
     pictures: [],

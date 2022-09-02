@@ -63,10 +63,11 @@ function UserDetail() {
       </UserDetailWrap>
       <FeedWrap>
         {reviews &&
-          reviews.map(({ reviewContent, store, images }, idx) => (
+          reviews.map(({ reviewId, reviewContent, store, images }, idx) => (
             <Feed
               key={createKey(userProfile?.nickname, idx)}
-              author={userProfile?.nickname}
+              reviewId={reviewId}
+              userNickname={userProfile?.nickname}
               contents={reviewContent}
               store={store}
               likeCnt={0}

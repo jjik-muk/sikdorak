@@ -20,10 +20,11 @@ function ReviewList() {
       <CommonHeader />
       <Wrap>
         {reviews &&
-          reviews.map(({ user, store, images, reviewContent }, i) => (
+          reviews.map(({ reviewId, user, store, images, reviewContent }, i) => (
             <Feed
               key={createKey(id, i)}
-              author={user.userNickname}
+              reviewId={reviewId}
+              userNickname={user.userNickname}
               contents={reviewContent}
               pictures={images}
               store={store}
