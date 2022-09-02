@@ -4,8 +4,10 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.mo
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.documentationConfiguration;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jjikmuk.sikdorak.common.DatabaseConfigurator;
+import com.jjikmuk.sikdorak.common.properties.AwsProperties;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.ObjectMapperConfig;
@@ -23,7 +25,7 @@ import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.operation.preprocess.OperationPreprocessor;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = AWSMockConfig.class)
 @ExtendWith(RestDocumentationExtension.class)
 @ActiveProfiles("test")
 public class InitAcceptanceTest {
@@ -42,6 +44,12 @@ public class InitAcceptanceTest {
 
 	@Autowired
 	protected DatabaseConfigurator testData;
+
+	@Autowired
+	AmazonS3 amazonS3;
+
+	@Autowired
+	AwsProperties awsProperties;
 
 	{
 		setUpRestAssured();
