@@ -99,7 +99,6 @@ public class ReviewController {
 		@PathVariable Long reviewId,
 		@AuthenticatedUser LoginUser loginUser
 	) {
-
 		reviewService.likeReview(reviewId, loginUser);
 
 		return new CommonResponseEntity<>(ResponseCodeAndMessages.REVIEW_LIKE_SUCCESS,
@@ -112,8 +111,10 @@ public class ReviewController {
 		@PathVariable Long reviewId,
 		@AuthenticatedUser LoginUser loginUser
 	) {
+		reviewService.unlikeReview(reviewId, loginUser);
 
 		return new CommonResponseEntity<>(ResponseCodeAndMessages.REVIEW_UNLIKE_SUCCESS,
 			HttpStatus.OK);
 	}
+
 }

@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.review.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
@@ -20,7 +20,7 @@ public class Likes {
         name = "likes",
         joinColumns = @JoinColumn(name = "review_id")
     )
-    private Set<Long> likes = new HashSet<>();
+    private List<Long> likes = new ArrayList<>();
 
     public boolean add(Long userId) {
         return likes.add(userId);
