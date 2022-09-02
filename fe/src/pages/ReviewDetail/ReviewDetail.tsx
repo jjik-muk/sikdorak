@@ -23,20 +23,12 @@ function ReviewDetail({ reviewId, userNickname, contents, pictures, store, likeC
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const { storeName, storeAddress } = store;
   const [comments, setComments] = useState([]);
-  console.log('comments', comments);
-
-  const clickCreateComment = () => {
-    commentRef.current.focus();
-  };
+  const [afterParam, setAfterParam] = useState(0);
+  const COMMENT_SIZE = 2;
+  const hasNextComments = afterParam !== 1;
 
   useEffect(() => {
-    fetchComment();
-
-    async function fetchComment() {
-      const res = await fetchDataThatNeedToLogin(`${DOMAIN}/api/reviews/${reviewId}/comments?size=10&after=0`);
-      console.log('res', res);
-      setComments(res.data.comments);
-    }
+    fetchNextComment();
   }, []);
 
   return (
@@ -63,7 +55,7 @@ function ReviewDetail({ reviewId, userNickname, contents, pictures, store, likeC
               {likeCnt}
             </IconWrap>
           </div>
-          <div onClick={clickCreateComment}>
+          <div onClick={focusWrittingComment}>
             <IconWrap width={btnWidth} height={FEED.BTN.HEIGHT}>
               <Icon icon="TalkBubble" fill={isActiveHeart ? 'red' : '#FFF'} />
             </IconWrap>
@@ -77,16 +69,34 @@ function ReviewDetail({ reviewId, userNickname, contents, pictures, store, likeC
         <TagList tags={['#초밥', '#맛집', '#부산']} />
         {comments &&
           comments.map(({ author, content, id }) => <Comment key={id} title={author.nickname} content={content} />)}
-        <button type="button">댓글 더보기</button>
+        {hasNextComments && (
+          <button onClick={fetchNextComment} type="button">
+            댓글 더보기
+          </button>
+        )}
         <WriteComment commentRef={commentRef} />
       </ContentsWrap>
     </Wrap>
   );
 
+  async function fetchNextComment() {
+    const commentRes = await fetchDataThatNeedToLogin(
+      `${DOMAIN}/api/reviews/${reviewId}/comments?size=${COMMENT_SIZE}&after=${afterParam}`,
+    );
+    const nextComments = commentRes.data.comments;
+    const nextAfterParam = commentRes.data.page.next;
+    setComments([...comments, ...nextComments]);
+    setAfterParam(nextAfterParam);
+  }
+
   function handleCopyURL() {
     const curURL = window.location.href;
     const { clipboard } = navigator;
     clipboard.writeText(curURL);
+  }
+
+  function focusWrittingComment() {
+    commentRef.current.focus();
   }
 }
 
