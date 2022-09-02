@@ -1,12 +1,12 @@
 import { DOMAIN } from 'constants/dummyData';
+import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
-import Feed from 'components/ReviewList/Feed/Feed';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { createKey, fetchDataThatNeedToLogin } from 'utils/utils';
+import { fetchDataThatNeedToLogin } from 'utils/utils';
 import {
   ActivityInfoWrap,
   FeedWrap,
@@ -56,18 +56,7 @@ function UserDetail() {
         </UserInfoWrap>
       </UserDetailWrap>
       <FeedWrap>
-        {reviews &&
-          reviews.map(({ reviewId, reviewContent, store, images }, idx) => (
-            <Feed
-              key={createKey(userProfile?.nickname, idx)}
-              reviewId={reviewId}
-              userNickname={userProfile?.nickname}
-              contents={reviewContent}
-              store={store}
-              likeCnt={0}
-              pictures={images}
-            />
-          ))}
+        <Feeds reviews={reviews} />
       </FeedWrap>
     </Wrap>
   );
