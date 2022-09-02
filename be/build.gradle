@@ -85,6 +85,7 @@ dependencies {
 
     // aws : https://spring.io/blog/2021/03/17/spring-cloud-aws-2-3-is-now-available#why-has-the-package-name-changed
     implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.2'
+    testImplementation "org.testcontainers:localstack:1.17.3"
 }
 
 test {
