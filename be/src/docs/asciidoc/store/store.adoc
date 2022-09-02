@@ -65,3 +65,15 @@ operation::store_remove_acceptance_test/remove_store_failed[snippets='http-reque
 ==== `Response`
 
 operation::store_remove_acceptance_test/remove_store_failed[snippets='http-response,response-fields']
+
+API : `GET /api/stores?type=maps&x=127.123&y=36.123&radius=100`
+
+=== `200 SUCCESS`
+
+==== `Request`
+
+operation::store_search_by_radius_acceptance_test/stores_radius_success[snippets='http-request,request-parameters']
+
+==== `Response`
+
+operation::store_search_by_radius_acceptance_test/stores_radius_success[snippets='http-response,response-fields']
