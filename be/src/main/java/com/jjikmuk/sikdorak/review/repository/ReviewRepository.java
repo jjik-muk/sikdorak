@@ -36,4 +36,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findPublicAndProtectedRecommendedReviewsInRecentOrder(
         @Param("targetId") long targetId,
         Pageable pageable);
+
 }

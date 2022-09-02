@@ -65,6 +65,7 @@ public class DatabaseConfigurator implements InitializingBean {
         initUserAuthorizationData();
         initReviewData();
         postReviews();
+        likeReview();
     }
 
     public void clear() {
@@ -207,5 +208,10 @@ public class DatabaseConfigurator implements InitializingBean {
                 List.of("tag1", "tag2"),
                 List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
         }
+    }
+
+    private void likeReview() {
+        followAcceptUserProtectedReview.like(kukim);
+        reviewRepository.save(followAcceptUserProtectedReview);
     }
 }

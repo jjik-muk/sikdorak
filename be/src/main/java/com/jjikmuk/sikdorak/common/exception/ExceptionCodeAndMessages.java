@@ -3,6 +3,7 @@ package com.jjikmuk.sikdorak.common.exception;
 import com.jjikmuk.sikdorak.comment.exception.InvalidCommentContentException;
 import com.jjikmuk.sikdorak.comment.exception.NotFoundCommentException;
 import com.jjikmuk.sikdorak.common.CodeAndMessages;
+import com.jjikmuk.sikdorak.review.exception.DuplicateLikeUserException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewImageException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewImagesException;
@@ -11,6 +12,7 @@ import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisibilityException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisitedDateException;
 import com.jjikmuk.sikdorak.review.exception.InvalidTagException;
 import com.jjikmuk.sikdorak.review.exception.InvalidTagsException;
+import com.jjikmuk.sikdorak.review.exception.NotFoundLikeUserException;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.store.exception.InvalidAddressException;
 import com.jjikmuk.sikdorak.store.exception.InvalidContactNumberException;
@@ -51,6 +53,8 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NOT_FOUND_STROE("F-R007", "리뷰를 찾을 수 없습니다.", NotFoundReviewException.class),
     INVALID_REVIEW_IMAGES("F-R008", "유효하지 않은 리뷰 이미지들 입니다.", InvalidReviewImagesException.class),
     INVALID_REVIEW_IMAGE("F-R009", "유효하지 않은 리뷰 이미지 입니다.", InvalidReviewImageException.class),
+    DUPLICATE_LIKE_USER("F-R010", "이미 좋아요를 누른 리뷰입니다.", DuplicateLikeUserException.class),
+    NOT_FOUND_LIKE_USER("F-R011", "존재하지 않는 좋아요 정보입니다.", NotFoundLikeUserException.class),
 
     // Store
     NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", NotFoundStoreException.class),
@@ -69,7 +73,7 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NOT_FOUND_USER("F-U007", "존재하지 않는 유저입니다.", NotFoundUserException.class),
     UNAUTHORIZED_USER("F-U008", "권한이 없는 유저입니다.", UnauthorizedUserException.class),
     DUPLICATE_SEND_ACCEPT_USER("F-U009", "팔로우 요청자와 대상자의 정보가 중복됩니다.", DuplicateSendAcceptUserException.class),
-    DUPLICATE_FOLLOWING_USER("F-U010", "이미 팔로우 된 유저입니다", DuplicateFollowingException.class),
+    DUPLICATE_FOLLOWING_USER("F-U010", "이미 팔로우 된 유저입니다.", DuplicateFollowingException.class),
     NOT_FOUND_FOLLOWING_USER("F-U011","존재하지 않는 팔로우 정보 입니다.", NotFoundFollowException.class),
 
     //OAuth

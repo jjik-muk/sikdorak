@@ -8,6 +8,8 @@ import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
 import com.jjikmuk.sikdorak.review.controller.response.RecommendedReviewResponse;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.domain.Review;
+import com.jjikmuk.sikdorak.review.exception.DuplicateLikeUserException;
+import com.jjikmuk.sikdorak.review.exception.NotFoundLikeUserException;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.domain.Store;
@@ -160,6 +162,38 @@ public class ReviewService {
         return review;
     }
 
+    @Transactional
+    public Review likeReview(Long reviewId, LoginUser loginUser) {
+        Review review = reviewRepository.findById(reviewId)
+            .orElseThrow(NotFoundReviewException::new);
+        User user = userRepository.findById(loginUser.getId())
+            .orElseThrow(NotFoundUserException::new);
+
+        if (review.isLikedBy(user.getId())) {
+            throw new DuplicateLikeUserException();
+        }
+
+        review.like(user);
+        return review;
+    }
+
+    @Transactional
+    public Review unlikeReview(long reviewId, LoginUser loginUser) {
+        Review review = reviewRepository.findById(reviewId)
+            .orElseThrow(NotFoundReviewException::new);
+        User user = userRepository.findById(loginUser.getId())
+            .orElseThrow(NotFoundUserException::new);
+
+        if (!review.isLikedBy(user.getId())) {
+            throw new NotFoundLikeUserException();
+        }
+
+        review.unlike(user);
+        return review;
+    }
+
+
+
     private void validateReviewWithUser(Review review, User user) {
         if (!review.isAuthor(user)) {
             throw new UnauthorizedUserException();
@@ -211,5 +245,4 @@ public class ReviewService {
             .map(Review::getUserId)
             .toList();
     }
-
 }
