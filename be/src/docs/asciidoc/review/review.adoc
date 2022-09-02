@@ -102,8 +102,6 @@ API : `GET /api/reviews`
 
 === `200 OK`
 
-비회원인 경우
-
 ==== `Request`
 
 operation::reviews_recommend_acceptance_test/review_recommend_success[snippets='http-request,request-parameters']
@@ -112,3 +110,30 @@ operation::reviews_recommend_acceptance_test/review_recommend_success[snippets='
 
 operation::reviews_recommend_acceptance_test/review_recommend_success[snippets='http-response,response-fields']
 
+=== 리뷰 좋아요
+
+API : `GET /api/reviews/{reviewId}/like`
+
+=== `200 OK`
+
+==== `Request`
+
+operation::review_like_acceptance_test/review_like_success[snippets='http-request,path-parameters']
+
+==== `Response`
+
+operation::review_like_acceptance_test/review_like_success[snippets='http-response,response-fields']
+
+=== 리뷰 좋아요 취소
+
+API : `GET /api/reviews/{reviewId}/unlike`
+
+=== `200 OK`
+
+==== `Request`
+
+operation::review_like_acceptance_test/review_unlike_success[snippets='http-request,path-parameters']
+
+==== `Response`
+
+operation::review_like_acceptance_test/review_unlike_success[snippets='http-response,response-fields']
