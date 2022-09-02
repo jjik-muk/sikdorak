@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class PresignedUrlCreateRequest {
 
 	@NotEmpty
-	@Pattern(regexp = ".jpg\\|.jpeg\\|.png")
+	@Pattern(regexp = "jpg\\|jpeg\\|png")
 	private String extension;
 
 	public PresignedUrlCreateRequest(String extension) {

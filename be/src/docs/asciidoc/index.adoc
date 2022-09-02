@@ -19,6 +19,10 @@ API : `GET /api/docs/info`
 
 include::{docdir}/review/review.adoc[]
 
+== 이미지 생성 API
+
+include::{docdir}/aws/s3.adoc[]
+
 == 댓글 API
 
 include::{docdir}/comment/comment.adoc[]
@@ -34,5 +38,4 @@ include::{docdir}/user/user.adoc[]
 == 로그인 API
 
 include::{docdir}/auth/auth.adoc[]
-
 

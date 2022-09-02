@@ -1,6 +1,10 @@
 package com.jjikmuk.sikdorak.aws.controller.response;
 
-public record PresignedUrlCreateResponse(String presignedUrl) {
+import javax.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.URL;
+
+public record PresignedUrlCreateResponse(
+	@NotEmpty @URL String presignedUrl) {
 
 }
 
