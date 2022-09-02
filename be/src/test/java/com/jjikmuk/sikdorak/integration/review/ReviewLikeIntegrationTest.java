@@ -10,7 +10,7 @@ import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.Authority;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import java.util.Set;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +32,9 @@ class ReviewLikeIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
 
         reviewService.likeReview(reviewId, loginUser);
-        Set<Long> likeUsersByReviewId = reviewRepository.findLikeUsersByReviewId(reviewId);
+        List<Long> likeUsersByReviewId = reviewRepository.findLikeUsersByReviewId(reviewId);
 
-        assertThat(likeUsersByReviewId.contains(loginUser.getId())).isTrue();
+        assertThat(likeUsersByReviewId).contains(loginUser.getId());
     }
 
     @Test
@@ -46,9 +46,9 @@ class ReviewLikeIntegrationTest extends InitIntegrationTest {
         reviewService.likeReview(reviewId, loginUser);
 
         reviewService.unlikeReview(reviewId, loginUser);
-        Set<Long> likeUsersByReviewId = reviewRepository.findLikeUsersByReviewId(reviewId);
+        List<Long> likeUsersByReviewId = reviewRepository.findLikeUsersByReviewId(reviewId);
 
-        assertThat(likeUsersByReviewId.contains(loginUser.getId())).isFalse();
+        assertThat(likeUsersByReviewId).doesNotContain(loginUser.getId());
     }
 
     @Test

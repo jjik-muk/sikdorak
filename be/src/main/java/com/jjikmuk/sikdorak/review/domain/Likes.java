@@ -3,6 +3,7 @@ package com.jjikmuk.sikdorak.review.domain;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
@@ -20,18 +21,19 @@ public class Likes {
         name = "likes",
         joinColumns = @JoinColumn(name = "review_id")
     )
-    private List<Long> likes = new ArrayList<>();
+    @Column(name = "likeUser")
+    private List<Long> likeUsers = new ArrayList<>();
 
     public boolean add(Long userId) {
-        return likes.add(userId);
+        return likeUsers.add(userId);
     }
 
     public boolean remove(Long userId) {
-        return likes.remove(userId);
+        return likeUsers.remove(userId);
     }
 
     public boolean contains(Long userId) {
-        return likes.contains(userId);
+        return likeUsers.contains(userId);
     }
 
 }

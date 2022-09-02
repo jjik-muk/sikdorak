@@ -49,9 +49,10 @@ class ReviewLikeAcceptanceTest extends InitAcceptanceTest {
             .header("Authorization", testData.user1ValidAuthorizationHeader)
 
         .when()
-            .put("/api/reviews/{reviewId}/unlike", testData.user1PublicReview.getId())
+            .put("/api/reviews/{reviewId}/unlike", testData.followAcceptUserProtectedReview.getId())
 
         .then()
+            .log().all()
             .statusCode(HttpStatus.OK.value())
             .body("code", equalTo(ResponseCodeAndMessages.REVIEW_UNLIKE_SUCCESS.getCode()))
             .body("message", equalTo(ResponseCodeAndMessages.REVIEW_UNLIKE_SUCCESS.getMessage()));
