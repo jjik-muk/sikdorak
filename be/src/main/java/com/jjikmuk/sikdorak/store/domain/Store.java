@@ -23,6 +23,9 @@ public class Store extends BaseTimeEntity {
     @Column(name = "store_id")
     private Long id;
 
+    @Column(name = "kakao_place_id", unique = true)
+    private Long kakaoPlaceId;
+
     @Embedded
     private StoreName storeName;
 
@@ -39,6 +42,14 @@ public class Store extends BaseTimeEntity {
     private Deleted deleted = Deleted.FALSE;
 
     public Store(String storeName, String contactNumber, Address address, Double y, Double x) {
+        this.storeName = new StoreName(storeName);
+        this.contactNumber = new ContactNumber(contactNumber);
+        this.address = address;
+        this.location = new StoreLocation(x, y);
+    }
+
+    public Store(Long kakaoPlaceId, String storeName, String contactNumber, Address address, Double y, Double x) {
+        this.kakaoPlaceId = kakaoPlaceId;
         this.storeName = new StoreName(storeName);
         this.contactNumber = new ContactNumber(contactNumber);
         this.address = address;
