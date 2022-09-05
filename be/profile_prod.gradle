@@ -11,6 +11,6 @@ jib {
     }
     container {
         mainClass = 'com.jjikmuk.sikdorak.SikdorakApplication' // entry point java class
-        jvmFlags = ["-Dspring.profiles.active=dev", "-Xms128m", "-Xmx128m"] // setup JVM Options
+        jvmFlags = ["-Dspring.profiles.active=prod", "-Xms128m", "-Xmx128m"] // setup JVM Options
     }
 }
