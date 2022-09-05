@@ -1,11 +1,34 @@
+import { DOMAIN } from 'constants/dummyData';
+import useToggle from 'hooks/useToggle';
+import { useLocation } from 'react-router-dom';
+import { fetchDataThatNeedToLogin } from 'utils/utils';
 import { Wrap } from './FollowButton.styled';
 
-function FollowButton({ already }: FollowButtonProps) {
-  return <Wrap>{already ? '언팔로우' : '팔로우'}</Wrap>;
+function FollowButton({ alreadyFollowed }: FollowButtonProps) {
+  const [isFriendship, toggleIsFriendship] = useToggle(alreadyFollowed);
+  const { pathname } = useLocation();
+  const IDtoFollow = Number(pathname.split('/').at(-1));
+
+  return isFriendship ? <Wrap onClick={postUnFollow}>언팔로우</Wrap> : <Wrap onClick={postFollow}>팔로우</Wrap>;
+
+  function postFollow() {
+    fetchDataThatNeedToLogin(`${DOMAIN}/api/users/follow`, {
+      method: 'PUT',
+      bodyData: { userId: IDtoFollow },
+    });
+    toggleIsFriendship();
+  }
+  function postUnFollow() {
+    fetchDataThatNeedToLogin(`${DOMAIN}/api/users/unfollow`, {
+      method: 'PUT',
+      bodyData: { userId: IDtoFollow },
+    });
+    toggleIsFriendship();
+  }
 }
 
 type FollowButtonProps = {
-  already?: boolean;
+  alreadyFollowed?: boolean;
 };
 
 export default FollowButton;

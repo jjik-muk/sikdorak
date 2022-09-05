@@ -1,15 +1,14 @@
 import { DOMAIN } from 'constants/dummyData';
-import CommonHeader from 'components/CommonHeader/CommonHeader';
-import Feed from 'components/ReviewList/Feed/Feed';
+import Feeds from 'components/Common/Feeds/Feeds';
+import CommonHeader from 'components/Common/Header/CommonHeader';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { createKey, fetchDataThatNeedToLogin } from 'utils/utils';
+import { fetchDataThatNeedToLogin } from 'utils/utils';
 import {
   ActivityInfoWrap,
-  FeedWrap,
   ProfileInfoWrap,
   UserDetailWrap,
   UserInfoHeader,
@@ -20,26 +19,20 @@ import {
 function UserDetail() {
   const [reviews, setReviews] = useState([]);
   const [userProfile, setUserProfile] = useState(null);
-  const [myInfo] = useMyUserInfo();
-  const { userId } = myInfo;
+  const [myUserInfo] = useMyUserInfo();
+  const myUserId = myUserInfo.userId;
   const { pathname } = useLocation();
-  const ID = Number(pathname.split('/').at(-1));
-  const isMyUserDetailPage = userId === ID;
+  const targetId = Number(pathname.split('/').at(-1));
+  const isMyUserDetailPage = myUserId === targetId;
 
   useEffect(() => {
-    fetchUserProfile();
-    fetchReviewDetail();
+    fetchAndStoreData({ url: `${DOMAIN}/api/users/${targetId}/reviews`, dispatch: setReviews });
+    fetchAndStoreData({ url: `${DOMAIN}/api/users/${targetId}`, dispatch: setUserProfile });
 
-    // TODO: 중복 코드 제거
-    async function fetchReviewDetail() {
-      const reviewDetailRes = await fetchDataThatNeedToLogin(`${DOMAIN}/api/users/${ID}/reviews`);
-      const fetchedReviews = reviewDetailRes.data;
-      setReviews(fetchedReviews);
-    }
-    async function fetchUserProfile() {
-      const userProfileRes = await fetchDataThatNeedToLogin(`${DOMAIN}/api/users/${ID}`);
-      const fetchedUserProfile = userProfileRes.data;
-      setUserProfile(fetchedUserProfile);
+    async function fetchAndStoreData({ url, dispatch }) {
+      const res = await fetchDataThatNeedToLogin(url);
+      const resData = res.data;
+      dispatch(resData);
     }
   }, []);
 
@@ -61,19 +54,7 @@ function UserDetail() {
           <ProfileInfoWrap>자신을 소개해주세요.</ProfileInfoWrap>
         </UserInfoWrap>
       </UserDetailWrap>
-      <FeedWrap>
-        {reviews &&
-          reviews.map(({ reviewContent, images }, idx) => (
-            <Feed
-              key={createKey(userProfile?.nickname, idx)}
-              author={userProfile?.nickname}
-              contents={reviewContent}
-              store={{ name: '호이 초밥', region: '부산' }}
-              likeCnt={0}
-              pictures={images}
-            />
-          ))}
-      </FeedWrap>
+      <Feeds reviews={reviews} isMyUserDetailPage={isMyUserDetailPage} />
     </Wrap>
   );
 }

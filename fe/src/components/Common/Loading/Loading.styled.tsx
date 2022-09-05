@@ -21,7 +21,7 @@ export const Spinner = styled.div`
   width: 100px;
   height: 100px;
   border: 10px solid grey;
+  border-top-color: #fff;
   border-radius: 50%;
-  border-top-color: white;
   animation: ${rotate} 1s linear infinite;
 `;

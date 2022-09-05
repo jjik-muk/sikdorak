@@ -1,5 +1,6 @@
 import { DOMAIN } from 'constants/dummyData';
-import Portal from 'common/Portal/Portal';
+import Loading from 'components/Common/Loading/Loading';
+import Portal from 'components/Common/Portal/Portal';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import ReviewDetailProvider from 'context/ReviewDetailProvider';
 import Callback from 'pages/Callback/Callback';
@@ -36,6 +37,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={hasAccessToken() ? <ReviewList /> : <Navigate replace to="/login" />} />
+          <Route path="/map" element={<Loading />} />
           <Route path="/login" element={hasAccessToken() ? <Navigate replace to="/" /> : <Login />} />
           <Route path="/userDetail">
             <Route path=":userId" element={hasAccessToken() ? <UserDetail /> : <Navigate replace to="/" />} />

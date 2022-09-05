@@ -1,9 +1,9 @@
 import { DEFAULT_IMG, FEEDS, STORE } from 'constants/dummyData';
 import { ICON, STORE_DETAIL } from 'constants/size';
 import TEXT from 'constants/text';
-import Icon from 'common/Icon';
-import CommonHeader from 'components/CommonHeader/CommonHeader';
-import Feed from 'components/ReviewList/Feed/Feed';
+import Feeds from 'components/Common/Feeds/Feeds';
+import CommonHeader from 'components/Common/Header/CommonHeader';
+import Icon from 'components/Common/Icon/Icon';
 import {
   DimText,
   InfoWrap,
@@ -55,9 +55,7 @@ function StoreDetail() {
             </Row>
           </InfoWrap>
         </StoreInfo>
-        {FEEDS.map(({ author, contents, store, likeCnt, pictures }) => (
-          <Feed author={author} contents={contents} store={store} likeCnt={likeCnt} pictures={pictures} />
-        ))}
+        <Feeds reivews={FEEDS} />
       </Wrap>
     </>
   );

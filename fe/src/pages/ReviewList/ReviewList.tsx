@@ -1,30 +1,43 @@
-import { FEEDS } from 'constants/dummyData';
-import CommonHeader from 'components/CommonHeader/CommonHeader';
-import Feed from 'components/ReviewList/Feed/Feed';
-import { useId } from 'react';
-import { createKey } from 'utils/utils';
-import { Wrap } from './ReviewList.styled';
+import { DOMAIN } from 'constants/dummyData';
+import Feeds from 'components/Common/Feeds/Feeds';
+import CommonHeader from 'components/Common/Header/CommonHeader';
+import { useEffect, useState } from 'react';
+import { fetchDataThatNeedToLogin } from 'utils/utils';
+import { ReviewListWrap } from './ReviewList.styled';
 
 function ReviewList() {
-  const id = useId();
+  const [reviews, setReviews] = useState([]);
+  const [afterParam, setAfterParam] = useState(0);
+  const REVIEW_SIZE = 5;
+
+  useEffect(() => {
+    fetchNextRecommendReviews();
+  }, []);
 
   return (
-    <>
+    <ReviewListWrap onScroll={handleScroll}>
       <CommonHeader />
-      <Wrap>
-        {FEEDS.map(({ author, contents, pictures, store, likeCnt }, i) => (
-          <Feed
-            key={createKey(id, i)}
-            author={author}
-            contents={contents}
-            pictures={pictures}
-            store={store}
-            likeCnt={likeCnt}
-          />
-        ))}
-      </Wrap>
-    </>
+      <Feeds reviews={reviews} />
+    </ReviewListWrap>
   );
+
+  function handleScroll(e) {
+    const { scrollHeight, scrollTop, clientHeight } = e.target as HTMLDivElement;
+    const hasNextPage = afterParam !== 1;
+    const isScrollEnd = scrollHeight - scrollTop === clientHeight;
+
+    if (hasNextPage && isScrollEnd) {
+      fetchNextRecommendReviews();
+    }
+  }
+
+  async function fetchNextRecommendReviews() {
+    const res = await fetchDataThatNeedToLogin(`${DOMAIN}/api/reviews?after=${afterParam}&size=${REVIEW_SIZE}`);
+    const nextReviews = res.data.reviews;
+    const nextAfterParam = res.data.page.next;
+    setReviews([...reviews, ...nextReviews]);
+    setAfterParam(nextAfterParam);
+  }
 }
 
 export default ReviewList;

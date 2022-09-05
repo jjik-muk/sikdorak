@@ -1,4 +1,4 @@
-import Icon from 'common/Icon';
+import Icon from 'components/Common/Icon/Icon';
 import { Dispatch } from 'react';
 import { ImgUploadWrapper, ButtonWrapper, Label } from './ImgUpload.styled';
 

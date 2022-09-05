@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import WriteComment from '../WriteComment/WriteComment';
 import { Wrap, Picture, Title, Content, ContentWrapper, ButtonWrapper, Button, CommentWrapper } from './Comment.styled';
 
 const DEFAULT_IMG_URL = 'https://flyclipart.com/thumb2/profile-user-png-icon-free-download-196388.png';
@@ -32,7 +31,6 @@ function Comment({ imgUrl = DEFAULT_IMG_URL, title = '식도락', content = '댓
           )}
           <Button onClick={handleAdditionComment}>댓글 추가</Button>
         </ButtonWrapper>
-        {isActiveAdditionComment && <WriteComment />}
       </CommentWrapper>
     </Wrap>
   );

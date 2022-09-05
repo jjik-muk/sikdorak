@@ -1,6 +1,6 @@
 import { DOMAIN } from 'constants/dummyData';
 import TEXT from 'constants/text';
-import Logo from 'common/Logo/Logo';
+import Logo from 'components/Common/Logo/Logo';
 import LoginButton from 'components/Login/LoginButton/LoginButton';
 import LoginInput from 'components/Login/LoginInput/LoginInput';
 import { Form, KakaoLogin, Wrap } from './Login.styled';

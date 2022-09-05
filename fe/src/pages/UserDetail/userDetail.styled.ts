@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
 
 export const Wrap = styled.div`
-  width: fit-content;
-  height: 100%;
-  margin: 0 auto;
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
 `;
 
 export const UserDetailWrap = styled.div`
@@ -32,9 +32,4 @@ export const ActivityInfoWrap = styled.div`
 
 export const ProfileInfoWrap = styled.div`
   margin-top: 20px;
-`;
-
-export const FeedWrap = styled.div`
-  width: fit-content;
-  margin: 0 auto;
 `;

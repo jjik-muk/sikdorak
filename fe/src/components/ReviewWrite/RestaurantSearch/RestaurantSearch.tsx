@@ -1,5 +1,5 @@
 import { DOMAIN } from 'constants/dummyData';
-import Modal from 'common/Modal/Modal';
+import Modal from 'components/Common/Modal/Modal';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { useEffect, useState } from 'react';
 import { debounce, fetchData } from 'utils/utils';

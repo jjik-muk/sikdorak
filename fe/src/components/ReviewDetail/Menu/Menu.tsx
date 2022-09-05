@@ -1,8 +1,9 @@
+import { Ref } from 'react';
 import { Btn, DeleteBtn, Wrap } from './Menu.styled';
 
-function Menu() {
+function Menu({ menuRef }: MenuProps) {
   return (
-    <Wrap>
+    <Wrap ref={menuRef}>
       <DeleteBtn>삭제</DeleteBtn>
       <Btn>수정</Btn>
       <Btn>취소</Btn>
@@ -11,3 +12,7 @@ function Menu() {
 }
 
 export default Menu;
+
+type MenuProps = {
+  menuRef: Ref<HTMLDivElement>;
+};

@@ -1,14 +1,17 @@
+import { DOMAIN } from 'constants/dummyData';
 import { DETAIL, FEED } from 'constants/size';
-import Icon from 'common/Icon';
-import Portal from 'common/Portal/Portal';
+import Icon from 'components/Common/Icon/Icon';
+import Portal from 'components/Common/Portal/Portal';
 import Menu from 'components/ReviewDetail/Menu/Menu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
+import Rating from 'components/ReviewDetail/TotalRating/Rating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
+import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
-import { useRef } from 'react';
-import { createKey } from 'utils/utils';
+import { useRef, useState } from 'react';
+import { createKey, fetchDataThatNeedToLogin } from 'utils/utils';
 import {
   ButtonWrapper,
   Contents,
@@ -22,45 +25,61 @@ import {
   Wrap,
 } from './Feed.styled';
 
-function Feed({ author, contents, pictures, store, likeCnt }: FeedProps) {
+function Feed({
+  images,
+  like = { count: 0, userLikeStatus: false },
+  reviewContent,
+  reviewId,
+  reviewScore,
+  store,
+  user,
+}: FeedProps) {
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
-  const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
+  const [isActiveHeart, toggleIsActiveHeart] = useToggle(like.userLikeStatus);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
+  const [likeCnt, setLikeCnt] = useState(like.count);
+
   const reviewDetailModalRef = useRef(null);
   useOutsideClick(reviewDetailModalRef, toggleIsClikedFeed);
-  const { name, region } = store;
+  const menuRef = useRef(null);
+  useOutsideClick(menuRef, toggleIsActiveMenu);
+
+  const [myUserInfo] = useMyUserInfo();
+  const myUserId = myUserInfo.userId;
+  const isMyFeed = user?.userId === myUserId;
 
   return (
     <>
       <Wrap onClick={toggleIsClikedFeed}>
         <ContentsWrap wrapWidth={DETAIL.WRAP.WIDTH_NO_IMG}>
           <Header>
-            <UserProfile nickname={author} />
-            <MenuWrap onClick={toggleIsActiveMenu}>
-              <Icon icon="MenuBtn" />
-              {isActiveMenu && <Menu />}
+            <UserProfile nickname={user?.userNickname} />
+            <MenuWrap onClick={handleMenu}>
+              {isMyFeed && <Icon icon="MenuBtn" />}
+              {isActiveMenu && <Menu menuRef={menuRef} />}
             </MenuWrap>
           </Header>
           <Main>
-            <Contents>{contents}</Contents>
+            <Contents>{reviewContent}</Contents>
             <Pictures>
-              {pictures &&
-                pictures.map((picture, i) => (
+              {images &&
+                images.map((image, i) => (
                   <img
-                    key={createKey(picture, i)}
-                    src={picture}
+                    key={createKey(image, i)}
+                    src={image}
                     alt="음식"
                     width={FEED.IMG.WIDTH}
                     height={FEED.IMG.HEIGHT}
                   />
                 ))}
             </Pictures>
+            <Rating rating={reviewScore} />
             <MainFooter>
-              <CompnayProfile company={name} region={region} />
+              <CompnayProfile company={store?.storeName} region={store?.storeAddress} />
             </MainFooter>
           </Main>
           <ButtonWrapper>
-            <div onClick={toggleIsActiveHeart}>
+            <div onClick={handleLike}>
               <IconWrap width={FEED.BTN.WIDTH_NO_IMG} height={FEED.BTN.HEIGHT}>
                 <Icon icon="Heart" fill={isActiveHeart ? 'red' : '#FFF'} />
                 {likeCnt}
@@ -81,25 +100,58 @@ function Feed({ author, contents, pictures, store, likeCnt }: FeedProps) {
       </Wrap>
       {isClikedFeed && (
         <Portal selector="#portal" ref={reviewDetailModalRef}>
-          <ReviewDetail author={author} contents={contents} pictures={pictures} store={store} likeCnt={likeCnt} />
+          <ReviewDetail
+            images={images}
+            like={like}
+            reviewContent={reviewContent}
+            reviewId={reviewId}
+            reviewScore={reviewScore}
+            store={store}
+            user={user}
+          />
         </Portal>
       )}
     </>
   );
 
-  function handleCopyURL() {
+  function handleMenu(e) {
+    toggleIsActiveMenu();
+    e.stopPropagation();
+  }
+
+  function handleLike(e) {
+    const path = isActiveHeart ? 'unlike' : 'like';
+    const URL = `${DOMAIN}/api/reviews/${reviewId}/${path}`;
+    const options = { method: 'PUT' };
+
+    if (isActiveHeart) {
+      setLikeCnt(likeCnt - 1);
+    } else {
+      setLikeCnt(likeCnt + 1);
+    }
+
+    fetchDataThatNeedToLogin(URL, options);
+    toggleIsActiveHeart();
+    e.stopPropagation();
+  }
+
+  function handleCopyURL(e) {
     const curURL = window.location.href;
     const { clipboard } = navigator;
+
     clipboard.writeText(curURL);
+    e.stopPropagation();
   }
 }
 
 export default Feed;
 
 export type FeedProps = {
-  author: string;
-  contents: string;
-  pictures?: string[];
-  store: { name: string; region: string };
-  likeCnt: number;
+  images: string[];
+  like: { count: number; userLikeStatus: boolean };
+  reviewContent: string;
+  reviewId: number;
+  reviewScore: number;
+  store: { storeId: number; storeName: string; storeAddress: string };
+  user: { userId: number; userNickname: string; userProfileImage: string };
 };
