@@ -6,6 +6,7 @@ import Menu from 'components/ReviewDetail/Menu/Menu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
 import Rating from 'components/ReviewDetail/TotalRating/Rating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
+import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
@@ -28,10 +29,15 @@ function Feed({ images, reviewContent, reviewId, reviewScore, store, user, likeC
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
   const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
+
   const reviewDetailModalRef = useRef(null);
-  const menuRef = useRef(null);
   useOutsideClick(reviewDetailModalRef, toggleIsClikedFeed);
+  const menuRef = useRef(null);
   useOutsideClick(menuRef, toggleIsActiveMenu);
+
+  const [myUserInfo] = useMyUserInfo();
+  const myUserId = myUserInfo.userId;
+  const isMyFeed = user?.userId === myUserId;
 
   return (
     <>
@@ -40,7 +46,7 @@ function Feed({ images, reviewContent, reviewId, reviewScore, store, user, likeC
           <Header>
             <UserProfile nickname={user?.userNickname} />
             <MenuWrap onClick={handleMenu}>
-              <Icon icon="MenuBtn" />
+              {isMyFeed && <Icon icon="MenuBtn" />}
               {isActiveMenu && <Menu menuRef={menuRef} />}
             </MenuWrap>
           </Header>

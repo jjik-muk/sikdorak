@@ -9,7 +9,6 @@ import { useLocation } from 'react-router-dom';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import {
   ActivityInfoWrap,
-  FeedWrap,
   ProfileInfoWrap,
   UserDetailWrap,
   UserInfoHeader,
@@ -20,20 +19,20 @@ import {
 function UserDetail() {
   const [reviews, setReviews] = useState([]);
   const [userProfile, setUserProfile] = useState(null);
-  const [myInfo] = useMyUserInfo();
-  const { userId } = myInfo;
+  const [myUserInfo] = useMyUserInfo();
+  const myUserId = myUserInfo.userId;
   const { pathname } = useLocation();
-  const ID = Number(pathname.split('/').at(-1));
-  const isMyUserDetailPage = userId === ID;
+  const targetId = Number(pathname.split('/').at(-1));
+  const isMyUserDetailPage = myUserId === targetId;
 
   useEffect(() => {
-    fetchAndStoreData({ url: `${DOMAIN}/api/users/${ID}/reviews`, dispatch: setReviews });
-    fetchAndStoreData({ url: `${DOMAIN}/api/users/${ID}`, dispatch: setUserProfile });
+    fetchAndStoreData({ url: `${DOMAIN}/api/users/${targetId}/reviews`, dispatch: setReviews });
+    fetchAndStoreData({ url: `${DOMAIN}/api/users/${targetId}`, dispatch: setUserProfile });
 
     async function fetchAndStoreData({ url, dispatch }) {
       const res = await fetchDataThatNeedToLogin(url);
-      const reeData = res.data;
-      dispatch(reeData);
+      const resData = res.data;
+      dispatch(resData);
     }
   }, []);
 
@@ -55,9 +54,7 @@ function UserDetail() {
           <ProfileInfoWrap>자신을 소개해주세요.</ProfileInfoWrap>
         </UserInfoWrap>
       </UserDetailWrap>
-      <FeedWrap>
-        <Feeds reviews={reviews} />
-      </FeedWrap>
+      <Feeds reviews={reviews} isMyUserDetailPage={isMyUserDetailPage} />
     </Wrap>
   );
 }
