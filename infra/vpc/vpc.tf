@@ -1,45 +1,45 @@
-resource "aws_vpc" "sikdorak_BE_VPC" {
+resource "aws_vpc" "vpc_be" {
   cidr_block       = "10.0.0.0/16"
   instance_tenancy = "default"
 
   tags = {
-    Name = "VPC_BE_main"
+    Name = "vpc-be"
   }
 }
 
-resource "aws_subnet" "sikdorak_BE_public_subnet" {
-  vpc_id     = aws_vpc.sikdorak_BE_VPC.id
+resource "aws_subnet" "public_subnet_be" {
+  vpc_id     = aws_vpc.vpc_be.id
   cidr_block = "10.0.10.0/24"
 
   availability_zone = "ap-northeast-2a"
 
   tags = {
-    Name = "public-subnet-BE"
+    Name = "public-subnet-be"
   }
 }
 
-resource "aws_subnet" "sikdorak_BE_private_subnet" {
-  vpc_id     = aws_vpc.sikdorak_BE_VPC.id
+resource "aws_subnet" "private_subnet_be" {
+  vpc_id     = aws_vpc.vpc_be.id
   cidr_block = "10.0.11.0/24"
 
   #  availability_zone = "ap-northeast-2b" # 일단 같은 가용영역에 할당
 
   tags = {
-    Name = "private-subnet-BE"
+    Name = "private-subnet-be"
   }
 }
 
 resource "aws_internet_gateway" "igw-be" {
 
-  vpc_id = aws_vpc.sikdorak_BE_VPC.id
+  vpc_id = aws_vpc.vpc_be.id
 
   tags = {
-    Name = "igw-VPC-BE-main"
+    Name = "igw-be"
   }
 }
 
-resource "aws_route_table" "rt_BE_public_subnet" {
-  vpc_id = aws_vpc.sikdorak_BE_VPC.id
+resource "aws_route_table" "rt_public_subnet_be" {
+  vpc_id = aws_vpc.vpc_be.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -47,20 +47,20 @@ resource "aws_route_table" "rt_BE_public_subnet" {
   }
 
   tags = {
-    Name = "rt-BE-public-subnet"
+    Name = "rt-public-subnet-be"
   }
 }
 
-resource "aws_route_table_association" "rta_public" {
-    subnet_id = aws_subnet.sikdorak_BE_public_subnet.id
-    route_table_id = aws_route_table.rt_BE_public_subnet.id
+resource "aws_route_table_association" "rta_public_subnet_be" {
+    subnet_id = aws_subnet.public_subnet_be.id
+    route_table_id = aws_route_table.rt_public_subnet_be.id
   
 }
 
 # 임시 private 외부 연결
 
-resource "aws_route_table" "rt_BE_private_subnet" {
-  vpc_id = aws_vpc.sikdorak_BE_VPC.id
+resource "aws_route_table" "rt_private_subnet_be" {
+  vpc_id = aws_vpc.vpc_be.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -68,12 +68,12 @@ resource "aws_route_table" "rt_BE_private_subnet" {
   }
 
   tags = {
-    Name = "rt-BE-private-subnet"
+    Name = "rt-private-subnet-be"
   }
 }
 
 resource "aws_route_table_association" "rta_private" {
-    subnet_id = aws_subnet.sikdorak_BE_private_subnet.id
-    route_table_id = aws_route_table.rt_BE_private_subnet.id
+    subnet_id = aws_subnet.private_subnet_be.id
+    route_table_id = aws_route_table.rt_private_subnet_be.id
   
 }
