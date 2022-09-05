@@ -1,4 +1,6 @@
 import Icon from 'components/Common/Icon/Icon';
+import { useId } from 'react';
+import { createKey } from 'utils/utils';
 import { Wrap } from './Rating.styled';
 
 function Rating({ rating }: TotalRatingProps) {
@@ -16,10 +18,12 @@ function Rating({ rating }: TotalRatingProps) {
 }
 
 function Star({ length, color }: StarProps) {
+  const id = useId();
+
   return (
     <>
-      {Array.from({ length }).map(() => (
-        <Icon icon="Star" stroke="#fff" fill={color} width={15} height={15} />
+      {Array.from({ length }).map((_, i) => (
+        <Icon key={createKey(id, i)} icon="Star" stroke="#fff" fill={color} width={15} height={15} />
       ))}
     </>
   );

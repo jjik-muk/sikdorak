@@ -36,7 +36,7 @@ function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, use
       {hasPicture && <Carousel urls={images} />}
       <ContentsWrap wrapWidth={wrapWidth}>
         <Header>
-          <Profile nickname={user.userNickname} />
+          <Profile nickname={user?.userNickname} />
           <div onClick={toggleIsActiveMenu}>
             <Icon icon="MenuBtn" />
             {isActiveMenu && <Menu />}
@@ -75,7 +75,7 @@ function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, use
             댓글 더보기
           </button>
         )}
-        <WriteComment commentRef={commentRef} />
+        <WriteComment commentRef={commentRef} reviewId={reviewId} comments={comments} setComments={setComments} />
       </ContentsWrap>
     </Wrap>
   );
@@ -84,6 +84,9 @@ function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, use
     const commentRes = await fetchDataThatNeedToLogin(
       `${DOMAIN}/api/reviews/${reviewId}/comments?size=${COMMENT_SIZE}&after=${afterParam}`,
     );
+
+    if (!commentRes.data) return;
+
     const nextComments = commentRes.data.comments;
     const nextAfterParam = commentRes.data.page.next;
     setComments([...comments, ...nextComments]);

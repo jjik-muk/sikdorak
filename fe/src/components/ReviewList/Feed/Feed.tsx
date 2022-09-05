@@ -35,7 +35,7 @@ function Feed({ images, reviewContent, reviewId, reviewScore, store, user, likeC
       <Wrap onClick={toggleIsClikedFeed}>
         <ContentsWrap wrapWidth={DETAIL.WRAP.WIDTH_NO_IMG}>
           <Header>
-            <UserProfile nickname={user.userNickname} />
+            <UserProfile nickname={user?.userNickname} />
             <MenuWrap onClick={toggleIsActiveMenu}>
               <Icon icon="MenuBtn" />
               {isActiveMenu && <Menu />}
