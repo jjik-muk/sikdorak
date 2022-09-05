@@ -51,7 +51,6 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 		assertThat(reviewDetailResponse.reviewVisibility()).isEqualTo("PRIVATE");
 	}
 
-
 	@Test
 	@DisplayName("유저가 친구의 친구 공개 리뷰를 조회한 경우 리뷰응답 객체를 반환한다")
 	void search_protected_review_detail_with_friend_User() {

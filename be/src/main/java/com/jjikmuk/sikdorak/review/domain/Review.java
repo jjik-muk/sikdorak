@@ -113,6 +113,10 @@ public class Review extends BaseTimeEntity {
 		return likes.getLikeUsers();
 	}
 
+	public long getLikesCount() {
+		return likes.size();
+	}
+
 	public String getReviewContent() {
 		return reviewContent.getReviewContent();
 	}

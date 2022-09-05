@@ -192,8 +192,6 @@ public class ReviewService {
         return review;
     }
 
-
-
     private void validateReviewWithUser(Review review, User user) {
         if (!review.isAuthor(user)) {
             throw new UnauthorizedUserException();

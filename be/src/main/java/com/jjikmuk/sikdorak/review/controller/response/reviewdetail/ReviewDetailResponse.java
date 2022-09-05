@@ -17,6 +17,7 @@ import org.hibernate.validator.constraints.URL;
 public record ReviewDetailResponse(
 	ReviewDetailUserResponse user,
 	ReviewDetailStoreResponse store,
+	ReviewDetailLikeResponse like,
 
 	@NotNull
 	long reviewId,
@@ -58,6 +59,7 @@ public record ReviewDetailResponse(
 		return new ReviewDetailResponse(
 			new ReviewDetailUserResponse(user),
 			new ReviewDetailStoreResponse(store),
+			new ReviewDetailLikeResponse(review.getLikesCount(), review.isLikedBy(user.getId())),
 			review.getId(),
 			review.getReviewContent(),
 			review.getReviewScore(),
