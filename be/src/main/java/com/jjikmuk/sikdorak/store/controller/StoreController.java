@@ -5,13 +5,16 @@ import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_MODIFY_S
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_REMOVE_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_BY_RADIUS_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_SUCCESS;
+import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_VERIFY_AND_UPSERT_RESPONSE;
 
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
+import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyAndUpsertRequest;
 import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfo;
 import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
+import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyAndUpsertResponse;
 import com.jjikmuk.sikdorak.store.service.StoreService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -49,8 +52,25 @@ public class StoreController {
 		return new CommonResponseEntity<>(STORE_CREATE_SUCCESS, null, HttpStatus.CREATED);
 	}
 
+	@PutMapping("")
+	public CommonResponseEntity<StoreVerifyAndUpsertResponse> verifyAndUpsertStore(
+		@RequestBody StoreVerifyAndUpsertRequest upsertRequest) {
+//		storeService.upsertStore(upsertRequest);
+		StoreVerifyAndUpsertResponse storeVerifyAndUpsertResponse = new StoreVerifyAndUpsertResponse(
+			1L,
+			upsertRequest.getKakaoPlaceId(),
+			upsertRequest.getStoreName(),
+			upsertRequest.getX(),
+			upsertRequest.getY()
+		);
+
+		return new CommonResponseEntity<>(STORE_VERIFY_AND_UPSERT_RESPONSE,
+			storeVerifyAndUpsertResponse, HttpStatus.OK);
+	}
+
 	@PutMapping("/{storeId}")
-	public CommonResponseEntity<Void> modifyStore(@PathVariable("storeId") Long storeId, @RequestBody StoreModifyRequest modifyRequest) {
+	public CommonResponseEntity<Void> modifyStore(@PathVariable("storeId") Long storeId,
+		@RequestBody StoreModifyRequest modifyRequest) {
 		storeService.modifyStore(storeId, modifyRequest);
 
 		return new CommonResponseEntity<>(STORE_MODIFY_SUCCESS, HttpStatus.OK);
@@ -66,7 +86,8 @@ public class StoreController {
 	@GetMapping(params = {"type=maps"})
 	public CommonResponseEntity<List<StoreRadiusSearchResponse>> searchStoreByRadius(
 		UserLocationInfo userLocationInfo) {
-		List<StoreRadiusSearchResponse> stores = storeService.searchStoresByRadius(userLocationInfo);
+		List<StoreRadiusSearchResponse> stores = storeService.searchStoresByRadius(
+			userLocationInfo);
 
 		return new CommonResponseEntity<>(STORE_SEARCH_BY_RADIUS_SUCCESS, stores, HttpStatus.OK);
 	}
