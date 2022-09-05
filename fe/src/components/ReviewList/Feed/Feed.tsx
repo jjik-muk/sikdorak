@@ -1,3 +1,4 @@
+import { DOMAIN } from 'constants/dummyData';
 import { DETAIL, FEED } from 'constants/size';
 import Icon from 'components/Common/Icon/Icon';
 import Portal from 'components/Common/Portal/Portal';
@@ -9,7 +10,7 @@ import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
 import { useRef } from 'react';
-import { createKey } from 'utils/utils';
+import { createKey, fetchDataThatNeedToLogin } from 'utils/utils';
 import {
   ButtonWrapper,
   Contents,
@@ -61,7 +62,7 @@ function Feed({ images, reviewContent, reviewId, reviewScore, store, user, likeC
             </MainFooter>
           </Main>
           <ButtonWrapper>
-            <div onClick={toggleIsActiveHeart}>
+            <div onClick={handleLike}>
               <IconWrap width={FEED.BTN.WIDTH_NO_IMG} height={FEED.BTN.HEIGHT}>
                 <Icon icon="Heart" fill={isActiveHeart ? 'red' : '#FFF'} />
                 {likeCnt}
@@ -95,6 +96,15 @@ function Feed({ images, reviewContent, reviewId, reviewScore, store, user, likeC
       )}
     </>
   );
+
+  function handleLike() {
+    const path = isActiveHeart ? 'unlike' : 'like';
+    const URL = `${DOMAIN}/api/reviews/${reviewId}/${path}`;
+    const options = { method: 'PUT' };
+
+    fetchDataThatNeedToLogin(URL, options);
+    toggleIsActiveHeart();
+  }
 
   function handleCopyURL() {
     const curURL = window.location.href;
