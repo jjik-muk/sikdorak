@@ -10,6 +10,7 @@ import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import { FeedProps } from 'components/ReviewList/Feed/Feed';
 import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
+import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import { useEffect, useRef, useState } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
@@ -26,6 +27,8 @@ function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, use
   const [afterParam, setAfterParam] = useState(0);
   const COMMENT_SIZE = 2;
   const hasNextComments = afterParam !== 1 && comments.length > 0;
+  const menuRef = useRef(null);
+  useOutsideClick(menuRef, toggleIsActiveMenu);
 
   useEffect(() => {
     fetchNextComment();
@@ -39,7 +42,7 @@ function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, use
           <Profile nickname={user?.userNickname} />
           <div onClick={toggleIsActiveMenu}>
             <Icon icon="MenuBtn" />
-            {isActiveMenu && <Menu />}
+            {isActiveMenu && <Menu menuRef={menuRef} />}
           </div>
         </Header>
         <Main>

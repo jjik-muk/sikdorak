@@ -29,7 +29,9 @@ function Feed({ images, reviewContent, reviewId, reviewScore, store, user, likeC
   const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const reviewDetailModalRef = useRef(null);
+  const menuRef = useRef(null);
   useOutsideClick(reviewDetailModalRef, toggleIsClikedFeed);
+  useOutsideClick(menuRef, toggleIsActiveMenu);
 
   return (
     <>
@@ -37,9 +39,9 @@ function Feed({ images, reviewContent, reviewId, reviewScore, store, user, likeC
         <ContentsWrap wrapWidth={DETAIL.WRAP.WIDTH_NO_IMG}>
           <Header>
             <UserProfile nickname={user?.userNickname} />
-            <MenuWrap onClick={toggleIsActiveMenu}>
+            <MenuWrap onClick={handleMenu}>
               <Icon icon="MenuBtn" />
-              {isActiveMenu && <Menu />}
+              {isActiveMenu && <Menu menuRef={menuRef} />}
             </MenuWrap>
           </Header>
           <Main>
@@ -97,19 +99,27 @@ function Feed({ images, reviewContent, reviewId, reviewScore, store, user, likeC
     </>
   );
 
-  function handleLike() {
+  function handleMenu(e) {
+    toggleIsActiveMenu();
+    e.stopPropagation();
+  }
+
+  function handleLike(e) {
     const path = isActiveHeart ? 'unlike' : 'like';
     const URL = `${DOMAIN}/api/reviews/${reviewId}/${path}`;
     const options = { method: 'PUT' };
 
     fetchDataThatNeedToLogin(URL, options);
     toggleIsActiveHeart();
+    e.stopPropagation();
   }
 
-  function handleCopyURL() {
+  function handleCopyURL(e) {
     const curURL = window.location.href;
     const { clipboard } = navigator;
+
     clipboard.writeText(curURL);
+    e.stopPropagation();
   }
 }
 
