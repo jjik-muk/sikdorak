@@ -18,23 +18,23 @@ public class StoreLocation {
     private static final double LONGITUDE_MIN = -180.0;
     private static final double LONGITUDE_MAX = 180.0;
 
-    private Double latitude;
-    private Double longitude;
+    private Double x;
+    private Double y;
 
-    public StoreLocation(Double latitude, Double longitude) {
-        if (Objects.isNull(latitude) ||
-                Objects.isNull(longitude) ||
-                !isInRange(latitude, LATITUDE_MIN, LATITUDE_MAX) ||
-                !isInRange(longitude, LONGITUDE_MIN, LONGITUDE_MAX)) {
+    public StoreLocation(Double x, Double y) {
+        if (Objects.isNull(y) ||
+                Objects.isNull(x) ||
+            isNotInRange(y, LATITUDE_MIN, LATITUDE_MAX) ||
+            isNotInRange(x, LONGITUDE_MIN, LONGITUDE_MAX)) {
             throw new InvalidStoreLocationException();
         }
 
-        // longitude = X, latitude = Y
-        this.latitude = latitude;
-        this.longitude = longitude;
+        // X = longitude, Y = latitude
+        this.x = x;
+        this.y = y;
     }
 
-    private boolean isInRange(double value, double min, double max) {
-        return min <= value && value <= max;
+    private boolean isNotInRange(double value, double min, double max) {
+        return !(min <= value) || !(value <= max);
     }
 }

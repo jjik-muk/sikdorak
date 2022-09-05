@@ -36,10 +36,10 @@ public class StoreModifyIntegrationTest extends InitIntegrationTest {
             StoreModifyRequest storeModifyRequest = new StoreModifyRequest(
                 "업데이트된 가게 이름",
                 "02-9999-9999",
-                "서울시 어쩌구 00길 00",
-                null,
-                37.49082,
-                127.033417
+                "서울시 어쩌구 11-22",
+                "서울시 어쩌구 어떤길",
+                127.033417,
+                37.49082
             );
 
             // when
@@ -49,10 +49,10 @@ public class StoreModifyIntegrationTest extends InitIntegrationTest {
             Store updatedStore = storeRepository.findById(updatedStoreId).orElseThrow();
             assertThat(storeModifyRequest.getStoreName()).isEqualTo(updatedStore.getStoreName());
             assertThat(storeModifyRequest.getContactNumber()).isEqualTo(updatedStore.getContactNumber());
-            assertThat(storeModifyRequest.getBaseAddress()).isEqualTo(updatedStore.getBaseAddress());
-            assertThat(storeModifyRequest.getDetailAddress()).isEqualTo(updatedStore.getDetailAddress());
-            assertThat(storeModifyRequest.getLatitude()).isEqualTo(updatedStore.getLatitude());
-            assertThat(storeModifyRequest.getLongitude()).isEqualTo(updatedStore.getLongitude());
+            assertThat(storeModifyRequest.getAddressName()).isEqualTo(updatedStore.getAddressName());
+            assertThat(storeModifyRequest.getRoadAddressName()).isEqualTo(updatedStore.getRoadAddressName());
+            assertThat(storeModifyRequest.getY()).isEqualTo(updatedStore.getY());
+            assertThat(storeModifyRequest.getX()).isEqualTo(updatedStore.getX());
         }
 
         @Test
@@ -63,8 +63,8 @@ public class StoreModifyIntegrationTest extends InitIntegrationTest {
             StoreModifyRequest storeModifyRequest = new StoreModifyRequest(
                 "업데이트된 가게 이름",
                 "02-9999-9999",
-                "서울시 어쩌구 00길 00",
-                null,
+                "서울시 어쩌구 11-22",
+                "서울시 어쩌구 어떤길",
                 37.49082,
                 127.033417
             );

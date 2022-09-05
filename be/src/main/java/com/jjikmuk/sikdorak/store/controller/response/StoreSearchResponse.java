@@ -5,20 +5,20 @@ import com.jjikmuk.sikdorak.store.domain.Store;
 public record StoreSearchResponse(long id,
 								  String storeName,
 								  String contactNumber,
-								  String baseAddress,
-								  String detailAddress,
-								  double latitude,
-								  double longitude) {
+								  String addressName,
+								  String roadAddressName,
+								  double x,
+								  double y) {
 
 	public static StoreSearchResponse from(Store store) {
 		return new StoreSearchResponse(
 			store.getId(),
 			store.getStoreName(),
 			store.getContactNumber(),
-			store.getBaseAddress(),
-			store.getDetailAddress(),
-			store.getLatitude(),
-			store.getLongitude()
+			store.getAddressName(),
+			store.getRoadAddressName(),
+			store.getX(),
+			store.getY()
 		);
 	}
 }

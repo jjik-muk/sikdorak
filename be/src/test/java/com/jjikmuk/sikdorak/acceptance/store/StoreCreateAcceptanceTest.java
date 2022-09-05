@@ -25,10 +25,10 @@ class StoreCreateAcceptanceTest extends InitAcceptanceTest {
 		StoreCreateRequest storeCreateRequest = new StoreCreateRequest(
 			"새로 생긴 가게",
 			"02-0000-0000",
+			"서울시 어쩌구 00-00",
 			"서울시 어쩌구 00길 00",
-			null,
-			37.49082,
-			127.033417
+			127.033417,
+			37.49082
 		);
 
 		ResponseCodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.STORE_CREATE_SUCCESS;
@@ -45,7 +45,7 @@ class StoreCreateAcceptanceTest extends InitAcceptanceTest {
 		.when()
 			.post("/api/stores")
 
-		.then()
+		.then().log().all()
 			.statusCode(HttpStatus.CREATED)
 			.body("code", Matchers.equalTo(expectedCodeAndMessage.getCode()))
 			.body("message", Matchers.equalTo(expectedCodeAndMessage.getMessage()));

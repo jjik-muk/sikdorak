@@ -27,10 +27,10 @@ class StoreModifyAcceptanceTest extends InitAcceptanceTest {
 		StoreModifyRequest storeModifyRequest = new StoreModifyRequest(
 			"업데이트된 가게 이름",
 			"02-9999-9999",
+			"서울시 어쩌구 00-00",
 			"서울시 어쩌구 00길 00",
-			null,
-			37.49082,
-			127.033417
+			127.033417,
+			37.49082
 		);
 
 		ResponseCodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.STORE_MODIFY_SUCCESS;

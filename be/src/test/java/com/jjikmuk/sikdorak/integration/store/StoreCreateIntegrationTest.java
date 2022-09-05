@@ -34,10 +34,10 @@ public class StoreCreateIntegrationTest extends InitIntegrationTest {
             StoreCreateRequest storeCreateRequest = new StoreCreateRequest(
                 "새로 생긴 가게",
                 "02-0000-0000",
+                "서울시 어쩌구 11-22",
                 "서울시 어쩌구 00길 00",
-                null,
-                37.49082,
-                127.033417
+                127.033417,
+                37.49082
             );
 
             // when
@@ -47,10 +47,10 @@ public class StoreCreateIntegrationTest extends InitIntegrationTest {
             Store savedStore = storeRepository.findById(savedStoreId).orElseThrow();
             assertThat(storeCreateRequest.getStoreName()).isEqualTo(savedStore.getStoreName());
             assertThat(storeCreateRequest.getContactNumber()).isEqualTo(savedStore.getContactNumber());
-            assertThat(storeCreateRequest.getBaseAddress()).isEqualTo(savedStore.getBaseAddress());
-            assertThat(storeCreateRequest.getDetailAddress()).isEqualTo(savedStore.getDetailAddress());
-            assertThat(storeCreateRequest.getLatitude()).isEqualTo(savedStore.getLatitude());
-            assertThat(storeCreateRequest.getLongitude()).isEqualTo(savedStore.getLongitude());
+            assertThat(storeCreateRequest.getAddressName()).isEqualTo(savedStore.getAddressName());
+            assertThat(storeCreateRequest.getRoadAddressName()).isEqualTo(savedStore.getRoadAddressName());
+            assertThat(storeCreateRequest.getX()).isEqualTo(savedStore.getX());
+            assertThat(storeCreateRequest.getY()).isEqualTo(savedStore.getY());
         }
 
         @Test

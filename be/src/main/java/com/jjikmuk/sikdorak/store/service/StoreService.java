@@ -5,6 +5,7 @@ import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
 import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfo;
 import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
+import com.jjikmuk.sikdorak.store.domain.Address;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
@@ -68,10 +69,9 @@ public class StoreService {
         Store store = new Store(
             createRequest.getStoreName(),
             createRequest.getContactNumber(),
-            createRequest.getBaseAddress(),
-            createRequest.getDetailAddress(),
-            createRequest.getLatitude(),
-            createRequest.getLongitude()
+            Address.of(createRequest.getAddressName(), createRequest.getRoadAddressName()),
+            createRequest.getY(),
+            createRequest.getX()
         );
 
         return storeRepository.save(store)
@@ -86,10 +86,9 @@ public class StoreService {
         store.editAll(
             modifyRequest.getStoreName(),
             modifyRequest.getContactNumber(),
-            modifyRequest.getBaseAddress(),
-            modifyRequest.getDetailAddress(),
-            modifyRequest.getLatitude(),
-            modifyRequest.getLongitude()
+            Address.of(modifyRequest.getAddressName(), modifyRequest.getRoadAddressName()),
+            modifyRequest.getY(),
+            modifyRequest.getX()
         );
 
         return store.getId();
