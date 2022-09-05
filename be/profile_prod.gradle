@@ -4,10 +4,8 @@ jib {
     }
 
     to {
-        image = "151211916334.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-springboot"
-        image = ${AWS_ECR_URI}
+        image = "$System.env.AWS_ECR_URL"
         tags = ["latest", "${project.name}".toString()]
-
     }
     container {
         mainClass = 'com.jjikmuk.sikdorak.SikdorakApplication' // entry point java class
