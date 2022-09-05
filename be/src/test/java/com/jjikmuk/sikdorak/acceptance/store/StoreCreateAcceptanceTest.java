@@ -45,7 +45,7 @@ class StoreCreateAcceptanceTest extends InitAcceptanceTest {
 		.when()
 			.post("/api/stores")
 
-		.then().log().all()
+		.then()
 			.statusCode(HttpStatus.CREATED)
 			.body("code", Matchers.equalTo(expectedCodeAndMessage.getCode()))
 			.body("message", Matchers.equalTo(expectedCodeAndMessage.getMessage()));
