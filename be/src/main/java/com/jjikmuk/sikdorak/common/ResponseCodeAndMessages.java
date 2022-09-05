@@ -39,7 +39,8 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
     COMMENT_SEARCH_SUCCESS("T-C004", "댓글 조회에 성공했습니다."),
 
     // ETC
-    SYSTEMINFO_SEARCH_API_DOCS_INFO("T-S001", "API 문서 코드/메세지 검색 성공했습니다.");
+    SYSTEMINFO_SEARCH_API_DOCS_INFO("T-S001", "API 문서 코드/메세지 검색 성공했습니다."),
+	IMAGES_UPLOAD_PRESIGNED_URL_CREATE_SUCCESS("T-I001", "업로드 용도의 S3 PreSigned URL이 생성에 성공했습니다.");
 
 
     private final String code;
