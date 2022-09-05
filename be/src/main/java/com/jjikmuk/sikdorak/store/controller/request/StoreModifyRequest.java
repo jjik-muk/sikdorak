@@ -20,26 +20,26 @@ public class StoreModifyRequest {
 
 	@NotBlank
 	@Length(max = 255)
-	private String baseAddress;
+	private String addressName;
 
-	@Length(max = 50)
-	private String detailAddress;
-
-	@Min(-90)
-	@Max(90)
-	private Double latitude;
+	@Length(max = 255)
+	private String roadAddressName;
 
 	@Min(-180)
 	@Max(180)
-	private Double longitude;
+	private Double x;
 
-	public StoreModifyRequest(String storeName, String contactNumber, String baseAddress,
-		String detailAddress, Double latitude, Double longitude) {
+	@Min(-90)
+	@Max(90)
+	private Double y;
+
+	public StoreModifyRequest(String storeName, String contactNumber, String addressName,
+		String roadAddressName, Double x, Double y) {
 		this.storeName = storeName;
 		this.contactNumber = contactNumber;
-		this.baseAddress = baseAddress;
-		this.detailAddress = detailAddress;
-		this.latitude = latitude;
-		this.longitude = longitude;
+		this.addressName = addressName;
+		this.roadAddressName = roadAddressName;
+		this.x = x;
+		this.y = y;
 	}
 }

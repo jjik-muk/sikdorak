@@ -26,7 +26,7 @@ public record ReviewDetailStoreResponse(
 	public ReviewDetailStoreResponse(Store store) {
 		this(store.getId(),
 			store.getStoreName(),
-			store.getBaseAddress());
+			store.getAddressName());
 	}
 }
 

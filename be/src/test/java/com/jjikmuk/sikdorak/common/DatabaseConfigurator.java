@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.common;
 
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
+import com.jjikmuk.sikdorak.store.domain.Address;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.user.user.domain.User;
@@ -109,8 +110,7 @@ public class DatabaseConfigurator implements InitializingBean {
     private void initStoreData() {
         this.store = storeRepository.save(new Store("맛있는가게",
             "02-0000-0000",
-            "서울시 송파구 좋은길 1",
-            "1층 101호",
+            Address.of("서울시 송파구 좋은길 1", "1층 101호"),
             37.5093890,
             127.105143));
     }

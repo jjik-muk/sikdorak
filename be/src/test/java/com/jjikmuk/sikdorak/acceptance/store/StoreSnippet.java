@@ -31,14 +31,14 @@ public interface StoreSnippet {
 				.description(Constants.STORENAME_DESCRIPTION),
 			fieldWithPath("contactNumber").type(JsonFieldType.STRING)
 				.description(Constants.CONTACTNUMBER_DESCRIPTION),
-			fieldWithPath("baseAddress").type(JsonFieldType.STRING)
-				.description(Constants.BASEADDRESS_DESCRIPTION),
-			fieldWithPath("detailAddress").type(JsonFieldType.STRING)
-				.description(Constants.DETAILADDRESS_DESCRIPTION).optional(),
-			fieldWithPath("latitude").type(JsonFieldType.NUMBER)
-				.description(Constants.LATITUDE_DESCRIPTION),
-			fieldWithPath("longitude").type(JsonFieldType.NUMBER)
-				.description(Constants.LONGITUDE_DESCRIPTION)
+			fieldWithPath("addressName").type(JsonFieldType.STRING)
+				.description(Constants.ADDRESS_NAME_DESCRIPTION),
+			fieldWithPath("roadAddressName").type(JsonFieldType.STRING)
+				.description(Constants.ROADADDRESS_NAME_DESCRIPTION).optional(),
+			fieldWithPath("y").type(JsonFieldType.NUMBER)
+				.description(Constants.Y_DESCRIPTION),
+			fieldWithPath("x").type(JsonFieldType.NUMBER)
+				.description(Constants.X_DESCRIPTION)
 
 		)
 	);
@@ -48,14 +48,14 @@ public interface StoreSnippet {
 			.description(Constants.STORENAME_DESCRIPTION),
 		fieldWithPath("contactNumber").type(JsonFieldType.STRING)
 			.description(Constants.CONTACTNUMBER_DESCRIPTION),
-		fieldWithPath("baseAddress").type(JsonFieldType.STRING)
-			.description(Constants.BASEADDRESS_DESCRIPTION),
-		fieldWithPath("detailAddress").type(JsonFieldType.STRING)
-			.description(Constants.DETAILADDRESS_DESCRIPTION).optional(),
-		fieldWithPath("latitude").type(JsonFieldType.NUMBER)
-			.description(Constants.LATITUDE_DESCRIPTION),
-		fieldWithPath("longitude").type(JsonFieldType.NUMBER)
-			.description(Constants.LONGITUDE_DESCRIPTION)
+		fieldWithPath("addressName").type(JsonFieldType.STRING)
+			.description(Constants.ADDRESS_NAME_DESCRIPTION),
+		fieldWithPath("roadAddressName").type(JsonFieldType.STRING)
+			.description(Constants.ROADADDRESS_NAME_DESCRIPTION).optional(),
+		fieldWithPath("y").type(JsonFieldType.NUMBER)
+			.description(Constants.Y_DESCRIPTION),
+		fieldWithPath("x").type(JsonFieldType.NUMBER)
+			.description(Constants.X_DESCRIPTION)
 	);
 
 	Snippet STORE_CREATE_RESPONSE_SNIPPET = createResponseSnippetWithFields(
@@ -70,14 +70,14 @@ public interface StoreSnippet {
 			.description(Constants.STORENAME_DESCRIPTION),
 		fieldWithPath("contactNumber").type(JsonFieldType.STRING)
 			.description(Constants.CONTACTNUMBER_DESCRIPTION),
-		fieldWithPath("baseAddress").type(JsonFieldType.STRING)
-			.description(Constants.BASEADDRESS_DESCRIPTION),
-		fieldWithPath("detailAddress").type(JsonFieldType.STRING)
-			.description(Constants.DETAILADDRESS_DESCRIPTION).optional(),
-		fieldWithPath("latitude").type(JsonFieldType.NUMBER)
-			.description(Constants.LATITUDE_DESCRIPTION),
-		fieldWithPath("longitude").type(JsonFieldType.NUMBER)
-			.description(Constants.LONGITUDE_DESCRIPTION)
+		fieldWithPath("addressName").type(JsonFieldType.STRING)
+			.description(Constants.ADDRESS_NAME_DESCRIPTION),
+		fieldWithPath("roadAddressName").type(JsonFieldType.STRING)
+			.description(Constants.ROADADDRESS_NAME_DESCRIPTION).optional(),
+		fieldWithPath("y").type(JsonFieldType.NUMBER)
+			.description(Constants.Y_DESCRIPTION),
+		fieldWithPath("x").type(JsonFieldType.NUMBER)
+			.description(Constants.X_DESCRIPTION)
 	);
 
 	Snippet STORE_MODIFY_RESPONSE_SNIPPET = createResponseSnippetWithFields(
@@ -92,8 +92,8 @@ public interface StoreSnippet {
 
 	Snippet STORE_SEARCH_BY_RADIUS_REQUEST_SNIPPET = requestParameters(
 		parameterWithName("type").description(Constants.REQUEST_PAGE_TYPE_DESCRIPTION),
-		parameterWithName("x").description(Constants.LONGITUDE_DESCRIPTION),
-		parameterWithName("y").description(Constants.LATITUDE_DESCRIPTION),
+		parameterWithName("x").description(Constants.X_DESCRIPTION),
+		parameterWithName("y").description(Constants.Y_DESCRIPTION),
 		parameterWithName("radius").description(Constants.RADIUS_DESCRIPTION)
 	);
 
@@ -108,13 +108,13 @@ public interface StoreSnippet {
 			fieldWithPath("contactNumber").type(JsonFieldType.STRING)
 				.description(Constants.CONTACTNUMBER_DESCRIPTION),
 			fieldWithPath("addressName").type(JsonFieldType.STRING)
-				.description(Constants.BASEADDRESS_DESCRIPTION),
+				.description(Constants.ADDRESS_NAME_DESCRIPTION),
 			fieldWithPath("roadAddressName").type(JsonFieldType.STRING)
-				.description(Constants.DETAILADDRESS_DESCRIPTION).optional(),
+				.description(Constants.ROADADDRESS_NAME_DESCRIPTION).optional(),
 			fieldWithPath("x").type(JsonFieldType.NUMBER)
-				.description(Constants.LONGITUDE_DESCRIPTION),
+				.description(Constants.X_DESCRIPTION),
 			fieldWithPath("y").type(JsonFieldType.NUMBER)
-				.description(Constants.LATITUDE_DESCRIPTION)
+				.description(Constants.Y_DESCRIPTION)
 		)
 	);
 
@@ -123,10 +123,10 @@ public interface StoreSnippet {
 		private static final String ID_DESCRIPTION = "가게 아이디";
 		private static final String STORENAME_DESCRIPTION = "가게 이름";
 		private static final String CONTACTNUMBER_DESCRIPTION = "가게 연락처";
-		private static final String BASEADDRESS_DESCRIPTION = "주소";
-		private static final String DETAILADDRESS_DESCRIPTION = "상세 주소";
-		private static final String LATITUDE_DESCRIPTION = "위도";
-		private static final String LONGITUDE_DESCRIPTION = "경도";
+		private static final String ADDRESS_NAME_DESCRIPTION = "지번 주소";
+		private static final String ROADADDRESS_NAME_DESCRIPTION = "도로명 주소";
+		private static final String Y_DESCRIPTION = "위도";
+		private static final String X_DESCRIPTION = "경도";
 		private static final String RADIUS_DESCRIPTION = "위치 반경";
 		private static final String REQUEST_PAGE_TYPE_DESCRIPTION = "요청하는 페이지 타입 - feed | maps 로 나뉩니다.";
 	}

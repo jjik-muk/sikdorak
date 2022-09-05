@@ -26,15 +26,15 @@ class StoreLocationTest {
 
             @ParameterizedTest
             @CsvSource({
-                    "37.4908786, 127.033406",
-                    "37.5093890, 127.105143",
+                    "127.033406, 37.4908786",
+                    "127.105143, 37.5093890",
             })
             @DisplayName("StorePoint 객체를 반환한다")
-            void It_returns_a_object(double latitude, double longitude) {
-                StoreLocation storePoint = new StoreLocation(latitude, longitude);
+            void It_returns_a_object(double x, double y) {
+                StoreLocation storePoint = new StoreLocation(x, y);
 
-                assertThat(storePoint.getLatitude()).isEqualTo(latitude);
-                assertThat(storePoint.getLongitude()).isEqualTo(longitude);
+                assertThat(storePoint.getY()).isEqualTo(y);
+                assertThat(storePoint.getX()).isEqualTo(x);
             }
         }
 
@@ -45,8 +45,8 @@ class StoreLocationTest {
             @ParameterizedTest
             @MethodSource("providePointNullOrOutOfRange")
             @DisplayName("예외를 발생시킨다")
-            void It_throws_error(Double latitude, Double longitude) {
-                assertThatThrownBy(() -> new StoreLocation(latitude, longitude))
+            void It_throws_error(Double y, Double x) {
+                assertThatThrownBy(() -> new StoreLocation(x, y))
                         .isInstanceOf(InvalidStoreLocationException.class);
             }
 

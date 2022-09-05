@@ -30,19 +30,19 @@ public class Store extends BaseTimeEntity {
     private ContactNumber contactNumber;
 
     @Embedded
-    private Address address; // baseAddress, detailAddress
+    private Address address;
 
     @Embedded
-    private StoreLocation location; // Float latitude, Float longitude
+    private StoreLocation location;
 
     @Embedded
     private Deleted deleted = Deleted.FALSE;
 
-    public Store(String storeName, String contactNumber, String baseAddress, String detailAddress, Double latitude, Double longitude) {
+    public Store(String storeName, String contactNumber, Address address, Double y, Double x) {
         this.storeName = new StoreName(storeName);
         this.contactNumber = new ContactNumber(contactNumber);
-        this.address = new Address(baseAddress, detailAddress);
-        this.location = new StoreLocation(latitude, longitude);
+        this.address = address;
+        this.location = new StoreLocation(x, y);
     }
 
     public Long getId() {
@@ -57,27 +57,27 @@ public class Store extends BaseTimeEntity {
         return contactNumber.getContactNumber();
     }
 
-    public String getBaseAddress() {
-        return address.getBaseAddress();
+    public String getAddressName() {
+        return address.getAddressName();
     }
 
-    public String getDetailAddress() {
-        return address.getDetailAddress();
+    public String getRoadAddressName() {
+        return this.address.getRoadAddressName();
     }
 
-    public double getLatitude() {
-        return location.getLatitude();
+    public double getY() {
+        return location.getY();
     }
 
-    public double getLongitude() {
-        return location.getLongitude();
+    public double getX() {
+        return location.getX();
     }
 
-    public void editAll(String storeName, String contactNumber, String baseAddress, String detailAddress, Double latitude, Double longitude) {
+    public void editAll(String storeName, String contactNumber, Address address, Double y, Double x) {
         this.storeName = new StoreName(storeName);
         this.contactNumber = new ContactNumber(contactNumber);
-        this.address = new Address(baseAddress, detailAddress);
-        this.location = new StoreLocation(latitude, longitude);
+        this.address = address;
+        this.location = new StoreLocation(x, y);
     }
 
     public void delete() {
