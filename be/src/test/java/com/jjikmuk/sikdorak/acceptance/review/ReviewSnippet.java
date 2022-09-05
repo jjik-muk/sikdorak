@@ -12,6 +12,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 
 import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
+import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailLikeResponse;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailStoreResponse;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailUserResponse;
@@ -81,6 +82,10 @@ interface ReviewSnippet {
 			fieldWithPath("store.storeName").type(JsonFieldType.STRING).description("가게 이름"),
 			fieldWithPath("store.storeAddress").type(JsonFieldType.STRING).description("가게 주소")),
 
+		responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailLikeResponse.class,
+			fieldWithPath("like.count").type(JsonFieldType.NUMBER).description("좋아요 개수"),
+			fieldWithPath("like.userLikeStatus").type(JsonFieldType.BOOLEAN).description("유저의 좋아요 여부")),
+
 		responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailResponse.class,
 			fieldWithPath("reviewId").type(JsonFieldType.NUMBER).description("리뷰 아이디"),
 			fieldWithPath("reviewContent").type(JsonFieldType.STRING).description("리뷰 내용"),
@@ -112,6 +117,10 @@ interface ReviewSnippet {
 			fieldWithPath("reviews[].store.storeId").type(JsonFieldType.NUMBER).description("가게 아이디"),
 			fieldWithPath("reviews[].store.storeName").type(JsonFieldType.STRING).description("가게 이름"),
 			fieldWithPath("reviews[].store.storeAddress").type(JsonFieldType.STRING).description("가게 주소")),
+
+		responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailLikeResponse.class,
+			fieldWithPath("reviews[].like.count").type(JsonFieldType.NUMBER).description("좋아요 개수"),
+			fieldWithPath("reviews[].like.userLikeStatus").type(JsonFieldType.BOOLEAN).description("유저의 좋아요 여부")),
 
 		responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailResponse.class,
 			fieldWithPath("reviews[].reviewId").type(JsonFieldType.NUMBER).description("리뷰 아이디"),

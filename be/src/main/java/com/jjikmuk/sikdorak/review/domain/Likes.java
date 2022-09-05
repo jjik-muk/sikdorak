@@ -39,4 +39,7 @@ public class Likes {
         return likeUsers.contains(userId);
     }
 
+    public long size() {
+        return likeUsers.size();
+    }
 }
