@@ -28,3 +28,12 @@ resource "aws_subnet" "sikdorak_BE_private_subnet" {
     Name = "public-subnet-BE"
   }
 }
+
+resource "aws_internet_gateway" "igw" {
+
+    vpc_id = aws_vpc.sikdorak_BE_VPC.id
+
+    tags = {
+        Name = "igw-VPC-BE-main"
+    }
+}
