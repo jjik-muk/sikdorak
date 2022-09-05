@@ -5,6 +5,7 @@ jib {
 
     to {
         image = "151211916334.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-springboot"
+        image = ${AWS_ECR_URI}
         tags = ["latest", "${project.name}".toString()]
 
     }
