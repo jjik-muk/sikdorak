@@ -10,7 +10,7 @@ import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { createKey, fetchDataThatNeedToLogin } from 'utils/utils';
 import {
   ButtonWrapper,
@@ -25,10 +25,19 @@ import {
   Wrap,
 } from './Feed.styled';
 
-function Feed({ images, reviewContent, reviewId, reviewScore, store, user, likeCnt }: FeedProps) {
+function Feed({
+  images,
+  like = { count: 0, userLikeStatus: false },
+  reviewContent,
+  reviewId,
+  reviewScore,
+  store,
+  user,
+}: FeedProps) {
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
-  const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
+  const [isActiveHeart, toggleIsActiveHeart] = useToggle(like.userLikeStatus);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
+  const [likeCnt, setLikeCnt] = useState(like.count);
 
   const reviewDetailModalRef = useRef(null);
   useOutsideClick(reviewDetailModalRef, toggleIsClikedFeed);
@@ -93,12 +102,12 @@ function Feed({ images, reviewContent, reviewId, reviewScore, store, user, likeC
         <Portal selector="#portal" ref={reviewDetailModalRef}>
           <ReviewDetail
             images={images}
+            like={like}
             reviewContent={reviewContent}
             reviewId={reviewId}
             reviewScore={reviewScore}
             store={store}
             user={user}
-            likeCnt={0}
           />
         </Portal>
       )}
@@ -114,6 +123,12 @@ function Feed({ images, reviewContent, reviewId, reviewScore, store, user, likeC
     const path = isActiveHeart ? 'unlike' : 'like';
     const URL = `${DOMAIN}/api/reviews/${reviewId}/${path}`;
     const options = { method: 'PUT' };
+
+    if (isActiveHeart) {
+      setLikeCnt(likeCnt - 1);
+    } else {
+      setLikeCnt(likeCnt + 1);
+    }
 
     fetchDataThatNeedToLogin(URL, options);
     toggleIsActiveHeart();
@@ -133,10 +148,10 @@ export default Feed;
 
 export type FeedProps = {
   images: string[];
+  like: { count: number; userLikeStatus: boolean };
   reviewContent: string;
   reviewId: number;
   reviewScore: number;
   store: { storeId: number; storeName: string; storeAddress: string };
   user: { userId: number; userNickname: string; userProfileImage: string };
-  likeCnt: number;
 };

@@ -16,7 +16,7 @@ import { useEffect, useRef, useState } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import { ButtonWrapper, Contents, ContentsWrap, Header, IconWrap, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
-function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, user, likeCnt }: FeedProps) {
+function ReviewDetail({ images, like, reviewContent, reviewId, reviewScore, store, user }: FeedProps) {
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const hasPicture = images.length > 0;
   const wrapWidth = hasPicture ? DETAIL.WRAP.WIDTH_WITH_IMG : DETAIL.WRAP.WIDTH_NO_IMG;
@@ -56,7 +56,7 @@ function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, use
           <div onClick={toggleIsActiveHeart}>
             <IconWrap width={btnWidth} height={FEED.BTN.HEIGHT}>
               <Icon icon="Heart" fill={isActiveHeart ? 'red' : '#FFF'} />
-              {likeCnt}
+              {like.count}
             </IconWrap>
           </div>
           <div onClick={focusWrittingComment}>

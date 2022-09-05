@@ -5,20 +5,19 @@ import { Wrap } from './Feeds.styled';
 // TODO: 리뷰가 없을 때 적절한 레이아웃 표시
 
 function Feeds({ reviews }: FeedsProps) {
-  console.log('reviews', reviews);
   return (
     <Wrap>
       {reviews ? (
-        reviews.map(({ images, reviewContent, id, reviewScore, store, user }) => (
-          <div key={id}>
+        reviews.map(({ images, like, reviewContent, reviewId, reviewScore, store, user }) => (
+          <div key={reviewId}>
             <Feed
               images={images}
+              like={like}
               reviewContent={reviewContent}
-              reviewId={id}
+              reviewId={reviewId}
               reviewScore={reviewScore}
               store={store}
               user={user}
-              likeCnt={0}
             />
           </div>
         ))
