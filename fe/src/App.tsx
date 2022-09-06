@@ -3,6 +3,7 @@ import Loading from 'components/Common/Loading/Loading';
 import Portal from 'components/Common/Portal/Portal';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import ReviewDetailProvider from 'context/ReviewDetailProvider';
+import ReviewsProvider from 'context/ReviewsProvider';
 import Callback from 'pages/Callback/Callback';
 import Login from 'pages/Login/Login';
 import ReviewList from 'pages/ReviewList/ReviewList';
@@ -32,32 +33,34 @@ function App() {
   }, [accessToken]);
 
   return (
-    <ReviewDetailProvider>
-      <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={hasAccessToken() ? <ReviewList /> : <Navigate replace to="/login" />} />
-          <Route path="/map" element={<Loading />} />
-          <Route path="/login" element={hasAccessToken() ? <Navigate replace to="/" /> : <Login />} />
-          <Route path="/userDetail">
-            <Route path=":userId" element={hasAccessToken() ? <UserDetail /> : <Navigate replace to="/" />} />
-          </Route>
-          <Route path="/storeDetail" element={hasAccessToken() ? <StoreDetail /> : <Navigate replace to="/" />} />
-          <Route
-            path="/api/oauth/callback"
-            element={<Callback accessToken={accessToken} setAccessToken={setAccessToken} />}
-          />
-          <Route
-            path="/reviewWrite"
-            element={
-              <Portal selector="#portal">
-                <ReviewWrite />
-              </Portal>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </ReviewDetailProvider>
+    <ReviewsProvider>
+      <ReviewDetailProvider>
+        <GlobalStyle />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={hasAccessToken() ? <ReviewList /> : <Navigate replace to="/login" />} />
+            <Route path="/map" element={<Loading />} />
+            <Route path="/login" element={hasAccessToken() ? <Navigate replace to="/" /> : <Login />} />
+            <Route path="/userDetail">
+              <Route path=":userId" element={hasAccessToken() ? <UserDetail /> : <Navigate replace to="/" />} />
+            </Route>
+            <Route path="/storeDetail" element={hasAccessToken() ? <StoreDetail /> : <Navigate replace to="/" />} />
+            <Route
+              path="/api/oauth/callback"
+              element={<Callback accessToken={accessToken} setAccessToken={setAccessToken} />}
+            />
+            <Route
+              path="/reviewWrite"
+              element={
+                <Portal selector="#portal">
+                  <ReviewWrite />
+                </Portal>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </ReviewDetailProvider>
+    </ReviewsProvider>
   );
 }
 

@@ -54,7 +54,7 @@ function UserDetail() {
           <ProfileInfoWrap>자신을 소개해주세요.</ProfileInfoWrap>
         </UserInfoWrap>
       </UserDetailWrap>
-      <Feeds reviews={reviews} isMyUserDetailPage={isMyUserDetailPage} />
+      <Feeds reviews={reviews} />
     </Wrap>
   );
 }
