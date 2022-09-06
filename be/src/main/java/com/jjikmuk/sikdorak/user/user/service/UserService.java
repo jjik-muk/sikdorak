@@ -72,15 +72,15 @@ public class UserService {
             .orElseThrow(NotFoundUserException::new);
         RelationType relationType = searchUser.relationTypeTo(loginUser);
         int reviewCount = reviewRepository.countByUserId(searchUser.getId());
-        int followerCount = userRepository.findFollowingsByUserId(userId).size();
         int followingCount = userRepository.findFollowingsByUserId(userId).size();
+        int followerCount = userRepository.findFollowersByUserId(userId).size();
 
 
         return UserDetailProfileResponse.of(
             searchUser,
             UserProfileRelationStatusResponse.of(relationType),
-            followerCount,
             followingCount,
+            followerCount,
             reviewCount
         );
     }
