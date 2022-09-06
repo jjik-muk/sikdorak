@@ -1,8 +1,6 @@
 ### ❗️ 이슈 번호
 
-<strong>
-Closes #
-</strong>
+[SDR-XXX]
 
 <br><br>
 
