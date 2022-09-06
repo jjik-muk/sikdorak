@@ -13,6 +13,8 @@ const reducer = (state, action: ActionType) => {
       };
     case 'ADD_REVIEWS':
       return { ...state, reviews: [...state.reviews, ...action.reviews] };
+    case 'DELETE_REVIEW':
+      return { ...state, reviews: state.reviews.filter((review) => review.reviewId !== action.reviewId) };
     default:
       return state;
   }
@@ -35,6 +37,7 @@ export const useReviews = () => [useContext(ReviewsContext), useContext(Dispatch
 type ActionType = {
   type: string;
   reviews: object[];
+  reviewId: number;
 };
 
 export default ReviewsProvider;

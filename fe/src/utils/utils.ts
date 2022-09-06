@@ -58,6 +58,5 @@ export async function fetchDataThatNeedToLogin(
     const refreshRes = await fetch(`${DOMAIN}/api/oauth/refresh`, { credentials: 'include' });
     const refreshResJson = await refreshRes.json();
     localStorage.setItem('accessToken', refreshResJson.data.accessToken);
-    window.location.reload();
   }
 }
