@@ -1,11 +1,4 @@
-data "terraform_remote_state" "vpc" {
-   backend = "local"
-
-    config = {
-        path = "${path.module}/../vpc/terraform.tfstate"
-    }
-}
-
+# ecs에서 사용할 보안그룹
 resource "aws_security_group" "ecs_springboot" {
   name = "ecs-springboot"
 
