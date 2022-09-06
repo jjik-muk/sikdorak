@@ -7,6 +7,8 @@ import com.jjikmuk.sikdorak.common.mock.WireMockPlaceApiTest;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.store.exception.InvalidXYException;
 import com.jjikmuk.sikdorak.store.service.PlaceApiService;
+import com.jjikmuk.sikdorak.store.service.dto.AddressSearchRequest;
+import com.jjikmuk.sikdorak.store.service.dto.AddressSearchResponse;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceSearchRequest;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceSearchResponse;
 import java.util.stream.Stream;
@@ -84,6 +86,30 @@ public class PlaceApiIntegrationTest extends InitIntegrationTest {
 				Arguments.of(127.10796497353, null),
 				Arguments.of(null, 37.5145458257413)
 			);
+		}
+	}
+
+	@Nested
+	@DisplayName("주소를 검색할 때")
+	class SearchAddressTest {
+
+		@Test
+		@DisplayName("입력값이 정상이면 장소 목록이 조회된다")
+		void search_place_success() {
+		    // given
+			String query = "서울 송파구 잠실동 177-5";
+			AddressSearchRequest request = new AddressSearchRequest(query);
+
+			// when
+			AddressSearchResponse responses = kakaoPlaceApiService.searchAddress(request);
+
+			// then
+			assertThat(responses.getAddressResponses()).isNotEmpty()
+				.satisfies(addressList -> {
+					addressList.forEach(address -> {
+						assertThat(address.addressName()).isEqualTo(query);
+					});
+				});
 		}
 	}
 }
