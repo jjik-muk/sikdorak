@@ -8,12 +8,12 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 public class PlaceMocksExtention implements BeforeAllCallback, AfterAllCallback {
 
 	@Override
-	public void afterAll(ExtensionContext context) {
+	public void beforeAll(ExtensionContext context) {
 		KakaoPlaceMocks.startSearchPlacesMockScenario();
 	}
 
 	@Override
-	public void beforeAll(ExtensionContext context) {
+	public void afterAll(ExtensionContext context) {
 		KakaoPlaceMocks.resetSearchPlacesMockScenario();
 	}
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class StoreVerifyAndSaveRequest {
+public class StoreVerifyOrSaveRequest {
 
 	@NotNull
 	@Positive
@@ -28,7 +28,7 @@ public class StoreVerifyAndSaveRequest {
 	@Min(90)
 	private Double y;
 
-	public StoreVerifyAndSaveRequest(Long placeId, String storeName, Double x, Double y) {
+	public StoreVerifyOrSaveRequest(Long placeId, String storeName, Double x, Double y) {
 		this.placeId = placeId;
 		this.storeName = storeName;
 		this.x = x;

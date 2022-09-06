@@ -5,16 +5,16 @@ import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_MODIFY_S
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_REMOVE_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_BY_RADIUS_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_SUCCESS;
-import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_VERIFY_AND_SAVE_RESPONSE;
+import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_VERIFY_OR_SAVE_RESPONSE;
 
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
-import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyAndSaveRequest;
+import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyOrSaveRequest;
 import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfo;
 import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
-import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyAndSaveResponse;
+import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyOrSaveResponse;
 import com.jjikmuk.sikdorak.store.service.StoreService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +31,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/stores")
+@RequestMapping("/api/stores")
 public class StoreController {
 
 	private final StoreService storeService;
 
-	@GetMapping()
+	@GetMapping
 	public CommonResponseEntity<List<StoreSearchResponse>> findStoresByStoreName(
 		@RequestParam("storeName") String storeName) {
 		List<StoreSearchResponse> findResponseList = storeService.searchStoresByStoreNameContaining(
@@ -45,19 +45,19 @@ public class StoreController {
 		return new CommonResponseEntity<>(STORE_SEARCH_SUCCESS, findResponseList, HttpStatus.OK);
 	}
 
-	@PostMapping()
+	@PostMapping
 	public CommonResponseEntity<Void> createStore(@RequestBody StoreCreateRequest createRequest) {
 		storeService.createStore(createRequest);
 
 		return new CommonResponseEntity<>(STORE_CREATE_SUCCESS, null, HttpStatus.CREATED);
 	}
 
-	@PutMapping("")
-	public CommonResponseEntity<StoreVerifyAndSaveResponse> verifyAndSaveStore(
-		@RequestBody StoreVerifyAndSaveRequest verifyAndSaveRequest) {
+	@PutMapping
+	public CommonResponseEntity<StoreVerifyOrSaveResponse> verifyOrSaveStore(
+		@RequestBody StoreVerifyOrSaveRequest verifyOrSaveRequest) {
 
-		return new CommonResponseEntity<>(STORE_VERIFY_AND_SAVE_RESPONSE,
-			storeService.verifyAndSave(verifyAndSaveRequest), HttpStatus.OK);
+		return new CommonResponseEntity<>(STORE_VERIFY_OR_SAVE_RESPONSE,
+			storeService.verifyOrSave(verifyOrSaveRequest), HttpStatus.OK);
 	}
 
 	@PutMapping("/{storeId}")

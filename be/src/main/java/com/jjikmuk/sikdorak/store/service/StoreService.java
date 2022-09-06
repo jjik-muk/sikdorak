@@ -2,11 +2,11 @@ package com.jjikmuk.sikdorak.store.service;
 
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
-import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyAndSaveRequest;
+import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyOrSaveRequest;
 import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfo;
 import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
-import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyAndSaveResponse;
+import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyOrSaveResponse;
 import com.jjikmuk.sikdorak.store.domain.Address;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
@@ -109,14 +109,14 @@ public class StoreService {
 	}
 
 	@Transactional
-	public StoreVerifyAndSaveResponse verifyAndSave(StoreVerifyAndSaveRequest request) {
+	public StoreVerifyOrSaveResponse verifyOrSave(StoreVerifyOrSaveRequest request) {
 		Store store = storeRepository.findStoreByPlaceId(request.getPlaceId())
 			.orElseGet(() -> searchApiPlaceAndSave(request));
 
-		return StoreVerifyAndSaveResponse.from(store);
+		return StoreVerifyOrSaveResponse.from(store);
 	}
 
-	private Store searchApiPlaceAndSave(StoreVerifyAndSaveRequest request) {
+	private Store searchApiPlaceAndSave(StoreVerifyOrSaveRequest request) {
 		PlaceSearchResponse placeSearchResponse = kakaoPlaceApiService.searchPlaces(
 			new PlaceSearchRequest(
 				request.getStoreName(),

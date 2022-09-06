@@ -13,10 +13,10 @@ import static org.springframework.restdocs.request.RequestDocumentation.requestP
 
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
-import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyAndSaveRequest;
+import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyOrSaveRequest;
 import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
-import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyAndSaveResponse;
+import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyOrSaveResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 
@@ -130,8 +130,8 @@ public interface StoreSnippet {
 	);
 
 	// 가게 등록 검증
-	Snippet STORE_VERIFY_AND_SAVE_REQUEST_SNIPPET = requestSnippetWithConstraintsAndFields(
-		StoreVerifyAndSaveRequest.class,
+	Snippet STORE_VERIFY_OR_SAVE_REQUEST_SNIPPET = requestSnippetWithConstraintsAndFields(
+		StoreVerifyOrSaveRequest.class,
 		fieldWithPath("placeId").type(JsonFieldType.NUMBER)
 			.description(Constants.CONTACTNUMBER_DESCRIPTION),
 		fieldWithPath("storeName").type(JsonFieldType.STRING)
@@ -142,11 +142,11 @@ public interface StoreSnippet {
 			.description(Constants.X_DESCRIPTION)
 	);
 
-	Snippet STORE_VERIFY_AND_SAVE_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+	Snippet STORE_VERIFY_OR_SAVE_RESPONSE_SNIPPET = createResponseSnippetWithFields(
 		responseFieldsOfCommon(),
 		
 		responseFieldsOfObjectWithConstraintsAndFields(
-			StoreVerifyAndSaveResponse.class,
+			StoreVerifyOrSaveResponse.class,
 			fieldWithPath("storeId").type(JsonFieldType.NUMBER)
 				.description(Constants.ID_DESCRIPTION),
 			fieldWithPath("placeId").type(JsonFieldType.NUMBER)

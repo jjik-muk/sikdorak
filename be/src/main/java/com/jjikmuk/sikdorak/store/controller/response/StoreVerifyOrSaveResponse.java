@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-public record StoreVerifyAndSaveResponse (
+public record StoreVerifyOrSaveResponse(
 
 	@NotNull
 	@Positive
@@ -30,8 +30,8 @@ public record StoreVerifyAndSaveResponse (
 	Double y
 ) {
 	
-	public static StoreVerifyAndSaveResponse from(Store store) {
-		return new StoreVerifyAndSaveResponse(
+	public static StoreVerifyOrSaveResponse from(Store store) {
+		return new StoreVerifyOrSaveResponse(
 			store.getId(),
 			store.getPlaceId(),
 			store.getStoreName(),
