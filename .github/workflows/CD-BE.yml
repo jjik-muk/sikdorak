@@ -56,7 +56,7 @@ jobs:
 
       - name: Deploy Spring Boot image into heroku registry
         run: |
-          ./gradlew jib
+          ./gradlew jib -Pdev
           heroku container:release web -a sikdorak-test
 
   server-health-check:
