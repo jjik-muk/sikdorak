@@ -9,11 +9,11 @@ public class PlaceMocksExtention implements BeforeAllCallback, AfterAllCallback 
 
 	@Override
 	public void beforeAll(ExtensionContext context) {
-		KakaoPlaceMocks.startSearchPlacesMockScenario();
+		KakaoPlaceMocks.startAllMocks();
 	}
 
 	@Override
 	public void afterAll(ExtensionContext context) {
-		KakaoPlaceMocks.resetSearchPlacesMockScenario();
+		KakaoPlaceMocks.resetAllMocks();
 	}
 }
