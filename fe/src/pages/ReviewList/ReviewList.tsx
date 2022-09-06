@@ -1,12 +1,13 @@
 import { DOMAIN } from 'constants/dummyData';
 import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
+import { useReviews } from 'context/ReviewsProvider';
 import { useEffect, useState } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import { ReviewListWrap } from './ReviewList.styled';
 
 function ReviewList() {
-  const [reviews, setReviews] = useState([]);
+  const [{ reviews }, dispatchReviews] = useReviews();
   const [afterParam, setAfterParam] = useState(0);
   const REVIEW_SIZE = 5;
 
@@ -35,7 +36,7 @@ function ReviewList() {
     const res = await fetchDataThatNeedToLogin(`${DOMAIN}/api/reviews?after=${afterParam}&size=${REVIEW_SIZE}`);
     const nextReviews = res.data.reviews;
     const nextAfterParam = res.data.page.next;
-    setReviews([...reviews, ...nextReviews]);
+    dispatchReviews({ type: 'ADD_REVIEWS', reviews: nextReviews });
     setAfterParam(nextAfterParam);
   }
 }

@@ -51,7 +51,7 @@ function ReviewDetail({
           <Profile nickname={user?.userNickname} />
           <div onClick={toggleIsActiveMenu}>
             <Icon icon="MenuBtn" />
-            {isActiveMenu && <Menu menuRef={menuRef} />}
+            {isActiveMenu && <Menu menuRef={menuRef} reviewId={reviewId} />}
           </div>
         </Header>
         <Main>

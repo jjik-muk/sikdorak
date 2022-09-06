@@ -55,7 +55,7 @@ function Feed({
             <UserProfile nickname={user?.userNickname} />
             <MenuWrap onClick={handleMenu}>
               {isMyFeed && <Icon icon="MenuBtn" />}
-              {isActiveMenu && <Menu menuRef={menuRef} />}
+              {isActiveMenu && <Menu menuRef={menuRef} reviewId={reviewId} />}
             </MenuWrap>
           </Header>
           <Main>
