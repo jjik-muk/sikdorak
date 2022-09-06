@@ -31,8 +31,8 @@ public abstract class KakaoPlaceMocks {
 	}
 
 	public static void resetAllMocks() {
-		resetSearchPlacesMockScenario();
-		resetSearchAddressMockScenario();
+		WireMock.getAllScenarios()
+			.forEach(scenario -> WireMock.resetScenario(scenario.getId()));
 	}
 
 	public static void startSearchPlacesMockScenario() {
