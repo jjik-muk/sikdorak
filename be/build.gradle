@@ -184,7 +184,7 @@ pmd {
 }
 
 if(project.hasProperty('dev')) {
-    apply from: rootProject.file('profile_dev.gradle')
+    apply from: rootProject.file('config-docker/profile_dev.gradle')
 } else if(project.hasProperty('prod')) {
-    apply from: rootProject.file('profile_prod.gradle')
+    apply from: rootProject.file('config-docker/profile_prod.gradle')
 }
