@@ -13,10 +13,10 @@ import static org.springframework.restdocs.request.RequestDocumentation.requestP
 
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
-import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyAndUpsertRequest;
+import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyAndSaveRequest;
 import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
-import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyAndUpsertResponse;
+import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyAndSaveResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 
@@ -130,9 +130,9 @@ public interface StoreSnippet {
 	);
 
 	// 가게 등록 검증
-	Snippet STORE_VERIFY_AND_UPSERT_REQUEST_SNIPPET = requestSnippetWithConstraintsAndFields(
-		StoreVerifyAndUpsertRequest.class,
-		fieldWithPath("kakaoPlaceId").type(JsonFieldType.NUMBER)
+	Snippet STORE_VERIFY_AND_SAVE_REQUEST_SNIPPET = requestSnippetWithConstraintsAndFields(
+		StoreVerifyAndSaveRequest.class,
+		fieldWithPath("placeId").type(JsonFieldType.NUMBER)
 			.description(Constants.CONTACTNUMBER_DESCRIPTION),
 		fieldWithPath("storeName").type(JsonFieldType.STRING)
 			.description(Constants.STORENAME_DESCRIPTION),
@@ -142,14 +142,14 @@ public interface StoreSnippet {
 			.description(Constants.X_DESCRIPTION)
 	);
 
-	Snippet STORE_VERIFY_AND_UPSERT_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+	Snippet STORE_VERIFY_AND_SAVE_RESPONSE_SNIPPET = createResponseSnippetWithFields(
 		responseFieldsOfCommon(),
 		
 		responseFieldsOfObjectWithConstraintsAndFields(
-			StoreVerifyAndUpsertResponse.class,
+			StoreVerifyAndSaveResponse.class,
 			fieldWithPath("storeId").type(JsonFieldType.NUMBER)
 				.description(Constants.ID_DESCRIPTION),
-			fieldWithPath("kakaoPlaceId").type(JsonFieldType.NUMBER)
+			fieldWithPath("placeId").type(JsonFieldType.NUMBER)
 				.description(Constants.KAKAO_PLACE_ID_DESCRIPTION),
 			fieldWithPath("storeName").type(JsonFieldType.STRING)
 				.description(Constants.STORENAME_DESCRIPTION),
@@ -170,7 +170,7 @@ public interface StoreSnippet {
 		private static final String Y_DESCRIPTION = "위도";
 		private static final String X_DESCRIPTION = "경도";
 		private static final String RADIUS_DESCRIPTION = "위치 반경";
-		private static final String KAKAO_PLACE_ID_DESCRIPTION = "카카오 로컬 API 장소 ID.";
+		private static final String KAKAO_PLACE_ID_DESCRIPTION = "API 에서 제공된 장소 ID";
 		private static final String REQUEST_PAGE_TYPE_DESCRIPTION = "요청하는 페이지 타입 - feed | maps 로 나뉩니다.";
 	}
 }

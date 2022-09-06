@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class StoreVerifyAndUpsertRequest {
+public class StoreVerifyAndSaveRequest {
 
 	@NotNull
 	@Positive
-	private Long kakaoPlaceId;
+	private Long placeId;
 
 	@NotBlank
 	private String storeName;
@@ -28,8 +28,8 @@ public class StoreVerifyAndUpsertRequest {
 	@Min(90)
 	private Double y;
 
-	public StoreVerifyAndUpsertRequest(Long kakaoPlaceId, String storeName, Double x, Double y) {
-		this.kakaoPlaceId = kakaoPlaceId;
+	public StoreVerifyAndSaveRequest(Long placeId, String storeName, Double x, Double y) {
+		this.placeId = placeId;
 		this.storeName = storeName;
 		this.x = x;
 		this.y = y;

@@ -5,16 +5,16 @@ import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_MODIFY_S
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_REMOVE_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_BY_RADIUS_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_SUCCESS;
-import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_VERIFY_AND_UPSERT_RESPONSE;
+import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_VERIFY_AND_SAVE_RESPONSE;
 
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
-import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyAndUpsertRequest;
+import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyAndSaveRequest;
 import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfo;
 import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
-import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyAndUpsertResponse;
+import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyAndSaveResponse;
 import com.jjikmuk.sikdorak.store.service.StoreService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -53,19 +53,11 @@ public class StoreController {
 	}
 
 	@PutMapping("")
-	public CommonResponseEntity<StoreVerifyAndUpsertResponse> verifyAndUpsertStore(
-		@RequestBody StoreVerifyAndUpsertRequest upsertRequest) {
-//		storeService.upsertStore(upsertRequest);
-		StoreVerifyAndUpsertResponse storeVerifyAndUpsertResponse = new StoreVerifyAndUpsertResponse(
-			1L,
-			upsertRequest.getKakaoPlaceId(),
-			upsertRequest.getStoreName(),
-			upsertRequest.getX(),
-			upsertRequest.getY()
-		);
+	public CommonResponseEntity<StoreVerifyAndSaveResponse> verifyAndSaveStore(
+		@RequestBody StoreVerifyAndSaveRequest verifyAndSaveRequest) {
 
-		return new CommonResponseEntity<>(STORE_VERIFY_AND_UPSERT_RESPONSE,
-			storeVerifyAndUpsertResponse, HttpStatus.OK);
+		return new CommonResponseEntity<>(STORE_VERIFY_AND_SAVE_RESPONSE,
+			storeService.verifyAndSave(verifyAndSaveRequest), HttpStatus.OK);
 	}
 
 	@PutMapping("/{storeId}")
