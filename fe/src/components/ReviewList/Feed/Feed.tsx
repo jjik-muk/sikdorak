@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import { DETAIL, FEED } from 'constants/size';
 import Icon from 'components/Common/Icon/Icon';
 import Portal from 'components/Common/Portal/Portal';
@@ -7,11 +6,12 @@ import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/Restaurant
 import Rating from 'components/ReviewDetail/TotalRating/Rating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
+import useLike from 'hooks/useLike';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
-import { useRef, useState } from 'react';
-import { createKey, fetchDataThatNeedToLogin } from 'utils/utils';
+import { useRef } from 'react';
+import { createKey } from 'utils/utils';
 import {
   ButtonWrapper,
   Contents,
@@ -35,9 +35,8 @@ function Feed({
   user,
 }: FeedProps) {
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
-  const [isActiveHeart, toggleIsActiveHeart] = useToggle(like.userLikeStatus);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
-  const [likeCnt, setLikeCnt] = useState(like.count);
+  const { isActiveHeart, likeCnt, postLike } = useLike({ like, reviewId });
 
   const reviewDetailModalRef = useRef(null);
   useOutsideClick(reviewDetailModalRef, toggleIsClikedFeed);
@@ -108,6 +107,9 @@ function Feed({
             reviewScore={reviewScore}
             store={store}
             user={user}
+            isActiveHeart={isActiveHeart}
+            likeCnt={likeCnt}
+            postLike={postLike}
           />
         </Portal>
       )}
@@ -120,18 +122,7 @@ function Feed({
   }
 
   function handleLike(e) {
-    const path = isActiveHeart ? 'unlike' : 'like';
-    const URL = `${DOMAIN}/api/reviews/${reviewId}/${path}`;
-    const options = { method: 'PUT' };
-
-    if (isActiveHeart) {
-      setLikeCnt(likeCnt - 1);
-    } else {
-      setLikeCnt(likeCnt + 1);
-    }
-
-    fetchDataThatNeedToLogin(URL, options);
-    toggleIsActiveHeart();
+    postLike();
     e.stopPropagation();
   }
 
