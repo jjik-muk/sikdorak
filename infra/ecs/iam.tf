@@ -25,6 +25,6 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" { # role
 }
 
 resource "aws_iam_instance_profile" "ecsTaskExecutionRole_profile" { # instance profile 생성
-  name = "ecs-agent"
+  name = "ecs-agent_profile"
   role = aws_iam_role.ecsTaskExecutionRole.name
 }
