@@ -19,6 +19,7 @@ import com.jjikmuk.sikdorak.store.exception.InvalidAddressException;
 import com.jjikmuk.sikdorak.store.exception.InvalidContactNumberException;
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreLocationException;
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreNameException;
+import com.jjikmuk.sikdorak.store.exception.InvalidXYException;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.user.auth.exception.ExpiredTokenException;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
@@ -66,6 +67,9 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     INVALID_CONTACT_NUMER("F-S003", "유효하지 않은 연락처 입니다.", InvalidContactNumberException.class),
     INVALID_ADDRESS("F-S004", "유효하지 않은 연락처 입니다.", InvalidAddressException.class),
     INVALID_STORE_LOCATION("F-S005", "유효하지 않은 좌표 입니다.",InvalidStoreLocationException .class),
+
+    // Place API
+    INVALID_XY_EXCEPTION("F-P001", "x, y 좌표가 유효하지 않습니다.", InvalidXYException.class),
 
     // User
     DUPLICATE_USER("F-U001", "중복된 유저입니다.",DuplicateUserException.class),
