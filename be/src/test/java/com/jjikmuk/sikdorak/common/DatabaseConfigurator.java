@@ -108,11 +108,13 @@ public class DatabaseConfigurator implements InitializingBean {
     }
 
     private void initStoreData() {
-        this.store = storeRepository.save(new Store("맛있는가게",
+        this.store = storeRepository.save(new Store(
+            123123L,
+            "맛있는가게",
             "02-0000-0000",
-            Address.of("서울시 송파구 좋은길 1", "1층 101호"),
-            37.5093890,
-            127.105143));
+            Address.of("서울시 송파구 11-22", "서울시 송파구 좋은길1"),
+            127.105143,
+            37.5093890));
     }
 
     private void initBasicUserData() {

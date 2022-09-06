@@ -21,6 +21,7 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
     STORE_MODIFY_SUCCESS("T-S003", "가게 수정에 성공했습니다."),
     STORE_REMOVE_SUCCESS("T-S004", "가게 삭제에 성공했습니다."),
     STORE_SEARCH_BY_RADIUS_SUCCESS("T-S005", "위치기반 가게 목록 조회에 성공했습니다"),
+    STORE_VERIFY_OR_SAVE_RESPONSE("T-S006", "가게 등록 검증에 성공했습니다"),
 
     //User
     USER_MODIFY_SUCCESS("T-U001", "유저 프로필 수정에 성공했습니다."),
