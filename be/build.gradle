@@ -139,28 +139,6 @@ bootJar {
         into "${project.buildDir}/resources/main/static/docs"
     }
 }
-//-- jib 관련 설정 -------------------------------------------------------
-
-jib {
-    from {
-        image = "eclipse-temurin:17-jre" // java 17
-    }
-
-    to {
-        image = "registry.heroku.com/sikdorak-test/web"
-        // docker image push into heroku container registry
-        tags = ["latest"]
-
-        auth {
-            username = 'heroku whoami'.execute().text.trim()
-            password = 'heroku auth:token'.execute().text.trim()
-        }
-    }
-    container {
-        mainClass = 'com.jjikmuk.sikdorak.SikdorakApplication' // entry point java class
-        jvmFlags = ["-Dspring.profiles.active=dev", "-Xms128m", "-Xmx128m"] // setup JVM Options
-    }
-}
 
 //-- 코드 분석 관련 task ------------------------------------------------------
 
@@ -203,4 +181,10 @@ pmd {
     ruleSetFiles = files("config-static-analyzer/pmd/custom-pmd-rules.xml")
     ruleSets = []
 //    ruleSets = ["category/java/bestpractices.xml", "category/java/errorprone.xml"]
+}
+
+if(project.hasProperty('dev')) {
+    apply from: rootProject.file('config-docker/profile_dev.gradle')
+} else if(project.hasProperty('prod')) {
+    apply from: rootProject.file('config-docker/profile_prod.gradle')
 }

@@ -1,0 +1,14 @@
+jib {
+    from {
+        image = "eclipse-temurin:17-jre" // java 17
+    }
+
+    to {
+        image = "$System.env.AWS_ECR_URL"
+        tags = ["latest", "${project.name}".toString()]
+    }
+    container {
+        mainClass = 'com.jjikmuk.sikdorak.SikdorakApplication' // entry point java class
+        jvmFlags = ["-Dspring.profiles.active=prod", "-Xms128m", "-Xmx128m"] // setup JVM Options
+    }
+}

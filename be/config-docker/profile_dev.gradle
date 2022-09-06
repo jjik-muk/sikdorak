@@ -1,0 +1,20 @@
+jib {
+    from {
+        image = "eclipse-temurin:17-jre" // java 17
+    }
+
+    to {
+        image = "registry.heroku.com/sikdorak-test/web"
+        // docker image push into heroku container registry
+        tags = ["latest"]
+
+        auth {
+            username = 'heroku whoami'.execute().text.trim()
+            password = 'heroku auth:token'.execute().text.trim()
+        }
+    }
+    container {
+        mainClass = 'com.jjikmuk.sikdorak.SikdorakApplication' // entry point java class
+        jvmFlags = ["-Dspring.profiles.active=dev", "-Xms128m", "-Xmx128m"] // setup JVM Options
+    }
+}
