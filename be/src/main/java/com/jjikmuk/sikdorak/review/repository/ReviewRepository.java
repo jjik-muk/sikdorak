@@ -21,8 +21,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("""
         select r from Review r
-        where r.reviewVisibility = 'PUBLIC' and r.id < :targetId
-        order by r.createdAt desc
+        where r.reviewVisibility = 'PUBLIC' and r.id <= :targetId
+        order by r.id desc
         """)
     List<Review> findPublicRecommendedReviewsInRecentOrder(
         @Param("targetId") long targetId,
@@ -30,8 +30,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("""
         	select r from Review r
-        	where r.reviewVisibility = 'PROTECTED' or r.reviewVisibility = 'PUBLIC' and r.id < :targetId
-        	order by r.createdAt desc
+        	where r.reviewVisibility = 'PROTECTED' or r.reviewVisibility = 'PUBLIC' and r.id <= :targetId
+        	order by r.id desc
         """)
     List<Review> findPublicAndProtectedRecommendedReviewsInRecentOrder(
         @Param("targetId") long targetId,
