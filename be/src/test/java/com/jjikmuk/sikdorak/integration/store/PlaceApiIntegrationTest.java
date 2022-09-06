@@ -3,16 +3,13 @@ package com.jjikmuk.sikdorak.integration.store;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.github.tomakehurst.wiremock.client.WireMock;
-import com.github.tomakehurst.wiremock.stubbing.Scenario;
-import com.jjikmuk.sikdorak.common.mock.KakaoPlaceMocks;
+import com.jjikmuk.sikdorak.common.mock.WireMockPlaceApiTest;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.store.exception.InvalidXYException;
 import com.jjikmuk.sikdorak.store.service.PlaceApiService;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceSearchRequest;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceSearchResponse;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,14 +17,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
-import org.springframework.test.context.TestPropertySource;
 
-@AutoConfigureWireMock(port = 0)
+
+@WireMockPlaceApiTest
 @DisplayName("PlaceApi 통합테스트")
-@TestPropertySource(properties = {
-	"api.kakao.api_url=http://localhost:${wiremock.server.port}"
-})
 public class PlaceApiIntegrationTest extends InitIntegrationTest {
 
 	@Autowired
@@ -36,12 +29,6 @@ public class PlaceApiIntegrationTest extends InitIntegrationTest {
 	@Nested
 	@DisplayName("장소를 검색할 때")
 	class SearchKeywordTest {
-
-		@BeforeAll
-		static void beforeAll() {
-			KakaoPlaceMocks.setupMockSearchPlace();
-			WireMock.setScenarioState(KakaoPlaceMocks.KEYWORD_SEARCH_SCENARIO, Scenario.STARTED);
-		}
 
 		@Test
 		@DisplayName("입력값이 정상이면 장소 목록이 조회된다")

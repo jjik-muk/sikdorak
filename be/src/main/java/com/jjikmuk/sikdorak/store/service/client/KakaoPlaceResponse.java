@@ -2,16 +2,17 @@ package com.jjikmuk.sikdorak.store.service.client;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.Getter;
 
+@Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record KakaoPlaceResponse(
-	Long id,
-	String placeName,
-	String addressName,
-	String roadAddressName,
-	String phone,
-	Double x,
-	Double y
-) {
+public class KakaoPlaceResponse {
 
+	private Long id;
+	private String placeName;
+	private String addressName;
+	private String roadAddressName;
+	private String phone;
+	private Double x;
+	private Double y;
 }

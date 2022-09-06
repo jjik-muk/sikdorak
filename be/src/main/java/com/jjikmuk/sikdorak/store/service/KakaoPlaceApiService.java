@@ -39,13 +39,13 @@ public class KakaoPlaceApiService implements PlaceApiService {
 		return placeSearchResponse.getDocuments()
 			.stream()
 			.map(place -> new PlaceResponse(
-				place.id(),
-				place.placeName(),
-				place.addressName(),
-				place.roadAddressName(),
-				place.phone(),
-				place.x(),
-				place.y()
+				place.getId(),
+				place.getPlaceName(),
+				place.getAddressName(),
+				place.getRoadAddressName(),
+				place.getPhone(),
+				place.getX(),
+				place.getY()
 			))
 			.collect(Collectors.toList());
 	}

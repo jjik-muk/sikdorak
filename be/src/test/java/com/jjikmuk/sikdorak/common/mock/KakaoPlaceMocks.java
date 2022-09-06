@@ -5,6 +5,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 
+import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.stubbing.Scenario;
 import org.apache.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,11 +14,12 @@ public abstract class KakaoPlaceMocks {
 
 	private final static String PLACE_KEYWORD_SEARCH_URL = "/v2/local/search/keyword.json";
 
-	public static final String KEYWORD_SEARCH_SCENARIO = "place_keyword_search_url";
+	private static final String SCENARIO_KEYWORD_SEARCH = "place_keyword_search_url";
 
-	public static void setupMockSearchPlace() {
+
+	public static void startSearchPlacesMockScenario() {
 		stubFor(get(urlPathEqualTo(PLACE_KEYWORD_SEARCH_URL))
-			.inScenario(KEYWORD_SEARCH_SCENARIO)
+			.inScenario(SCENARIO_KEYWORD_SEARCH)
 			.whenScenarioStateIs(Scenario.STARTED)
 			.willReturn(aResponse()
 				.withStatus(HttpStatus.OK.value())
@@ -25,6 +27,22 @@ public abstract class KakaoPlaceMocks {
 				.withBody(Payload.PLACE_RESPONSE_BODY)
 			)
 		);
+
+		WireMock.setScenarioState(SCENARIO_KEYWORD_SEARCH, Scenario.STARTED);
+	}
+
+	public static void resetSearchPlacesMockScenario() {
+		stubFor(get(urlPathEqualTo(PLACE_KEYWORD_SEARCH_URL))
+			.inScenario(SCENARIO_KEYWORD_SEARCH)
+			.whenScenarioStateIs(Scenario.STARTED)
+			.willReturn(aResponse()
+				.withStatus(HttpStatus.OK.value())
+				.withHeader(HttpHeaders.CONTENT_TYPE, "application/json; charset=utf-8")
+				.withBody(Payload.PLACE_RESPONSE_BODY)
+			)
+		);
+
+		WireMock.resetScenario(SCENARIO_KEYWORD_SEARCH);
 	}
 
 	private static class Payload {
