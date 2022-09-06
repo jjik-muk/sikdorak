@@ -37,7 +37,9 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
             () -> assertThat(userDetailProfileResponse.nickname()).isEqualTo(testData.kukim.getNickname()),
             () -> assertThat(userDetailProfileResponse.relationStatus().isViewer()).isTrue(),
             () -> assertThat(userDetailProfileResponse.relationStatus().followStatus()).isFalse(),
-            () -> assertThat(userDetailProfileResponse.reviewCount()).isEqualTo(1)
+            () -> assertThat(userDetailProfileResponse.reviewCount()).isEqualTo(1),
+            () -> assertThat(userDetailProfileResponse.followingCount()).isZero(),
+            () -> assertThat(userDetailProfileResponse.followersCount()).isZero()
         );
     }
 
@@ -54,7 +56,9 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
             () -> assertThat(userDetailProfileResponse.nickname()).isEqualTo(testData.kukim.getNickname()),
             () -> assertThat(userDetailProfileResponse.relationStatus().isViewer()).isFalse(),
             () -> assertThat(userDetailProfileResponse.relationStatus().followStatus()).isFalse(),
-            () -> assertThat(userDetailProfileResponse.reviewCount()).isEqualTo(1)
+            () -> assertThat(userDetailProfileResponse.reviewCount()).isEqualTo(1),
+            () -> assertThat(userDetailProfileResponse.followingCount()).isZero(),
+            () -> assertThat(userDetailProfileResponse.followersCount()).isZero()
         );
     }
 
@@ -71,12 +75,15 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
             () -> assertThat(userDetailProfileResponse.nickname()).isEqualTo(testData.hoi.getNickname()),
             () -> assertThat(userDetailProfileResponse.relationStatus().isViewer()).isFalse(),
             () -> assertThat(userDetailProfileResponse.relationStatus().followStatus()).isTrue(),
-            () -> assertThat(userDetailProfileResponse.reviewCount()).isEqualTo(3)
+            () -> assertThat(userDetailProfileResponse.reviewCount()).isEqualTo(3),
+            () -> assertThat(userDetailProfileResponse.followingCount()).isEqualTo(2),
+            () -> assertThat(userDetailProfileResponse.followersCount()).isEqualTo(1)
+
         );
     }
 
     @Test
-    @DisplayName("팔로우 되어 있는 회원이 유저의 정보를 조회할 경우 유저 정보를 반환한다.")
+    @DisplayName("팔로우 되어있지 않은 회원이 유저의 정보를 조회할 경우 유저 정보를 반환한다.")
     void user_search_unfollowing_user_profile() {
         LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
 
@@ -88,7 +95,9 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
             () -> assertThat(userDetailProfileResponse.nickname()).isEqualTo(testData.jay.getNickname()),
             () -> assertThat(userDetailProfileResponse.relationStatus().isViewer()).isFalse(),
             () -> assertThat(userDetailProfileResponse.relationStatus().followStatus()).isFalse(),
-            () -> assertThat(userDetailProfileResponse.reviewCount()).isZero()
+            () -> assertThat(userDetailProfileResponse.reviewCount()).isZero(),
+            () -> assertThat(userDetailProfileResponse.followingCount()).isZero(),
+            () -> assertThat(userDetailProfileResponse.followersCount()).isZero()
         );
     }
 
