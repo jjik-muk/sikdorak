@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.user.auth.controller;
 
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
+import com.jjikmuk.sikdorak.common.properties.JwtProperties;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.user.auth.controller.response.AccessTokenResponse;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtTokenPair;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OAuthController {
 
     private final OAuthService oAuthService;
+    private final JwtProperties jwtProperties;
 
     @GetMapping("/api/oauth/login")
     public ResponseEntity<Void> loginPageUrl() {
@@ -52,13 +54,13 @@ public class OAuthController {
             HttpStatus.OK);
     }
 
-    private static void setCookie(HttpServletResponse response, String refreshToken) {
+    private void setCookie(HttpServletResponse response, String refreshToken) {
         ResponseCookie cookieHeader = ResponseCookie.from("refreshToken", refreshToken)
             .sameSite(SameSite.NONE.attributeValue())
+            .maxAge(jwtProperties.getRefreshTokenExpiredMillisecond() / 1000)
             .secure(true)
             .httpOnly(true)
             .build();
-
         response.addHeader(HttpHeaders.SET_COOKIE, cookieHeader.toString());
     }
 }
