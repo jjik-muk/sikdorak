@@ -1,7 +1,6 @@
-import { DEFAULT_IMG, FEEDS, STORE } from 'constants/dummyData';
+import { DEFAULT_IMG, STORE } from 'constants/dummyData';
 import { ICON, STORE_DETAIL } from 'constants/size';
 import TEXT from 'constants/text';
-import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
 import Icon from 'components/Common/Icon/Icon';
 import {
@@ -55,7 +54,6 @@ function StoreDetail() {
             </Row>
           </InfoWrap>
         </StoreInfo>
-        <Feeds reivews={FEEDS} />
       </Wrap>
     </>
   );

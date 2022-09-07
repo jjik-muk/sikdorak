@@ -10,13 +10,12 @@ import Textarea from 'components/ReviewWrite/Textarea/Textarea';
 import WriteRating from 'components/ReviewWrite/WriteRating/WriteRating';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import ReviewWriteProvider from 'context/ReviewWriteProvider';
-import { useState } from 'react';
+import useUploadImage from 'hooks/useUploadImage';
 import { Content, Img, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
 
 function ReviewWrite() {
-  const [selectedImg, setSelectedImg] = useState(null);
-  const [userInfo] = useMyUserInfo();
-  const { nickname, profileImageUrl } = userInfo;
+  const { selectedImg, setSelectedImg } = useUploadImage();
+  const [{ nickname, profileImageUrl }] = useMyUserInfo();
 
   return (
     <ReviewWriteProvider>
@@ -43,7 +42,7 @@ function ReviewWrite() {
             <WriteRating />
             <TagContainer />
             <PostScope />
-            <RegistrationBtn />
+            <RegistrationBtn selectedImg={selectedImg} />
           </InputWrap>
         </Content>
       </Wrap>

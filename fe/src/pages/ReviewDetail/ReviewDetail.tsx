@@ -16,12 +16,21 @@ import { useEffect, useRef, useState } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import { ButtonWrapper, Contents, ContentsWrap, Header, IconWrap, Main, MainFooter, Wrap } from './ReviewDetail.styled';
 
-function ReviewDetail({ images, like, reviewContent, reviewId, reviewScore, store, user }: FeedProps) {
+function ReviewDetail({
+  images,
+  reviewContent,
+  reviewId,
+  reviewScore,
+  store,
+  user,
+  isActiveHeart,
+  likeCnt,
+  postLike,
+}: ReviewDetailProps) {
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const hasPicture = images.length > 0;
   const wrapWidth = hasPicture ? DETAIL.WRAP.WIDTH_WITH_IMG : DETAIL.WRAP.WIDTH_NO_IMG;
   const btnWidth = hasPicture ? FEED.BTN.WIDTH_WITH_IMG : FEED.BTN.WIDTH_NO_IMG;
-  const [isActiveHeart, toggleIsActiveHeart] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const [comments, setComments] = useState([]);
   const [afterParam, setAfterParam] = useState(0);
@@ -42,7 +51,7 @@ function ReviewDetail({ images, like, reviewContent, reviewId, reviewScore, stor
           <Profile nickname={user?.userNickname} />
           <div onClick={toggleIsActiveMenu}>
             <Icon icon="MenuBtn" />
-            {isActiveMenu && <Menu menuRef={menuRef} />}
+            {isActiveMenu && <Menu menuRef={menuRef} reviewId={reviewId} />}
           </div>
         </Header>
         <Main>
@@ -53,10 +62,10 @@ function ReviewDetail({ images, like, reviewContent, reviewId, reviewScore, stor
           </MainFooter>
         </Main>
         <ButtonWrapper>
-          <div onClick={toggleIsActiveHeart}>
+          <div onClick={postLike}>
             <IconWrap width={btnWidth} height={FEED.BTN.HEIGHT}>
               <Icon icon="Heart" fill={isActiveHeart ? 'red' : '#FFF'} />
-              {like.count}
+              {likeCnt}
             </IconWrap>
           </div>
           <div onClick={focusWrittingComment}>
@@ -108,3 +117,9 @@ function ReviewDetail({ images, like, reviewContent, reviewId, reviewScore, stor
 }
 
 export default ReviewDetail;
+
+type ReviewDetailProps = FeedProps & {
+  isActiveHeart: boolean;
+  likeCnt: number;
+  postLike: () => void;
+};
