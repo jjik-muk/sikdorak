@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import Modal from 'components/Common/Modal/Modal';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { useEffect, useState } from 'react';
@@ -10,7 +9,6 @@ export default function RestaurantSearch() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [searchResult, setSearchResult] = useState([]);
-
   const { restaurant: selectedRestaurant, address: restaurantAddress } = reviewWriteState;
 
   useEffect(() => {
@@ -22,16 +20,22 @@ export default function RestaurantSearch() {
       setIsModalOpen(false);
       return;
     }
-    const { data } = await fetchData(`${DOMAIN}/api/stores?storeName=${searchText}`);
-    const searchResultData = data.map(({ id, storeName, baseAddress }) => (
+    const { documents } = await fetchData(
+      `https://dapi.kakao.com/v2/local/search/keyword.json?query=${searchText}&category_group_code=FD6`,
+      {
+        headers: { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` },
+      },
+    );
+
+    const searchResultData = documents.map(({ id, place_name, address_name }) => (
       <SearchResult
         key={id}
-        data-storename={storeName}
+        data-storename={place_name}
         data-id={id}
-        data-address={baseAddress}
+        data-address={address_name}
         onClick={clickRestaurant}
       >
-        {`${storeName} (${baseAddress})`}
+        {`${place_name} (${address_name})`}
       </SearchResult>
     ));
     setSearchResult(searchResultData);
