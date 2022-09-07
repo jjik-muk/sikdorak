@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayName("유저 검색 통합테스트")
-public class UserSearchIntegrationTest extends InitIntegrationTest {
+class UserSearchIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     private UserService userService;
