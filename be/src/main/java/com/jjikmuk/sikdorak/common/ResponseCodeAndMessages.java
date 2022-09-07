@@ -32,6 +32,7 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
     USER_DELETE_SUCCESS("T-U006", "유저 정보 삭제에 성공했습니다."),
     USER_SEARCH_FOLLOWERS_SUCCESS("T-007", "유저 팔로워 목록 조회에 성공했습니다."),
     USER_SEARCH_FOLLOWINGS_SUCCESS("T-008", "유저 팔로잉 목록 조회에 성공했습니다."),
+    USER_SEARCH_SUCCESS("T-009", "유저 검색에 성공했습니다."),
 
     // Comment
     COMMENT_CREATE_SUCCESS("T-C001", "댓글 작성에 성공했습니다."),

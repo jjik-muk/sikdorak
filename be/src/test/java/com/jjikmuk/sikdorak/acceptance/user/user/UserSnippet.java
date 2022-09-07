@@ -112,4 +112,22 @@ public interface UserSnippet {
         )
     );
 
+    Snippet USER_SEARCH_BY_NICKNAME_REQUEST_SNIPPET = pathParameters(
+        parameterWithName("userId").description("팔로워/팔로워 목록을 조회할 유저 아이디")
+    );
+
+    Snippet USER_SEARCH_BY_NICKNAME_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+        responseFieldsOfCommon(),
+
+        responseFieldsOfListWithConstraintsAndFields(
+            FollowUserProfile.class,
+            fieldWithPath("id").type(JsonFieldType.NUMBER).description("유저 아이디"),
+            fieldWithPath("nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
+            fieldWithPath("profileImage").type(JsonFieldType.STRING).description("유저 프로필 이미지"),
+            fieldWithPath("isViewer").type(JsonFieldType.BOOLEAN).description("자신의 프로필 여부"),
+            fieldWithPath("followStatus").type(JsonFieldType.BOOLEAN).description("유저와의 관계")
+        )
+    );
+
+
 }
