@@ -4,6 +4,7 @@ import static com.jjikmuk.sikdorak.acceptance.user.user.UserSnippet.USER_SEARCH_
 import static com.jjikmuk.sikdorak.acceptance.user.user.UserSnippet.USER_SEARCH_BY_NICKNAME_RESPONSE_SNIPPET;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import com.jjikmuk.sikdorak.acceptance.InitAcceptanceTest;
@@ -24,14 +25,15 @@ class UserSearchAcceptanceTest extends InitAcceptanceTest {
                 USER_SEARCH_BY_NICKNAME_REQUEST_SNIPPET,
                 USER_SEARCH_BY_NICKNAME_RESPONSE_SNIPPET
             ))
-            .queryParam("nickname", "ku")
+            .queryParam("nickname", "쿠")
 
-        .when()
+            .when()
             .get("/api/users")
 
-        .then()
+            .then()
             .statusCode(HttpStatus.OK.value())
             .body("code", equalTo(ResponseCodeAndMessages.USER_SEARCH_SUCCESS.getCode()))
-            .body("message", equalTo(ResponseCodeAndMessages.USER_SEARCH_SUCCESS.getMessage()));
+            .body("message", equalTo(ResponseCodeAndMessages.USER_SEARCH_SUCCESS.getMessage()))
+            .body("data", hasSize(1));
     }
 }

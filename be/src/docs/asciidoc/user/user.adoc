@@ -147,3 +147,17 @@ operation::user_followings_search_by_user_id_acceptance_test/search_user_followi
 ==== `Response`
 
 operation::user_followings_search_by_user_id_acceptance_test/search_user_followings_success[snippets='http-response,response-fields']
+
+=== 유저 검색
+
+API : `GET /api/users?nickname=xxx
+
+=== `200 OK`
+
+==== `Request`
+
+operation::user_search_acceptance_test/search_user_by_nickname_success[snippets='http-request,request-parameters']
+
+==== `Response`
+
+operation::user_search_acceptance_test/search_user_by_nickname_success[snippets='http-response,response-fields']

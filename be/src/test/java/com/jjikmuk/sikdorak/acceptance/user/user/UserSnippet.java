@@ -9,6 +9,7 @@ import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.responseFi
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
@@ -112,20 +113,18 @@ public interface UserSnippet {
         )
     );
 
-    Snippet USER_SEARCH_BY_NICKNAME_REQUEST_SNIPPET = pathParameters(
-        parameterWithName("userId").description("팔로워/팔로워 목록을 조회할 유저 아이디")
+    Snippet USER_SEARCH_BY_NICKNAME_REQUEST_SNIPPET = requestParameters(
+        parameterWithName("nickname").description("검색할 유저의 닉네임")
     );
 
     Snippet USER_SEARCH_BY_NICKNAME_RESPONSE_SNIPPET = createResponseSnippetWithFields(
         responseFieldsOfCommon(),
 
         responseFieldsOfListWithConstraintsAndFields(
-            FollowUserProfile.class,
+            UserSimpleProfileResponse.class,
             fieldWithPath("id").type(JsonFieldType.NUMBER).description("유저 아이디"),
             fieldWithPath("nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
-            fieldWithPath("profileImage").type(JsonFieldType.STRING).description("유저 프로필 이미지"),
-            fieldWithPath("isViewer").type(JsonFieldType.BOOLEAN).description("자신의 프로필 여부"),
-            fieldWithPath("followStatus").type(JsonFieldType.BOOLEAN).description("유저와의 관계")
+            fieldWithPath("profileImage").type(JsonFieldType.STRING).description("유저 프로필 이미지")
         )
     );
 
