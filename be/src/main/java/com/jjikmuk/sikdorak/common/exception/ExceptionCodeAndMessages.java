@@ -20,6 +20,7 @@ import com.jjikmuk.sikdorak.store.exception.InvalidContactNumberException;
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreLocationException;
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreNameException;
 import com.jjikmuk.sikdorak.store.exception.InvalidXYException;
+import com.jjikmuk.sikdorak.store.exception.NotFoundApiAddressException;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.user.auth.exception.ExpiredTokenException;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
@@ -65,8 +66,9 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", NotFoundStoreException.class),
     INVALID_STORE_NAME("F-S002", "유효하지 않은 가게이름 입니다.",InvalidStoreNameException.class),
     INVALID_CONTACT_NUMER("F-S003", "유효하지 않은 연락처 입니다.", InvalidContactNumberException.class),
-    INVALID_ADDRESS("F-S004", "유효하지 않은 연락처 입니다.", InvalidAddressException.class),
+    INVALID_ADDRESS("F-S004", "유효하지 않은 주소 입니다.", InvalidAddressException.class),
     INVALID_STORE_LOCATION("F-S005", "유효하지 않은 좌표 입니다.",InvalidStoreLocationException .class),
+    NOT_FOUND_API_ADDRESS("F-S006", "API 에서 주소를 불러올 수 없습니다.", NotFoundApiAddressException.class),
 
     // Place API
     INVALID_XY_EXCEPTION("F-P001", "x, y 좌표가 유효하지 않습니다.", InvalidXYException.class),

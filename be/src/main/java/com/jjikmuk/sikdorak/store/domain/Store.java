@@ -80,6 +80,10 @@ public class Store extends BaseTimeEntity {
         return this.address.getRoadAddressName();
     }
 
+    public Address getAddress() {
+        return this.address;
+    }
+
     public double getY() {
         return location.getY();
     }
