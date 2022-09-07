@@ -9,6 +9,7 @@ import { ReviewListWrap } from './ReviewList.styled';
 function ReviewList() {
   const [{ reviews }, dispatchReviews] = useReviews();
   const [afterParam, setAfterParam] = useState(0);
+  const [hasNextPage, setHasNextPage] = useState(true);
   const REVIEW_SIZE = 5;
 
   useEffect(() => {
@@ -24,7 +25,6 @@ function ReviewList() {
 
   function handleScroll(e) {
     const { scrollHeight, scrollTop, clientHeight } = e.target as HTMLDivElement;
-    const hasNextPage = afterParam !== 1;
     const isScrollEnd = scrollHeight - scrollTop === clientHeight;
 
     if (hasNextPage && isScrollEnd) {
@@ -38,6 +38,10 @@ function ReviewList() {
     const nextAfterParam = res.data.page.next;
     dispatchReviews({ type: 'ADD_REVIEWS', reviews: nextReviews });
     setAfterParam(nextAfterParam);
+
+    if (res.data.page.last) {
+      setHasNextPage(false);
+    }
   }
 }
 
