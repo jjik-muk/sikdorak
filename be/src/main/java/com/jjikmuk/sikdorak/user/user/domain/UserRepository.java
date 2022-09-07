@@ -26,4 +26,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
         + "where u.deleted = false", nativeQuery = true)
     List<User> findFollowingsByUserId(@Param("userId")long userId);
 
+    @Query("select u from User u where u.nickname.nickname like %:nickname%")
+    List<User> findAllByNickname(String nickname);
 }

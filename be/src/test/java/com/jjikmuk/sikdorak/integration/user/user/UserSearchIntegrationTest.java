@@ -27,9 +27,9 @@ public class UserSearchIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
-    @DisplayName("유저의 닉네임으로 검색할 경우 유저 검색결과를 반환한다.")
+    @DisplayName("닉네임 일부분으로 검색할 경우 유저 검색결과를 반환한다.")
     void search_users_by_part_nickname() {
-        String searchNickname = testData.forky.getNickname().substring(0, 3);
+        String searchNickname = testData.forky.getNickname().substring(0, 1);
         List<UserSimpleProfileResponse> result = userService.searchUsersByNickname(searchNickname);
 
         assertThat(result.size()).isEqualTo(1);

@@ -36,9 +36,15 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<UserSimpleProfileResponse> searchUsersByNickname(String nickname) {
+        if (Objects.isNull(nickname) || nickname.isBlank()) {
+            return new ArrayList<>();
+        }
 
+        List<User> users = userRepository.findAllByNickname(nickname);
 
-        return null;
+        return users.stream()
+            .map(UserSimpleProfileResponse::from)
+            .toList();
     }
 
     @Transactional(readOnly = true)
