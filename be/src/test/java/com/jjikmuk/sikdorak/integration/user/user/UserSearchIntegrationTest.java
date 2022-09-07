@@ -20,26 +20,33 @@ class UserSearchIntegrationTest extends InitIntegrationTest {
     @DisplayName("유저의 닉네임으로 검색할 경우 유저 검색결과를 반환한다.")
     void search_users_by_full_nickname() {
         String searchNickname = testData.forky.getNickname();
+
         List<UserSimpleProfileResponse> result = userService.searchUsersByNickname(searchNickname);
 
         assertThat(result).isNotEmpty();
-        assertThat(result.get(0).nickname()).isEqualTo(testData.forky.getNickname());
+        assertThat(result)
+            .extracting(UserSimpleProfileResponse::nickname)
+            .contains(testData.forky.getNickname());
     }
 
     @Test
     @DisplayName("닉네임 일부분으로 검색할 경우 유저 검색결과를 반환한다.")
     void search_users_by_part_nickname() {
         String searchNickname = testData.forky.getNickname().substring(0, 1);
+
         List<UserSimpleProfileResponse> result = userService.searchUsersByNickname(searchNickname);
 
         assertThat(result).isNotEmpty();
-        assertThat(result.get(0).nickname()).isEqualTo(testData.forky.getNickname());
+        assertThat(result)
+            .extracting(UserSimpleProfileResponse::nickname)
+            .contains(testData.forky.getNickname());
     }
 
     @Test
     @DisplayName("검색하는 닉네임이 비어있을 경우 비어있는 목록을 반환한다.")
     void search_users_by_blank() {
         String searchNickname = "";
+
         List<UserSimpleProfileResponse> result = userService.searchUsersByNickname(searchNickname);
 
         assertThat(result).isEmpty();
@@ -49,6 +56,7 @@ class UserSearchIntegrationTest extends InitIntegrationTest {
     @DisplayName("검색결과가 존재하지 않을 경우 비어있는 목록을 반환한다.")
     void search_users_by_invalid_nickname() {
         String searchNickname = "honux";
+
         List<UserSimpleProfileResponse> result = userService.searchUsersByNickname(searchNickname);
 
         assertThat(result).isEmpty();
