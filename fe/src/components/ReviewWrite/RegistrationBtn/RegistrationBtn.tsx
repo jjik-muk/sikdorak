@@ -4,7 +4,7 @@ import useUploadImage from 'hooks/useUploadImage';
 import { fetchData } from 'utils/utils';
 import { Wrap } from './RegistrationBtn.styled';
 
-function RegistrationBtn() {
+function RegistrationBtn({ selectedImg }: any) {
   const [reviewWriteState] = useReviewWrite();
   const { uploadImageToS3 } = useUploadImage();
 
@@ -15,7 +15,7 @@ function RegistrationBtn() {
   );
 
   async function handleRegistration() {
-    await uploadImageToS3(reviewWriteState.presigendUrl);
+    await uploadImageToS3(reviewWriteState.presignedUrl, selectedImg);
     registerPost();
   }
 

@@ -13,10 +13,10 @@ function useUploadImage() {
     return res.data.presignedUrl;
   }
 
-  async function uploadImageToS3(presigendUrl) {
+  async function uploadImageToS3(presigendUrl, image) {
     const res = await fetch(presigendUrl, {
       method: 'PUT',
-      body: selectedImg,
+      body: image,
       headers: {
         'Content-Type': 'image/png',
       },

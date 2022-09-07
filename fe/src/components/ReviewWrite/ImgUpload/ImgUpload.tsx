@@ -29,12 +29,12 @@ function ImgUpload({ setSelectedImg }: ImgUploadProps) {
     }
 
     setSelectedImg(selectedImg);
-    const presigendUrl = await fetchPresignedUrl({ extension: 'png' });
-    const fileName = presigendUrl.split('/')[4].split('?')[0];
+    const presignedUrl = await fetchPresignedUrl({ extension: 'png' });
+    const fileName = presignedUrl.split('/')[4].split('?')[0];
     const imageUrl = `https://sikdorak-images.s3.ap-northeast-2.amazonaws.com/origin/${fileName}`;
     const images = [imageUrl];
     dispatchReviewWrite({ type: 'SET_IMAGES', images });
-    dispatchReviewWrite({ type: 'SET_PRESIGNED_URL', presigendUrl });
+    dispatchReviewWrite({ type: 'SET_PRESIGNED_URL', presignedUrl });
   }
 }
 

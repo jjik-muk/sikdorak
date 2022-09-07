@@ -42,7 +42,7 @@ function ReviewWrite() {
             <WriteRating />
             <TagContainer />
             <PostScope />
-            <RegistrationBtn />
+            <RegistrationBtn selectedImg={selectedImg} />
           </InputWrap>
         </Content>
       </Wrap>

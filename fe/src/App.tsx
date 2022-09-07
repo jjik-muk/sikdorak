@@ -1,11 +1,11 @@
 import { DOMAIN } from 'constants/dummyData';
-import Loading from 'components/Common/Loading/Loading';
 import Portal from 'components/Common/Portal/Portal';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import ReviewDetailProvider from 'context/ReviewDetailProvider';
 import ReviewsProvider from 'context/ReviewsProvider';
 import Callback from 'pages/Callback/Callback';
 import Login from 'pages/Login/Login';
+import Map from 'pages/Map/Map';
 import ReviewList from 'pages/ReviewList/ReviewList';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import StoreDetail from 'pages/StoreDetail/StoreDetail';
@@ -39,7 +39,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={hasAccessToken() ? <ReviewList /> : <Navigate replace to="/login" />} />
-            <Route path="/map" element={<Loading />} />
+            <Route path="/map" element={<Map />} />
             <Route path="/login" element={hasAccessToken() ? <Navigate replace to="/" /> : <Login />} />
             <Route path="/userDetail">
               <Route path=":userId" element={hasAccessToken() ? <UserDetail /> : <Navigate replace to="/" />} />
