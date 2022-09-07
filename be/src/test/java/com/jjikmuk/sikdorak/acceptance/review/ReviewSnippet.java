@@ -6,11 +6,11 @@ import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.requestSni
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.responseFieldsOfCommon;
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.responseFieldsOfCommonNonData;
 import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.responseFieldsOfObjectWithConstraintsAndFields;
+import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.responsePagingFieldsOfCommon;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 
-import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailLikeResponse;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
@@ -133,12 +133,7 @@ interface ReviewSnippet {
 			fieldWithPath("reviews[].createdAt").type(JsonFieldType.STRING).description("리뷰 생성 시간"),
 			fieldWithPath("reviews[].updatedAt").type(JsonFieldType.STRING).description("리뷰 수정 시간")),
 
-		responseFieldsOfObjectWithConstraintsAndFields(
-			CursorPageResponse.class,
-			fieldWithPath("page.size").type(JsonFieldType.NUMBER).description("페이지 크기"),
-			fieldWithPath("page.prev").type(JsonFieldType.NUMBER).description("이전 페이지를 가리키는 커서 | 해당 API에서는 사용하지 않습니다"),
-			fieldWithPath("page.next").type(JsonFieldType.NUMBER).description("다음 페이지를 가리키는 커서 | 더이상 데이터가 존재하지 않으면 1을 반환합니다. ")
-		)
+		responsePagingFieldsOfCommon()
 	);
 
 	Snippet REVIEW_LIKE_SUCCESS_REQUEST_SNIPPET = pathParameters(

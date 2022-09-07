@@ -12,6 +12,7 @@ import com.jjikmuk.sikdorak.review.exception.DuplicateLikeUserException;
 import com.jjikmuk.sikdorak.review.exception.NotFoundLikeUserException;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
+import com.jjikmuk.sikdorak.review.service.dto.PagingInfo;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
@@ -27,7 +28,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewService {
 
     private static final long FIRST_CURSOR_ID = 0L;
-    private static final long LAST_CURSOR_ID = 1L;
+    private static final long LAST_CURSOR_ID = 0L;
     private static final int PAGING_LIMIT_SIZE = 15;
 
     private final StoreRepository storeRepository;
@@ -77,31 +77,15 @@ public class ReviewService {
     public RecommendedReviewResponse getRecentRecommendedReviews(LoginUser loginUser,
         CursorPageRequest cursorPageRequest) {
 
-        if (cursorPageRequest.getSize() > PAGING_LIMIT_SIZE) {
-            throw new InvalidPageParameterException();
-        }
+        validateCursorPageSize(cursorPageRequest);
 
-        long cursor = getCursorOrDefaultCursor(cursorPageRequest);
-        int size = cursorPageRequest.getSize();
-        Pageable pageable = Pageable.ofSize(size);
+        PagingInfo pagingInfo = convertToPagingInfo(cursorPageRequest);
+        List<Review> reviews = getRecommendedReviews(loginUser, pagingInfo);
 
-        List<Review> reviews = getRecommendedReviews(loginUser, cursor, pageable);
+        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews);
+        CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, cursorPageRequest);
 
-        if (reviews.isEmpty()) {
-            return RecommendedReviewResponse.of(
-                new ArrayList<>(),
-                new CursorPageResponse(0, FIRST_CURSOR_ID, LAST_CURSOR_ID));
-        }
-
-        List<ReviewDetailResponse> recommendedReviewsResponse = getRecommendedReviewsResponse(
-            reviews,
-            getReviewAuthors(getAuthorIds(reviews)),
-            getReviewStores(getStoreIds(reviews)));
-        long nextCursorId = recommendedReviewsResponse.get(recommendedReviewsResponse.size() - 1)
-            .reviewId();
-        CursorPageResponse cursorPageResponse = new CursorPageResponse(size, FIRST_CURSOR_ID, nextCursorId);
-
-        return RecommendedReviewResponse.of(recommendedReviewsResponse, cursorPageResponse);
+        return RecommendedReviewResponse.of(reviewsResponse, cursorPageResponse);
 
     }
 
@@ -203,23 +187,54 @@ public class ReviewService {
             : cursorPageRequest.getAfter();
     }
 
-    private List<ReviewDetailResponse> getRecommendedReviewsResponse(List<Review> reviews,
-        Map<Long, User> authors, Map<Long, Store> stores) {
+    private List<ReviewDetailResponse> getReviewsResponse(List<Review> reviews) {
+        Map<Long, User> authors = getReviewAuthors(getAuthorIds(reviews));
+        Map<Long, Store> stores = getReviewStores(getStoreIds(reviews));
+
+        if (reviews.isEmpty()) {
+            return new ArrayList<>();
+        }
 
         return reviews.stream()
-            .map(review -> ReviewDetailResponse.of(review, stores.get(review.getStoreId()),
+            .map(review -> ReviewDetailResponse.of(review,
+                stores.get(review.getStoreId()),
                 authors.get(review.getUserId())))
             .toList();
     }
 
-    private List<Review> getRecommendedReviews(LoginUser loginUser, long targetReviewId,
-        Pageable pageable) {
+    private CursorPageResponse getCursorResponse(List<ReviewDetailResponse> reviewResponses,
+        CursorPageRequest cursorPageRequest) {
+        if (reviewResponses.isEmpty()) {
+            return new CursorPageResponse(0, FIRST_CURSOR_ID, LAST_CURSOR_ID, true);
+        }
+
+        int lastIndex = reviewResponses.size() - 1;
+        long nextCursorId = reviewResponses.get(lastIndex).reviewId() - 1;
+        boolean isLast = nextCursorId == 0L;
+
+        return new CursorPageResponse(cursorPageRequest.getSize(), FIRST_CURSOR_ID, LAST_CURSOR_ID, isLast);
+    }
+
+    private void validateCursorPageSize(CursorPageRequest cursorPageRequest) {
+        if (cursorPageRequest.getSize() > PAGING_LIMIT_SIZE) {
+            throw new InvalidPageParameterException();
+        }
+    }
+
+    private PagingInfo convertToPagingInfo(CursorPageRequest cursorPageRequest) {
+        long cursor = getCursorOrDefaultCursor(cursorPageRequest);
+        int size = cursorPageRequest.getSize();
+
+        return PagingInfo.from(cursor, size);
+    }
+
+    private List<Review> getRecommendedReviews(LoginUser loginUser, PagingInfo pagingInfo) {
         if (loginUser.isAnonymous()) {
-            return reviewRepository.findPublicRecommendedReviewsInRecentOrder(targetReviewId,
-                pageable);
+            return reviewRepository.findPublicRecommendedReviewsInRecentOrder(pagingInfo.cursor(),
+                pagingInfo.pageable());
         }
         return reviewRepository.findPublicAndProtectedRecommendedReviewsInRecentOrder(
-            targetReviewId, pageable);
+            pagingInfo.cursor(), pagingInfo.pageable());
     }
 
     private Map<Long, Store> getReviewStores(List<Long> storeIds) {

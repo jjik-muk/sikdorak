@@ -61,7 +61,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
     @DisplayName("리뷰 피드 목록 조회 요청시 존재하지 않는 페이지를 요청할 경우 빈배열을 반환한다.")
     void get_invalid_page_recommended_reviews() {
 
-        long invalidPage = 1;
+        long invalidPage = -1L;
         int size = 5;
 
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);

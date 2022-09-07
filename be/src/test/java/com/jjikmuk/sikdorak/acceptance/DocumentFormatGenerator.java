@@ -64,6 +64,12 @@ public interface DocumentFormatGenerator {
 			.type(JsonFieldType.NUMBER)
 			.description("다음 페이지를 가리키는 커서");
 
+	FieldDescriptor DEFAULT_PAGING_IS_LAST_RESPONSE_FIELD_DESCRIPTORS =
+		fieldWithPath("page.last")
+			.type(JsonFieldType.BOOLEAN)
+			.description("마지막 페이지 여부");
+
+
 	/**
 	 * 요청 객체의 필드 설명과 제약조건을 반환한다.
 	 * @param clazz
@@ -143,7 +149,8 @@ public interface DocumentFormatGenerator {
 			CursorPageResponse.class,
 			DEFAULT_PAGING_SIZE_RESPONSE_FIELD_DESCRIPTORS,
 			DEFAULT_PAGING_PREV_CURSOR_RESPONSE_FIELD_DESCRIPTORS,
-			DEFAULT_PAGING_NEXT_CURSOR_RESPONSE_FIELD_DESCRIPTORS
+			DEFAULT_PAGING_NEXT_CURSOR_RESPONSE_FIELD_DESCRIPTORS,
+			DEFAULT_PAGING_IS_LAST_RESPONSE_FIELD_DESCRIPTORS
 		);
 	}
 
