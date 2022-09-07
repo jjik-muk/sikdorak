@@ -95,7 +95,7 @@ public class PlaceApiIntegrationTest extends InitIntegrationTest {
 
 		@Test
 		@DisplayName("입력값이 정상이면 장소 목록이 조회된다")
-		void search_place_success() {
+		void search_address_success() {
 		    // given
 			String query = "서울 송파구 잠실동 177-5";
 			AddressSearchRequest request = new AddressSearchRequest(query);
