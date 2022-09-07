@@ -22,7 +22,7 @@ class UserSearchIntegrationTest extends InitIntegrationTest {
         String searchNickname = testData.forky.getNickname();
         List<UserSimpleProfileResponse> result = userService.searchUsersByNickname(searchNickname);
 
-        assertThat(result.size()).isEqualTo(1);
+        assertThat(result).hasSize(1);
         assertThat(result.get(0).nickname()).isEqualTo(testData.forky.getNickname());
     }
 
@@ -32,7 +32,7 @@ class UserSearchIntegrationTest extends InitIntegrationTest {
         String searchNickname = testData.forky.getNickname().substring(0, 1);
         List<UserSimpleProfileResponse> result = userService.searchUsersByNickname(searchNickname);
 
-        assertThat(result.size()).isEqualTo(1);
+        assertThat(result).hasSize(1);
         assertThat(result.get(0).nickname()).isEqualTo(testData.forky.getNickname());
     }
 
