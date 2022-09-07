@@ -24,7 +24,7 @@ class StoreVerifyOrSaveAcceptanceTest extends InitAcceptanceTest {
 	void search_store_by_name_containing_success() {
 		ResponseCodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.STORE_VERIFY_OR_SAVE_RESPONSE;
 		StoreVerifyOrSaveRequest verifyOrSaveRequest = new StoreVerifyOrSaveRequest(1455921244L,
-			"한국계", 127.111, 37.111);
+			"한국계", 127.079996336912,  37.5107289013413);
 
 		given(this.spec)
 			.filter(
