@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("유저 검색 문서테스트")
-public class UserSearchByNicknameAcceptanceTest extends InitAcceptanceTest {
+public class UserSearchAcceptanceTest extends InitAcceptanceTest {
 
     @Test
     @DisplayName("유저 검색 요청이 올바를 경우 유저 목록과 성공 상태코드를 반환한다.")
