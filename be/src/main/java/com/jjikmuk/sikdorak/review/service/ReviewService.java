@@ -212,7 +212,7 @@ public class ReviewService {
         long nextCursorId = reviewResponses.get(lastIndex).reviewId() - 1;
         boolean isLast = nextCursorId == 0L;
 
-        return new CursorPageResponse(cursorPageRequest.getSize(), FIRST_CURSOR_ID, LAST_CURSOR_ID, isLast);
+        return new CursorPageResponse(cursorPageRequest.getSize(), FIRST_CURSOR_ID, nextCursorId, isLast);
     }
 
     private void validateCursorPageSize(CursorPageRequest cursorPageRequest) {

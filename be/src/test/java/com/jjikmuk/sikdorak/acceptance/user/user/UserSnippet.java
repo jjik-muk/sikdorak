@@ -9,6 +9,7 @@ import static com.jjikmuk.sikdorak.acceptance.DocumentFormatGenerator.responseFi
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
@@ -111,5 +112,21 @@ public interface UserSnippet {
             fieldWithPath("followStatus").type(JsonFieldType.BOOLEAN).description("유저와의 관계")
         )
     );
+
+    Snippet USER_SEARCH_BY_NICKNAME_REQUEST_SNIPPET = requestParameters(
+        parameterWithName("nickname").description("검색할 유저의 닉네임")
+    );
+
+    Snippet USER_SEARCH_BY_NICKNAME_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+        responseFieldsOfCommon(),
+
+        responseFieldsOfListWithConstraintsAndFields(
+            UserSimpleProfileResponse.class,
+            fieldWithPath("id").type(JsonFieldType.NUMBER).description("유저 아이디"),
+            fieldWithPath("nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
+            fieldWithPath("profileImage").type(JsonFieldType.STRING).description("유저 프로필 이미지")
+        )
+    );
+
 
 }
