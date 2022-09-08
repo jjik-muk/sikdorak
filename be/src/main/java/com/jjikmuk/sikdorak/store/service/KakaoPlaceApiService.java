@@ -91,7 +91,7 @@ public class KakaoPlaceApiService implements PlaceApiService {
 			.roadAddressName(roadAddress.getAddressName())
 			.region1DepthName(address.getRegion1DepthName())
 			.region2DepthName(address.getRegion2DepthName())
-			.region3DepthName(address.getRegion3DepthHName())
+			.region3DepthName(address.getRegion3DepthName())
 			.region3DepthHName(address.getRegion3DepthHName())
 			.mainAddressNo(address.getMainAddressNo())
 			.subAddressNo(address.getSubAddressNo())
