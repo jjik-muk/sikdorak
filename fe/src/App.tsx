@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import Portal from 'components/Common/Portal/Portal';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import ReviewDetailProvider from 'context/ReviewDetailProvider';
@@ -24,7 +23,7 @@ function App() {
     setMyInfo();
 
     async function setMyInfo() {
-      const myInfo = await fetchDataThatNeedToLogin(`${DOMAIN}/api/users/me`);
+      const myInfo = await fetchDataThatNeedToLogin(`api/users/me`);
       const { id, nickname, profileImage } = myInfo.data;
       const myInfoJson = JSON.stringify({ userId: id, nickname, profileImageUrl: profileImage });
       localStorage.setItem('MY_INFO', myInfoJson);

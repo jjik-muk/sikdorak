@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import { useState } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import useToggle from './useToggle';
@@ -9,7 +8,7 @@ function useLike({ like, reviewId }) {
 
   function postLike() {
     const path = isActiveHeart ? 'unlike' : 'like';
-    const URL = `${DOMAIN}/api/reviews/${reviewId}/${path}`;
+    const URL = `api/reviews/${reviewId}/${path}`;
     const options = { method: 'PUT' };
 
     if (isActiveHeart) {

@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import useToggle from 'hooks/useToggle';
 import { useLocation } from 'react-router-dom';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
@@ -12,14 +11,14 @@ function FollowButton({ alreadyFollowed }: FollowButtonProps) {
   return isFriendship ? <Wrap onClick={postUnFollow}>언팔로우</Wrap> : <Wrap onClick={postFollow}>팔로우</Wrap>;
 
   function postFollow() {
-    fetchDataThatNeedToLogin(`${DOMAIN}/api/users/follow`, {
+    fetchDataThatNeedToLogin(`api/users/follow`, {
       method: 'PUT',
       bodyData: { userId: IDtoFollow },
     });
     toggleIsFriendship();
   }
   function postUnFollow() {
-    fetchDataThatNeedToLogin(`${DOMAIN}/api/users/unfollow`, {
+    fetchDataThatNeedToLogin(`api/users/unfollow`, {
       method: 'PUT',
       bodyData: { userId: IDtoFollow },
     });

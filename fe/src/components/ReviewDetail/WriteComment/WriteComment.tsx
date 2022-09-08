@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import { useState } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
@@ -41,7 +40,7 @@ export default function WriteComment({ commentRef, reviewId, comments, setCommen
   }
 
   async function postWrittingComment() {
-    fetchDataThatNeedToLogin(`${DOMAIN}/api/reviews/${reviewId}/comments`, {
+    fetchDataThatNeedToLogin(`api/reviews/${reviewId}/comments`, {
       method: 'POST',
       bodyData: {
         content: commentValue,

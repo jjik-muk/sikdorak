@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import { useReviews } from 'context/ReviewsProvider';
 import { Ref } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
@@ -20,7 +19,7 @@ function Menu({ menuRef, reviewId }: MenuProps) {
   }
 
   function handleDeleteReview() {
-    fetchDataThatNeedToLogin(`${DOMAIN}/api/reviews/${reviewId}`, { method: 'DELETE' });
+    fetchDataThatNeedToLogin(`api/reviews/${reviewId}`, { method: 'DELETE' });
     dispatchReivews({ type: 'DELETE_REVIEW', reviewId });
   }
 }

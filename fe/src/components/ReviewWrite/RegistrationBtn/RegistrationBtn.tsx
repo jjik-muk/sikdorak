@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import useUploadImage from 'hooks/useUploadImage';
 import { fetchData } from 'utils/utils';
@@ -46,7 +45,7 @@ function RegistrationBtn({ selectedImg }: any) {
     const headers = {
       Authorization: `Bearer ${accessToken}`,
     };
-    fetchData(`${DOMAIN}/api/reviews`, { headers, method: 'POST', bodyData });
+    fetchData(`api/reviews`, { headers, method: 'POST', bodyData });
   }
 }
 

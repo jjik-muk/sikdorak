@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import { useState } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 
@@ -6,7 +5,7 @@ function useUploadImage() {
   const [selectedImg, setSelectedImg] = useState(null);
 
   async function fetchPresignedUrl({ extension }) {
-    const res = await fetchDataThatNeedToLogin(`${DOMAIN}/api/images/url`, {
+    const res = await fetchDataThatNeedToLogin(`api/images/url`, {
       method: 'PUT',
       bodyData: { extension },
     });
