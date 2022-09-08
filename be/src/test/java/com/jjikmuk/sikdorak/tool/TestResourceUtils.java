@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.common;
+package com.jjikmuk.sikdorak.tool;
 
 import static java.nio.charset.Charset.defaultCharset;
 import static org.springframework.util.StreamUtils.copyToString;

@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.common;
+package com.jjikmuk.sikdorak.tool;
 
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;

@@ -7,8 +7,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.startsWith;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
-import com.jjikmuk.sikdorak.common.mock.OAuthMocks;
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
+import com.jjikmuk.sikdorak.tool.mock.OAuthMocks;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;

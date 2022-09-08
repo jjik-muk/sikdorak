@@ -1,6 +1,6 @@
-package com.jjikmuk.sikdorak.common.extension;
+package com.jjikmuk.sikdorak.tool.extension;
 
-import com.jjikmuk.sikdorak.common.mock.KakaoPlaceMocks;
+import com.jjikmuk.sikdorak.tool.mock.KakaoPlaceMocks;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;

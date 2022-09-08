@@ -6,8 +6,8 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jjikmuk.sikdorak.common.DatabaseConfigurator;
 import com.jjikmuk.sikdorak.common.properties.AwsProperties;
+import com.jjikmuk.sikdorak.tool.DatabaseConfigurator;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.ObjectMapperConfig;

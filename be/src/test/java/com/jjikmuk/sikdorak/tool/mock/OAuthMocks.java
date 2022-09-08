@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.common.mock;
+package com.jjikmuk.sikdorak.tool.mock;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;

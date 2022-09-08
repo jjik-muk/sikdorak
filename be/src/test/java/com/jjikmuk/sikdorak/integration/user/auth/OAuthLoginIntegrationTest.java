@@ -3,8 +3,8 @@ package com.jjikmuk.sikdorak.integration.user.auth;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
-import com.jjikmuk.sikdorak.common.mock.OAuthMocks;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
+import com.jjikmuk.sikdorak.tool.mock.OAuthMocks;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.auth.service.OAuthService;

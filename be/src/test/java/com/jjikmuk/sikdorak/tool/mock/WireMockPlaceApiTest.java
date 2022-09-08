@@ -1,6 +1,6 @@
-package com.jjikmuk.sikdorak.common.mock;
+package com.jjikmuk.sikdorak.tool.mock;
 
-import com.jjikmuk.sikdorak.common.extension.PlaceMocksExtention;
+import com.jjikmuk.sikdorak.tool.extension.PlaceMocksExtention;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

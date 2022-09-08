@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.common.mock;
+package com.jjikmuk.sikdorak.tool.mock;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -7,7 +7,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.stubbing.StubMapping;
-import com.jjikmuk.sikdorak.common.TestResourceUtils;
+import com.jjikmuk.sikdorak.tool.TestResourceUtils;
 import org.apache.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
