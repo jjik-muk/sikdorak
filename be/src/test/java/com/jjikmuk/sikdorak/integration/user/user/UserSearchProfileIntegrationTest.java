@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * [] 제공해야 하는 정보 : 닉네임, 프로필 이미지, 이메일(있다면), 게시물 개수, 조회자와 유저의 일치 여부, 팔로잉 상태, 팔로워 수, 팔로잉 수
  */
 
-@DisplayName("유저 프로필 조회 통합 테스트")
+@DisplayName("통합 : User 프로필 조회")
 class UserSearchProfileIntegrationTest extends InitIntegrationTest {
 
     @Autowired

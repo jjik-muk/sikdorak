@@ -12,7 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("통합 : 사용자 생성 기능")
+@DisplayName("통합 : User 생성 기능")
 public class UserCreateIntegrationTest extends InitIntegrationTest {
 
     @Autowired
