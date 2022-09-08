@@ -1,8 +1,9 @@
-package com.jjikmuk.sikdorak.comment.domain;
+package com.jjikmuk.sikdorak.unittest.comment.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.jjikmuk.sikdorak.comment.domain.CommentContent;
 import com.jjikmuk.sikdorak.comment.exception.InvalidCommentContentException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

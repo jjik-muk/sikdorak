@@ -1,14 +1,15 @@
-package com.jjikmuk.sikdorak.review.domain;
+package com.jjikmuk.sikdorak.unittest.review.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import com.jjikmuk.sikdorak.review.domain.ReviewScore;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewScoreException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ReviewScoreTest {
 

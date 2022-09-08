@@ -1,8 +1,9 @@
-package com.jjikmuk.sikdorak.review.domain;
+package com.jjikmuk.sikdorak.unittest.review.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.jjikmuk.sikdorak.review.domain.ReviewContent;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

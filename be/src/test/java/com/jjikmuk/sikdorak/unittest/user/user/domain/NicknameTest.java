@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.user.user.domain;
+package com.jjikmuk.sikdorak.unittest.user.user.domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

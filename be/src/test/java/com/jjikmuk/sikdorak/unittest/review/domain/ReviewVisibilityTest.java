@@ -1,7 +1,8 @@
-package com.jjikmuk.sikdorak.review.domain;
+package com.jjikmuk.sikdorak.unittest.review.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.jjikmuk.sikdorak.review.domain.ReviewVisibility;
 import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

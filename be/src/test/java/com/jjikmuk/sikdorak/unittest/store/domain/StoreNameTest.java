@@ -1,14 +1,15 @@
-package com.jjikmuk.sikdorak.store.domain;
+package com.jjikmuk.sikdorak.unittest.store.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import com.jjikmuk.sikdorak.store.domain.StoreName;
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreNameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("StoreNameTest 클래스")
 class StoreNameTest {

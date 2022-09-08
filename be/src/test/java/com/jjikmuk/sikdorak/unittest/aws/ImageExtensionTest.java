@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.aws;
+package com.jjikmuk.sikdorak.unittest.aws;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
