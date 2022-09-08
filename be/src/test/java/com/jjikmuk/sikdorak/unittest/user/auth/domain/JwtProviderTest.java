@@ -13,6 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+@DisplayName("단위 : JwtProvider 클래스")
 public class JwtProviderTest {
 
     private JwtProperties jwtProperties;

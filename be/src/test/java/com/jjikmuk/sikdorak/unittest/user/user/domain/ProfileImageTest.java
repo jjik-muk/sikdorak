@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@DisplayName("User ProfileImage 단위 테스트")
+@DisplayName("단위 : User ProfileImage")
 public class ProfileImageTest {
 
     @Nested

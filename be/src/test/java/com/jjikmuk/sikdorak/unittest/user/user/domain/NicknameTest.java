@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
-@DisplayName("User Nickname 단위 테스트")
+@DisplayName("단위 : User Nickname 클래스")
 public class NicknameTest {
     @Nested
     @DisplayName("생성자")

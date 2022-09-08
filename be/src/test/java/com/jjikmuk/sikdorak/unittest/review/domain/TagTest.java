@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@DisplayName("Tag 클래스")
+@DisplayName("단위 : Tag 클래스")
 class TagTest {
 
 	@Nested

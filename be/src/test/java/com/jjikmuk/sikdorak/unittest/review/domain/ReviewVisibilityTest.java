@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+@DisplayName("단위 : ReviewVisibility 클래스")
 class ReviewVisibilityTest {
 
 	@Nested

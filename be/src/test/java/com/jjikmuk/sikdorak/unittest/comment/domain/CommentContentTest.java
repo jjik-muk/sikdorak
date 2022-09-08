@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 
+@DisplayName("단위 : CommentContent 클래스")
 class CommentContentTest {
 
 	@Nested

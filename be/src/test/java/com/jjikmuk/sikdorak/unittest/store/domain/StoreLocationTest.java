@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-@DisplayName("StoreLocation 클래스")
+@DisplayName("단위 : StoreLocation 클래스")
 class StoreLocationTest {
 
     @Nested

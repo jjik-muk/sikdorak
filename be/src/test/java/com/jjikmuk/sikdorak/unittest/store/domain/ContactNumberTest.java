@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 
-@DisplayName("ContactNumberTest 클래스")
+@DisplayName("단위 : ContactNumber 클래스")
 class ContactNumberTest {
 
     @Nested

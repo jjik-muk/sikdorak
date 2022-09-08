@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@DisplayName("Image 클래스")
+@DisplayName("단위 : Image 클래스")
 class ImageTest {
 
 	@Nested

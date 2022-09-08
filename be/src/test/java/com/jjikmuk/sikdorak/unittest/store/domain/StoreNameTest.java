@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@DisplayName("StoreNameTest 클래스")
+@DisplayName("단위 : StoreName 클래스")
 class StoreNameTest {
 
     @Nested

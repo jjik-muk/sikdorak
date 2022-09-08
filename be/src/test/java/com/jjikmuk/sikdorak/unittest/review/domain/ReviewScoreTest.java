@@ -11,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+@DisplayName("단위 : ReviewScore 클래스")
 class ReviewScoreTest {
 
     @Nested

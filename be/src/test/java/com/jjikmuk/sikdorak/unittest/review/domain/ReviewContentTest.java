@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-@DisplayName("ReviewContentTest 클래스")
+@DisplayName("단위 : ReviewContent 클래스")
 class ReviewContentTest {
 
 	@Nested
