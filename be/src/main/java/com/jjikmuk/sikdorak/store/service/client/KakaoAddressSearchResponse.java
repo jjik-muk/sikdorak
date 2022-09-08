@@ -3,11 +3,11 @@ package com.jjikmuk.sikdorak.store.service.client;
 import java.util.Collections;
 import java.util.List;
 
-public class KakaoPlaceSearchResponse {
+public class KakaoAddressSearchResponse {
 
-	List<KakaoPlaceResponse> documents;
+	List<KakaoAddressDocumentResponse> documents;
 
-	public List<KakaoPlaceResponse> getDocuments() {
+	public List<KakaoAddressDocumentResponse> getDocuments() {
 		return Collections.unmodifiableList(documents);
 	}
 }

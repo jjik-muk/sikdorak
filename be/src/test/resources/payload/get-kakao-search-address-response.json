@@ -1,0 +1,43 @@
+{
+  "documents": [
+    {
+      "address": {
+        "address_name": "서울 송파구 잠실동 177-5",
+        "b_code": "1171010100",
+        "h_code": "1171065000",
+        "main_address_no": "177",
+        "mountain_yn": "N",
+        "region_1depth_name": "서울",
+        "region_2depth_name": "송파구",
+        "region_3depth_h_name": "잠실본동",
+        "region_3depth_name": "잠실동",
+        "sub_address_no": "5",
+        "x": "127.079973849354",
+        "y": "37.5107481079524"
+      },
+      "address_name": "서울 송파구 올림픽로8길 10",
+      "address_type": "ROAD_ADDR",
+      "road_address": {
+        "address_name": "서울 송파구 올림픽로8길 10",
+        "building_name": "",
+        "main_building_no": "10",
+        "region_1depth_name": "서울",
+        "region_2depth_name": "송파구",
+        "region_3depth_name": "잠실동",
+        "road_name": "올림픽로8길",
+        "sub_building_no": "",
+        "underground_yn": "N",
+        "x": "127.079973849354",
+        "y": "37.5107481079524",
+        "zone_no": "05556"
+      },
+      "x": "127.079973849354",
+      "y": "37.5107481079524"
+    }
+  ],
+  "meta": {
+    "is_end": true,
+    "pageable_count": 1,
+    "total_count": 1
+  }
+}

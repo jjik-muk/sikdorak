@@ -9,8 +9,12 @@ import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyOrSaveResponse;
 import com.jjikmuk.sikdorak.store.domain.Address;
 import com.jjikmuk.sikdorak.store.domain.Store;
+import com.jjikmuk.sikdorak.store.exception.NotFoundApiAddressException;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
+import com.jjikmuk.sikdorak.store.service.dto.AddressResponse;
+import com.jjikmuk.sikdorak.store.service.dto.AddressSearchRequest;
+import com.jjikmuk.sikdorak.store.service.dto.AddressSearchResponse;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceResponse;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceSearchRequest;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceSearchResponse;
@@ -20,11 +24,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class StoreService {
 
 	private final StoreRepository storeRepository;
@@ -72,10 +78,14 @@ public class StoreService {
 
 	@Transactional
 	public Long createStore(StoreCreateRequest createRequest) {
+		Address address = Address.requiredFieldBuilder(
+				createRequest.getAddressName(), createRequest.getRoadAddressName())
+			.build();
+
 		Store store = new Store(
 			createRequest.getStoreName(),
 			createRequest.getContactNumber(),
-			Address.of(createRequest.getAddressName(), createRequest.getRoadAddressName()),
+			address,
 			createRequest.getY(),
 			createRequest.getX()
 		);
@@ -89,10 +99,14 @@ public class StoreService {
 		Store store = storeRepository.findById(storeId)
 			.orElseThrow(NotFoundStoreException::new);
 
+		Address address = Address.requiredFieldBuilder(
+				modifyRequest.getAddressName(), modifyRequest.getRoadAddressName())
+			.build();
+
 		store.editAll(
 			modifyRequest.getStoreName(),
 			modifyRequest.getContactNumber(),
-			Address.of(modifyRequest.getAddressName(), modifyRequest.getRoadAddressName()),
+			address,
 			modifyRequest.getY(),
 			modifyRequest.getX()
 		);
@@ -111,12 +125,25 @@ public class StoreService {
 	@Transactional
 	public StoreVerifyOrSaveResponse verifyOrSave(StoreVerifyOrSaveRequest request) {
 		Store store = storeRepository.findStoreByPlaceId(request.getPlaceId())
-			.orElseGet(() -> searchApiPlaceAndSave(request));
+			.orElseGet(() -> searchApiAndSave(request));
 
 		return StoreVerifyOrSaveResponse.from(store);
 	}
 
-	private Store searchApiPlaceAndSave(StoreVerifyOrSaveRequest request) {
+	private Store searchApiAndSave(StoreVerifyOrSaveRequest request) {
+		PlaceResponse placeResponse = searchPlaceApi(request);
+		AddressResponse addressResponse = searchAddressApi(placeResponse);
+
+		return storeRepository.save(new Store(
+			placeResponse.id(),
+			placeResponse.placeName(),
+			placeResponse.contactNumber(),
+			getAddress(addressResponse),
+			placeResponse.x(),
+			placeResponse.y()));
+	}
+
+	private PlaceResponse searchPlaceApi(StoreVerifyOrSaveRequest request) {
 		PlaceSearchResponse placeSearchResponse = kakaoPlaceApiService.searchPlaces(
 			new PlaceSearchRequest(
 				request.getStoreName(),
@@ -124,15 +151,7 @@ public class StoreService {
 				request.getY()
 			));
 
-		PlaceResponse place = findFirstPlace(request.getPlaceId(), placeSearchResponse);
-
-		return storeRepository.save(new Store(
-			place.id(),
-			place.placeName(),
-			place.contactNumber(),
-			Address.of(place.addressName(), place.roadAddressName()),
-			place.x(),
-			place.y()));
+		return findFirstPlace(request.getPlaceId(), placeSearchResponse);
 	}
 
 	private PlaceResponse findFirstPlace(Long placeId, PlaceSearchResponse placeSearchResponse) {
@@ -141,5 +160,37 @@ public class StoreService {
 			.filter(place -> place.id().equals(placeId))
 			.findFirst()
 			.orElseThrow(NotFoundStoreException::new);
+	}
+
+	private AddressResponse searchAddressApi(PlaceResponse place) {
+		AddressSearchResponse addresses = kakaoPlaceApiService.searchAddress(
+			new AddressSearchRequest(place.addressName()));
+
+		try {
+			return addresses.getAddressResponses()
+				.stream()
+				.findFirst()
+				.orElseThrow(NotFoundApiAddressException::new);
+		} catch (Exception e) {
+			// 예측하지 못한 예외도 해당 로직을 타게 하기 Exception 으로 선언
+			log.error(e.getMessage(), e);
+			return new AddressResponse(place.addressName(), place.roadAddressName());
+		}
+	}
+
+	private Address getAddress(AddressResponse addressResponse) {
+		return Address.requiredFieldBuilder(
+				addressResponse.addressName(),
+				addressResponse.roadAddressName())
+			.region1DepthName(addressResponse.region1DepthName())
+			.region2DepthName(addressResponse.region2DepthName())
+			.region3DepthName(addressResponse.region3DepthName())
+			.region3DepthHName(addressResponse.region3DepthHName())
+			.mainAddressNo(addressResponse.mainAddressNo())
+			.subAddressNo(addressResponse.subAddressNo())
+			.roadName(addressResponse.roadName())
+			.mainBuildingNo(addressResponse.mainBuildingNo())
+			.subBuildingNo(addressResponse.subBuildingNo())
+			.build();
 	}
 }

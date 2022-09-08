@@ -66,6 +66,8 @@ operation::store_remove_acceptance_test/remove_store_failed[snippets='http-reque
 
 operation::store_remove_acceptance_test/remove_store_failed[snippets='http-response,response-fields']
 
+=== 가게 목록 위치 기반 조회
+
 API : `GET /api/stores?type=maps&x=127.123&y=36.123&radius=100`
 
 === `200 SUCCESS`
@@ -77,3 +79,17 @@ operation::store_search_by_radius_acceptance_test/stores_radius_success[snippets
 ==== `Response`
 
 operation::store_search_by_radius_acceptance_test/stores_radius_success[snippets='http-response,response-fields']
+
+=== 가게 등록 검증
+
+API : `PUT /api/stores`
+
+=== `200 SUCCESS`
+
+==== `Request`
+
+operation::store_verify_or_save_acceptance_test/search_store_by_name_containing_success[snippets='http-request,request-body']
+
+==== `Response`
+
+operation::store_verify_or_save_acceptance_test/search_store_by_name_containing_success[snippets='http-response,response-fields']

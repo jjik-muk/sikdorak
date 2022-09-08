@@ -1,0 +1,42 @@
+{
+  "documents": [
+    {
+      "address_name": "서울 송파구 잠실동 177-5",
+      "category_group_code": "FD6",
+      "category_group_name": "음식점",
+      "category_name": "음식점 > 한식 > 육류,고기 > 닭요리",
+      "distance": "",
+      "id": "1455921244",
+      "phone": "02-424-7077",
+      "place_name": "한국계",
+      "place_url": "http://place.map.kakao.com/1455921244",
+      "road_address_name": "서울 송파구 올림픽로8길 10",
+      "x": "127.079996336912",
+      "y": "37.5107289013413"
+    },
+    {
+      "address_name": "서울 송파구 방이동 24-4",
+      "category_group_code": "FD6",
+      "category_group_name": "음식점",
+      "category_name": "음식점 > 한식 > 육류,고기",
+      "distance": "",
+      "id": "415215581",
+      "phone": "02-420-7077",
+      "place_name": "한국계 방이직영점",
+      "place_url": "http://place.map.kakao.com/415215581",
+      "road_address_name": "서울 송파구 오금로11길 7",
+      "x": "127.10796497353",
+      "y": "37.5145458257413"
+    }
+  ],
+  "meta": {
+    "is_end": true,
+    "pageable_count": 2,
+    "same_name": {
+      "keyword": "한국계",
+      "region": [],
+      "selected_region": ""
+    },
+    "total_count": 2
+  }
+}
