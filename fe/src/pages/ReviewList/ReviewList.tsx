@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
 import { useReviews } from 'context/ReviewsProvider';
@@ -33,7 +32,7 @@ function ReviewList() {
   }
 
   async function fetchNextRecommendReviews() {
-    const res = await fetchDataThatNeedToLogin(`${DOMAIN}/api/reviews?after=${afterParam}&size=${REVIEW_SIZE}`);
+    const res = await fetchDataThatNeedToLogin(`api/reviews?after=${afterParam}&size=${REVIEW_SIZE}`);
     const nextReviews = res.data.reviews;
     const nextAfterParam = res.data.page.next;
     dispatchReviews({ type: 'ADD_REVIEWS', reviews: nextReviews });

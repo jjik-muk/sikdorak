@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
@@ -26,8 +25,8 @@ function UserDetail() {
   const isMyUserDetailPage = myUserId === targetId;
 
   useEffect(() => {
-    fetchAndStoreData({ url: `${DOMAIN}/api/users/${targetId}/reviews`, dispatch: setReviews });
-    fetchAndStoreData({ url: `${DOMAIN}/api/users/${targetId}`, dispatch: setUserProfile });
+    fetchAndStoreData({ url: `api/users/${targetId}/reviews`, dispatch: setReviews });
+    fetchAndStoreData({ url: `api/users/${targetId}`, dispatch: setUserProfile });
 
     async function fetchAndStoreData({ url, dispatch }) {
       const res = await fetchDataThatNeedToLogin(url);

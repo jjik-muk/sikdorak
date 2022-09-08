@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import { STATUS_CODE } from 'constants/statusCode';
 import Loading from 'components/Common/Loading/Loading';
 import { Dispatch, useEffect } from 'react';
@@ -12,9 +11,12 @@ function Callback({ accessToken, setAccessToken }: CallbackProps) {
     fetchAccessToken();
 
     async function fetchAccessToken() {
-      const res = await fetch(`${DOMAIN}/api/oauth/callback?code=${kakaoAuthorizationCode}`, {
-        credentials: 'include',
-      });
+      const res = await fetch(
+        `${process.env.REACT_APP_BE_SERVER_URL}/api/oauth/callback?code=${kakaoAuthorizationCode}`,
+        {
+          credentials: 'include',
+        },
+      );
       const resJson = await res.json();
       const { code, data } = resJson;
 

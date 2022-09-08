@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import { DETAIL, FEED } from 'constants/size';
 import Icon from 'components/Common/Icon/Icon';
 import Carousel from 'components/ReviewDetail/Carousel/Carousel';
@@ -94,7 +93,7 @@ function ReviewDetail({
 
   async function fetchNextComment() {
     const commentRes = await fetchDataThatNeedToLogin(
-      `${DOMAIN}/api/reviews/${reviewId}/comments?size=${COMMENT_SIZE}&after=${afterParam}`,
+      `api/reviews/${reviewId}/comments?size=${COMMENT_SIZE}&after=${afterParam}`,
     );
 
     if (!commentRes.data) return;

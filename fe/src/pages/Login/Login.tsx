@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import TEXT from 'constants/text';
 import Logo from 'components/Common/Logo/Logo';
 import LoginButton from 'components/Login/LoginButton/LoginButton';
@@ -13,7 +12,7 @@ function Login() {
     <Wrap>
       <Form>
         <Logo />
-        <KakaoLogin href={`${DOMAIN}/api/oauth/login`}>
+        <KakaoLogin href={`${process.env.REACT_APP_BE_SERVER_URL}/api/oauth/login`}>
           <LoginButton text={KAKAO} />
         </KakaoLogin>
         <LoginInput type={ID} />

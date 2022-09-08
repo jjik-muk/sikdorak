@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import useUploadImage from 'hooks/useUploadImage';
 import { fetchData } from 'utils/utils';
@@ -15,7 +14,10 @@ function RegistrationBtn({ selectedImg }: any) {
   );
 
   async function handleRegistration() {
-    await uploadImageToS3(reviewWriteState.presignedUrl, selectedImg);
+    const hasImageThatNeedToUpload = reviewWriteState.presignedUrl;
+    if (hasImageThatNeedToUpload) {
+      await uploadImageToS3(reviewWriteState.presignedUrl, selectedImg);
+    }
     registerPost();
   }
 
@@ -46,7 +48,7 @@ function RegistrationBtn({ selectedImg }: any) {
     const headers = {
       Authorization: `Bearer ${accessToken}`,
     };
-    fetchData(`${DOMAIN}/api/reviews`, { headers, method: 'POST', bodyData });
+    fetchData(`${process.env.REACT_APP_BE_SERVER_URL}/api/reviews`, { headers, method: 'POST', bodyData });
   }
 }
 

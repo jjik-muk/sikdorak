@@ -1,4 +1,3 @@
-import { DOMAIN } from 'constants/dummyData';
 import { STATUS_CODE } from 'constants/statusCode';
 import { css } from 'styled-components';
 
@@ -35,7 +34,7 @@ export async function fetchData(url: string, { headers, method, bodyData }: any 
 }
 
 export async function fetchDataThatNeedToLogin(
-  url: string,
+  path: string,
   { headers, method, bodyData }: any = { header: '', method: 'GET' },
 ) {
   const accessToken = localStorage.getItem('accessToken');
@@ -46,7 +45,7 @@ export async function fetchDataThatNeedToLogin(
   const body = JSON.stringify(bodyData);
   const fetchParams = { method, headers: { ...headers, ...defaultHeaders }, body };
 
-  const res = await fetch(url, fetchParams);
+  const res = await fetch(`${process.env.REACT_APP_BE_SERVER_URL}/${path}`, fetchParams);
   const resJson = await res.json();
 
   if (resJson.code === STATUS_CODE.EXPIRED_ACCESS_TOKEN) {
@@ -55,7 +54,7 @@ export async function fetchDataThatNeedToLogin(
   return resJson;
 
   async function reissueAccessToken() {
-    const refreshRes = await fetch(`${DOMAIN}/api/oauth/refresh`, { credentials: 'include' });
+    const refreshRes = await fetch(`api/oauth/refresh`, { credentials: 'include' });
     const refreshResJson = await refreshRes.json();
     localStorage.setItem('accessToken', refreshResJson.data.accessToken);
   }
