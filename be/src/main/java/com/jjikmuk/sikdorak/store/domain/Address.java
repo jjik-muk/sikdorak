@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
+@Builder(builderMethodName = "hiddenBuilder")
 public class Address {
 
     /**
@@ -83,7 +83,7 @@ public class Address {
     }
 
     public static AddressBuilder requiredFieldBuilder(String addressName, String roadAddressName) {
-        return builder()
+        return hiddenBuilder()
             .addressName(addressName)
             .roadAddressName(roadAddressName);
     }
