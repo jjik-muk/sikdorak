@@ -19,7 +19,7 @@ import org.springframework.http.MediaType;
  * 디테일 조회 가능한 사람이 조회한 경우 : public 글
  * 조회 불가능한 사람이 조회한 경우 : 게스트/친구관계가 protected, private 조회 , 친구관계가 private 조회
  */
-@DisplayName("리뷰조회 인수테스트")
+@DisplayName("문서화 : Review 디테일 조회")
 class ReviewSearchDocumentationTest extends InitDocumentationTest {
 
 	@Test

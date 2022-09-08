@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+@DisplayName("문서화 : AWS S3 Presigned URL 생성")
 class PresignedURLCreateDocumentationTest extends InitDocumentationTest {
 
 	@Test

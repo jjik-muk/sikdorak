@@ -23,7 +23,7 @@ import org.springframework.http.MediaType;
  * - [x] 유저, 본인 리뷰 수정 정상 요청 유저
  * - [x] 본인 리뷰 수정 비정상 요청(없는 스토어 아이디) -> throw
  */
-@DisplayName("ReviewUpdate 인수 테스트")
+@DisplayName("문서화 : Review 수정")
 class ReviewModifyDocumentationTest extends InitDocumentationTest {
 
 	@Test

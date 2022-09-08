@@ -13,7 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-@DisplayName("위치기반 스토어 목록 조회 문서테스트")
+@DisplayName("문서화 : Store 위치 기반 검색,조회")
 class StoreSearchByRadiusDocumentationTest extends InitDocumentationTest {
 
     @Test

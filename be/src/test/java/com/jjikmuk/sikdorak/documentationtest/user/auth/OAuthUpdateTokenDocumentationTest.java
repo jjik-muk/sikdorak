@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-@DisplayName("OAuth 토큰 재발급 인수테스트")
+@DisplayName("문서화 : OAuth 엑세스 토큰 갱신")
 class OAuthUpdateTokenDocumentationTest extends InitDocumentationTest {
 
     @Test

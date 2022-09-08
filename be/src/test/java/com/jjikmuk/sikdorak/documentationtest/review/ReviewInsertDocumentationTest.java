@@ -19,7 +19,7 @@ import org.springframework.http.MediaType;
  *  [ ] 이미지 업로드 기능 추가해야함
  *  [ ] 유저 추가해야함
  */
-@DisplayName("ReviewInsert 인수 테스트")
+@DisplayName("문서화 : Review 생성")
 class ReviewInsertDocumentationTest extends InitDocumentationTest {
 
 	@Test

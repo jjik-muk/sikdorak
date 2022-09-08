@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.cloud.contract.spec.internal.HttpStatus;
 import org.springframework.http.MediaType;
 
-@DisplayName("StoreRemove 인수 테스트")
+@DisplayName("문서화 : Store 삭제 기능")
 class StoreRemoveDocumentationTest extends InitDocumentationTest {
 
 	@Test

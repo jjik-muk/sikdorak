@@ -11,7 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-@DisplayName("유저 탈퇴 인수 테스트")
+@DisplayName("문서화 : User 삭제")
 class UserDeleteDocumentationTest extends InitDocumentationTest {
 
     @Test

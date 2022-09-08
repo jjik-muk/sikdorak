@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-@DisplayName("CommentSearch 인수테스트")
+@DisplayName("문서화 : Comment 검색")
 class CommentSearchDocumentationTest extends InitDocumentationTest {
 
 	@Test

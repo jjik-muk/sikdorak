@@ -20,7 +20,7 @@ import org.springframework.http.MediaType;
  * - [x] 본인의 글을 조회한 경우(public/protected/private 모두 조회)
  */
 
-@DisplayName("특정 유저의 리뷰 전체 조회 인수 테스트")
+@DisplayName("문서화 : User(특정 유저)의 리뷰 리스트 조회")
 class UserReviewsSearchByUserIdDocumentationTest extends InitDocumentationTest {
 
 	@Test

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.contract.spec.internal.HttpStatus;
 
-@DisplayName("리뷰 피드 조회 인수 테스트")
+@DisplayName("문서화 : Review 피드조회(추천) 기능")
 class ReviewsRecommendDocumentationTest extends InitDocumentationTest {
 
     @Test

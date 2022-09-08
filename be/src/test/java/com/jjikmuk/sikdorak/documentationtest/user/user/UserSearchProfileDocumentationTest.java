@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 
-@DisplayName("유저 조회 인수테스트")
+@DisplayName("문서화 : User 프로필 조회")
 class UserSearchProfileDocumentationTest extends InitDocumentationTest {
 
     @Test

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-@DisplayName("유저 본인 프로필 조회 인수 테스트")
+@DisplayName("문서화 : User 자신의 프로필 조회")
 class UserSearchSelfProfileDocumentationTest extends InitDocumentationTest {
 
     @Test

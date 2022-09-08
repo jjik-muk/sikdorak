@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-@DisplayName("StoreSearch 인수테스트")
+@DisplayName("문서화 : Store 검색,조회")
 public class StoreSearchDocumentationTest extends InitDocumentationTest {
 
     @Test

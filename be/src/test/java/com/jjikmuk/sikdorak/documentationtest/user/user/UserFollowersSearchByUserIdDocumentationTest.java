@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-@DisplayName("유저 팔로워 목록 조회 인수 테스트")
+@DisplayName("문서화 : User 팔로워 목록 조회")
 class UserFollowersSearchByUserIdDocumentationTest extends InitDocumentationTest {
 
     @Test

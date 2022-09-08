@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @WireMockPlaceApiTest
-@DisplayName("StoreVerifyOrSave 인수테스트")
+@DisplayName("문서화 : Store 검증 및 저장 (카카오 API 사용)")
 class StoreVerifyOrSaveDocumentationTest extends InitDocumentationTest {
 
 	@Test

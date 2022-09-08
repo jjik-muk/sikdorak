@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.cloud.contract.spec.internal.HttpStatus;
 import org.springframework.http.MediaType;
 
-@DisplayName("StoreModify 인수 테스트")
+@DisplayName("문서화 : Store 수정 기능")
 class StoreModifyDocumentationTest extends InitDocumentationTest {
 
 	@Test

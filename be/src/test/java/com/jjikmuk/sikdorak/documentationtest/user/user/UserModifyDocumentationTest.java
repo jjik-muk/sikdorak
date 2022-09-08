@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-@DisplayName("UserModify 인수테스트")
+@DisplayName("문서화 : User 수정")
 class UserModifyDocumentationTest extends InitDocumentationTest {
 
     @Test

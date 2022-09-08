@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-@DisplayName("CommentCreate 인수테스트")
+@DisplayName("문서화 : Comment 생성")
 class CommentCreateDocumentationTest extends InitDocumentationTest {
 
 

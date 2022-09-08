@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.cloud.contract.spec.internal.HttpStatus;
 import org.springframework.http.MediaType;
 
-@DisplayName("StoreCreate 인수 테스트")
+@DisplayName("문서화 : Store 생성 기능")
 class StoreCreateDocumentationTest extends InitDocumentationTest {
 
 	@Test

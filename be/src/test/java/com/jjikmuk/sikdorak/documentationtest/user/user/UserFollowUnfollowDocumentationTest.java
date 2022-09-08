@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-@DisplayName("UserFollowUnfollow 인수 테스트")
+@DisplayName("문서화 : User 팔로우/언팔로우")
 class UserFollowUnfollowDocumentationTest extends InitDocumentationTest {
 
     @Test

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-@DisplayName("유저 검색 문서테스트")
+@DisplayName("문서화 : User 닉네임으로 검색")
 class UserSearchDocumentationTest extends InitDocumentationTest {
 
     @Test

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-@DisplayName("리뷰 좋아요 인수테스트")
+@DisplayName("문서화 : Review 좋아요 기능")
 class ReviewLikeDocumentationTest extends InitDocumentationTest {
 
     @Test
