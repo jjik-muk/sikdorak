@@ -6,11 +6,11 @@ API : `POST /api/reviews/{reviewId}/comments`
 
 ==== `Request`
 
-operation::comment_create_acceptance_test/create_comment_success[snippets='http-request,request-body,path-parameters']
+operation::comment_create_documentation_test/create_comment_success[snippets='http-request,request-body,path-parameters']
 
 ==== `Response`
 
-operation::comment_create_acceptance_test/create_comment_success[snippets='http-response,response-fields']
+operation::comment_create_documentation_test/create_comment_success[snippets='http-response,response-fields']
 
 === 댓글 수정
 
@@ -20,11 +20,11 @@ API : `PUT /api/reviews/{reviewId}/comments/{commentId}`
 
 ==== `Request`
 
-operation::comment_modify_acceptance_test/modify_comment_success[snippets='http-request,request-body,path-parameters']
+operation::comment_modify_documentation_test/modify_comment_success[snippets='http-request,request-body,path-parameters']
 
 ==== `Response`
 
-operation::comment_modify_acceptance_test/modify_comment_success[snippets='http-response,response-fields']
+operation::comment_modify_documentation_test/modify_comment_success[snippets='http-response,response-fields']
 
 === 댓글 삭제
 
@@ -34,11 +34,11 @@ API : `DELETE /api/reviews/{reviewId}/comments/{commentId}`
 
 ==== `Request`
 
-operation::comment_remove_acceptance_test/remove_comment_success[snippets='http-request,path-parameters']
+operation::comment_remove_documentation_test/remove_comment_success[snippets='http-request,path-parameters']
 
 ==== `Response`
 
-operation::comment_remove_acceptance_test/remove_comment_success[snippets='http-response,response-fields']
+operation::comment_remove_documentation_test/remove_comment_success[snippets='http-response,response-fields']
 
 === 댓글 조회
 
@@ -48,8 +48,8 @@ API : `GET /api/reviews/{reviewId}/comments`
 
 ==== `Request`
 
-operation::comment_search_acceptance_test/search_comment_success[snippets='http-request,path-parameters,request-parameters']
+operation::comment_search_documentation_test/search_comment_success[snippets='http-request,path-parameters,request-parameters']
 
 ==== `Response`
 
-operation::comment_search_acceptance_test/search_comment_success[snippets='http-response,response-fields']
+operation::comment_search_documentation_test/search_comment_success[snippets='http-response,response-fields']
