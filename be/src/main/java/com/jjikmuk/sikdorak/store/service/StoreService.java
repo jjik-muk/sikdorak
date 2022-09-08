@@ -78,10 +78,14 @@ public class StoreService {
 
 	@Transactional
 	public Long createStore(StoreCreateRequest createRequest) {
+		Address address = Address.requiredFieldBuilder(
+				createRequest.getAddressName(), createRequest.getRoadAddressName())
+			.build();
+
 		Store store = new Store(
 			createRequest.getStoreName(),
 			createRequest.getContactNumber(),
-			Address.of(createRequest.getAddressName(), createRequest.getRoadAddressName()),
+			address,
 			createRequest.getY(),
 			createRequest.getX()
 		);
@@ -95,10 +99,14 @@ public class StoreService {
 		Store store = storeRepository.findById(storeId)
 			.orElseThrow(NotFoundStoreException::new);
 
+		Address address = Address.requiredFieldBuilder(
+				modifyRequest.getAddressName(), modifyRequest.getRoadAddressName())
+			.build();
+
 		store.editAll(
 			modifyRequest.getStoreName(),
 			modifyRequest.getContactNumber(),
-			Address.of(modifyRequest.getAddressName(), modifyRequest.getRoadAddressName()),
+			address,
 			modifyRequest.getY(),
 			modifyRequest.getX()
 		);
@@ -171,9 +179,9 @@ public class StoreService {
 	}
 
 	private Address getAddress(AddressResponse addressResponse) {
-		return Address.builder()
-			.addressName(addressResponse.addressName())
-			.roadAddressName(addressResponse.roadAddressName())
+		return Address.requiredFieldBuilder(
+				addressResponse.addressName(),
+				addressResponse.roadAddressName())
 			.region1DepthName(addressResponse.region1DepthName())
 			.region2DepthName(addressResponse.region2DepthName())
 			.region3DepthName(addressResponse.region3DepthName())

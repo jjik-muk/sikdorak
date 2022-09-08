@@ -1,16 +1,16 @@
 package com.jjikmuk.sikdorak.store.domain;
 
+import com.jjikmuk.sikdorak.store.exception.InvalidAddressException;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Embeddable
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 public class Address {
@@ -59,10 +59,32 @@ public class Address {
     @Column(length = 5) // 도로명주소.건물부번
     private String subBuildingNo;
 
-    public static Address of(String addressName, String roadAddressName) {
-        return new Address(
-            addressName, roadAddressName,
-            null, null, null, null, null, null, null, null, null
-        );
+    public Address(String addressName, String roadAddressName, String region1DepthName,
+        String region2DepthName, String region3DepthName, String region3DepthHName,
+        String mainAddressNo, String subAddressNo, String roadName, String mainBuildingNo,
+        String subBuildingNo) {
+
+        if (Objects.isNull(addressName) ||
+            Objects.isNull(roadAddressName)) {
+            throw new InvalidAddressException();
+        }
+
+        this.addressName = addressName;
+        this.roadAddressName = roadAddressName;
+        this.region1DepthName = region1DepthName;
+        this.region2DepthName = region2DepthName;
+        this.region3DepthName = region3DepthName;
+        this.region3DepthHName = region3DepthHName;
+        this.mainAddressNo = mainAddressNo;
+        this.subAddressNo = subAddressNo;
+        this.roadName = roadName;
+        this.mainBuildingNo = mainBuildingNo;
+        this.subBuildingNo = subBuildingNo;
+    }
+
+    public static AddressBuilder requiredFieldBuilder(String addressName, String roadAddressName) {
+        return builder()
+            .addressName(addressName)
+            .roadAddressName(roadAddressName);
     }
 }
