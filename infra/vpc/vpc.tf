@@ -22,7 +22,7 @@ resource "aws_subnet" "private_subnet_be" {
   vpc_id     = aws_vpc.vpc_be.id
   cidr_block = "10.0.11.0/24"
 
-  #  availability_zone = "ap-northeast-2b" # 일단 같은 가용영역에 할당
+  availability_zone = "ap-northeast-2a" # 일단 같은 가용영역에 할당
 
   tags = {
     Name = "private-subnet-be"
@@ -52,9 +52,9 @@ resource "aws_route_table" "rt_public_subnet_be" {
 }
 
 resource "aws_route_table_association" "rta_public_subnet_be" {
-    subnet_id = aws_subnet.public_subnet_be.id
-    route_table_id = aws_route_table.rt_public_subnet_be.id
-  
+  subnet_id      = aws_subnet.public_subnet_be.id
+  route_table_id = aws_route_table.rt_public_subnet_be.id
+
 }
 
 # 임시 private 외부 연결
@@ -73,7 +73,7 @@ resource "aws_route_table" "rt_private_subnet_be" {
 }
 
 resource "aws_route_table_association" "rta_private" {
-    subnet_id = aws_subnet.private_subnet_be.id
-    route_table_id = aws_route_table.rt_private_subnet_be.id
-  
+  subnet_id      = aws_subnet.private_subnet_be.id
+  route_table_id = aws_route_table.rt_private_subnet_be.id
+
 }
