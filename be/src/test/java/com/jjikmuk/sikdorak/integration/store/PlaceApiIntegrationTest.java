@@ -46,9 +46,7 @@ public class PlaceApiIntegrationTest extends InitIntegrationTest {
 
 		    // then
 			assertThat(searchResponse.getPlaces()).isNotEmpty()
-				.satisfies(places ->
-					places.forEach(place ->
-						assertThat(place.placeName()).contains(storeName)));
+				.allSatisfy(place -> assertThat(place.placeName()).contains(storeName));
 		}
 
 		@Test
@@ -63,9 +61,7 @@ public class PlaceApiIntegrationTest extends InitIntegrationTest {
 
 			// then
 			assertThat(searchResponse.getPlaces()).isNotEmpty()
-				.satisfies(places ->
-					places.forEach(place ->
-						assertThat(place.placeName()).contains(storeName)));
+				.allSatisfy(place -> assertThat(place.placeName()).contains(storeName));
 		}
 
 		@ParameterizedTest
@@ -105,11 +101,12 @@ public class PlaceApiIntegrationTest extends InitIntegrationTest {
 
 			// then
 			assertThat(responses.getAddressResponses()).isNotEmpty()
-				.satisfies(addressList -> {
-					addressList.forEach(address -> {
-						assertThat(address.addressName()).isEqualTo(query);
-					});
-				});
+				.allSatisfy(address ->
+					assertThat(address).isNotNull().satisfiesAnyOf(
+						addr -> assertThat(addr.addressName()).contains(query),
+						addr -> assertThat(addr.roadAddressName()).contains(query)
+					)
+				);
 		}
 	}
 }

@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.integration.store;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -45,6 +46,23 @@ class StoreVerifyOrSaveIntegrationTest extends InitIntegrationTest {
 			.thenReturn(getPlaceSearchResponse());
 		when(placeApiService.searchAddress(any()))
 			.thenReturn(getAddressSearchResponse());
+	}
+
+	private PlaceSearchResponse getPlaceSearchResponse() {
+
+		return new PlaceSearchResponse(
+			List.of(
+				new PlaceResponse(
+					1455921244L,
+					"한국계",
+					"서울 송파구 잠실동 177-5",
+					"서울 송파구 올림픽로8길 10",
+					"02-424-7077",
+					127.079996336912,
+					37.5107289013413
+				)
+			)
+		);
 	}
 
 	@Nested
@@ -155,13 +173,20 @@ class StoreVerifyOrSaveIntegrationTest extends InitIntegrationTest {
 				assertThat(savedStore.getStoreName()).contains(request.getStoreName());
 
 				Address address = savedStore.getAddress();
-				assertThat(address).isNotNull();
-				assertThat(address.getAddressName()).isEqualTo(expectedAddressName);
-				assertThat(address.getRoadAddressName()).isEqualTo(expectedRoadAddressName);
-				assertThat(address.getRegion1DepthName()).isEqualTo(expectedRegion1DepthName);
-				assertThat(address.getRegion2DepthName()).isEqualTo(expectedRegion2DepthName);
-				assertThat(address.getRegion3DepthName()).isEqualTo(expectedRegion3DepthName);
-				assertThat(address.getRegion3DepthHName()).isEqualTo(expectedRegion3DepthHName);
+				assertAll(
+					() -> assertThat(address).isNotNull(),
+					() -> assertThat(address.getAddressName()).isEqualTo(expectedAddressName),
+					() -> assertThat(address.getRoadAddressName()).isEqualTo(
+						expectedRoadAddressName),
+					() -> assertThat(address.getRegion1DepthName()).isEqualTo(
+						expectedRegion1DepthName),
+					() -> assertThat(address.getRegion2DepthName()).isEqualTo(
+						expectedRegion2DepthName),
+					() -> assertThat(address.getRegion3DepthName()).isEqualTo(
+						expectedRegion3DepthName),
+					() -> assertThat(address.getRegion3DepthHName()).isEqualTo(
+						expectedRegion3DepthHName)
+				);
 			}
 		}
 
@@ -186,9 +211,11 @@ class StoreVerifyOrSaveIntegrationTest extends InitIntegrationTest {
 					request);
 
 				// then
-				assertThat(response).isNotNull();
-				assertThat(response.placeId()).isEqualTo(request.getPlaceId());
-				assertThat(response.storeName()).isEqualTo(request.getStoreName());
+				assertThat(response).isNotNull()
+					.satisfies(res -> {
+						assertThat(res.placeId()).isEqualTo(request.getPlaceId());
+						assertThat(res.storeName()).isEqualTo(request.getStoreName());
+					});
 
 				Store savedStore = storeRepository.findById(response.storeId())
 					.orElseThrow();
@@ -198,31 +225,18 @@ class StoreVerifyOrSaveIntegrationTest extends InitIntegrationTest {
 				assertThat(savedStore.getStoreName()).contains(request.getStoreName());
 
 				Address address = savedStore.getAddress();
-				assertThat(address).isNotNull();
-				assertThat(address.getAddressName()).isEqualTo(expectedAddressName);
-				assertThat(address.getRoadAddressName()).isEqualTo(expectedRoadAddressName);
-				assertThat(address.getRegion1DepthName()).isNull();
-				assertThat(address.getRegion2DepthName()).isNull();
-				assertThat(address.getRegion3DepthName()).isNull();
-				assertThat(address.getRegion3DepthHName()).isNull();
+				assertAll(
+					() -> assertThat(address).isNotNull(),
+					() -> assertThat(address.getAddressName()).isEqualTo(expectedAddressName),
+					() -> assertThat(address.getRoadAddressName()).isEqualTo(
+						expectedRoadAddressName),
+					() -> assertThat(address.getRegion1DepthName()).isNull(),
+					() -> assertThat(address.getRegion2DepthName()).isNull(),
+					() -> assertThat(address.getRegion3DepthName()).isNull(),
+					() -> assertThat(address.getRegion3DepthHName()).isNull()
+				);
 			}
 		}
-	}
-
-	private PlaceSearchResponse getPlaceSearchResponse() {
-		return new PlaceSearchResponse(
-			List.of(
-				new PlaceResponse(
-					1455921244L,
-					"한국계",
-					"서울 송파구 잠실동 177-5",
-					"서울 송파구 올림픽로8길 10",
-					"02-424-7077",
-					127.079996336912,
-					37.5107289013413
-				)
-			)
-		);
 	}
 
 	private AddressSearchResponse getAddressSearchResponse() {
