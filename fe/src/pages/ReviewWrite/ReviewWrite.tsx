@@ -13,7 +13,7 @@ import ReviewWriteProvider from 'context/ReviewWriteProvider';
 import useUploadImage from 'hooks/useUploadImage';
 import { Content, Img, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
 
-function ReviewWrite() {
+function ReviewWrite({ toggleIsReviewWrite }: ReviewWriteProps) {
   const { selectedImg, setSelectedImg } = useUploadImage();
   const [{ nickname, profileImageUrl }] = useMyUserInfo();
 
@@ -42,7 +42,9 @@ function ReviewWrite() {
             <WriteRating />
             <TagContainer />
             <PostScope />
-            <RegistrationBtn selectedImg={selectedImg} />
+            <div onClick={toggleIsReviewWrite}>
+              <RegistrationBtn selectedImg={selectedImg} />
+            </div>
           </InputWrap>
         </Content>
       </Wrap>
@@ -51,3 +53,7 @@ function ReviewWrite() {
 }
 
 export default ReviewWrite;
+
+type ReviewWriteProps = {
+  toggleIsReviewWrite?: () => void;
+};

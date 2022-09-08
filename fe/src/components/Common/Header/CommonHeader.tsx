@@ -53,7 +53,7 @@ function CommonHeader() {
         </ButtonWrap>
         {isReviewWrite && (
           <Portal selector="#portal" ref={reviewWriteModalRef}>
-            <ReviewWrite />
+            <ReviewWrite toggleIsReviewWrite={toggleIsReviewWrite} />
           </Portal>
         )}
       </Header>
