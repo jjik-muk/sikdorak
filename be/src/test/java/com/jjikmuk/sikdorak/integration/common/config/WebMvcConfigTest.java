@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.common.config;
+package com.jjikmuk.sikdorak.integration.common.config;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,10 +28,10 @@ class WebMvcConfigTest {
     private MockMvc mvc;
 
     @MockBean
-    private OAuthUserArgumentResolver oAuthUserArgumentResolver;
+    private OAuthUserArgumentResolver oAuthUserArgumentResolver; // application context 용도로 필요
 
     @MockBean
-    private UserService userService;
+    private UserService userService; // application context 용도로 필요
 
     @ParameterizedTest
     @ValueSource(strings = {"GET", "POST", "PUT", "DELETE", "OPTIONS"})
