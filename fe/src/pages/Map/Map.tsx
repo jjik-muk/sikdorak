@@ -1,10 +1,17 @@
 import CommonHeader from 'components/Common/Header/CommonHeader';
+import MapComponent from 'components/Map/MapComponent';
+import { ContentArea, FeedsArea, MapArea } from './Map.styled';
 
 function Map() {
   return (
     <>
       <CommonHeader />
-      <div>지도 페이지입니다.</div>
+      <ContentArea>
+        <FeedsArea>야호</FeedsArea>
+        <MapArea>
+          <MapComponent />
+        </MapArea>
+      </ContentArea>
     </>
   );
 }
