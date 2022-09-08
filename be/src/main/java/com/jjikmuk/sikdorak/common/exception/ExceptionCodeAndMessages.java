@@ -22,6 +22,7 @@ import com.jjikmuk.sikdorak.store.exception.InvalidStoreNameException;
 import com.jjikmuk.sikdorak.store.exception.InvalidXYException;
 import com.jjikmuk.sikdorak.store.exception.NotFoundApiAddressException;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
+import com.jjikmuk.sikdorak.store.exception.PlaceApiServerException;
 import com.jjikmuk.sikdorak.user.auth.exception.ExpiredTokenException;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
 import com.jjikmuk.sikdorak.user.auth.exception.NeedLoginException;
@@ -60,23 +61,27 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NOT_FOUND_LIKE_USER("F-R011", "존재하지 않는 좋아요 정보입니다.", NotFoundLikeUserException.class),
 
     // Images
-    INVALID_IMAGES_EXTENSION("F-I001", "유효하지 않은 이미지 확장자 입니다.", InvalidImagesExtensionException.class),
+    INVALID_IMAGES_EXTENSION("F-I001", "유효하지 않은 이미지 확장자 입니다.",
+        InvalidImagesExtensionException.class),
 
     // Store
     NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", NotFoundStoreException.class),
-    INVALID_STORE_NAME("F-S002", "유효하지 않은 가게이름 입니다.",InvalidStoreNameException.class),
+    INVALID_STORE_NAME("F-S002", "유효하지 않은 가게이름 입니다.", InvalidStoreNameException.class),
     INVALID_CONTACT_NUMER("F-S003", "유효하지 않은 연락처 입니다.", InvalidContactNumberException.class),
     INVALID_ADDRESS("F-S004", "유효하지 않은 주소 입니다.", InvalidAddressException.class),
-    INVALID_STORE_LOCATION("F-S005", "유효하지 않은 좌표 입니다.",InvalidStoreLocationException .class),
+    INVALID_STORE_LOCATION("F-S005", "유효하지 않은 좌표 입니다.", InvalidStoreLocationException.class),
     NOT_FOUND_API_ADDRESS("F-S006", "API 에서 주소를 불러올 수 없습니다.", NotFoundApiAddressException.class),
+    FAILED_CONNECTION_WITH_PLACE_API_SERVER("F-S007", "장소 API 서버와의 통신이 원할하지 않습니다.",
+        PlaceApiServerException.class),
 
     // Place API
     INVALID_XY_EXCEPTION("F-P001", "x, y 좌표가 유효하지 않습니다.", InvalidXYException.class),
 
     // User
-    DUPLICATE_USER("F-U001", "중복된 유저입니다.",DuplicateUserException.class),
+    DUPLICATE_USER("F-U001", "중복된 유저입니다.", DuplicateUserException.class),
     INVALID_USER_NIKCNAME("F-U002", "유효하지 않은 닉네임 입니다.", InvalidUserNicknameException.class),
-    INVALID_USER_PROFILE_IMAGE("F-U003", "유효하지 않은 프로필 이미지 url의 형식입니다.", InvalidUserProfileImageUrlException.class),
+    INVALID_USER_PROFILE_IMAGE("F-U003", "유효하지 않은 프로필 이미지 url의 형식입니다.",
+        InvalidUserProfileImageUrlException.class),
     INVALID_USER_EMAIL("F-U004", "유효하지 않은 이메일 형식입니다.", InvalidUserEmailException.class),
     INVALID_FOLLOWERS("F-U005", "유효하지 않은 팔로워 목록입니다.", InvalidFollowersException.class),
     INVALID_FOLLOWINGS("F-U06", "유효하지 않은 팔로잉 목록입니다.", InvalidFollowingException.class),
