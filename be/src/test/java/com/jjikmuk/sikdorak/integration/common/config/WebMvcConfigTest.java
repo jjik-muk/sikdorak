@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
 @WebMvcTest(CorsTestController.class)
 @MockBean(JpaMetamodelMappingContext.class)
 @ActiveProfiles("test")
+@DisplayName("통합 : CORS 설정")
 class WebMvcConfigTest {
 
     @Autowired

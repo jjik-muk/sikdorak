@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 @WireMockPlaceApiTest
-@DisplayName("PlaceApi 통합테스트")
+@DisplayName("통합 : PlaceApiService 테스트(카카오)")
 public class PlaceApiIntegrationTest extends InitIntegrationTest {
 
 	@Autowired

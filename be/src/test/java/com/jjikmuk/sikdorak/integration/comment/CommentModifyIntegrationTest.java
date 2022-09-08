@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("CommentModify 통합테스트")
+@DisplayName("통합 : Comment 수정")
 class CommentModifyIntegrationTest extends InitIntegrationTest {
 
 	@Autowired

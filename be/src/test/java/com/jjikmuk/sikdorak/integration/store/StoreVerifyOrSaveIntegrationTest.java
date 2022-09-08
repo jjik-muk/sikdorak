@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@DisplayName("StoreVerifyOrSave 통합테스트")
+@DisplayName("통합 : Store 검증 및 저장 (카카오 API 사용)")
 class StoreVerifyOrSaveIntegrationTest extends InitIntegrationTest {
 
 	@Autowired

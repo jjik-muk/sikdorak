@@ -23,7 +23,7 @@ import org.springframework.test.context.TestPropertySource;
     "oauth.kakao.service.token_url=http://localhost:${wiremock.server.port}",
     "oauth.kakao.service.api_url=http://localhost:${wiremock.server.port}"
 })
-@DisplayName("OAuth 로그인 통합테스트")
+@DisplayName("통합 : OAuth 로그인")
 public class OAuthLoginIntegrationTest extends InitIntegrationTest {
 
     @Autowired

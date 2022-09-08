@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("CommentSearch 통합테스트")
+@DisplayName("통합 : Comment 검색")
 class CommentSearchIntegrationTest extends InitIntegrationTest {
 
 	private static final CursorPageRequest FIRST_PAGE_REQUEST = new CursorPageRequest(0L, 0L, 10,

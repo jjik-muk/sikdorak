@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * - [x] 유저 도메인 객체 생성 후 통합 테스트 추가
  * - [ ] Image 추가 통합 테스트
  */
-@DisplayName("ReviewInsert 통합테스트")
+@DisplayName("통합 : Review 생성")
 public class ReviewInsertIntegrationTest extends InitIntegrationTest {
 
 	@Autowired

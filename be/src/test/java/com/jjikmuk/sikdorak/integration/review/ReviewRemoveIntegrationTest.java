@@ -15,7 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("ReviewRemove 통합 테스트")
+@DisplayName("통합 : Review 삭제")
 class ReviewRemoveIntegrationTest extends InitIntegrationTest {
 
 	@Autowired
