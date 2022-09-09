@@ -63,6 +63,16 @@ public class DataGenerator {
 			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg")));
 	}
 
+	public Store store() {
+		return storeRepository.save(new Store(
+			"가게 이름",
+			"02-000-0000",
+			Address.requiredFieldBuilder("지번", "도로명").build(),
+			123.111,
+			37.111
+		));
+	}
+
 	public LoginUser createLoginUserWithUserId(long userId) {
 		return new LoginUser(userId, Authority.USER);
 	}
