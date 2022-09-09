@@ -214,6 +214,7 @@ public class StoreService {
 			store.getY(),
 			reviewRepository.countByStoreId(storeId),
 			reviewRepository.findReviewScoreAverageByStoreId(storeId)
+				.orElse(0.0)
 		);
 	}
 }
