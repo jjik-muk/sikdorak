@@ -91,8 +91,8 @@ public class StoreService {
 			createRequest.getStoreName(),
 			createRequest.getContactNumber(),
 			address,
-			createRequest.getY(),
-			createRequest.getX()
+			createRequest.getX(),
+			createRequest.getY()
 		);
 
 		return storeRepository.save(store)
