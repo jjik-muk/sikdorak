@@ -23,9 +23,9 @@ permissions:
   contents: read
 
 jobs:
-  sonarcloud:
-    name: SonarCloud
-    runs-on: ubuntu-latest
+  infra-sonarcloud:
+    name: Static analysis
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
         with:
