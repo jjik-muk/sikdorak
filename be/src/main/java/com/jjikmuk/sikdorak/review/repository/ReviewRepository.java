@@ -40,11 +40,11 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
         @Param("targetId") long targetId,
         Pageable pageable);
 
-    Long countReviewByStoreId(@Param("storeId") long storeId);
+    Integer countByStoreId(@Param("storeId") long storeId);
 
     @Query(value = """
         SELECT avg(r.reviewScore.reviewScore) FROM Review r
          WHERE r.storeId = :storeId AND r.deleted = false""")
-    double findReviewScoreAverageByStoreId(@Param("storeId") long storeId);
+    Double findReviewScoreAverageByStoreId(@Param("storeId") long storeId);
 
 }
