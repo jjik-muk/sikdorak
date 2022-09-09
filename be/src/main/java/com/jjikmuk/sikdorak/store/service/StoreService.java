@@ -61,6 +61,7 @@ public class StoreService {
 			.toList();
 	}
 
+	@Transactional(readOnly = true)
 	public List<StoreRadiusSearchResponse> searchStoresByRadius(UserLocationInfo userLocationInfo) {
 
 		List<StoreRadiusSearchResponse> result = new ArrayList<>();
@@ -198,6 +199,7 @@ public class StoreService {
 			.build();
 	}
 
+	@Transactional(readOnly = true)
 	public StoreDetailResponse searchDetail(Long storeId) {
 		Store store = storeRepository.findById(storeId)
 			.orElseThrow(NotFoundStoreException::new);
