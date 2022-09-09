@@ -19,7 +19,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("ReviewModify 통합테스트")
+@DisplayName("통합 : Review 수정")
 class ReviewModifyIntegrationTest extends InitIntegrationTest {
 
 

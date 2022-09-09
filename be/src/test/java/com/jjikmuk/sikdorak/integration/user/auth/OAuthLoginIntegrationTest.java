@@ -3,8 +3,8 @@ package com.jjikmuk.sikdorak.integration.user.auth;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
-import com.jjikmuk.sikdorak.common.mock.OAuthMocks;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
+import com.jjikmuk.sikdorak.tool.mock.OAuthMocks;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.auth.service.OAuthService;
@@ -23,7 +23,7 @@ import org.springframework.test.context.TestPropertySource;
     "oauth.kakao.service.token_url=http://localhost:${wiremock.server.port}",
     "oauth.kakao.service.api_url=http://localhost:${wiremock.server.port}"
 })
-@DisplayName("OAuth 로그인 통합테스트")
+@DisplayName("통합 : OAuth 로그인")
 public class OAuthLoginIntegrationTest extends InitIntegrationTest {
 
     @Autowired

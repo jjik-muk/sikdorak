@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("StoreRemove 통합테스트")
+@DisplayName("통합 : Store 삭제 기능")
 public class StoreRemoveIntegrationTest extends InitIntegrationTest {
 
     @Autowired

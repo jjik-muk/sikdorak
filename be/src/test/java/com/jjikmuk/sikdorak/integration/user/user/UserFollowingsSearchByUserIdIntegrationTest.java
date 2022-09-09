@@ -15,7 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("유저 팔로잉 목록 조회 통합 테스트")
+@DisplayName("통합 : User 팔로잉 목록 조회")
 class UserFollowingsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 
     @Autowired

@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
     [] 댓글 기능이 추가 되면 댓글 삭제 검증 추가
  */
 
-@DisplayName("유저 탈퇴 통합테스트")
+@DisplayName("통합 : User 삭제 기능")
 class UserDeleteIntegrationTest extends InitIntegrationTest {
 
     @Autowired

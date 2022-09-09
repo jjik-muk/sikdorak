@@ -8,12 +8,11 @@ import com.jjikmuk.sikdorak.user.auth.domain.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.auth.exception.ExpiredTokenException;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
 import com.jjikmuk.sikdorak.user.auth.service.OAuthService;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("OAuth 토큰 재발급 통합 테스트")
+@DisplayName("통합 : OAuth 토큰 갱신 기능")
 class OAuthUpdateTokenIntegrationTest extends InitIntegrationTest {
 
     @Autowired

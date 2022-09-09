@@ -15,7 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("리뷰 피드 목록 조회 통합 테스트")
+@DisplayName("통합 :  Review 피드조회(추천) 기능")
 class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
 
     @Autowired

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("유저 검색 통합테스트")
+@DisplayName("통합 : User 닉네임 검색,조회")
 class UserSearchIntegrationTest extends InitIntegrationTest {
 
     @Autowired

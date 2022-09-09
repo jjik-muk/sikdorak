@@ -13,7 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("유저 본인 프로필 조회 통합 테스트")
+@DisplayName("통합 : User 자신의 프로필 조회")
 class UserSearchSelfProfileIntegrationTest extends InitIntegrationTest {
 
     @Autowired

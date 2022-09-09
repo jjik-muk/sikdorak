@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("StoreSearch 통합테스트")
+@DisplayName("통합 : Store 검색 기능")
 public class StoreSearchIntegrationTest extends InitIntegrationTest {
 
 	@Autowired

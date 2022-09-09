@@ -6,11 +6,11 @@ API : `GET /api/stores`
 
 ==== `Request`
 
-operation::store_search_acceptance_test/search_store_by_name_containing_success[snippets='http-request,request-parameters']
+operation::store_search_documentation_test/search_store_by_name_containing_success[snippets='http-request,request-parameters']
 
 ==== `Response`
 
-operation::store_search_acceptance_test/search_store_by_name_containing_success[snippets='http-response,response-fields']
+operation::store_search_documentation_test/search_store_by_name_containing_success[snippets='http-response,response-fields']
 
 === 가게 추가
 
@@ -20,11 +20,11 @@ API : `POST /api/stores`
 
 ==== `Request`
 
-operation::store_create_acceptance_test/create_store_success[snippets='http-request,request-body']
+operation::store_create_documentation_test/create_store_success[snippets='http-request,request-body']
 
 ==== `Response`
 
-operation::store_create_acceptance_test/create_store_success[snippets='http-response,response-fields']
+operation::store_create_documentation_test/create_store_success[snippets='http-response,response-fields']
 
 === 가게 수정
 
@@ -34,11 +34,11 @@ API : `PUT /api/stores`
 
 ==== `Request`
 
-operation::store_modify_acceptance_test/modify_store_success[snippets='http-request,path-parameters,request-body']
+operation::store_modify_documentation_test/modify_store_success[snippets='http-request,path-parameters,request-body']
 
 ==== `Response`
 
-operation::store_modify_acceptance_test/modify_store_success[snippets='http-response,response-fields']
+operation::store_modify_documentation_test/modify_store_success[snippets='http-response,response-fields']
 
 === 가게 삭제
 
@@ -48,11 +48,11 @@ API : `DELETE /api/stores`
 
 ==== `Request`
 
-operation::store_remove_acceptance_test/remove_store_success[snippets='http-request,path-parameters']
+operation::store_remove_documentation_test/remove_store_success[snippets='http-request,path-parameters']
 
 ==== `Response`
 
-operation::store_remove_acceptance_test/remove_store_success[snippets='http-response,response-fields']
+operation::store_remove_documentation_test/remove_store_success[snippets='http-response,response-fields']
 
 === `400 BAD REQUEST`
 
@@ -60,11 +60,11 @@ operation::store_remove_acceptance_test/remove_store_success[snippets='http-resp
 
 ==== `Request`
 
-operation::store_remove_acceptance_test/remove_store_failed[snippets='http-request,path-parameters']
+operation::store_remove_documentation_test/remove_store_failed[snippets='http-request,path-parameters']
 
 ==== `Response`
 
-operation::store_remove_acceptance_test/remove_store_failed[snippets='http-response,response-fields']
+operation::store_remove_documentation_test/remove_store_failed[snippets='http-response,response-fields']
 
 === 가게 목록 위치 기반 조회
 
@@ -74,11 +74,11 @@ API : `GET /api/stores?type=maps&x=127.123&y=36.123&radius=100`
 
 ==== `Request`
 
-operation::store_search_by_radius_acceptance_test/stores_radius_success[snippets='http-request,request-parameters']
+operation::store_search_by_radius_documentation_test/stores_radius_success[snippets='http-request,request-parameters']
 
 ==== `Response`
 
-operation::store_search_by_radius_acceptance_test/stores_radius_success[snippets='http-response,response-fields']
+operation::store_search_by_radius_documentation_test/stores_radius_success[snippets='http-response,response-fields']
 
 === 가게 등록 검증
 
@@ -88,8 +88,8 @@ API : `PUT /api/stores`
 
 ==== `Request`
 
-operation::store_verify_or_save_acceptance_test/search_store_by_name_containing_success[snippets='http-request,request-body']
+operation::store_verify_or_save_documentation_test/search_store_by_name_containing_success[snippets='http-request,request-body']
 
 ==== `Response`
 
-operation::store_verify_or_save_acceptance_test/search_store_by_name_containing_success[snippets='http-response,response-fields']
+operation::store_verify_or_save_documentation_test/search_store_by_name_containing_success[snippets='http-response,response-fields']

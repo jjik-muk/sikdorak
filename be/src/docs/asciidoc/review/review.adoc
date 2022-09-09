@@ -6,11 +6,11 @@ API : `GET /api/review/{reviewId}`
 
 ==== `Request`
 
-operation::review_search_acceptance_test/search_review_detail_success[snippets='http-request,path-parameters']
+operation::review_search_documentation_test/search_review_detail_success[snippets='http-request,path-parameters']
 
 ==== `Response`
 
-operation::review_search_acceptance_test/search_review_detail_success[snippets='http-response,response-fields']
+operation::review_search_documentation_test/search_review_detail_success[snippets='http-response,response-fields']
 
 === `401 Unauthorized`
 
@@ -18,11 +18,11 @@ operation::review_search_acceptance_test/search_review_detail_success[snippets='
 
 ==== `Request`
 
-operation::review_search_acceptance_test/search_review_detail_failed[snippets='http-request,path-parameters']
+operation::review_search_documentation_test/search_review_detail_failed[snippets='http-request,path-parameters']
 
 ==== `Response`
 
-operation::review_search_acceptance_test/search_review_detail_failed[snippets='http-response,response-fields']
+operation::review_search_documentation_test/search_review_detail_failed[snippets='http-response,response-fields']
 
 === 리뷰 생성
 
@@ -33,11 +33,11 @@ API : `POST /api/reviews`
 
 ==== `Request`
 
-operation::review_insert_acceptance_test/create_review_success[snippets='http-request,request-fields']
+operation::review_insert_documentation_test/create_review_success[snippets='http-request,request-fields']
 
 ==== `Response`
 
-operation::review_insert_acceptance_test/create_review_success[snippets='http-response,response-fields']
+operation::review_insert_documentation_test/create_review_success[snippets='http-response,response-fields']
 
 === 리뷰 수정
 
@@ -49,11 +49,11 @@ API : `PUT /api/reviews/{reviewId}`
 
 ==== `Request`
 
-operation::review_modify_acceptance_test/modify_review_success[snippets='http-request,path-parameters,request-fields']
+operation::review_modify_documentation_test/modify_review_success[snippets='http-request,path-parameters,request-fields']
 
 ==== `Response`
 
-operation::review_modify_acceptance_test/modify_review_success[snippets='http-response,response-fields']
+operation::review_modify_documentation_test/modify_review_success[snippets='http-response,response-fields']
 
 === `401 UNATHORIZED`
 
@@ -62,11 +62,11 @@ operation::review_modify_acceptance_test/modify_review_success[snippets='http-re
 
 ==== `Request`
 
-operation::review_modify_acceptance_test/modify_review_failed[snippets='http-request']
+operation::review_modify_documentation_test/modify_review_failed[snippets='http-request']
 
 ==== `Response`
 
-operation::review_modify_acceptance_test/modify_review_failed[snippets='http-response,response-fields']
+operation::review_modify_documentation_test/modify_review_failed[snippets='http-response,response-fields']
 
 === 리뷰 삭제
 
@@ -104,11 +104,11 @@ API : `GET /api/reviews`
 
 ==== `Request`
 
-operation::reviews_recommend_acceptance_test/review_recommend_success[snippets='http-request,request-parameters']
+operation::reviews_recommend_documentation_test/review_recommend_success[snippets='http-request,request-parameters']
 
 ==== `Response`
 
-operation::reviews_recommend_acceptance_test/review_recommend_success[snippets='http-response,response-fields']
+operation::reviews_recommend_documentation_test/review_recommend_success[snippets='http-response,response-fields']
 
 === 리뷰 좋아요
 
@@ -118,11 +118,11 @@ API : `GET /api/reviews/{reviewId}/like`
 
 ==== `Request`
 
-operation::review_like_acceptance_test/review_like_success[snippets='http-request,path-parameters']
+operation::review_like_documentation_test/review_like_success[snippets='http-request,path-parameters']
 
 ==== `Response`
 
-operation::review_like_acceptance_test/review_like_success[snippets='http-response,response-fields']
+operation::review_like_documentation_test/review_like_success[snippets='http-response,response-fields']
 
 === 리뷰 좋아요 취소
 
@@ -132,8 +132,8 @@ API : `GET /api/reviews/{reviewId}/unlike`
 
 ==== `Request`
 
-operation::review_like_acceptance_test/review_unlike_success[snippets='http-request,path-parameters']
+operation::review_like_documentation_test/review_unlike_success[snippets='http-request,path-parameters']
 
 ==== `Response`
 
-operation::review_like_acceptance_test/review_unlike_success[snippets='http-response,response-fields']
+operation::review_like_documentation_test/review_unlike_success[snippets='http-response,response-fields']

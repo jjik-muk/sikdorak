@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.ServletWebRequest;
 
-@DisplayName("OAuth Argument Resolver 통합 테스트")
+@DisplayName("통합 : OAuth Argument Resolver")
 class OAuthArgumentResolverIntegrationTest extends InitIntegrationTest {
 
 	@Autowired

@@ -15,7 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("리뷰 디테일 조회 통합 테스트")
+@DisplayName("통합 : Review 검색,조회")
 class ReviewSearchIntegrationTest extends InitIntegrationTest {
 
 	@Autowired

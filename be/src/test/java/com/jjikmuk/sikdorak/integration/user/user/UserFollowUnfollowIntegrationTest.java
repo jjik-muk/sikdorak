@@ -19,7 +19,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("UserFollowUnfollow 통합 테스트")
+@DisplayName("통합 : User 팔로우/언팔로우 기능")
 class UserFollowUnfollowIntegrationTest extends InitIntegrationTest {
 
     @Autowired
