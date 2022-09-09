@@ -4,6 +4,7 @@ import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_CREATE_S
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_MODIFY_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_REMOVE_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_BY_RADIUS_SUCCESS;
+import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_DETAIL_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_VERIFY_OR_SAVE_RESPONSE;
 
@@ -12,6 +13,7 @@ import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyOrSaveRequest;
 import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfo;
+import com.jjikmuk.sikdorak.store.controller.response.StoreDetailResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyOrSaveResponse;
@@ -82,5 +84,13 @@ public class StoreController {
 			userLocationInfo);
 
 		return new CommonResponseEntity<>(STORE_SEARCH_BY_RADIUS_SUCCESS, stores, HttpStatus.OK);
+	}
+
+	@GetMapping("/{storeId}")
+	public CommonResponseEntity<StoreDetailResponse> searchDetail(
+		@PathVariable("storeId") Long storeId) {
+
+		return new CommonResponseEntity<>(STORE_SEARCH_DETAIL_SUCCESS,
+			storeService.searchDetail(storeId), HttpStatus.OK);
 	}
 }

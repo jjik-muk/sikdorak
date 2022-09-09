@@ -1,9 +1,11 @@
 package com.jjikmuk.sikdorak.store.service;
 
+import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyOrSaveRequest;
 import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfo;
+import com.jjikmuk.sikdorak.store.controller.response.StoreDetailResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyOrSaveResponse;
@@ -34,6 +36,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class StoreService {
 
 	private final StoreRepository storeRepository;
+
+	private final ReviewRepository reviewRepository;
 	private final PlaceApiService kakaoPlaceApiService;
 
 	@Transactional(readOnly = true)
@@ -192,5 +196,22 @@ public class StoreService {
 			.mainBuildingNo(addressResponse.mainBuildingNo())
 			.subBuildingNo(addressResponse.subBuildingNo())
 			.build();
+	}
+
+	public StoreDetailResponse searchDetail(Long storeId) {
+		Store store = storeRepository.findById(storeId)
+			.orElseThrow(NotFoundStoreException::new);
+
+		return new StoreDetailResponse(
+			storeId,
+			store.getStoreName(),
+			store.getAddressName(),
+			store.getRoadAddressName(),
+			store.getContactNumber(),
+			store.getX(),
+			store.getY(),
+			reviewRepository.countByStoreId(storeId),
+			reviewRepository.findReviewScoreAverageByStoreId(storeId)
+		);
 	}
 }

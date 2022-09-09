@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.documentationtest.store;
 
-import static com.jjikmuk.sikdorak.documentationtest.store.StoreSnippet.STORE_SEARCH_REQUEST;
-import static com.jjikmuk.sikdorak.documentationtest.store.StoreSnippet.STORE_SEARCH_RESPONSE;
+import static com.jjikmuk.sikdorak.documentationtest.store.StoreSnippet.STORE_SEARCH_DETAIL_REQUEST_PARAM_SNIPPET;
+import static com.jjikmuk.sikdorak.documentationtest.store.StoreSnippet.STORE_SEARCH_DETAIL_RESPONSE_SNIPPET;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
@@ -23,10 +23,12 @@ public class StoreDetailDocumentationTest extends InitDocumentationTest {
     @DisplayName("가게의 상세를 조회할때, 해당 가게가 존재하면 상세 정보가 반환된다.")
     void search_store_detail_success() {
         Store savedStore = testData.store;
-        CodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.STORE_SEARCH_SUCCESS;
+        CodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.STORE_SEARCH_DETAIL_SUCCESS;
 
         given(this.spec)
-            .filter(document(DEFAULT_RESTDOC_PATH, STORE_SEARCH_REQUEST, STORE_SEARCH_RESPONSE))
+            .filter(document(DEFAULT_RESTDOC_PATH,
+                STORE_SEARCH_DETAIL_REQUEST_PARAM_SNIPPET,
+                STORE_SEARCH_DETAIL_RESPONSE_SNIPPET))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
             .header("Authorization", testData.user1ValidAuthorizationHeader)
@@ -59,7 +61,7 @@ public class StoreDetailDocumentationTest extends InitDocumentationTest {
             .get("/api/stores/{storeId}", notExistStoreId)
 
             .then()
-            .statusCode(HttpStatus.OK.value())
+            .statusCode(HttpStatus.NOT_FOUND.value())
             .body("code", equalTo(expectedCodeAndMessage.getCode()))
             .body("message", equalTo(expectedCodeAndMessage.getMessage()));
     }
