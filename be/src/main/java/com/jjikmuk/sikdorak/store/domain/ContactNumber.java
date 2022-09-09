@@ -25,12 +25,11 @@ public class ContactNumber {
 	private String contactNumber;
 
 	public ContactNumber(String contactNumber) {
-		if (Objects.nonNull(contactNumber)) {
-			if (contactNumber.isBlank()
-				|| contactNumber.length() > LIMIT_LENGTH
-				|| !isPatternMatches(contactNumber, numberPattern)) {
-				throw new InvalidContactNumberException();
-			}
+
+		if (Objects.nonNull(contactNumber) && (contactNumber.isBlank()
+			|| contactNumber.length() > LIMIT_LENGTH
+			|| !isPatternMatches(contactNumber, numberPattern))) {
+			throw new InvalidContactNumberException();
 		}
 
 		this.contactNumber = contactNumber;
