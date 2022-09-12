@@ -1,3 +1,5 @@
+import { REVIEWS } from 'constants/dummyData';
+import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
 import MapComponent from 'components/Map/MapComponent';
 import Stores from 'components/Map/Stores/Stores';
@@ -31,7 +33,7 @@ function Map() {
             유저 리뷰
           </button>
         </Buttons>
-        <FeedsArea>{isActiveStore && <Stores stores={stores} />}</FeedsArea>
+        <FeedsArea>{isActiveStore ? <Stores stores={stores} /> : <Feeds reviews={REVIEWS} isUsedMapPage />}</FeedsArea>
         <MapArea>
           <MapComponent stores={stores} mapPos={mapPos} setMapPos={setMapPos} />
         </MapArea>

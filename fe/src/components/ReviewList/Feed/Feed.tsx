@@ -33,6 +33,7 @@ function Feed({
   reviewScore,
   store,
   user,
+  isUsedMapPage,
 }: FeedProps) {
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
@@ -46,11 +47,12 @@ function Feed({
   const [myUserInfo] = useMyUserInfo();
   const myUserId = myUserInfo.userId;
   const isMyFeed = user?.userId === myUserId;
+  const BTN_WIDTH = isUsedMapPage ? 125 : FEED.BTN.WIDTH_NO_IMG;
 
   return (
     <>
       <Wrap onClick={toggleIsClikedFeed}>
-        <ContentsWrap wrapWidth={DETAIL.WRAP.WIDTH_NO_IMG}>
+        <ContentsWrap wrapWidth={isUsedMapPage ? 500 : DETAIL.WRAP.WIDTH_NO_IMG}>
           <Header>
             <UserProfile nickname={user?.userNickname} />
             <MenuWrap onClick={handleMenu}>
@@ -79,18 +81,18 @@ function Feed({
           </Main>
           <ButtonWrapper>
             <div onClick={handleLike}>
-              <IconWrap width={FEED.BTN.WIDTH_NO_IMG} height={FEED.BTN.HEIGHT}>
+              <IconWrap width={BTN_WIDTH} height={FEED.BTN.HEIGHT}>
                 <Icon icon="Heart" fill={isActiveHeart ? 'red' : '#FFF'} />
                 {likeCnt}
               </IconWrap>
             </div>
             <div>
-              <IconWrap width={FEED.BTN.WIDTH_NO_IMG} height={FEED.BTN.HEIGHT}>
+              <IconWrap width={BTN_WIDTH} height={FEED.BTN.HEIGHT}>
                 <Icon icon="TalkBubble" fill={isActiveHeart ? 'red' : '#FFF'} />
               </IconWrap>
             </div>
             <div onClick={handleCopyURL}>
-              <IconWrap width={FEED.BTN.WIDTH_NO_IMG} height={FEED.BTN.HEIGHT}>
+              <IconWrap width={BTN_WIDTH} height={FEED.BTN.HEIGHT}>
                 <Icon icon="ShareArrow" fill={isActiveHeart ? 'red' : '#FFF'} />
               </IconWrap>
             </div>
@@ -145,4 +147,5 @@ export type FeedProps = {
   reviewScore: number;
   store: { storeId: number; storeName: string; storeAddress: string };
   user: { userId: number; userNickname: string; userProfileImage: string };
+  isUsedMapPage?: boolean;
 };
