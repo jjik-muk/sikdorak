@@ -24,7 +24,7 @@ function App() {
 
     async function setMyInfo() {
       const myInfo = await fetchDataThatNeedToLogin(`api/users/me`);
-      const { id, nickname, profileImage } = myInfo.data;
+      const { id, nickname, profileImage } = myInfo.data || { id: null, nickname: null, profileImage: null };
       const myInfoJson = JSON.stringify({ userId: id, nickname, profileImageUrl: profileImage });
       localStorage.setItem('MY_INFO', myInfoJson);
       dispatchMyUserInfo({ type: 'SET_USER', userId: id, nickname, profileImageUrl: profileImage });
