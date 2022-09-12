@@ -10,7 +10,7 @@ import Logo from '../Logo/Logo';
 import Portal from '../Portal/Portal';
 import { ButtonWrap, IconWrap, Input, SearchFormWrap, Header, Wrap, ProfileImageWrap } from './CommonHeader.styled';
 
-function CommonHeader() {
+function CommonHeader({ dispatchReviews }: any) {
   const [isReviewWrite, toggleIsReviewWrite] = useToggle(false);
   const [, toggleIsUserProfile] = useToggle(false);
   const reviewWriteModalRef = useRef(null);
@@ -53,7 +53,7 @@ function CommonHeader() {
         </ButtonWrap>
         {isReviewWrite && (
           <Portal selector="#portal" ref={reviewWriteModalRef}>
-            <ReviewWrite toggleIsReviewWrite={toggleIsReviewWrite} />
+            <ReviewWrite toggleIsReviewWrite={toggleIsReviewWrite} dispatchReviews={dispatchReviews} />
           </Portal>
         )}
       </Header>

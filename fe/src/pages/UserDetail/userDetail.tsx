@@ -3,7 +3,7 @@ import CommonHeader from 'components/Common/Header/CommonHeader';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import {
@@ -15,8 +15,19 @@ import {
   Wrap,
 } from './UserDetail.styled';
 
+function reviewsReducer(state, action) {
+  switch (action.type) {
+    case 'SET_REVIEWS':
+      return { reviews: action.reviews };
+    case 'ADD_REVIEW':
+      return { reviews: [...state.reviews, action.review] };
+    default:
+      throw new Error('reviewsReducer에 정의된 action type이 아닙니다.');
+  }
+}
+
 function UserDetail() {
-  const [reviews, setReviews] = useState([]);
+  const [{ reviews }, dispatchReviews] = useReducer(reviewsReducer, { reviews: [] });
   const [userProfile, setUserProfile] = useState(null);
   const [myUserInfo] = useMyUserInfo();
   const myUserId = myUserInfo.userId;
@@ -25,19 +36,22 @@ function UserDetail() {
   const isMyUserDetailPage = myUserId === targetId;
 
   useEffect(() => {
-    fetchAndStoreData({ url: `api/users/${targetId}/reviews`, dispatch: setReviews });
-    fetchAndStoreData({ url: `api/users/${targetId}`, dispatch: setUserProfile });
+    fetchReviews();
+    fetchUserInfo();
 
-    async function fetchAndStoreData({ url, dispatch }) {
-      const res = await fetchDataThatNeedToLogin(url);
-      const resData = res.data;
-      dispatch(resData);
+    async function fetchReviews() {
+      const res = await fetchDataThatNeedToLogin(`api/users/${targetId}/reviews`);
+      dispatchReviews({ type: 'SET_REVIEWS', reviews: res.data });
+    }
+    async function fetchUserInfo() {
+      const res = await fetchDataThatNeedToLogin(`api/users/${targetId}`);
+      setUserProfile(res.data);
     }
   }, [targetId]);
 
   return (
     <Wrap>
-      <CommonHeader />
+      <CommonHeader dispatchReviews={dispatchReviews} />
       <UserDetailWrap>
         <UserProfilePhoto src={userProfile?.profileImage} />
         <UserInfoWrap>

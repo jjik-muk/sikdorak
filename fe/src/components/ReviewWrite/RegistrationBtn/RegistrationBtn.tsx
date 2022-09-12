@@ -3,7 +3,7 @@ import useUploadImage from 'hooks/useUploadImage';
 import { fetchData, fetchDataThatNeedToLogin } from 'utils/utils';
 import { Wrap } from './RegistrationBtn.styled';
 
-function RegistrationBtn({ selectedImg }: any) {
+function RegistrationBtn({ selectedImg, dispatchReviews }: any) {
   const [reviewWriteState] = useReviewWrite();
   const { content, year, month, date, rating, scope, tags, images, store, presignedUrl } = reviewWriteState;
   const { placeId, storeName, x, y } = store;
@@ -53,6 +53,15 @@ function RegistrationBtn({ selectedImg }: any) {
       images,
     };
     fetchDataThatNeedToLogin(`api/reviews`, { method: 'POST', bodyData });
+    const newReview = {
+      reviewContent: content,
+      reviewScore: rating,
+      reviewVisibility: scope,
+      tags,
+      images,
+      store,
+    };
+    dispatchReviews({ type: 'ADD_REVIEW', review: newReview });
   }
 }
 
