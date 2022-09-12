@@ -1,13 +1,12 @@
 package com.jjikmuk.sikdorak.store.domain;
 
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreNameException;
+import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import java.util.Objects;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,7 +15,7 @@ public class StoreName {
 
     private static final int LIMIT_LENGTH = 50;
 
-    @Column(length = LIMIT_LENGTH)
+    @Column(length = LIMIT_LENGTH, nullable = false)
     private String storeName;
 
     public StoreName(String storeName) {
