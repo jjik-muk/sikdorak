@@ -77,7 +77,7 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           #task-definition: ${{ steps.task-def.outputs.task-definition }}
-          task-definition: task-definition.json
+          task-definition: ./be/task-definition.json
           service: web-ser2
           cluster: ECS-springboot
           wait-for-service-stability: true
