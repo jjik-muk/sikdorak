@@ -63,9 +63,7 @@
 
 ### Backend
 
-<img width="947" alt="image" src="https://user-images.githubusercontent.com/57086195/189293173-9fe7cad3-5c0d-440f-9dc3-3d84b4278556.png">
-
-
+![image](https://user-images.githubusercontent.com/57086195/189566094-806615a8-4b6d-48d3-b7cb-6363aba1b530.png)
 
 # 프로젝트 기술 스택 🪛
 
