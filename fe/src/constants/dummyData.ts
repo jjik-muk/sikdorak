@@ -24,6 +24,8 @@ export const REVIEWS = [
       storeId: 337,
       storeName: '호이',
       storeAddress: '제주특별자치도 제주시 한경면 저지리 1715-16',
+      x: 127.1231,
+      y: 34.12312,
     },
     like: {
       count: 1,

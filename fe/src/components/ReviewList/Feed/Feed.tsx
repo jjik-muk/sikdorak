@@ -33,6 +33,7 @@ function Feed({
   reviewScore,
   store,
   user,
+  tags,
   isUsedMapPage,
 }: FeedProps) {
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
@@ -112,6 +113,7 @@ function Feed({
             isActiveHeart={isActiveHeart}
             likeCnt={likeCnt}
             postLike={postLike}
+            tags={tags}
           />
         </Portal>
       )}
@@ -147,5 +149,6 @@ export type FeedProps = {
   reviewScore: number;
   store: { storeId: number; storeName: string; storeAddress: string };
   user: { userId: number; userNickname: string; userProfileImage: string };
+  tags: string[];
   isUsedMapPage?: boolean;
 };

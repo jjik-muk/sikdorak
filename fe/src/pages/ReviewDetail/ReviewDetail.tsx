@@ -25,6 +25,7 @@ function ReviewDetail({
   isActiveHeart,
   likeCnt,
   postLike,
+  tags,
 }: ReviewDetailProps) {
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const hasPicture = images.length > 0;
@@ -78,7 +79,7 @@ function ReviewDetail({
             </IconWrap>
           </div>
         </ButtonWrapper>
-        <TagList tags={['#초밥', '#맛집', '#부산']} />
+        <TagList tags={tags} />
         {comments &&
           comments.map(({ author, content, id }) => <Comment key={id} title={author.nickname} content={content} />)}
         {hasNextComments && (

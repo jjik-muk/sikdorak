@@ -13,7 +13,7 @@ function TagList({ imgUrl = DEFAULT_IMG_URL, tags }: { imgUrl?: string; tags: st
       <CommentWrapper>
         <ContentWrapper>
           {tags.map((tag, idx) => (
-            <div key={createKey(id, idx)}>{tag}</div>
+            <div key={createKey(id, idx)}>#{tag}</div>
           ))}
         </ContentWrapper>
       </CommentWrapper>

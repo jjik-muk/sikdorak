@@ -9,7 +9,7 @@ function Feeds({ reviews, isUsedMapPage }: FeedsProps) {
   return (
     <Wrap>
       {hasReviews ? (
-        reviews.map(({ images, like, reviewContent, reviewId, reviewScore, store, user }) => (
+        reviews.map(({ images, like, reviewContent, reviewId, reviewScore, store, user, tags }) => (
           <div key={reviewId}>
             <Feed
               images={images}
@@ -19,6 +19,7 @@ function Feeds({ reviews, isUsedMapPage }: FeedsProps) {
               reviewScore={reviewScore}
               store={store}
               user={user}
+              tags={tags}
               isUsedMapPage={isUsedMapPage}
             />
           </div>
