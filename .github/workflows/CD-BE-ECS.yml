@@ -65,10 +65,8 @@ jobs:
         run: ./gradlew build
 
       - name: Push Spring Boot image into ECR
-        env:
-          AWS_ECR_URL: ${{ secrets.AWS_ECR_URL}}
         run: |
-          ./gradlew jib -Pprod
+          ./gradlew jib -Pprod --stacktrace
 
       - name: Download task definition
         #id: task-def

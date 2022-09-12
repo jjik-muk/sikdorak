@@ -4,7 +4,7 @@ jib {
     }
 
     to {
-        image = "$System.env.AWS_ECR_URL"
+        image = "151211916334.dkr.ecr.ap-northeast-2.amazonaws.com/ecr-springboot"
         tags = ["latest", "${project.name}".toString()]
     }
     container {
