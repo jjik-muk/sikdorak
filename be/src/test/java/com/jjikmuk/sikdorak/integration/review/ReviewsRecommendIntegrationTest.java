@@ -22,11 +22,11 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
     private ReviewService reviewService;
 
     @Test
-    @DisplayName("비회원이 리뷰 피드 목록 조회 요청을 할 경우 공개범위가 public 인 리뷰들을 반환한다.")
+    @DisplayName("비회원이 리뷰 피드 목록 조회 요청을 할 경우 공개범위가 public 인 리뷰들을 좋아요 순서대로 반환한다.")
     void anonymous_user_get_recommended_reviews() {
 
-        long cursorPage = 0;
-        int size = 5;
+        long cursorPage = 15;
+        int size = 9;
 
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
@@ -34,7 +34,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         RecommendedReviewResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
             loginUser, cursorPageRequest);
 
-        assertThat(recommendedReviews.reviews()).hasSize(5);
+        assertThat(recommendedReviews.reviews().get(0).like().count()).isGreaterThan(0L);
         assertThat(recommendedReviews.reviews().stream()
             .anyMatch(r -> r.reviewVisibility().equals(ReviewVisibility.PROTECTED.name()))).isFalse();
     }
@@ -52,7 +52,6 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         RecommendedReviewResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
             loginUser, cursorPageRequest);
 
-        assertThat(recommendedReviews.reviews()).hasSize(5);
         assertThat(recommendedReviews.reviews().stream().anyMatch(
             r -> r.reviewVisibility().equals(ReviewVisibility.PROTECTED.name()))).isTrue();
     }

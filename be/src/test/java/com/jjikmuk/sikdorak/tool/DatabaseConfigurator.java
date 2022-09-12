@@ -215,7 +215,9 @@ public class DatabaseConfigurator implements InitializingBean {
 	}
 
 	private void likeReview() {
+		followAcceptUserPublicReview.like(kukim);
 		followAcceptUserProtectedReview.like(kukim);
+		reviewRepository.save(followAcceptUserPublicReview);
 		reviewRepository.save(followAcceptUserProtectedReview);
 	}
 }

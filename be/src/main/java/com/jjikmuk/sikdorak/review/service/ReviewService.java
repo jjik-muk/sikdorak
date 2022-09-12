@@ -28,12 +28,14 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReviewService {
 
     private static final long FIRST_CURSOR_ID = 0L;
@@ -233,8 +235,15 @@ public class ReviewService {
             return reviewRepository.findPublicRecommendedReviewsInRecentOrder(pagingInfo.cursor(),
                 pagingInfo.pageable());
         }
+
+        if (!userRepository.existsById(loginUser.getId())) {
+            throw new NotFoundUserException();
+        }
+
         return reviewRepository.findPublicAndProtectedRecommendedReviewsInRecentOrder(
-            pagingInfo.cursor(), pagingInfo.pageable());
+            loginUser.getId(),
+            pagingInfo.cursor(),
+            pagingInfo.pageable());
     }
 
     private Map<Long, Store> getReviewStores(List<Long> storeIds) {

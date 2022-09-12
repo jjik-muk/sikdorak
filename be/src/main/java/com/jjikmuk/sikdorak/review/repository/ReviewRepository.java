@@ -19,21 +19,24 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Integer countByUserId(Long userId);
 
-    @Query("""
-        select r from Review r
-        where r.reviewVisibility = 'PUBLIC' and r.id <= :targetId
-        order by r.id desc
-        """)
+    @Query(value = """
+        select * from review as r
+        where r.review_visibility = 'PUBLIC' and r.review_id <= :targetId
+        order by (select count(*) from likes as l where l.review_id = r.review_id) desc, r.review_id desc 
+        """,
+        nativeQuery = true)
     List<Review> findPublicRecommendedReviewsInRecentOrder(
         @Param("targetId") long targetId,
         Pageable pageable);
 
     @Query("""
         	select r from Review r
-        	where r.reviewVisibility = 'PROTECTED' or r.reviewVisibility = 'PUBLIC' and r.id <= :targetId
+        	where r.reviewVisibility = 'PROTECTED' or r.reviewVisibility = 'PUBLIC'
+        	and r.id <= :targetId and r.userId <> :authorId
         	order by r.id desc
         """)
     List<Review> findPublicAndProtectedRecommendedReviewsInRecentOrder(
+        @Param("authorId") long authorId,
         @Param("targetId") long targetId,
         Pageable pageable);
 
