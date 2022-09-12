@@ -27,12 +27,14 @@ export default function RestaurantSearch() {
       },
     );
 
-    const searchResultData = documents.map(({ id, place_name, address_name }) => (
+    const searchResultData = documents.map(({ id, place_name, address_name, x, y }) => (
       <SearchResult
         key={id}
+        data-placeid={id}
         data-storename={place_name}
-        data-id={id}
         data-address={address_name}
+        data-x={x}
+        data-y={y}
         onClick={clickRestaurant}
       >
         {`${place_name} (${address_name})`}
@@ -64,8 +66,9 @@ export default function RestaurantSearch() {
   }
 
   function clickRestaurant({ target }) {
-    const { storename, address, id } = target.dataset;
+    const { storename, address, placeid, x, y } = target.dataset;
+    const store = { storeName: storename, placeId: placeid, address, x, y };
     setIsModalOpen(false);
-    dispatchReviewWriteState({ type: 'SELECT_RESTAURANT', restaurant: storename, address, id });
+    dispatchReviewWriteState({ type: 'SET_STORE', store });
   }
 }

@@ -33,7 +33,7 @@ function UserDetail() {
       const resData = res.data;
       dispatch(resData);
     }
-  }, []);
+  }, [targetId]);
 
   return (
     <Wrap>

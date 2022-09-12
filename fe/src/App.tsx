@@ -29,7 +29,7 @@ function App() {
       localStorage.setItem('MY_INFO', myInfoJson);
       dispatchMyUserInfo({ type: 'SET_USER', userId: id, nickname, profileImageUrl: profileImage });
     }
-  }, [accessToken]);
+  }, [accessToken, dispatchMyUserInfo]);
 
   return (
     <ReviewsProvider>
