@@ -233,8 +233,15 @@ public class ReviewService {
             return reviewRepository.findPublicRecommendedReviewsInRecentOrder(pagingInfo.cursor(),
                 pagingInfo.pageable());
         }
+
+        if (!userRepository.existsById(loginUser.getId())) {
+            throw new NotFoundUserException();
+        }
+
         return reviewRepository.findPublicAndProtectedRecommendedReviewsInRecentOrder(
-            pagingInfo.cursor(), pagingInfo.pageable());
+            loginUser.getId(),
+            pagingInfo.cursor(),
+            pagingInfo.pageable());
     }
 
     private Map<Long, Store> getReviewStores(List<Long> storeIds) {
