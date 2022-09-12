@@ -38,7 +38,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={hasAccessToken() ? <ReviewList /> : <Navigate replace to="/login" />} />
-            <Route path="/map" element={<Map />} />
+            <Route path="/map" element={hasAccessToken() ? <Map /> : <Navigate replace to="/" />} />
             <Route path="/login" element={hasAccessToken() ? <Navigate replace to="/" /> : <Login />} />
             <Route path="/userDetail">
               <Route path=":userId" element={hasAccessToken() ? <UserDetail /> : <Navigate replace to="/" />} />
