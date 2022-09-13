@@ -1,14 +1,16 @@
 package com.jjikmuk.sikdorak.user.user.service;
 
+import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
+import com.jjikmuk.sikdorak.store.domain.Store;
+import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
 import com.jjikmuk.sikdorak.user.user.controller.response.FollowUserProfile;
-import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileRelationStatusResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserDetailProfileResponse;
-import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
+import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileRelationStatusResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserSimpleProfileResponse;
 import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 import com.jjikmuk.sikdorak.user.user.domain.User;
@@ -20,7 +22,10 @@ import com.jjikmuk.sikdorak.user.user.exception.NotFoundFollowException;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,6 +38,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
+    private final StoreRepository storeRepository;
 
     @Transactional(readOnly = true)
     public List<UserSimpleProfileResponse> searchUsersByNickname(String nickname) {
@@ -48,26 +54,15 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<UserReviewResponse> searchUserReviewsByUserIdAndRelationType(Long searchUserId, LoginUser loginUser) {
+    public List<ReviewDetailResponse> searchUserReviewsByUserIdAndRelationType(Long searchUserId, LoginUser loginUser) {
         log.debug("searchByUserReviews: searchUserId={}, loginUser.id={}, loginUser.authority={}", searchUserId, loginUser.getId(), loginUser.getAuthority());
 
         User searchUser = userRepository.findById(searchUserId)
             .orElseThrow(NotFoundUserException::new);
 
-        return switch (searchUser.relationTypeTo(loginUser)) {
-            case SELF -> reviewRepository.findByUserId(searchUserId)
-                .stream()
-                .map(UserReviewResponse::from)
-                .toList();
-            case CONNECTION -> reviewRepository.findByUserIdAndConnection(searchUserId)
-                .stream()
-                .map(UserReviewResponse::from)
-                .toList();
-            case DISCONNECTION -> reviewRepository.findByUserIdAndDisconnection(searchUserId)
-                .stream()
-                .map(UserReviewResponse::from)
-                .toList();
-        };
+        List<Review> userReviews = findUserReviews(loginUser, searchUser);
+
+        return getReviewsResponse(userReviews);
     }
 
     @Transactional(readOnly = true)
@@ -234,5 +229,50 @@ public class UserService {
         if (sendUser.equals(acceptUser)) {
             throw new DuplicateSendAcceptUserException();
         }
+    }
+
+    private List<Review> findUserReviews(LoginUser loginUser, User searchUser) {
+        return switch (searchUser.relationTypeTo(loginUser)) {
+            case SELF -> reviewRepository.findByUserId(searchUser.getId());
+            case CONNECTION -> reviewRepository.findByUserIdAndConnection(searchUser.getId());
+            case DISCONNECTION -> reviewRepository.findByUserIdAndDisconnection(searchUser.getId());
+        };
+    }
+
+    private Map<Long, Store> getReviewStores(List<Long> storeIds) {
+        return storeRepository.findAllById(storeIds).stream()
+            .collect(Collectors.toMap(Store::getId, Function.identity()));
+    }
+
+    private Map<Long, User> getReviewAuthors(List<Long> authorIds) {
+        return userRepository.findAllById(authorIds).stream()
+            .collect(Collectors.toMap(User::getId, Function.identity()));
+    }
+
+    private List<Long> getStoreIds(List<Review> reviews) {
+        return reviews.stream()
+            .map(Review::getStoreId)
+            .toList();
+    }
+
+    private List<Long> getAuthorIds(List<Review> reviews) {
+        return reviews.stream()
+            .map(Review::getUserId)
+            .toList();
+    }
+
+    private List<ReviewDetailResponse> getReviewsResponse(List<Review> reviews) {
+        Map<Long, User> authors = getReviewAuthors(getAuthorIds(reviews));
+        Map<Long, Store> stores = getReviewStores(getStoreIds(reviews));
+
+        if (reviews.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return reviews.stream()
+            .map(review -> ReviewDetailResponse.of(review,
+                stores.get(review.getStoreId()),
+                authors.get(review.getUserId())))
+            .toList();
     }
 }

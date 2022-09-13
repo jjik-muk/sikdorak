@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
+import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.user.auth.controller.Authority;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
 import java.util.List;
@@ -25,7 +25,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	void guest_search_user_reviews_success() {
 		LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
-		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
+		List<ReviewDetailResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
 
 		assertThat(reviews).hasSize(1);
 	}
@@ -35,7 +35,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	void disconnection_user_search_user_reviews_success() {
 		LoginUser loginUser = new LoginUser(testData.jay.getId(), Authority.USER);
 
-		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
+		List<ReviewDetailResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
 
 		assertThat(reviews).hasSize(1);
 	}
@@ -45,7 +45,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	void connection_user_search_user_reviews_success() {
 		LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
 
-		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
+		List<ReviewDetailResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
 
 		assertThat(reviews).hasSize(2);
 	}
@@ -55,7 +55,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	void user_search_user_reviews_success() {
 		LoginUser loginUser = new LoginUser(testData.hoi.getId(), Authority.USER);
 
-		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
+		List<ReviewDetailResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
 
 		assertThat(reviews).hasSize(3);
 	}
@@ -76,7 +76,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	void search_empty_user_reviews_failed() {
 		LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
-		List<UserReviewResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(
+		List<ReviewDetailResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(
 			testData.jay.getId(), loginUser);
 
 		assertThat(reviews).isEmpty();
