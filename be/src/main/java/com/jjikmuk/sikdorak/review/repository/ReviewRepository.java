@@ -73,6 +73,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
         SELECT r FROM Review r
          WHERE r.storeId = :storeId
            AND r.id <= :targetId
+           AND r.reviewVisibility = 'PUBLIC'
          ORDER BY r.id DESC
         """)
     List<Review> findPublicReviewsOfStore(
