@@ -1,21 +1,26 @@
 package com.jjikmuk.sikdorak.documentationtest.user.user;
 
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.createResponseSnippetWithFields;
+import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.requestPagingFieldsOfCommon;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.requestSnippetWithConstraintsAndFields;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.responseFieldsOfCommon;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.responseFieldsOfCommonNonData;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.responseFieldsOfListWithConstraintsAndFields;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.responseFieldsOfObjectWithConstraintsAndFields;
+import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.responsePagingFieldsOfCommon;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
+import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailLikeResponse;
+import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
+import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailStoreResponse;
+import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailUserResponse;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
 import com.jjikmuk.sikdorak.user.user.controller.response.FollowUserProfile;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserDetailProfileResponse;
-import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserSimpleProfileResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
@@ -38,27 +43,45 @@ public interface UserSnippet {
 
     Snippet USER_FOLLOW_RESPONSE_SNIPPET = createResponseSnippetWithFields(responseFieldsOfCommonNonData());
 
-    Snippet USER_SEARCH_REVIEWS_REQUEST_PARAM_SNIPPET = pathParameters(
+    Snippet USER_SEARCH_REVIEWS_REQUEST_PATH_PARAM_SNIPPET = pathParameters(
         parameterWithName("userId").description("리뷰를 조회할 유저 아이디")
     );
+
+    Snippet USER_SEARCH_REVIEWS_REQUEST_QUERY_PARAM_SNIPPET = requestPagingFieldsOfCommon();
 
     Snippet USER_SEARCH_REVIEWS_RESPONSE_SNIPPET = createResponseSnippetWithFields(
         responseFieldsOfCommon(),
 
-        responseFieldsOfListWithConstraintsAndFields(
-            UserReviewResponse.class,
-            fieldWithPath("id").type(JsonFieldType.NUMBER).description("리뷰 아이디"),
-            fieldWithPath("userId").type(JsonFieldType.NUMBER).description("리뷰를 작성한 유저 아이디"),
-            fieldWithPath("storeId").type(JsonFieldType.NUMBER).description("리뷰 작성 대상 가게 아이디"),
-            fieldWithPath("reviewContent").type(JsonFieldType.STRING).description("리뷰 내용"),
-            fieldWithPath("reviewScore").type(JsonFieldType.NUMBER).description("리뷰 평점"),
-            fieldWithPath("reviewVisibility").type(JsonFieldType.STRING).description("리뷰 보기 권한"),
-            fieldWithPath("visitedDate").type(JsonFieldType.STRING).description("가게 방문 날짜"),
-            fieldWithPath("tags").type(JsonFieldType.ARRAY).description("리뷰 태그들"),
-            fieldWithPath("images").type(JsonFieldType.ARRAY).description("리뷰 이미지"),
-            fieldWithPath("createdAt").type(JsonFieldType.STRING).description("리뷰 생성 시간"),
-            fieldWithPath("updatedAt").type(JsonFieldType.STRING).description("리뷰 수정 시간")
-        )
+        responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailUserResponse.class,
+            fieldWithPath("reviews[].user").type(JsonFieldType.OBJECT).description("유저 정보"),
+            fieldWithPath("reviews[].user.userId").type(JsonFieldType.NUMBER).description("유저 아이디"),
+            fieldWithPath("reviews[].user.userNickname").type(JsonFieldType.STRING).description("유저 이름"),
+            fieldWithPath("reviews[].user.userProfileImage").type(JsonFieldType.STRING)
+                .description("유저 프로필 이미지")),
+
+        responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailStoreResponse.class,
+            fieldWithPath("reviews[].store").type(JsonFieldType.OBJECT).description("가게 정보"),
+            fieldWithPath("reviews[].store.storeId").type(JsonFieldType.NUMBER).description("가게 아이디"),
+            fieldWithPath("reviews[].store.storeName").type(JsonFieldType.STRING).description("가게 이름"),
+            fieldWithPath("reviews[].store.addressName").type(JsonFieldType.STRING).description("지번 주소"),
+            fieldWithPath("reviews[].store.roadAddressName").type(JsonFieldType.STRING).description("도로명 주소")),
+
+        responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailLikeResponse.class,
+            fieldWithPath("reviews[].like.count").type(JsonFieldType.NUMBER).description("좋아요 개수"),
+            fieldWithPath("reviews[].like.userLikeStatus").type(JsonFieldType.BOOLEAN).description("유저의 좋아요 여부")),
+
+        responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailResponse.class,
+            fieldWithPath("reviews[].reviewId").type(JsonFieldType.NUMBER).description("리뷰 아이디"),
+            fieldWithPath("reviews[].reviewContent").type(JsonFieldType.STRING).description("리뷰 내용"),
+            fieldWithPath("reviews[].reviewScore").type(JsonFieldType.NUMBER).description("리뷰 점수"),
+            fieldWithPath("reviews[].reviewVisibility").type(JsonFieldType.STRING).description("리뷰 게시물의 공개 범위"),
+            fieldWithPath("reviews[].visitedDate").type(JsonFieldType.STRING).description("가게 방문일"),
+            fieldWithPath("reviews[].tags").type(JsonFieldType.ARRAY).description("리뷰를 표현하는 태그들"),
+            fieldWithPath("reviews[].images").type(JsonFieldType.ARRAY).description("리뷰를 위한 사진 URL"),
+            fieldWithPath("reviews[].createdAt").type(JsonFieldType.STRING).description("리뷰 생성 시간"),
+            fieldWithPath("reviews[].updatedAt").type(JsonFieldType.STRING).description("리뷰 수정 시간")),
+
+        responsePagingFieldsOfCommon()
     );
 
     Snippet USER_SEARCH_PROFILE_REQUEST_SNIPPET = pathParameters(

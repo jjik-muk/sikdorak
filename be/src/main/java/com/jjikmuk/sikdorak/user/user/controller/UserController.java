@@ -2,14 +2,17 @@ package com.jjikmuk.sikdorak.user.user.controller;
 
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.aop.UserOnly;
+import com.jjikmuk.sikdorak.common.controller.CursorPageable;
+import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
+import com.jjikmuk.sikdorak.review.controller.response.ReviewListResponse;
+import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
 import com.jjikmuk.sikdorak.user.user.controller.response.FollowUserProfile;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserDetailProfileResponse;
-import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserSimpleProfileResponse;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
 import java.util.List;
@@ -30,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+    private final ReviewService reviewService;
 
     @GetMapping
     public CommonResponseEntity<List<UserSimpleProfileResponse>> searchUsers(
@@ -45,11 +49,13 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/reviews")
-    public CommonResponseEntity<List<UserReviewResponse>> searchReviewsByUserId(
+    public CommonResponseEntity<ReviewListResponse> searchReviewsByUserId(
         @PathVariable Long userId,
-        @AuthenticatedUser LoginUser loginUser) {
+        @AuthenticatedUser LoginUser loginUser,
+        @CursorPageable CursorPageRequest cursorPageRequest) {
 
-        List<UserReviewResponse> userReviewResponses = userService.searchUserReviewsByUserIdAndRelationType(userId, loginUser);
+        ReviewListResponse userReviewResponses =
+            reviewService.searchUserReviewsByUserIdAndRelationType(userId, loginUser, cursorPageRequest);
 
         return new CommonResponseEntity<>(
             ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS,

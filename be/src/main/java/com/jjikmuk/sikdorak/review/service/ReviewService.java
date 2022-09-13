@@ -5,7 +5,7 @@ import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
 import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
-import com.jjikmuk.sikdorak.review.controller.response.RecommendedReviewResponse;
+import com.jjikmuk.sikdorak.review.controller.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.exception.DuplicateLikeUserException;
@@ -28,12 +28,14 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReviewService {
 
     private static final long FIRST_CURSOR_ID = 0L;
@@ -64,29 +66,49 @@ public class ReviewService {
 
     /*
     TODO - 개선사항
-     [] 비회원인 경우
-        [] public 상태의 리뷰만 제공한다.
-        [] 추천하는 피드들을 우선으로 준다. (좋아요 많은 순 / 평점이 높은 순 / 댓글 많은 순 등등)
+     [x] 비회원인 경우
+        [x] public 상태의 리뷰만 제공한다.
+        [x] 추천하는 피드들을 우선으로 준다. (좋아요 많은 순)
      [] 회원인 경우
-        [] public, protected 상태만 준다.
+        [x] public, protected 상태만 준다.
         [] 친구들의 피드들을 우선으로 준다. (최신순)
-        [] 유저 본인의 private 게시물도 있다면 함께 보여야 한다.
         [] 추천 조건을 변경해서 피드들을 따로 볼 수 있다. (비회원의 추천 피드와 동일하게)
      */
     @Transactional(readOnly = true)
-    public RecommendedReviewResponse getRecentRecommendedReviews(LoginUser loginUser,
+    public ReviewListResponse getRecentRecommendedReviews(LoginUser loginUser,
         CursorPageRequest cursorPageRequest) {
 
         validateCursorPageSize(cursorPageRequest);
-
         PagingInfo pagingInfo = convertToPagingInfo(cursorPageRequest);
         List<Review> reviews = getRecommendedReviews(loginUser, pagingInfo);
 
         List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews);
         CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, cursorPageRequest);
 
-        return RecommendedReviewResponse.of(reviewsResponse, cursorPageResponse);
+        return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
 
+    }
+
+    @Transactional(readOnly = true)
+    public ReviewListResponse searchUserReviewsByUserIdAndRelationType(Long searchUserId, LoginUser loginUser,
+        CursorPageRequest cursorPageRequest) {
+
+        if (log.isDebugEnabled()) {
+            log.debug("searchByUserReviews: searchUserId={}, loginUser.id={}, loginUser.authority={}",
+                searchUserId, loginUser.getId(), loginUser.getAuthority());
+        }
+
+        validateCursorPageSize(cursorPageRequest);
+        PagingInfo pagingInfo = convertToPagingInfo(cursorPageRequest);
+        User searchUser = userRepository.findById(searchUserId)
+            .orElseThrow(NotFoundUserException::new);
+
+        List<Review> userReviews = findUserReviews(loginUser, searchUser, pagingInfo);
+
+        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(userReviews);
+        CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, cursorPageRequest);
+
+        return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
     }
 
     @Transactional
@@ -264,5 +286,16 @@ public class ReviewService {
         return reviews.stream()
             .map(Review::getUserId)
             .toList();
+    }
+
+    private List<Review> findUserReviews(LoginUser loginUser, User searchUser, PagingInfo pagingInfo) {
+        return switch (searchUser.relationTypeTo(loginUser)) {
+            case SELF -> reviewRepository.findByUserIdWithPageable(searchUser.getId(),
+                pagingInfo.cursor(), pagingInfo.pageable());
+            case CONNECTION -> reviewRepository.findByUserIdAndConnection(searchUser.getId(),
+                pagingInfo.cursor(), pagingInfo.pageable());
+            case DISCONNECTION -> reviewRepository.findByUserIdAndDisconnection(searchUser.getId(),
+                pagingInfo.cursor(), pagingInfo.pageable());
+        };
     }
 }

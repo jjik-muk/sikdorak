@@ -6,9 +6,8 @@ import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
 import com.jjikmuk.sikdorak.user.user.controller.response.FollowUserProfile;
-import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileRelationStatusResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserDetailProfileResponse;
-import com.jjikmuk.sikdorak.user.user.controller.response.UserReviewResponse;
+import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileRelationStatusResponse;
 import com.jjikmuk.sikdorak.user.user.controller.response.UserSimpleProfileResponse;
 import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 import com.jjikmuk.sikdorak.user.user.domain.User;
@@ -22,13 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
@@ -47,28 +44,7 @@ public class UserService {
             .toList();
     }
 
-    @Transactional(readOnly = true)
-    public List<UserReviewResponse> searchUserReviewsByUserIdAndRelationType(Long searchUserId, LoginUser loginUser) {
-        log.debug("searchByUserReviews: searchUserId={}, loginUser.id={}, loginUser.authority={}", searchUserId, loginUser.getId(), loginUser.getAuthority());
 
-        User searchUser = userRepository.findById(searchUserId)
-            .orElseThrow(NotFoundUserException::new);
-
-        return switch (searchUser.relationTypeTo(loginUser)) {
-            case SELF -> reviewRepository.findByUserId(searchUserId)
-                .stream()
-                .map(UserReviewResponse::from)
-                .toList();
-            case CONNECTION -> reviewRepository.findByUserIdAndConnection(searchUserId)
-                .stream()
-                .map(UserReviewResponse::from)
-                .toList();
-            case DISCONNECTION -> reviewRepository.findByUserIdAndDisconnection(searchUserId)
-                .stream()
-                .map(UserReviewResponse::from)
-                .toList();
-        };
-    }
 
     @Transactional(readOnly = true)
     public UserSimpleProfileResponse searchSelfProfile(LoginUser loginUser) {
@@ -188,16 +164,6 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User searchById(Long userId) {
-        if (Objects.isNull(userId)) {
-            throw new NotFoundUserException();
-        }
-
-        return userRepository.findById(userId)
-            .orElseThrow(NotFoundUserException::new);
-    }
-
-    @Transactional(readOnly = true)
     public User searchByUniqueId(long uniqueId) {
         return userRepository.findByUniqueId(uniqueId)
             .orElseThrow(NotFoundUserException::new);
@@ -235,4 +201,5 @@ public class UserService {
             throw new DuplicateSendAcceptUserException();
         }
     }
+
 }

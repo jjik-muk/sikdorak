@@ -16,9 +16,8 @@ public record ReviewDetailStoreResponse(
 	@Size(min = 1, max = 500)
 	String storeName,
 
-	@NotNull
-	@Size(min = 1, max = 255)
-	String storeAddress
+	String addressName,
+	String roadAddressName
 
 	// String storeImage
 ) {
@@ -26,7 +25,9 @@ public record ReviewDetailStoreResponse(
 	public ReviewDetailStoreResponse(Store store) {
 		this(store.getId(),
 			store.getStoreName(),
-			store.getAddressName());
+			store.getAddressName(),
+			store.getRoadAddressName()
+		);
 	}
 }
 
