@@ -31,7 +31,7 @@ class StoreReviewsSearchByStoreIdDocumentationTest extends InitDocumentationTest
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
 			.param("after", 0)
-			.param("size", 10)
+			.param("size", 1)
 
 			.when()
 			.get("/api/stores/{storeId}/reviews", testData.store.getId())
