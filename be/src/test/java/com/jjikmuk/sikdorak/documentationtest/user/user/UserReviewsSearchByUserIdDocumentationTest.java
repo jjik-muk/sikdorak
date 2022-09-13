@@ -1,7 +1,8 @@
 package com.jjikmuk.sikdorak.documentationtest.user.user;
 
 
-import static com.jjikmuk.sikdorak.documentationtest.user.user.UserSnippet.USER_SEARCH_REVIEWS_REQUEST_PARAM_SNIPPET;
+import static com.jjikmuk.sikdorak.documentationtest.user.user.UserSnippet.USER_SEARCH_REVIEWS_REQUEST_PATH_PARAM_SNIPPET;
+import static com.jjikmuk.sikdorak.documentationtest.user.user.UserSnippet.USER_SEARCH_REVIEWS_REQUEST_QUERY_PARAM_SNIPPET;
 import static com.jjikmuk.sikdorak.documentationtest.user.user.UserSnippet.USER_SEARCH_REVIEWS_RESPONSE_SNIPPET;
 import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
@@ -29,7 +30,8 @@ class UserReviewsSearchByUserIdDocumentationTest extends InitDocumentationTest {
 		given(this.spec)
 			.filter(
 				document(DEFAULT_RESTDOC_PATH,
-					USER_SEARCH_REVIEWS_REQUEST_PARAM_SNIPPET,
+					USER_SEARCH_REVIEWS_REQUEST_PATH_PARAM_SNIPPET,
+					USER_SEARCH_REVIEWS_REQUEST_QUERY_PARAM_SNIPPET,
 					USER_SEARCH_REVIEWS_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
@@ -74,7 +76,8 @@ class UserReviewsSearchByUserIdDocumentationTest extends InitDocumentationTest {
 		given(this.spec)
 			.filter(
 				document(DEFAULT_RESTDOC_PATH,
-					USER_SEARCH_REVIEWS_REQUEST_PARAM_SNIPPET,
+					USER_SEARCH_REVIEWS_REQUEST_PATH_PARAM_SNIPPET,
+					USER_SEARCH_REVIEWS_REQUEST_QUERY_PARAM_SNIPPET,
 					USER_SEARCH_REVIEWS_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")

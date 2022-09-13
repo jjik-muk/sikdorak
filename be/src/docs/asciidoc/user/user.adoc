@@ -61,7 +61,7 @@ API : `GET /api/users/{userId}/reviews`
 
 ==== `Request`
 
-operation::user_reviews_search_by_user_id_documentation_test/guest_search_user_reviews_success[snippets='http-request']
+operation::user_reviews_search_by_user_id_documentation_test/guest_search_user_reviews_success[snippets='http-request,path-parameters,request-parameters']
 
 ==== `Response`
 

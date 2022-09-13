@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.documentationtest.user.user;
 
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.createResponseSnippetWithFields;
+import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.requestPagingFieldsOfCommon;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.requestSnippetWithConstraintsAndFields;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.responseFieldsOfCommon;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.responseFieldsOfCommonNonData;
@@ -42,9 +43,11 @@ public interface UserSnippet {
 
     Snippet USER_FOLLOW_RESPONSE_SNIPPET = createResponseSnippetWithFields(responseFieldsOfCommonNonData());
 
-    Snippet USER_SEARCH_REVIEWS_REQUEST_PARAM_SNIPPET = pathParameters(
+    Snippet USER_SEARCH_REVIEWS_REQUEST_PATH_PARAM_SNIPPET = pathParameters(
         parameterWithName("userId").description("리뷰를 조회할 유저 아이디")
     );
+
+    Snippet USER_SEARCH_REVIEWS_REQUEST_QUERY_PARAM_SNIPPET = requestPagingFieldsOfCommon();
 
     Snippet USER_SEARCH_REVIEWS_RESPONSE_SNIPPET = createResponseSnippetWithFields(
         responseFieldsOfCommon(),
