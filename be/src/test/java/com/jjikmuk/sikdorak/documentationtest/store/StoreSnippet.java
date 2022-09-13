@@ -1,17 +1,23 @@
 package com.jjikmuk.sikdorak.documentationtest.store;
 
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.createResponseSnippetWithFields;
+import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.requestPagingFieldsOfCommon;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.requestSnippetWithConstraintsAndFields;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.responseFieldsOfCommon;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.responseFieldsOfCommonNonData;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.responseFieldsOfListWithConstraintsAndFields;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.responseFieldsOfObjectWithConstraintsAndFields;
+import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.responsePagingFieldsOfCommon;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
 import com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator;
+import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailLikeResponse;
+import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
+import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailStoreResponse;
+import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailUserResponse;
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyOrSaveRequest;
@@ -189,6 +195,63 @@ public interface StoreSnippet {
 			fieldWithPath("reviewScoreAverage").type(JsonFieldType.NUMBER)
 				.description(Constants.REVIEW_SCORE_AVERAGE)
 		)
+	);
+
+	// 가게 리뷰 조회
+	Snippet STORE_SEARCH_REVIEWS_REQUEST_PARAM_SNIPPET = pathParameters(
+		parameterWithName("storeId").description(Constants.ID_DESCRIPTION)
+	);
+
+	Snippet STORE_SEARCH_REVIEWS_PAGING_REQUEST_PARAM_SNIPPET = requestPagingFieldsOfCommon();
+
+	Snippet STORE_SEARCH_REVIEWS_RESPONSE_SNIPPET = createResponseSnippetWithFields(
+		responseFieldsOfCommon(),
+
+		responseFieldsOfObjectWithConstraintsAndFields(
+			ReviewDetailUserResponse.class,
+			fieldWithPath("reviews[].user").type(JsonFieldType.OBJECT).description("유저 정보"),
+			fieldWithPath("reviews[].user.userId").type(JsonFieldType.NUMBER).description("유저 아이디"),
+			fieldWithPath("reviews[].user.userNickname").type(JsonFieldType.STRING)
+				.description("유저 이름"),
+			fieldWithPath("reviews[].user.userProfileImage").type(JsonFieldType.STRING)
+				.description("유저 프로필 이미지")),
+
+		responseFieldsOfObjectWithConstraintsAndFields(
+			ReviewDetailStoreResponse.class,
+			fieldWithPath("reviews[].store").type(JsonFieldType.OBJECT).description("가게 정보"),
+			fieldWithPath("reviews[].store.storeId").type(JsonFieldType.NUMBER)
+				.description(Constants.ID_DESCRIPTION),
+			fieldWithPath("reviews[].store.storeName").type(JsonFieldType.STRING)
+				.description(Constants.STORE_NAME_DESCRIPTION),
+//			fieldWithPath("reviews[].store.storeName").type(JsonFieldType.STRING).description(Constants.ADDRESS_NAME_DESCRIPTION),
+//			fieldWithPath("reviews[].store.roadStoreName").type(JsonFieldType.STRING).description(Constants.ROAD_ADDRESS_NAME_DESCRIPTION)),
+			fieldWithPath("reviews[].store.storeAddress").type(JsonFieldType.STRING)
+				.description(Constants.STORE_NAME_DESCRIPTION)),
+
+		responseFieldsOfObjectWithConstraintsAndFields(
+			ReviewDetailLikeResponse.class,
+			fieldWithPath("reviews[].like").type(JsonFieldType.OBJECT).description("좋아요 정보"),
+			fieldWithPath("reviews[].like.count").type(JsonFieldType.NUMBER).description("좋아요 개수"),
+			fieldWithPath("reviews[].like.userLikeStatus").type(JsonFieldType.BOOLEAN)
+				.description("유저의 좋아요 여부")),
+
+		responseFieldsOfObjectWithConstraintsAndFields(
+			ReviewDetailResponse.class,
+			fieldWithPath("reviews[].reviewId").type(JsonFieldType.NUMBER).description("리뷰 아이디"),
+			fieldWithPath("reviews[].reviewContent").type(JsonFieldType.STRING)
+				.description("리뷰 내용"),
+			fieldWithPath("reviews[].reviewScore").type(JsonFieldType.NUMBER).description("리뷰 점수"),
+			fieldWithPath("reviews[].reviewVisibility").type(JsonFieldType.STRING)
+				.description("리뷰 게시물의 공개 범위"),
+			fieldWithPath("reviews[].visitedDate").type(JsonFieldType.STRING).description("가게 방문일"),
+			fieldWithPath("reviews[].tags").type(JsonFieldType.ARRAY).description("리뷰를 표현하는 태그들"),
+			fieldWithPath("reviews[].images").type(JsonFieldType.ARRAY)
+				.description("리뷰를 위한 사진 URL"),
+			fieldWithPath("reviews[].createdAt").type(JsonFieldType.STRING).description("리뷰 생성 시간"),
+			fieldWithPath("reviews[].updatedAt").type(JsonFieldType.STRING)
+				.description("리뷰 수정 시간")),
+
+		responsePagingFieldsOfCommon()
 	);
 
 	class Constants {
