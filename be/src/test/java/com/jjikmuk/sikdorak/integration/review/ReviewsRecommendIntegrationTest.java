@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.review.controller.response.RecommendedReviewResponse;
+import com.jjikmuk.sikdorak.review.controller.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.review.domain.ReviewVisibility;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.Authority;
@@ -29,7 +29,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
-        RecommendedReviewResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
+        ReviewListResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
             loginUser, cursorPageRequest);
         long firstReviewLikeCount = recommendedReviews.reviews().get(0).like().count();
         long secondReviewLikeCount = recommendedReviews.reviews().get(1).like().count();
@@ -47,7 +47,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
-        RecommendedReviewResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
+        ReviewListResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
             loginUser, cursorPageRequest);
 
         assertThat(recommendedReviews.reviews().stream().anyMatch(
@@ -62,7 +62,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, invalidPage, size, true);
 
-        RecommendedReviewResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
+        ReviewListResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
             loginUser, cursorPageRequest);
 
         assertThat(recommendedReviews.reviews()).isEmpty();
@@ -76,7 +76,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
-        RecommendedReviewResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
+        ReviewListResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
             loginUser, cursorPageRequest);
 
         assertThat(recommendedReviews.reviews()).hasSize(size);
@@ -90,7 +90,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
-        RecommendedReviewResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
+        ReviewListResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
             loginUser, cursorPageRequest);
 
         assertThat(recommendedReviews.reviews()).hasSize(size);
