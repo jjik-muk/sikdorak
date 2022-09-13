@@ -33,10 +33,10 @@ class StoreReviewsSearchByStoreIdDocumentationTest extends InitDocumentationTest
 			.param("after", 0)
 			.param("size", 1)
 
-			.when()
+		.when()
 			.get("/api/stores/{storeId}/reviews", testData.store.getId())
 
-			.then()
+		.then()
 			.statusCode(HttpStatus.OK.value())
 			.body("code",
 				Matchers.equalTo(ResponseCodeAndMessages.STORE_SEARCH_REVIEW_SUCCESS.getCode()))
