@@ -2,8 +2,10 @@ package com.jjikmuk.sikdorak.user.user.controller;
 
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.aop.UserOnly;
+import com.jjikmuk.sikdorak.common.controller.CursorPageable;
+import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
-import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
+import com.jjikmuk.sikdorak.review.controller.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
@@ -47,11 +49,12 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/reviews")
-    public CommonResponseEntity<List<ReviewDetailResponse>> searchReviewsByUserId(
+    public CommonResponseEntity<ReviewListResponse> searchReviewsByUserId(
         @PathVariable Long userId,
-        @AuthenticatedUser LoginUser loginUser) {
+        @AuthenticatedUser LoginUser loginUser,
+        @CursorPageable CursorPageRequest cursorPageRequest) {
 
-        List<ReviewDetailResponse> userReviewResponses = reviewService.searchUserReviewsByUserIdAndRelationType(userId, loginUser);
+        ReviewListResponse userReviewResponses = reviewService.searchUserReviewsByUserIdAndRelationType(userId, loginUser, cursorPageRequest);
 
         return new CommonResponseEntity<>(
             ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS,

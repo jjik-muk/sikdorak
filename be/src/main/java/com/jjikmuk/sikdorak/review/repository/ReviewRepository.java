@@ -11,11 +11,32 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findByUserId(Long userId);
 
-    @Query("select r from Review as r where r.userId = :userId and not r.reviewVisibility = 'PRIVATE'")
-    List<Review> findByUserIdAndConnection(@Param("userId") Long userId);
+    @Query("""
+        select r from Review as r
+        where r.userId = :userId and r.id <= :targetId
+        order by r.id desc
+        """)
+    List<Review> findByUserIdWithPageable(@Param("userId") long userId,
+        @Param("targetId") long targetId,
+        Pageable pageable);
 
-    @Query("select r from Review as r where r.userId = :userId and r.reviewVisibility = 'PUBLIC'")
-    List<Review> findByUserIdAndDisconnection(@Param("userId") Long userId);
+    @Query("""
+        select r from Review as r
+        where r.userId = :userId and not r.reviewVisibility = 'PRIVATE' and r.id <= :targetId
+        order by r.id desc
+        """)
+    List<Review> findByUserIdAndConnection(@Param("userId") long userId,
+        @Param("targetId") long targetId,
+        Pageable pageable);
+
+    @Query("""
+        select r from Review as r
+        where r.userId = :userId and r.reviewVisibility = 'PUBLIC' and r.id <= :targetId
+        order by r.id desc
+        """)
+    List<Review> findByUserIdAndDisconnection(@Param("userId") Long userId,
+        @Param("targetId") long targetId,
+        Pageable pageable);
 
     Integer countByUserId(Long userId);
 
@@ -31,7 +52,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("""
         	select r from Review r
-        	where r.reviewVisibility = 'PROTECTED' or r.reviewVisibility = 'PUBLIC'
+        	where not r.reviewVisibility = 'PRIVATE'
         	and r.id <= :targetId and r.userId <> :authorId
         	order by r.id desc
         """)

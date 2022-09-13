@@ -5,7 +5,7 @@ import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
 import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
-import com.jjikmuk.sikdorak.review.controller.response.RecommendedReviewResponse;
+import com.jjikmuk.sikdorak.review.controller.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.exception.DuplicateLikeUserException;
@@ -75,31 +75,35 @@ public class ReviewService {
         [] 추천 조건을 변경해서 피드들을 따로 볼 수 있다. (비회원의 추천 피드와 동일하게)
      */
     @Transactional(readOnly = true)
-    public RecommendedReviewResponse getRecentRecommendedReviews(LoginUser loginUser,
+    public ReviewListResponse getRecentRecommendedReviews(LoginUser loginUser,
         CursorPageRequest cursorPageRequest) {
 
         validateCursorPageSize(cursorPageRequest);
-
         PagingInfo pagingInfo = convertToPagingInfo(cursorPageRequest);
         List<Review> reviews = getRecommendedReviews(loginUser, pagingInfo);
 
         List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews);
         CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, cursorPageRequest);
 
-        return RecommendedReviewResponse.of(reviewsResponse, cursorPageResponse);
+        return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
 
     }
 
     @Transactional(readOnly = true)
-    public List<ReviewDetailResponse> searchUserReviewsByUserIdAndRelationType(Long searchUserId, LoginUser loginUser) {
+    public ReviewListResponse searchUserReviewsByUserIdAndRelationType(Long searchUserId, LoginUser loginUser, CursorPageRequest cursorPageRequest) {
         log.debug("searchByUserReviews: searchUserId={}, loginUser.id={}, loginUser.authority={}", searchUserId, loginUser.getId(), loginUser.getAuthority());
 
+        validateCursorPageSize(cursorPageRequest);
+        PagingInfo pagingInfo = convertToPagingInfo(cursorPageRequest);
         User searchUser = userRepository.findById(searchUserId)
             .orElseThrow(NotFoundUserException::new);
 
-        List<Review> userReviews = findUserReviews(loginUser, searchUser);
+        List<Review> userReviews = findUserReviews(loginUser, searchUser, pagingInfo);
 
-        return getReviewsResponse(userReviews);
+        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(userReviews);
+        CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, cursorPageRequest);
+
+        return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
     }
 
     @Transactional
@@ -279,11 +283,14 @@ public class ReviewService {
             .toList();
     }
 
-    private List<Review> findUserReviews(LoginUser loginUser, User searchUser) {
+    private List<Review> findUserReviews(LoginUser loginUser, User searchUser, PagingInfo pagingInfo) {
         return switch (searchUser.relationTypeTo(loginUser)) {
-            case SELF -> reviewRepository.findByUserId(searchUser.getId());
-            case CONNECTION -> reviewRepository.findByUserIdAndConnection(searchUser.getId());
-            case DISCONNECTION -> reviewRepository.findByUserIdAndDisconnection(searchUser.getId());
+            case SELF -> reviewRepository.findByUserIdWithPageable(searchUser.getId(),
+                pagingInfo.cursor(), pagingInfo.pageable());
+            case CONNECTION -> reviewRepository.findByUserIdAndConnection(searchUser.getId(),
+                pagingInfo.cursor(), pagingInfo.pageable());
+            case DISCONNECTION -> reviewRepository.findByUserIdAndDisconnection(searchUser.getId(),
+                pagingInfo.cursor(), pagingInfo.pageable());
         };
     }
 }

@@ -33,15 +33,18 @@ class UserReviewsSearchByUserIdDocumentationTest extends InitDocumentationTest {
 					USER_SEARCH_REVIEWS_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
+			.queryParam("after", 0)
+			.queryParam("size", 1)
 
 		.when()
 			.get("/api/users/{userId}/reviews", testData.hoi.getId())
 
 		.then()
 			.statusCode(HttpStatus.OK.value())
+			.log().all()
 			.body("code", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getCode()))
 			.body("message", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getMessage()))
-			.body("data.size()", Matchers.equalTo(1));
+			.body("data.reviews.size()", Matchers.equalTo(1));
 	}
 
 	@Test
@@ -51,16 +54,18 @@ class UserReviewsSearchByUserIdDocumentationTest extends InitDocumentationTest {
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
 			.header("Authorization", testData.followSendUserValidAuthorizationHeader)
+			.queryParam("after", 0)
+			.queryParam("size", 2)
 
 		.when()
 			.get("/api/users/{userId}/reviews", testData.hoi.getId())
 
 		.then()
 			.statusCode(HttpStatus.OK.value())
+			.log().all()
 			.body("code", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getCode()))
 			.body("message", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getMessage()))
-			.body("data.size()", Matchers.equalTo(2));
-
+			.body("data.reviews.size()", Matchers.equalTo(2));
 	}
 
 	@Test
@@ -74,15 +79,18 @@ class UserReviewsSearchByUserIdDocumentationTest extends InitDocumentationTest {
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
 			.header("Authorization", testData.followAcceptUserValidAuthorizationHeader)
+			.queryParam("after", 0)
+			.queryParam("size", 3)
 
 		.when()
 			.get("/api/users/{userId}/reviews", testData.hoi.getId())
 
 		.then()
+			.log().all()
 			.statusCode(HttpStatus.OK.value())
 			.body("code", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getCode()))
 			.body("message", Matchers.equalTo(ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS.getMessage()))
-			.body("data.size()", Matchers.equalTo(3));
+			.body("data.reviews.size()", Matchers.equalTo(3));
 	}
 
 }
