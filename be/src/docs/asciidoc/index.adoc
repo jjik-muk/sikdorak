@@ -1,7 +1,7 @@
 ifndef::snippets[]
 :snippets: ../../../build/generated-snippets
 endif::[]
-= Getting Started With `Sikdorak` Docs
+= 식도락 백엔드 서버 API 문서
 notification-api-docs
 :doctype: book
 :icons: font
@@ -18,7 +18,7 @@ include::{docdir}/review/review.adoc[]
 
 include::{docdir}/aws/s3.adoc[]
 
-= 댓글 API (/api/comments/*)
+= 댓글 API (/api/reviews/{reviewId}/comments/*)
 
 include::{docdir}/comment/comment.adoc[]
 
@@ -35,7 +35,7 @@ include::{docdir}/user/user.adoc[]
 include::{docdir}/auth/auth.adoc[]
 
 
-= 서버 상태코드 code/message 목록 API
+= 서버 상태코드 목록 조회 API (GET /api/docs/info)
 
 API : `GET /api/docs/info`
 
