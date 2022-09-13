@@ -184,9 +184,10 @@ public interface StoreSnippet {
 				Constants.CONTACT_NUMBER_DESCRIPTION),
 			fieldWithPath("y").type(JsonFieldType.NUMBER).description(Constants.Y_DESCRIPTION),
 			fieldWithPath("x").type(JsonFieldType.NUMBER).description(Constants.X_DESCRIPTION),
-			fieldWithPath("reviewCounts").type(JsonFieldType.NUMBER).description("리뷰 개수 입니다"),
-			fieldWithPath("reviewScoreAverage").type(JsonFieldType.NUMBER).description(
-				Constants.X_DESCRIPTION)
+			fieldWithPath("reviewCounts").type(JsonFieldType.NUMBER)
+				.description(Constants.REVIEW_COUNTS),
+			fieldWithPath("reviewScoreAverage").type(JsonFieldType.NUMBER)
+				.description(Constants.REVIEW_SCORE_AVERAGE)
 		)
 	);
 
@@ -202,5 +203,7 @@ public interface StoreSnippet {
 		private static final String RADIUS_DESCRIPTION = "위치 반경";
 		private static final String KAKAO_PLACE_ID_DESCRIPTION = "API 에서 제공된 장소 ID";
 		private static final String REQUEST_PAGE_TYPE_DESCRIPTION = "요청하는 페이지 타입 - feed | maps 로 나뉩니다.";
+		private static final String REVIEW_SCORE_AVERAGE = "가게의 리뷰 평균 점수 입니다.";
+		private static final String REVIEW_COUNTS = "가게의 리뷰 개수입니다.";
 	}
 }
