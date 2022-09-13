@@ -1,55 +1,25 @@
-=== 유저 프로필 수정 요청
+=== 유저 검색 (GET /api/users?nickname={value})
 
-API : `PUT /api/users`
+API : `GET /api/users?nickname={value}
 
+유저들을 닉네임으로 검색합니다.
 
-=== `200 OK`
+==== `200 OK`
 
-==== `Request`
+===== Request
 
-operation::user_modify_documentation_test/modify_user_profile_success[snippets='http-request']
+operation::user_search_documentation_test/search_user_by_nickname_success[snippets='http-request,request-parameters']
 
-==== `Response`
+===== Response
 
-operation::user_modify_documentation_test/modify_user_profile_success[snippets='http-response']
-
-
-=== 유저 팔로우 요청
-
-API : `PUT /api/users/follow`
+operation::user_search_documentation_test/search_user_by_nickname_success[snippets='http-response,response-fields']
 
 
-=== `200 OK`
+=== 유저가 작성한 리뷰들 조회 (GET /api/users/{userId}/reviews?after={value}&size={value})
 
-==== `Request`
+API : `GET /api/users/{userId}/reviews?after={value}&size={value}`
 
-operation::user_follow_unfollow_documentation_test/user_follow_success[snippets='http-request,request-body']
-
-==== `Response`
-
-operation::user_follow_unfollow_documentation_test/user_follow_success[snippets='http-response']
-
-
-=== 유저 언팔로우 요청
-
-API : `PUT /api/users/unfollow`
-
-
-=== `200 OK`
-
-==== `Request`
-
-operation::user_follow_unfollow_documentation_test/user_unfollow_success[snippets='http-request,request-body']
-
-==== `Response`
-
-operation::user_follow_unfollow_documentation_test/user_unfollow_success[snippets='http-response']
-
-=== 유저 리뷰 조회
-
-API : `GET /api/users/{userId}/reviews`
-
-특정 유저의 모든 리뷰를 조회 기능
+특정 유저의 모든 리뷰를 조회합니다.
 
 게스트이거나 친구가 아닌 경우 : public 게시물 조회
 
@@ -57,107 +27,157 @@ API : `GET /api/users/{userId}/reviews`
 
 본인의 경우 : public | protected | private 전체 게시물 조회
 
-=== `200 OK` : 게스트가 요청한 경우
+==== `200 OK` : 게스트가 요청한 경우
 
-==== `Request`
+===== Request
 
 operation::user_reviews_search_by_user_id_documentation_test/guest_search_user_reviews_success[snippets='http-request,path-parameters,request-parameters']
 
-==== `Response`
+===== Response
 
 operation::user_reviews_search_by_user_id_documentation_test/guest_search_user_reviews_success[snippets='http-response,response-fields']
 
 
-=== `200 OK` : 본인이 요청한 경우
+==== `200 OK` : 본인이 요청한 경우
 
-==== `Request`
+===== Request
 
 operation::user_reviews_search_by_user_id_documentation_test/self_user_search_user_reviews_success[snippets='http-request']
 
-==== `Response`
+===== Response
 
 operation::user_reviews_search_by_user_id_documentation_test/self_user_search_user_reviews_success[snippets='http-response']
 
-=== 유저 프로필 조회
-
-API : `GET /api/users/{userId}`
-
-=== `200 OK`
-
-==== `Request`
-
-operation::user_search_profile_documentation_test/search_user_profile_success[snippets='http-request,path-parameters']
-
-==== `Response`
-
-operation::user_search_profile_documentation_test/search_user_profile_success[snippets='http-response,response-fields']
-
-=== 유저 탈퇴
-
-API : `DELETE /api/users`
-
-=== `200 OK`
-
-==== `Request`
-
-operation::user_delete_documentation_test/delete_user_success[snippets='http-request']
-
-==== `Response`
-
-operation::user_delete_documentation_test/delete_user_success[snippets='http-response']
-
-=== 유저 본인 프로필 조회
+=== 유저 본인 프로필 조회 (GET /api/users/me)
 
 API : `GET /api/users/me`
 
-=== `200 OK`
+유저 본인의 프로필을 조회합니다. (단, 로그인 한 유저만 가능)
 
-==== `Request`
+==== `200 OK`
+
+===== Request
 
 operation::user_search_self_profile_documentation_test/search_self_profile_success[snippets='http-request']
 
-==== `Response`
+===== Response
 
 operation::user_search_self_profile_documentation_test/search_self_profile_success[snippets='http-response,response-fields']
 
-=== 유저 팔로워 목록 조회
+=== 유저 프로필 조회 (GET /api/users/{userId})
+
+API : `GET /api/users/{userId}`
+
+특정 유저의 프로필을 조회합니다.
+
+==== `200 OK`
+
+===== Request
+
+operation::user_search_profile_documentation_test/search_user_profile_success[snippets='http-request,path-parameters']
+
+===== Response
+
+operation::user_search_profile_documentation_test/search_user_profile_success[snippets='http-response,response-fields']
+
+=== 유저 프로필 수정 요청 (PUT /api/users)
+
+API : `PUT /api/users`
+
+유저 프로필을 수정합니다. (단, 로그인 한 유저만 가능)
+
+==== `200 OK`
+
+===== Request
+
+operation::user_modify_documentation_test/modify_user_profile_success[snippets='http-request']
+
+===== Response
+
+operation::user_modify_documentation_test/modify_user_profile_success[snippets='http-response']
+
+=== 유저 탈퇴 (DELETE /api/users)
+
+API : `DELETE /api/users`
+
+유저를 탈퇴합니다. (단, 로그인 한 유저만 가능)
+
+==== `200 OK`
+
+===== Request
+
+operation::user_delete_documentation_test/delete_user_success[snippets='http-request']
+
+===== Response
+
+operation::user_delete_documentation_test/delete_user_success[snippets='http-response']
+
+
+=== 유저 팔로워 목록 조회 (GET /api/users/{userId}/followers)
 
 API : `GET /api/users/{userId}/followers`
 
-=== `200 OK`
+특정 유저의 팔로우 목록을 조회합니다.
 
-==== `Request`
+==== `200 OK`
+
+===== Request
 
 operation::user_followers_search_by_user_id_documentation_test/search_user_followers_success[snippets='http-request,path-parameters']
 
-==== `Response`
+===== Response
 
 operation::user_followers_search_by_user_id_documentation_test/search_user_followers_success[snippets='http-response,response-fields']
 
-=== 유저 팔로잉 목록 조회
+=== 유저 팔로잉 목록 조회 (GET /api/users/{userId}/followings)
 
 API : `GET /api/users/{userId}/followings`
 
-=== `200 OK`
+특정 유저의 팔로잉 목록을 조회합니다.
 
-==== `Request`
+==== `200 OK`
+
+===== Request
 
 operation::user_followings_search_by_user_id_documentation_test/search_user_followings_success[snippets='http-request,path-parameters']
 
-==== `Response`
+===== Response
 
 operation::user_followings_search_by_user_id_documentation_test/search_user_followings_success[snippets='http-response,response-fields']
 
-=== 유저 검색
 
-API : `GET /api/users?nickname=xxx
 
-=== `200 OK`
+=== 유저 팔로우 요청 (PUT /api/users/follow)
 
-==== `Request`
+API : `PUT /api/users/follow`
 
-operation::user_search_documentation_test/search_user_by_nickname_success[snippets='http-request,request-parameters']
+유저를 팔로우 합니다. (단, 로그인 한 유저만 가능)
 
-==== `Response`
+==== `200 OK`
 
-operation::user_search_documentation_test/search_user_by_nickname_success[snippets='http-response,response-fields']
+===== Request
+
+operation::user_follow_unfollow_documentation_test/user_follow_success[snippets='http-request,request-body']
+
+===== Response
+
+operation::user_follow_unfollow_documentation_test/user_follow_success[snippets='http-response']
+
+
+=== 유저 언팔로우 요청 (PUT /api/users/follow)
+
+API : `PUT /api/users/unfollow`
+
+유저를 언팔로우 합니다. (단, 로그인 한 유저만 가능)
+
+==== `200 OK`
+
+===== Request
+
+operation::user_follow_unfollow_documentation_test/user_unfollow_success[snippets='http-request,request-body']
+
+===== Response
+
+operation::user_follow_unfollow_documentation_test/user_unfollow_success[snippets='http-response']
+
+
