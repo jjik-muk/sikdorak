@@ -220,5 +220,5 @@ public interface StoreSnippet {
 		private static final String REVIEW_SCORE_AVERAGE = "가게의 리뷰 평균 점수 입니다.";
 		private static final String REVIEW_COUNTS = "가게의 리뷰 개수입니다.";
 	}
-	
+
 }
