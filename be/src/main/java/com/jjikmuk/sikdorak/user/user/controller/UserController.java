@@ -54,7 +54,8 @@ public class UserController {
         @AuthenticatedUser LoginUser loginUser,
         @CursorPageable CursorPageRequest cursorPageRequest) {
 
-        ReviewListResponse userReviewResponses = reviewService.searchUserReviewsByUserIdAndRelationType(userId, loginUser, cursorPageRequest);
+        ReviewListResponse userReviewResponses =
+            reviewService.searchUserReviewsByUserIdAndRelationType(userId, loginUser, cursorPageRequest);
 
         return new CommonResponseEntity<>(
             ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS,

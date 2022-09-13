@@ -90,8 +90,13 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public ReviewListResponse searchUserReviewsByUserIdAndRelationType(Long searchUserId, LoginUser loginUser, CursorPageRequest cursorPageRequest) {
-        log.debug("searchByUserReviews: searchUserId={}, loginUser.id={}, loginUser.authority={}", searchUserId, loginUser.getId(), loginUser.getAuthority());
+    public ReviewListResponse searchUserReviewsByUserIdAndRelationType(Long searchUserId, LoginUser loginUser,
+        CursorPageRequest cursorPageRequest) {
+
+        if (log.isDebugEnabled()) {
+            log.debug("searchByUserReviews: searchUserId={}, loginUser.id={}, loginUser.authority={}",
+                searchUserId, loginUser.getId(), loginUser.getAuthority());
+        }
 
         validateCursorPageSize(cursorPageRequest);
         PagingInfo pagingInfo = convertToPagingInfo(cursorPageRequest);
