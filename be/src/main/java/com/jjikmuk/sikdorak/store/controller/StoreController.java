@@ -8,7 +8,12 @@ import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_D
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_VERIFY_OR_SAVE_RESPONSE;
 
+import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
+import com.jjikmuk.sikdorak.common.controller.CursorPageable;
+import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
+import com.jjikmuk.sikdorak.review.controller.response.RecommendedReviewResponse;
+import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyOrSaveRequest;
@@ -37,6 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StoreController {
 
 	private final StoreService storeService;
+	private final ReviewService reviewService;
 
 	@GetMapping
 	public CommonResponseEntity<List<StoreSearchResponse>> findStoresByStoreName(
@@ -92,5 +98,16 @@ public class StoreController {
 
 		return new CommonResponseEntity<>(STORE_SEARCH_DETAIL_SUCCESS,
 			storeService.searchDetail(storeId), HttpStatus.OK);
+	}
+
+	@GetMapping("/{storeId}/reviews")
+	public CommonResponseEntity<RecommendedReviewResponse> searchStoreReviews(
+		@PathVariable long storeId,
+		@CursorPageable CursorPageRequest cursorPageRequest
+	) {
+		return new CommonResponseEntity<>(
+			ResponseCodeAndMessages.STORE_SEARCH_REVIEW_SUCCESS,
+			reviewService.searchStoreReviews(storeId, cursorPageRequest),
+			HttpStatus.OK);
 	}
 }
