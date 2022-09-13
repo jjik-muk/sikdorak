@@ -69,4 +69,14 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
          WHERE r.storeId = :storeId AND r.deleted = false""")
     Optional<Double> findReviewScoreAverageByStoreId(@Param("storeId") long storeId);
 
+    @Query("""
+        SELECT r FROM Review r
+         WHERE r.storeId = :storeId
+           AND r.id <= :targetId
+         ORDER BY r.id DESC
+        """)
+    List<Review> findPublicReviewsOfStore(
+        @Param("storeId") long storeId,
+        @Param("targetId") long targetId,
+        Pageable pageable);
 }
