@@ -7,35 +7,35 @@ notification-api-docs
 :icons: font
 :source-highlighter: highlightjs
 :toc: left
-:toclevels: 4
+:toclevels: 2
 :sectlinks:
 
-== API Response code/message 조회
-
-API : `GET /api/docs/info`
-
-
-== 리뷰 API
+= 리뷰 API (/api/review/*)
 
 include::{docdir}/review/review.adoc[]
 
-== 이미지 생성 API
+= 이미지 생성 API (/api/images/*)
 
 include::{docdir}/aws/s3.adoc[]
 
-== 댓글 API
+= 댓글 API (/api/comments/*)
 
 include::{docdir}/comment/comment.adoc[]
 
-== 가게 API
+= 가게 API (/api/stores/*)
 
 include::{docdir}/store/store.adoc[]
 
-== 유저 API
+= 유저 API (/api/users/*)
 
 include::{docdir}/user/user.adoc[]
 
-== 로그인 API
+= 로그인 API (/api/oauth/*)
 
 include::{docdir}/auth/auth.adoc[]
+
+
+= 서버 상태코드 code/message 목록 API
+
+API : `GET /api/docs/info`
 
