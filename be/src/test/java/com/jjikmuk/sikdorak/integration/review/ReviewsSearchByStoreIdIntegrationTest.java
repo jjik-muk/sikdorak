@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.integration.store;
+package com.jjikmuk.sikdorak.integration.review;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.review.controller.response.RecommendedReviewResponse;
+import com.jjikmuk.sikdorak.review.controller.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.store.domain.Store;
@@ -17,8 +17,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("통합 : Store 리뷰 조회 기능")
-class StoreReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
+@DisplayName("통합 : 특정 가게의 Review 조회 기능")
+class ReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     private ReviewService reviewService;
@@ -35,7 +35,7 @@ class StoreReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
             CursorPageRequest pageRequest = new CursorPageRequest(0L, 0L, 10, true);
 
             // when
-            RecommendedReviewResponse reviewResponse = reviewService.searchStoreReviews(
+            ReviewListResponse reviewResponse = reviewService.searchReviewsByStoreId(
                 store.getId(), pageRequest);
 
             // then
@@ -61,7 +61,7 @@ class StoreReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
 
             // then
             assertThatThrownBy(
-                () -> reviewService.searchStoreReviews(notExistingStoreId, pageRequest))
+                () -> reviewService.searchReviewsByStoreId(notExistingStoreId, pageRequest))
                 .isInstanceOf(NotFoundStoreException.class);
         }
     }

@@ -12,7 +12,7 @@ import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.controller.CursorPageable;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
-import com.jjikmuk.sikdorak.review.controller.response.RecommendedReviewResponse;
+import com.jjikmuk.sikdorak.review.controller.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
@@ -101,13 +101,13 @@ public class StoreController {
 	}
 
 	@GetMapping("/{storeId}/reviews")
-	public CommonResponseEntity<RecommendedReviewResponse> searchStoreReviews(
+	public CommonResponseEntity<ReviewListResponse> searchStoreReviews(
 		@PathVariable long storeId,
 		@CursorPageable CursorPageRequest cursorPageRequest
 	) {
 		return new CommonResponseEntity<>(
 			ResponseCodeAndMessages.STORE_SEARCH_REVIEW_SUCCESS,
-			reviewService.searchStoreReviews(storeId, cursorPageRequest),
+			reviewService.searchReviewsByStoreId(storeId, cursorPageRequest),
 			HttpStatus.OK);
 	}
 }

@@ -200,7 +200,7 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public RecommendedReviewResponse searchStoreReviews(long storeId,
+    public ReviewListResponse searchReviewsByStoreId(long storeId,
         CursorPageRequest cursorPageRequest) {
 
         Store store = storeRepository.findById(storeId)
@@ -216,7 +216,7 @@ public class ReviewService {
         CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse,
             cursorPageRequest);
 
-        return RecommendedReviewResponse.of(reviewsResponse, cursorPageResponse);
+        return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
     }
 
     private List<Review> getStoreReviews(long storeId, PagingInfo pagingInfo) {
