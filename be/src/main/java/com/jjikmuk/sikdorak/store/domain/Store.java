@@ -41,7 +41,7 @@ public class Store extends BaseTimeEntity {
     @Embedded
     private Deleted deleted = Deleted.FALSE;
 
-    public Store(String storeName, String contactNumber, Address address, Double y, Double x) {
+    public Store(String storeName, String contactNumber, Address address, Double x, Double y) {
         this.storeName = new StoreName(storeName);
         this.contactNumber = new ContactNumber(contactNumber);
         this.address = address;

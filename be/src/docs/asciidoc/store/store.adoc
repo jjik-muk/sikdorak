@@ -93,3 +93,18 @@ operation::store_verify_or_save_documentation_test/search_store_by_name_containi
 ==== `Response`
 
 operation::store_verify_or_save_documentation_test/search_store_by_name_containing_success[snippets='http-response,response-fields']
+
+=== 가게 상세 조회
+
+API : `GET /api/stores/{storeId}`
+
+=== `200 SUCCESS`
+
+==== `Request`
+
+operation::store_detail_documentation_test/search_store_detail_success[snippets='http-request,path-parameters']
+
+==== `Response`
+
+operation::store_detail_documentation_test/search_store_detail_success[snippets='http-response,response-fields']
+
