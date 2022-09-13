@@ -88,13 +88,13 @@ API : `PUT /api/stores`
 
 ==== `Request`
 
-operation:store_verify_or_save_documentation_test/search_store_by_name_containing_success[snippets='http-request,request-body']
+operation::store_verify_or_save_documentation_test/search_store_by_name_containing_success[snippets='http-request,request-body']
 
 ==== `Response`
 
 operation::store_verify_or_save_documentation_test/search_store_by_name_containing_success[snippets='http-response,response-fields']
 
-=== 가게 상세 조회`
+=== 가게 상세 조회
 
 API : `GET /api/stores/{storeId}`
 
