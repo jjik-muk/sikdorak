@@ -4,6 +4,7 @@ import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.aop.UserOnly;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
+import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
+    private final ReviewService reviewService;
 
     @GetMapping
     public CommonResponseEntity<List<UserSimpleProfileResponse>> searchUsers(
@@ -49,7 +51,7 @@ public class UserController {
         @PathVariable Long userId,
         @AuthenticatedUser LoginUser loginUser) {
 
-        List<ReviewDetailResponse> userReviewResponses = userService.searchUserReviewsByUserIdAndRelationType(userId, loginUser);
+        List<ReviewDetailResponse> userReviewResponses = reviewService.searchUserReviewsByUserIdAndRelationType(userId, loginUser);
 
         return new CommonResponseEntity<>(
             ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS,

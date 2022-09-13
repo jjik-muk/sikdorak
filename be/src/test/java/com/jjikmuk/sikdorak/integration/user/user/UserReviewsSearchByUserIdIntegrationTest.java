@@ -5,10 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
+import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.user.auth.controller.Authority;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
-import com.jjikmuk.sikdorak.user.user.service.UserService;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,14 +18,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 
 	@Autowired
-	private UserService userService;
+	private ReviewService reviewService;
 
 	@Test
 	@DisplayName("게스트가 특정 유저의 리뷰를 조회한다면 public 리뷰들만 반환한다.")
 	void guest_search_user_reviews_success() {
 		LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
-		List<ReviewDetailResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
+		List<ReviewDetailResponse> reviews = reviewService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
 
 		assertThat(reviews).hasSize(1);
 	}
@@ -35,7 +35,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	void disconnection_user_search_user_reviews_success() {
 		LoginUser loginUser = new LoginUser(testData.jay.getId(), Authority.USER);
 
-		List<ReviewDetailResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
+		List<ReviewDetailResponse> reviews = reviewService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
 
 		assertThat(reviews).hasSize(1);
 	}
@@ -45,7 +45,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	void connection_user_search_user_reviews_success() {
 		LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
 
-		List<ReviewDetailResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
+		List<ReviewDetailResponse> reviews = reviewService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
 
 		assertThat(reviews).hasSize(2);
 	}
@@ -55,7 +55,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	void user_search_user_reviews_success() {
 		LoginUser loginUser = new LoginUser(testData.hoi.getId(), Authority.USER);
 
-		List<ReviewDetailResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
+		List<ReviewDetailResponse> reviews = reviewService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser);
 
 		assertThat(reviews).hasSize(3);
 	}
@@ -67,7 +67,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		long invalidUserId = Long.MAX_VALUE;
 
 		assertThatThrownBy(() ->
-			userService.searchUserReviewsByUserIdAndRelationType(invalidUserId, loginUser))
+			reviewService.searchUserReviewsByUserIdAndRelationType(invalidUserId, loginUser))
 			.isInstanceOf(NotFoundUserException.class);
 	}
 
@@ -76,7 +76,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	void search_empty_user_reviews_failed() {
 		LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
-		List<ReviewDetailResponse> reviews = userService.searchUserReviewsByUserIdAndRelationType(
+		List<ReviewDetailResponse> reviews = reviewService.searchUserReviewsByUserIdAndRelationType(
 			testData.jay.getId(), loginUser);
 
 		assertThat(reviews).isEmpty();
