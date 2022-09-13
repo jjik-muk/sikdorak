@@ -51,7 +51,7 @@
 
 ## 프로젝트 아키텍처 🏛
 
-![프로젝트아키텍처](https://user-images.githubusercontent.com/57086195/189524880-6e3bfb26-1cb8-4e74-9461-f97361308095.png)
+![프로젝트아키텍처](https://user-images.githubusercontent.com/57086195/189831558-6f9bc2fa-a02a-44d1-ae8a-0eb9f7da5b0d.png)
 
 
 ## CI/CD 🤖
