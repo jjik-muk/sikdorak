@@ -26,7 +26,7 @@ operation::review_search_documentation_test/search_review_detail_failed[snippets
 
 operation::review_search_documentation_test/search_review_detail_failed[snippets='http-response,response-fields']
 
-=== 리뷰 목록 조회(피드) (GET /api/reviews?after={after}&size={size})
+=== 리뷰 목록 조회(피드) (GET /api/reviews?after={value}&size={value})
 
 API : `GET /api/reviews?after={after}&size={size}`
 
@@ -138,7 +138,7 @@ operation::review_like_documentation_test/review_like_success[snippets='http-req
 
 operation::review_like_documentation_test/review_like_success[snippets='http-response,response-fields']
 
-=== 리뷰 좋아요 취소(PUT /api/reviews/{reviewId}/unlike)
+=== 리뷰 좋아요 취소 (PUT /api/reviews/{reviewId}/unlike)
 
 API : `PUT /api/reviews/{reviewId}/unlike`
 
