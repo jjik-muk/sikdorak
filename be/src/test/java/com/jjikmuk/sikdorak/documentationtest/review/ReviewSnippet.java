@@ -117,8 +117,8 @@ interface ReviewSnippet {
 			fieldWithPath("reviews[].store").type(JsonFieldType.OBJECT).description("가게 정보"),
 			fieldWithPath("reviews[].store.storeId").type(JsonFieldType.NUMBER).description("가게 아이디"),
 			fieldWithPath("reviews[].store.storeName").type(JsonFieldType.STRING).description("가게 이름"),
-			fieldWithPath("reviews[].store.addressName").type(JsonFieldType.STRING).description("가게 주소"),
-			fieldWithPath("reviews[].store.roadAddressName").type(JsonFieldType.STRING).description("가게 주소")),
+			fieldWithPath("reviews[].store.addressName").type(JsonFieldType.STRING).description("지번 주소"),
+			fieldWithPath("reviews[].store.roadAddressName").type(JsonFieldType.STRING).description("도로명 주소")),
 
 		responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailLikeResponse.class,
 			fieldWithPath("reviews[].like.count").type(JsonFieldType.NUMBER).description("좋아요 개수"),
