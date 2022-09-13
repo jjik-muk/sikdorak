@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayName("통합 : Store 상세 검색 기능")
-public class StoreSearchDetailIntegrationTest extends InitIntegrationTest {
+class StoreSearchDetailIntegrationTest extends InitIntegrationTest {
 
 	@Autowired
 	private StoreService storeService;

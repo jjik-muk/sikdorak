@@ -17,7 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @DisplayName("문서화 : 특정 Store 상세 조회")
-public class StoreDetailDocumentationTest extends InitDocumentationTest {
+class StoreDetailDocumentationTest extends InitDocumentationTest {
 
     @Test
     @DisplayName("가게의 상세를 조회할때, 해당 가게가 존재하면 상세 정보가 반환된다.")
