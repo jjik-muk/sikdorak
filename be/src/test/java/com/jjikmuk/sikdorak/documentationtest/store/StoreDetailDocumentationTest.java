@@ -33,10 +33,10 @@ class StoreDetailDocumentationTest extends InitDocumentationTest {
             .header("Content-type", "application/json")
             .header("Authorization", testData.user1ValidAuthorizationHeader)
 
-            .when()
+        .when()
             .get("/api/stores/{storeId}", savedStore.getId())
 
-            .then()
+        .then()
             .statusCode(HttpStatus.OK.value())
             .body("code", equalTo(expectedCodeAndMessage.getCode()))
             .body("message", equalTo(expectedCodeAndMessage.getMessage()))
@@ -57,10 +57,10 @@ class StoreDetailDocumentationTest extends InitDocumentationTest {
             .header("Content-type", "application/json")
             .header("Authorization", testData.user1ValidAuthorizationHeader)
 
-            .when()
+        .when()
             .get("/api/stores/{storeId}", notExistStoreId)
 
-            .then()
+        .then()
             .statusCode(HttpStatus.NOT_FOUND.value())
             .body("code", equalTo(expectedCodeAndMessage.getCode()))
             .body("message", equalTo(expectedCodeAndMessage.getMessage()));
