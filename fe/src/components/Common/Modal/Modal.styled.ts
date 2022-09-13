@@ -1,3 +1,4 @@
+import { STYLE } from 'constants/style';
 import styled from 'styled-components';
 
 type ModalWrapperProps = {
@@ -11,4 +12,5 @@ export const ModalWrapper = styled.div<ModalWrapperProps>`
   ${({ width }) => `width:${width}`};
   ${({ height }) => `height:${height}`};
   overflow: auto;
+  ${STYLE.BOX_CONTAINER}
 `;

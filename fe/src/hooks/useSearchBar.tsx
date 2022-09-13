@@ -11,7 +11,6 @@ function useSearchBar() {
       const options = { headers };
       const searchRes = await fetchData(url, options);
       setSearchResults(searchRes);
-      console.log('searched');
     }, DELAY_MS)();
   }
 

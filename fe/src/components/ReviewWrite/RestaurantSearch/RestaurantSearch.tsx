@@ -1,11 +1,10 @@
 import Modal from 'components/Common/Modal/Modal';
-import { useReviewWrite } from 'context/ReviewWriteProvider';
 import useSearchBar from 'hooks/useSearchBar';
 import { useEffect, useState } from 'react';
-import { RestaurantSearchWrapper, SearchResult, Wrap } from './RestaurantSearch.styled';
+import SearchResult from '../SearchResult/SearchResult';
+import { RestaurantSearchInput, Wrap } from './RestaurantSearch.styled';
 
 export default function RestaurantSearch() {
-  const [, dispatchReviewWriteState] = useReviewWrite();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { inputValue, searchResults, setInputValue, debouncedSearch } = useSearchBar();
   const headers = { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` };
@@ -26,14 +25,23 @@ export default function RestaurantSearch() {
   return (
     <Wrap>
       <div>
-        <RestaurantSearchWrapper
+        <RestaurantSearchInput
           value={inputValue}
           onChange={handleChangeSearchBar}
           onClick={handleClickSearchBar}
           onFocus={openModal}
           onBlur={closeModal}
         />
-        {isModalOpen && <Modal>{createSearchResultComponents(searchResults)}</Modal>}
+        {isModalOpen && (
+          <Modal>
+            <SearchResult
+              searchResults={searchResults}
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+              closeModal={closeModal}
+            />
+          </Modal>
+        )}
       </div>
     </Wrap>
   );
@@ -47,32 +55,9 @@ export default function RestaurantSearch() {
   function handleClickSearchBar() {
     openModal();
   }
-  function createSearchResultComponents(searchRes) {
-    const { documents } = searchRes;
-    return documents?.map(({ id, place_name, address_name, x, y }) => (
-      <SearchResult
-        key={id}
-        data-placeid={id}
-        data-storename={place_name}
-        data-address={address_name}
-        data-x={x}
-        data-y={y}
-        onClick={handleClickRestaurant}
-      >
-        {`${place_name} (${address_name})`}
-      </SearchResult>
-    ));
-  }
   function handleChangeSearchBar({ target }) {
     const { value } = target;
     setInputValue(value);
     openModal();
-  }
-  function handleClickRestaurant({ target }) {
-    const { storename, address, placeid, x, y } = target.dataset;
-    const store = { storeName: storename, placeId: placeid, address, x, y };
-    setInputValue(storename);
-    dispatchReviewWriteState({ type: 'SET_STORE', store });
-    closeModal();
   }
 }
