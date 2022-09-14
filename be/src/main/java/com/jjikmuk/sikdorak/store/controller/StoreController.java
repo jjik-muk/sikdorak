@@ -84,8 +84,11 @@ public class StoreController {
 		return new CommonResponseEntity<>(STORE_MODIFY_SUCCESS, HttpStatus.OK);
 	}
 
+	@AdminOnly
 	@DeleteMapping("/{storeId}")
-	public CommonResponseEntity<Void> removeStore(@PathVariable("storeId") Long storeId) {
+	public CommonResponseEntity<Void> removeStore(
+		@PathVariable("storeId") Long storeId,
+		@AuthenticatedUser LoginUser loginUser) {
 		storeService.removeStore(storeId);
 
 		return new CommonResponseEntity<>(STORE_REMOVE_SUCCESS, HttpStatus.OK);

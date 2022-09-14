@@ -10,7 +10,7 @@
 | <<가게 등록 검증>> | PUT /api/stores
 | <<가게 추가(ADMIN)>> | POST /api/stores
 | <<가게 수정(ADMIN)>> | PUT /api/stores/{storeId}
-| <<가게 삭제>> | DELETE /api/stores/{storeId}
+| <<가게 삭제(ADMIN)>> | DELETE /api/stores/{storeId}
 
 |===
 
@@ -109,6 +109,8 @@ operation::store_create_documentation_test/create_store_success[snippets='http-r
 
 ==== `401 UNAUTHORIZED`
 
+관리자가 아닌 사용자가 요청하는 경우, 실패합니다.
+
 ===== Request
 
 operation::store_create_documentation_test/create_store_failed[snippets='http-request,request-body']
@@ -121,7 +123,7 @@ operation::store_create_documentation_test/create_store_failed[snippets='http-re
 
 API : `PUT /api/stores/{storeId}`
 
-특정 가게를 수정합니다. (단, 어드민만 가능)
+특정 가게를 수정합니다. (단, 관리자로 등록된 사용자만 가능)
 
 ==== `200 SUCCESS`
 
@@ -135,6 +137,8 @@ operation::store_modify_documentation_test/modify_store_success[snippets='http-r
 
 ==== `401 UNAUTHORIZED`
 
+관리자가 아닌 사용자가 요청하는 경우, 실패합니다.
+
 ===== Request
 
 operation::store_modify_documentation_test/modify_store_falied[snippets='http-request,request-body']
@@ -143,11 +147,11 @@ operation::store_modify_documentation_test/modify_store_falied[snippets='http-re
 
 operation::store_modify_documentation_test/modify_store_falied[snippets='http-response,response-fields']
 
-=== 가게 삭제
+=== 가게 삭제(ADMIN)
 
 API : `DELETE /api/stores`
 
-특정 가게를 삭제합니다. (단, 어드민만 가능)
+특정 가게를 삭제합니다. (단, 관리자로 등록된 사용자만 가능)
 
 ==== `200 SUCCESS`
 
@@ -165,9 +169,21 @@ operation::store_remove_documentation_test/remove_store_success[snippets='http-r
 
 ===== Request
 
-operation::store_remove_documentation_test/remove_store_failed[snippets='http-request,path-parameters']
+operation::store_remove_documentation_test/remove_store_not_admin_failed[snippets='http-request,path-parameters']
 
 ===== Response
 
-operation::store_remove_documentation_test/remove_store_failed[snippets='http-response,response-fields']
+operation::store_remove_documentation_test/remove_store_not_admin_failed[snippets='http-response,response-fields']
+
+==== `401 UNAUTHORIZED`
+
+관리자가 아닌 사용자가 요청하는 경우, 실패합니다.
+
+===== Request
+
+operation::store_remove_documentation_test/remove_store_not_admin_failed[snippets='http-request,path-parameters']
+
+===== Response
+
+operation::store_remove_documentation_test/remove_store_not_admin_failed[snippets='http-response,response-fields']
 

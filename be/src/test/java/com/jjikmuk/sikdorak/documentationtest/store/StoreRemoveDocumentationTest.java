@@ -26,12 +26,14 @@ class StoreRemoveDocumentationTest extends InitDocumentationTest {
 
 		ResponseCodeAndMessages expectedCodeAndMessage = ResponseCodeAndMessages.STORE_REMOVE_SUCCESS;
 
+		String adminAuthHeader = testData.generator.validAuthorizationHeader(testData.admin);
+
 		given(this.spec)
 			.filter(document(DEFAULT_RESTDOC_PATH,
 				STORE_REMOVE_REQUEST_PARAM_SNIPPET,
 				STORE_REMOVE_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
-			.header("Authorization", testData.user1ValidAuthorizationHeader)
+			.header("Authorization", adminAuthHeader)
 			.contentType(ContentType.JSON)
 
 		.when()
@@ -45,24 +47,52 @@ class StoreRemoveDocumentationTest extends InitDocumentationTest {
 
 	@Test
 	@DisplayName("가게 삭제 요청 시 존재하지 않는 가게에 대한 요청이라면, 삭제되지 않고 실패 메세지를 전송한다.")
-	void remove_store_failed() {
+	void remove_store_notfound_failed() {
 		Long unsavedStoreId = Long.MIN_VALUE;
 
 		CodeAndMessages expectedCodeAndMessage = ExceptionCodeAndMessages.NOT_FOUND_STORE;
+
+		String adminAuthHeader = testData.generator.validAuthorizationHeader(testData.admin);
 
 		given(this.spec)
 			.filter(document(DEFAULT_RESTDOC_PATH,
 				STORE_REMOVE_REQUEST_PARAM_SNIPPET,
 				STORE_REMOVE_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
-			.header("Authorization", testData.user1ValidAuthorizationHeader)
+			.header("Authorization", adminAuthHeader)
 			.contentType(ContentType.JSON)
 
-			.when()
+		.when()
 			.delete("/api/stores/{storeId}", unsavedStoreId)
 
-			.then()
+		.then()
 			.statusCode(HttpStatus.NOT_FOUND)
+			.body("code", Matchers.equalTo(expectedCodeAndMessage.getCode()))
+			.body("message", Matchers.equalTo(expectedCodeAndMessage.getMessage()));
+	}
+
+	@Test
+	@DisplayName("권한이 없는 사용자가 가게 삭제 요청을 한다면, 예외를 발생시킨다.")
+	void remove_store_not_admin_failed() {
+		Long savedStoreId = testData.store.getId();
+
+		CodeAndMessages expectedCodeAndMessage = ExceptionCodeAndMessages.UNAUTHORIZED_USER;
+
+		String notAdminAuthHeader = testData.generator.validAuthorizationHeader(testData.jay);
+
+		given(this.spec)
+			.filter(document(DEFAULT_RESTDOC_PATH,
+				STORE_REMOVE_REQUEST_PARAM_SNIPPET,
+				STORE_REMOVE_RESPONSE_SNIPPET))
+			.accept(MediaType.APPLICATION_JSON_VALUE)
+			.header("Authorization", notAdminAuthHeader)
+			.contentType(ContentType.JSON)
+
+		.when()
+			.delete("/api/stores/{storeId}", savedStoreId)
+
+		.then()
+			.statusCode(HttpStatus.UNAUTHORIZED)
 			.body("code", Matchers.equalTo(expectedCodeAndMessage.getCode()))
 			.body("message", Matchers.equalTo(expectedCodeAndMessage.getMessage()));
 	}
