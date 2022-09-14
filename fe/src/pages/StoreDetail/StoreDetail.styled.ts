@@ -1,6 +1,5 @@
 import { STYLE } from 'constants/style';
 import styled from 'styled-components';
-import { flexLayoutMixin } from 'utils/utils';
 
 export const Wrap = styled.div`
   width: fit-content;
@@ -46,26 +45,4 @@ export const Row = styled.div`
 export const Title = styled.h2`
   font-size: 20px;
   font-weight: 700;
-`;
-
-export const MoreDim = styled.div`
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  background-color: grey;
-  opacity: 0.5;
-  right: 0;
-  bottom: 0;
-`;
-
-export const DimText = styled.div`
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  ${() => flexLayoutMixin('', 'center', 'center')}
-  color: #fff;
-  font-weight: 500;
-  right: 0;
-  bottom: 0;
-  font-size: 20px;
 `;
