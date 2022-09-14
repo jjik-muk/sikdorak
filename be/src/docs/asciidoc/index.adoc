@@ -10,32 +10,32 @@ notification-api-docs
 :toclevels: 2
 :sectlinks:
 
-= 리뷰 API (/api/review/*)
+= 리뷰 API
 
 include::{docdir}/review/review.adoc[]
 
-= 이미지 생성 API (/api/images/*)
+= 이미지 생성 API
 
 include::{docdir}/aws/s3.adoc[]
 
-= 댓글 API (/api/reviews/{reviewId}/comments/*)
+= 댓글 API
 
 include::{docdir}/comment/comment.adoc[]
 
-= 가게 API (/api/stores/*)
+= 가게 API
 
 include::{docdir}/store/store.adoc[]
 
-= 유저 API (/api/users/*)
+= 유저 API
 
 include::{docdir}/user/user.adoc[]
 
-= 로그인 API (/api/oauth/*)
+= 로그인 API
 
 include::{docdir}/auth/auth.adoc[]
 
 
-= 서버 상태코드 목록 조회 API (GET /api/docs/info)
+= 서버 상태코드 목록 조회 API
 
 API : `GET /api/docs/info`
 

@@ -1,4 +1,17 @@
-=== 댓글 조회 (GET /api/reviews/{reviewId}/comments)
+=== 전체 목록 (/api/reviews/{reviewId}/comments/*)
+[cols=2*]
+|===
+| 기능 | API
+
+| 댓글 조회 | GET /api/reviews/{reviewId}/comments
+| 댓글 생성 | POST /api/reviews/{reviedId}/comments
+| 댓글 수정 | PUT /api/reviews/{reviewId}/comments/{commentId}
+| 댓글 삭제 | DELETE /api/reviews/{reviewId}/comments/{commentId}
+
+|===
+
+
+=== 댓글 조회
 
 API : `GET /api/reviews/{reviewId}/comments`
 
@@ -14,7 +27,7 @@ operation::comment_search_documentation_test/search_comment_success[snippets='ht
 
 operation::comment_search_documentation_test/search_comment_success[snippets='http-response,response-fields']
 
-=== 댓글 생성 (POST /api/reviews/{reviedId}/comments)
+=== 댓글 생성
 
 API : `POST /api/reviews/{reviewId}/comments`
 
@@ -30,7 +43,7 @@ operation::comment_create_documentation_test/create_comment_success[snippets='ht
 
 operation::comment_create_documentation_test/create_comment_success[snippets='http-response,response-fields']
 
-=== 댓글 수정 (PUT /api/reviews/{reviewId}/comments/{commentId})
+=== 댓글 수정
 
 API : `PUT /api/reviews/{reviewId}/comments/{commentId}`
 
@@ -47,7 +60,7 @@ operation::comment_modify_documentation_test/modify_comment_success[snippets='ht
 
 operation::comment_modify_documentation_test/modify_comment_success[snippets='http-response,response-fields']
 
-=== 댓글 삭제 (DELETE /api/reviews/{reviewId}/comments/{commentId})
+=== 댓글 삭제
 
 API : `DELETE /api/reviews/{reviewId}/comments/{commentId}`
 

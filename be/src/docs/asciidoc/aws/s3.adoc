@@ -1,4 +1,13 @@
-=== S3 Presigned URL 생성 (PUT /api/images/url)
+=== 전체 목록 (/api/images/*)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<S3 Presigned URL 생성>> | PUT /api/images/url
+
+|===
+
+=== S3 Presigned URL 생성
 
 API : `PUT /api/images/url`
 

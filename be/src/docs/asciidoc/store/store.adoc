@@ -1,4 +1,20 @@
-=== 가게 조회 (GET /api/stores?storeName={value})
+=== 전체 목록 (/api/stores/*)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<가게 조회>> | GET /api/stores?storeName={value}
+| <<가게 상세 조회>> | GET /api/stores/{storeId}
+| <<가게 목록 위치 기반 조회>> | GET /api/stores?latitude={value}&longitude={value}
+| <<가게 리뷰 조회>> | GET /api/stores/\{storeId}/reviews?after=\{after}&size=\{size}
+| <<가게 등록 검증>> | PUT /api/stores
+| <<가게 추가>> | POST /api/stores
+| <<가게 수정>> | PUT /api/stores/{storeId}
+| <<가게 삭제>> | DELETE /api/stores/{storeId}
+
+|===
+
+=== 가게 조회
 
 API : `GET /api/stores`
 
@@ -14,7 +30,68 @@ operation::store_search_documentation_test/search_store_by_name_containing_succe
 
 operation::store_search_documentation_test/search_store_by_name_containing_success[snippets='http-response,response-fields']
 
-=== 가게 추가 (POST /api/stores)
+=== 가게 상세 조회
+
+API : `GET /api/stores/{storeId}`
+
+특정 가게의 상세 정보를 조회합니다. (단, 가게 리뷰는 가게 리뷰 조회 API를 사용해야 합니다.)
+
+==== `200 SUCCESS`
+
+===== Request
+
+operation::store_detail_documentation_test/search_store_detail_success[snippets='http-request,path-parameters']
+
+===== Response
+
+operation::store_detail_documentation_test/search_store_detail_success[snippets='http-response,response-fields']
+
+=== 가게 목록 위치 기반 조회
+
+API : `GET /api/stores?type=maps&x=127.123&y=36.123&radius=100`
+
+가게 목록을 위치 기반으로 조회합니다.
+
+==== `200 SUCCESS`
+
+===== Request
+
+operation::store_search_by_radius_documentation_test/stores_radius_success[snippets='http-request,request-parameters']
+
+===== Response
+
+operation::store_search_by_radius_documentation_test/stores_radius_success[snippets='http-response,response-fields']
+
+=== 가게 리뷰 조회
+
+==== `Request`
+
+operation::store_reviews_search_by_store_id_documentation_test/search_store_public_reviews_success[snippets='http-request,path-parameters,request-parameters']
+
+==== `Response`
+
+operation::store_reviews_search_by_store_id_documentation_test/search_store_public_reviews_success[snippets='http-response,response-fields']
+
+
+=== 가게 등록 검증
+
+API : `PUT /api/stores`
+
+카카오 상점 정보를 가지고 가게 등록/검증을 합니다. (단, 어드민만 가능)
+
+==== `200 SUCCESS`
+
+===== Request
+
+operation::store_verify_or_save_documentation_test/search_store_by_name_containing_success[snippets='http-request,request-body']
+
+===== Response
+
+operation::store_verify_or_save_documentation_test/search_store_by_name_containing_success[snippets='http-response,response-fields']
+
+
+
+=== 가게 추가
 
 API : `POST /api/stores`
 
@@ -30,7 +107,7 @@ operation::store_create_documentation_test/create_store_success[snippets='http-r
 
 operation::store_create_documentation_test/create_store_success[snippets='http-response,response-fields']
 
-=== 가게 수정 (PUT /api/stores/{storeId})
+=== 가게 수정
 
 API : `PUT /api/stores/{storeId}`
 
@@ -46,7 +123,7 @@ operation::store_modify_documentation_test/modify_store_success[snippets='http-r
 
 operation::store_modify_documentation_test/modify_store_success[snippets='http-response,response-fields']
 
-=== 가게 삭제 (DELETE /api/stores/{storeId})
+=== 가게 삭제
 
 API : `DELETE /api/stores`
 
@@ -74,60 +151,3 @@ operation::store_remove_documentation_test/remove_store_failed[snippets='http-re
 
 operation::store_remove_documentation_test/remove_store_failed[snippets='http-response,response-fields']
 
-=== 가게 목록 위치 기반 조회 (GET /api/stores?latitude={value}&longitude={value})
-
-API : `GET /api/stores?type=maps&x=127.123&y=36.123&radius=100`
-
-가게 목록을 위치 기반으로 조회합니다.
-
-==== `200 SUCCESS`
-
-===== Request
-
-operation::store_search_by_radius_documentation_test/stores_radius_success[snippets='http-request,request-parameters']
-
-===== Response
-
-operation::store_search_by_radius_documentation_test/stores_radius_success[snippets='http-response,response-fields']
-
-=== 가게 등록 검증 (PUT /api/stores)
-
-API : `PUT /api/stores`
-
-카카오 상점 정보를 가지고 가게 등록/검증을 합니다. (단, 어드민만 가능)
-
-==== `200 SUCCESS`
-
-===== Request
-
-operation::store_verify_or_save_documentation_test/search_store_by_name_containing_success[snippets='http-request,request-body']
-
-===== Response
-
-operation::store_verify_or_save_documentation_test/search_store_by_name_containing_success[snippets='http-response,response-fields']
-
-=== 가게 상세 조회 (GET /api/stores/{storeId})
-
-API : `GET /api/stores/{storeId}`
-
-특정 가게의 상세 정보를 조회합니다. (단, 가게 리뷰는 가게 리뷰 조회 API를 사용해야 합니다.)
-
-==== `200 SUCCESS`
-
-===== Request
-
-operation::store_detail_documentation_test/search_store_detail_success[snippets='http-request,path-parameters']
-
-===== Response
-
-operation::store_detail_documentation_test/search_store_detail_success[snippets='http-response,response-fields']
-
-=== 가게 리뷰 조회(GET /api/stores/\{storeId}/reviews?after=\{after}&size=\{size})
-
-==== `Request`
-
-operation::store_reviews_search_by_store_id_documentation_test/search_store_public_reviews_success[snippets='http-request,path-parameters,request-parameters']
-
-==== `Response`
-
-operation::store_reviews_search_by_store_id_documentation_test/search_store_public_reviews_success[snippets='http-response,response-fields']
