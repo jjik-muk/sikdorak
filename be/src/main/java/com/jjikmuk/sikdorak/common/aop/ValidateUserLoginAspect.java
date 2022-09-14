@@ -13,9 +13,15 @@ import org.springframework.stereotype.Component;
 public class ValidateUserLoginAspect {
 
     @Before("@annotation(com.jjikmuk.sikdorak.common.aop.UserOnly) || @within(com.jjikmuk.sikdorak.common.aop.UserOnly)")
-    public void validateLogin(JoinPoint joinPoint) {
+    public void validateUserOnly(JoinPoint joinPoint) {
         LoginUser loginUser = findLoginUser(joinPoint.getArgs());
         loginUser.ifAnonymousThrowException();
+    }
+
+    @Before("@annotation(com.jjikmuk.sikdorak.common.aop.AdminOnly) || @within(com.jjikmuk.sikdorak.common.aop.AdminOnly)")
+    public void validateAdminOnly(JoinPoint joinPoint) {
+        LoginUser loginUser = findLoginUser(joinPoint.getArgs());
+        loginUser.ifNotAdminThrowException();
     }
 
     private LoginUser findLoginUser(Object[] args) {
