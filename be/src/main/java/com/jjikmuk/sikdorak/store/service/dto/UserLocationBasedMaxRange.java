@@ -14,14 +14,18 @@ public class UserLocationBasedMaxRange {
     private final double minY;
 
     public UserLocationBasedMaxRange(UserLocationInfoRequest userLocationInfoRequest) {
-        double mForLatitude = (1 /Math.toRadians(EARTH_RADIUS)) / 1000;
-        double mForLongitude = (1 / (Math.toRadians(EARTH_RADIUS) * Math.cos(Math.toRadians(
+        double meterForLatitude = (1 / Math.toRadians(EARTH_RADIUS)) / 1000;
+        double meterForLongitude = (1 / (Math.toRadians(EARTH_RADIUS) * Math.cos(Math.toRadians(
             userLocationInfoRequest.getY())))) / 1000;
 
-        this.maxX = calculateMaxPoint(userLocationInfoRequest.getX(), userLocationInfoRequest.getRadius(), mForLongitude);
-        this.maxY = calculateMaxPoint(userLocationInfoRequest.getY(), userLocationInfoRequest.getRadius(), mForLatitude);
-        this.minX = calculateMinPoint(userLocationInfoRequest.getX(), userLocationInfoRequest.getRadius(), mForLongitude);
-        this.minY = calculateMinPoint(userLocationInfoRequest.getY(), userLocationInfoRequest.getRadius(), mForLatitude);
+        this.maxX = calculateMaxPoint(userLocationInfoRequest.getX(),
+            userLocationInfoRequest.getRadius(), meterForLongitude);
+        this.maxY = calculateMaxPoint(userLocationInfoRequest.getY(),
+            userLocationInfoRequest.getRadius(), meterForLatitude);
+        this.minX = calculateMinPoint(userLocationInfoRequest.getX(),
+            userLocationInfoRequest.getRadius(), meterForLongitude);
+        this.minY = calculateMinPoint(userLocationInfoRequest.getY(),
+            userLocationInfoRequest.getRadius(), meterForLatitude);
     }
 
     private double calculateMaxPoint(double point, int radius, double meterForPoint) {

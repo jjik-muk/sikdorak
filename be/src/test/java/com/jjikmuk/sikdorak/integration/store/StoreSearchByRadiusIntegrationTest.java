@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayName("통합 : Store 위치 기반 검색,조회")
-public class StoreSearchByRadiusIntegrationTest extends InitIntegrationTest {
+class StoreSearchByRadiusIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     private StoreService storeService;

@@ -9,8 +9,9 @@ public record StoreListByRadiusResponse(
     CursorPageResponse page
 
 ) {
+
     public static StoreListByRadiusResponse of(List<StoreRadiusSearchResponse> stores,
-        CursorPageResponse page){
+        CursorPageResponse page) {
         return new StoreListByRadiusResponse(stores, page);
     }
 }

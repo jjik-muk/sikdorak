@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
-public class UserLocationInfoRequest{
+public class UserLocationInfoRequest {
 
     private static final double MAX_LATITUDE_RANGE = 90.0;
     private static final double MIN_LATITUDE_RANGE = -90.0;
@@ -20,17 +20,17 @@ public class UserLocationInfoRequest{
     @NotNull
     @Min(-180)
     @Max(180)
-    double x;
+    private final double x;
 
     @NotNull
     @Min(-90)
     @Max(90)
-    double y;
+    private final double y;
 
     @NotNull
     @Min(0)
     @Max(20000)
-    int radius;
+    private final int radius;
 
     @JsonCreator
     public UserLocationInfoRequest(double x, double y, int radius) {
@@ -52,11 +52,11 @@ public class UserLocationInfoRequest{
         return MIN_RADIUS_RANGE <= radius && radius <= MAX_RADIUS_RANGE;
     }
 
-    private static  boolean validateLongitude(double x) {
+    private static boolean validateLongitude(double x) {
         return MIN_LONGITUDE_RANGE <= x && x <= MAX_LONGITUDE_RANGE;
     }
 
-    private static  boolean validateLatitude(double y) {
+    private static boolean validateLatitude(double y) {
         return MIN_LATITUDE_RANGE <= y && y <= MAX_LATITUDE_RANGE;
     }
 }
