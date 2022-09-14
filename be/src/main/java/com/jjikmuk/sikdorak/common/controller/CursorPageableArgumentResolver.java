@@ -2,7 +2,7 @@ package com.jjikmuk.sikdorak.common.controller;
 
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
-import com.jjikmuk.sikdorak.common.exception.UnsupportedParameterTypeException;
+import com.jjikmuk.sikdorak.common.exception.SikdorakServerError;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -36,17 +36,23 @@ public class CursorPageableArgumentResolver implements HandlerMethodArgumentReso
 		validateBeforeAfterParameter(beforeParam, afterParam);
 
 		// before, after, size 파싱
+		CursorPageable annotation = parameter.getParameterAnnotation(CursorPageable.class);
+        
+        if (annotation == null) {
+			throw new SikdorakServerError();
+        }
+
 		return new CursorPageRequest(
 			getCursorOrNull(beforeParam),
 			getCursorOrNull(afterParam),
-			getSizeOrDefault(webRequest, parameter.getParameterAnnotation(CursorPageable.class)),
+			getSizeOrDefault(webRequest, annotation),
 			(afterParam != null)
 		);
 	}
 
 	private void validateParameter(MethodParameter parameter) {
 		if (!parameter.getParameterType().equals(CursorPageRequest.class)) {
-			 throw new UnsupportedParameterTypeException();
+			 throw new SikdorakServerError();
 		}
 	}
 
