@@ -141,11 +141,11 @@ operation::store_modify_documentation_test/modify_store_success[snippets='http-r
 
 ===== Request
 
-operation::store_modify_documentation_test/modify_store_falied[snippets='http-request,request-body']
+operation::store_modify_documentation_test/modify_store_failed[snippets='http-request,request-body']
 
 ===== Response
 
-operation::store_modify_documentation_test/modify_store_falied[snippets='http-response,response-fields']
+operation::store_modify_documentation_test/modify_store_failed[snippets='http-response,response-fields']
 
 === 가게 삭제(ADMIN)
 
