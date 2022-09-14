@@ -3,10 +3,10 @@
 |===
 | 기능 | API
 
-| 댓글 조회 | GET /api/reviews/{reviewId}/comments
-| 댓글 생성 | POST /api/reviews/{reviedId}/comments
-| 댓글 수정 | PUT /api/reviews/{reviewId}/comments/{commentId}
-| 댓글 삭제 | DELETE /api/reviews/{reviewId}/comments/{commentId}
+| <<댓글 조회>> | GET /api/reviews/{reviewId}/comments
+| <<댓글 생성>> | POST /api/reviews/{reviedId}/comments
+| <<댓글 수정>> | PUT /api/reviews/{reviewId}/comments/{commentId}
+| <<댓글 삭제>> | DELETE /api/reviews/{reviewId}/comments/{commentId}
 
 |===
 
