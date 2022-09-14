@@ -58,6 +58,9 @@ export default function RestaurantSearch() {
   function handleChangeSearchBar({ target }) {
     const { value } = target;
     setInputValue(value);
-    openModal();
+
+    if (!isModalOpen) {
+      openModal();
+    }
   }
 }

@@ -32,3 +32,8 @@ export const Buttons = styled.div`
     ${STYLE.BOX_CONTAINER}
   }
 `;
+
+export const Input = styled.input`
+  width: 100%;
+  height: 50px;
+`;

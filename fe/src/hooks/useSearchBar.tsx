@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { debounce, fetchData } from 'utils/utils';
 
+const INIT_STATE: any = {};
+
 function useSearchBar() {
   const [inputValue, setInputValue] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState(INIT_STATE);
   const DELAY_MS = 150;
 
-  function debouncedSearch({ url, headers }) {
+  function debouncedSearch({ url, headers }: any) {
     debounce(async function fetchSearchResults() {
       const options = { headers };
       const searchRes = await fetchData(url, options);
@@ -15,7 +17,7 @@ function useSearchBar() {
   }
 
   function clearSearchResults() {
-    setSearchResults([]);
+    setSearchResults({});
   }
 
   return { inputValue, setInputValue, searchResults, debouncedSearch, clearSearchResults };
