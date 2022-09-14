@@ -1,31 +1,33 @@
 package com.jjikmuk.sikdorak.store.service.dto;
 
-import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfoRequest;
+import com.jjikmuk.sikdorak.store.domain.UserLocationInfo;
 import lombok.Getter;
 
 @Getter
 public class UserLocationBasedMaxRange {
 
-    private static final int EARTH_RADIUS = 3761;
+    //meter 당 위도,경도를 구할때 사용합니다.
+    private static final double EARTH_RADIUS = 6371;
 
     private final double maxX;
     private final double maxY;
     private final double minX;
     private final double minY;
 
-    public UserLocationBasedMaxRange(UserLocationInfoRequest userLocationInfoRequest) {
+    //참고 : https://wildeveloperetrain.tistory.com/171
+    public UserLocationBasedMaxRange(UserLocationInfo locationInfo) {
         double meterForLatitude = (1 / Math.toRadians(EARTH_RADIUS)) / 1000;
         double meterForLongitude = (1 / (Math.toRadians(EARTH_RADIUS) * Math.cos(Math.toRadians(
-            userLocationInfoRequest.getY())))) / 1000;
+            locationInfo.y())))) / 1000;
 
-        this.maxX = calculateMaxPoint(userLocationInfoRequest.getX(),
-            userLocationInfoRequest.getRadius(), meterForLongitude);
-        this.maxY = calculateMaxPoint(userLocationInfoRequest.getY(),
-            userLocationInfoRequest.getRadius(), meterForLatitude);
-        this.minX = calculateMinPoint(userLocationInfoRequest.getX(),
-            userLocationInfoRequest.getRadius(), meterForLongitude);
-        this.minY = calculateMinPoint(userLocationInfoRequest.getY(),
-            userLocationInfoRequest.getRadius(), meterForLatitude);
+        this.maxX = calculateMaxPoint(locationInfo.x(),
+            locationInfo.radius(), meterForLongitude);
+        this.maxY = calculateMaxPoint(locationInfo.y(),
+            locationInfo.radius(), meterForLatitude);
+        this.minX = calculateMinPoint(locationInfo.x(),
+            locationInfo.radius(), meterForLongitude);
+        this.minY = calculateMinPoint(locationInfo.y(),
+            locationInfo.radius(), meterForLatitude);
     }
 
     private double calculateMaxPoint(double point, int radius, double meterForPoint) {

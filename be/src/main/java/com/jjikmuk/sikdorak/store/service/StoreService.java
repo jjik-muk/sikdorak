@@ -3,7 +3,6 @@ package com.jjikmuk.sikdorak.store.service;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
 import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
-import com.jjikmuk.sikdorak.common.util.DistanceCalcUtil;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
@@ -16,6 +15,7 @@ import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyOrSaveResponse;
 import com.jjikmuk.sikdorak.store.domain.Address;
 import com.jjikmuk.sikdorak.store.domain.Store;
+import com.jjikmuk.sikdorak.store.domain.UserLocationInfo;
 import com.jjikmuk.sikdorak.store.exception.NotFoundApiAddressException;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
@@ -90,9 +90,11 @@ public class StoreService {
 	public StoreListByRadiusResponse searchStoresByRadius(
         UserLocationInfoRequest userLocationInfoRequest,
 		CursorPageRequest cursorPageRequest) {
-		validateCursorRequest(cursorPageRequest);
 
-		UserLocationBasedMaxRange coordinates = new UserLocationBasedMaxRange(userLocationInfoRequest);
+		validateCursorRequest(cursorPageRequest);
+		UserLocationInfo userLocationInfo = new UserLocationInfo(userLocationInfoRequest.x(),
+			userLocationInfoRequest.y(), userLocationInfoRequest.radius());
+		UserLocationBasedMaxRange coordinates = new UserLocationBasedMaxRange(userLocationInfo);
 
 		List<Store> stores = storeRepository.findStoresByRadius(coordinates.getMaxX(),
 			coordinates.getMaxY(),
@@ -101,8 +103,7 @@ public class StoreService {
 			cursorPageRequest.getAfter(),
 			Pageable.ofSize(cursorPageRequest.getSize()));
 
-		List<StoreRadiusSearchResponse> storeListResponse = getStoreListResponse(stores,
-            userLocationInfoRequest);
+		List<StoreRadiusSearchResponse> storeListResponse = getStoreListResponse(stores);
 		CursorPageResponse cursorPageResponse = getCursorPageResponse(storeListResponse);
 
 		return StoreListByRadiusResponse.of(storeListResponse, cursorPageResponse);
@@ -226,16 +227,8 @@ public class StoreService {
 			.build();
 	}
 
-	private List<StoreRadiusSearchResponse> getStoreListResponse(List<Store> stores,
-		UserLocationInfoRequest userLocationInfoRequest) {
-		double userX = userLocationInfoRequest.getX();
-		double userY = userLocationInfoRequest.getY();
-		int radius = userLocationInfoRequest.getRadius();
-
+	private List<StoreRadiusSearchResponse> getStoreListResponse(List<Store> stores) {
 		return stores.stream()
-			.filter(
-				store -> DistanceCalcUtil.isValidDistance(store.getX(), store.getY(), userX, userY,
-					radius))
 			.map(StoreRadiusSearchResponse::from)
 			.toList();
 	}
