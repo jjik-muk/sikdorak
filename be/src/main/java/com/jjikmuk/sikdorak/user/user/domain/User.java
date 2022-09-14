@@ -98,6 +98,10 @@ public class User extends BaseTimeEntity {
         return followers.getFollower();
     }
 
+    public Authority getAuthority() {
+        return this.authority;
+    }
+
     public void editAll(String nickname, String email, String profileImage) {
         this.nickname = new Nickname(nickname);
         this.email = new Email(email);

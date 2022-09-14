@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.unittest.user.user.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.jjikmuk.sikdorak.user.user.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -34,6 +35,24 @@ public class UserTest {
                 assertThat(user.getNickname()).isEqualTo(nickname);
                 assertThat(user.getProfileImage()).isEqualTo(profileImageUrl);
                 assertThat(user.getEmail()).isEqualTo(email);
+            }
+        }
+
+        @Nested
+        @DisplayName("만약 유저 권한을 부여하지 않으면")
+        class Context_without_authority {
+            @Test
+            @DisplayName("유저 권한을 가진 유저 객체를 반환한다.")
+            void createUser() {
+                Long id = 1L;
+                Long kakaoId = 232323243242L;
+                String nickname = "Forky_Ham";
+                String profileImageUrl = "https://k.kakaocdn.net/dn/RKydg/btrIGzx2qYz/IHPrmTbYBOqqbH1/img_640x640.jpg";
+                String email = "forky@sikdorak.com";
+
+                User user = new User(id, kakaoId, nickname, profileImageUrl, email);
+
+                assertThat(user.getAuthority()).isEqualTo(Authority.USER);
             }
         }
     }
