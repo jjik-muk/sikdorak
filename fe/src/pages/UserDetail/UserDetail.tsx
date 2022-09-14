@@ -3,7 +3,8 @@ import CommonHeader from 'components/Common/Header/CommonHeader';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
-import { useEffect, useReducer, useState } from 'react';
+import useReviews from 'hooks/useReviews';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import {
@@ -15,34 +16,20 @@ import {
   Wrap,
 } from './UserDetail.styled';
 
-function reviewsReducer(state, action) {
-  switch (action.type) {
-    case 'SET_REVIEWS':
-      return { reviews: action.reviews };
-    case 'ADD_REVIEW':
-      return { reviews: [...state.reviews, action.review] };
-    default:
-      throw new Error('reviewsReducer에 정의된 action type이 아닙니다.');
-  }
-}
-
 function UserDetail() {
-  const [{ reviews }, dispatchReviews] = useReducer(reviewsReducer, { reviews: [] });
+  const { reviews, dispatchReviews, fetchNextReviews, afterParam, handleScroll } = useReviews();
   const [userProfile, setUserProfile] = useState(null);
   const [myUserInfo] = useMyUserInfo();
   const myUserId = myUserInfo.userId;
   const { pathname } = useLocation();
   const targetId = Number(pathname.split('/').at(-1));
   const isMyUserDetailPage = myUserId === targetId;
+  const REVIEW_SIZE = 5;
 
   useEffect(() => {
-    fetchReviews();
     fetchUserInfo();
+    fetchNextReviews(getUrl(afterParam, REVIEW_SIZE));
 
-    async function fetchReviews() {
-      const res = await fetchDataThatNeedToLogin(`api/users/${targetId}/reviews`);
-      dispatchReviews({ type: 'SET_REVIEWS', reviews: res.data });
-    }
     async function fetchUserInfo() {
       const res = await fetchDataThatNeedToLogin(`api/users/${targetId}`);
       setUserProfile(res.data);
@@ -50,7 +37,11 @@ function UserDetail() {
   }, [targetId]);
 
   return (
-    <Wrap>
+    <Wrap
+      onScroll={(e) => {
+        handleScroll(e, getUrl(afterParam, REVIEW_SIZE));
+      }}
+    >
       <CommonHeader dispatchReviews={dispatchReviews} />
       <UserDetailWrap>
         <UserProfilePhoto src={userProfile?.profileImage} />
@@ -70,6 +61,10 @@ function UserDetail() {
       <Feeds reviews={reviews} />
     </Wrap>
   );
+
+  function getUrl(after, reviewSize) {
+    return `api/users/${targetId}/reviews?after=${after}&size=${reviewSize}`;
+  }
 }
 
 export default UserDetail;
