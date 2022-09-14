@@ -1,8 +1,7 @@
 import { STORE } from 'constants/dummyData';
-import { ICON } from 'constants/size';
 import CommonHeader from 'components/Common/Header/CommonHeader';
-import Icon from 'components/Common/Icon/Icon';
-import { InfoWrap, Row, StoreInfo, Text, Title, Wrap } from './StoreDetail.styled';
+import StoreInfo from 'components/StoreDetail/StoreInfo/StoreInfo';
+import styled from 'styled-components';
 
 function StoreDetail() {
   const { storeName, storeRating, reviewCnt, address, phoneNumber } = STORE;
@@ -11,27 +10,21 @@ function StoreDetail() {
     <>
       <CommonHeader />
       <Wrap>
-        <StoreInfo>
-          <InfoWrap>
-            <Title>{storeName}</Title>
-            <Row>
-              <Icon icon="Star" stroke="#fff" fill="#f1c40f" width={ICON.SMALL} height={ICON.SMALL} />
-              <Text>{storeRating} / 5</Text>
-              <Text>리뷰 {reviewCnt}</Text>
-            </Row>
-            <Row>
-              <Icon icon="Location" width={ICON.SMALL} height={ICON.SMALL} fill="#000" />
-              <Text>{address}</Text>
-            </Row>
-            <Row>
-              <Icon icon="Phone" width={ICON.SMALL} height={ICON.SMALL} fill="#000" />
-              <Text>{phoneNumber}</Text>
-            </Row>
-          </InfoWrap>
-        </StoreInfo>
+        <StoreInfo
+          storeName={storeName}
+          storeRating={storeRating}
+          reviewCnt={reviewCnt}
+          address={address}
+          phoneNumber={phoneNumber}
+        />
       </Wrap>
     </>
   );
 }
 
 export default StoreDetail;
+
+const Wrap = styled.div`
+  width: fit-content;
+  margin: 0 auto;
+`;
