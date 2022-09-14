@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,6 +46,9 @@ public class User extends BaseTimeEntity {
     @Embedded
     private Followers followers;
 
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
+
     private boolean deleted = false;
 
     public User(Long uniqueId, String nickname, String profileImage, String email) {
@@ -51,6 +56,10 @@ public class User extends BaseTimeEntity {
     }
 
     public User(Long id, Long uniqueId, String nickname, String profileImage, String email) {
+        this(id, uniqueId, nickname, profileImage, email, Authority.USER);
+    }
+
+    public User(Long id, Long uniqueId, String nickname, String profileImage, String email, Authority authority) {
         this.id = id;
         this.uniqueId = uniqueId;
         this.nickname = new Nickname(nickname);
@@ -58,6 +67,7 @@ public class User extends BaseTimeEntity {
         this.email = Objects.isNull(email) ? new Email() : new Email(email);
         this.followings = new Followings();
         this.followers = new Followers();
+        this.authority = authority;
     }
 
     public Long getId() {
