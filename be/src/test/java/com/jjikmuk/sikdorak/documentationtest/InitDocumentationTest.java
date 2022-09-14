@@ -25,7 +25,7 @@ import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.operation.preprocess.OperationPreprocessor;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = AWSMockConfig.class)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ExtendWith(RestDocumentationExtension.class)
 @ActiveProfiles("test")
 public class InitDocumentationTest {
