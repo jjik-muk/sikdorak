@@ -4,6 +4,12 @@
 
 <div align="center">
     <p dir="auto">
+        <a href="https://sikdorak.jjikmuk.com/">
+            <img src="https://img.shields.io/badge/Web Service-61DAFB?style=flat&logo=react&logoColor=white">
+        </a>
+        <a href="https://api.jjikmuk.com/docs/index.html">
+            <img src="https://img.shields.io/badge/API Docs-6DB33F?style=flat&logo=spring&logoColor=white">
+        </a>
         <a href="https://github.com/jjik-muk/sikdorak/wiki">
             <img src="https://img.shields.io/badge/GitHub Wiki 📚-181717?style=flat&logo=Github&logoColor=white">
         </a>
@@ -51,19 +57,20 @@
 
 ## 프로젝트 아키텍처 🏛
 
-![프로젝트아키텍처](https://user-images.githubusercontent.com/57086195/189831558-6f9bc2fa-a02a-44d1-ae8a-0eb9f7da5b0d.png)
+![프로젝트아키텍처](https://user-images.githubusercontent.com/57086195/190068249-1e33bee0-db43-44c3-ab65-b732520e3391.png)
+
 
 
 ## CI/CD 🤖
 
 ### Frontend
 
-<img width="903" alt="image" src="https://user-images.githubusercontent.com/57086195/189293108-91eaacbf-4006-4210-88fe-5cb76ce5b288.png">
+![프론트엔드-cicd](https://user-images.githubusercontent.com/57086195/190076391-fdb1622c-aa30-4d86-8b28-1ce373da6da6.png)
 
 
 ### Backend
 
-![image](https://user-images.githubusercontent.com/57086195/189566094-806615a8-4b6d-48d3-b7cb-6363aba1b530.png)
+![백엔드-cicd](https://user-images.githubusercontent.com/57086195/189566094-806615a8-4b6d-48d3-b7cb-6363aba1b530.png)
 
 # 프로젝트 기술 스택 🪛
 
