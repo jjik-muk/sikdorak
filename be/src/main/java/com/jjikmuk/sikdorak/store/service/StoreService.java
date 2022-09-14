@@ -1,14 +1,14 @@
 package com.jjikmuk.sikdorak.store.service;
 
-import com.jjikmuk.sikdorak.common.util.CoordinateUtil;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
 import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
+import com.jjikmuk.sikdorak.common.util.DistanceCalcUtil;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyOrSaveRequest;
-import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfo;
+import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfoRequest;
 import com.jjikmuk.sikdorak.store.controller.response.StoreDetailResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreListByRadiusResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
@@ -16,7 +16,6 @@ import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyOrSaveResponse;
 import com.jjikmuk.sikdorak.store.domain.Address;
 import com.jjikmuk.sikdorak.store.domain.Store;
-import com.jjikmuk.sikdorak.store.exception.InvalidUserLocationException;
 import com.jjikmuk.sikdorak.store.exception.NotFoundApiAddressException;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
@@ -26,7 +25,7 @@ import com.jjikmuk.sikdorak.store.service.dto.AddressSearchResponse;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceResponse;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceSearchRequest;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceSearchResponse;
-import com.jjikmuk.sikdorak.store.service.dto.SquareCoordinates;
+import com.jjikmuk.sikdorak.store.service.dto.UserLocationBasedMaxRange;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -46,7 +45,6 @@ public class StoreService {
 	private final StoreRepository storeRepository;
 	private final ReviewRepository reviewRepository;
 	private final PlaceApiService kakaoPlaceApiService;
-	private final CoordinateUtil coordinateUtil;
 
 	@Transactional(readOnly = true)
 	public Store searchById(Long storeId) {
@@ -89,22 +87,22 @@ public class StoreService {
 	}
 
 	@Transactional(readOnly = true)
-	public StoreListByRadiusResponse searchStoresByRadius(UserLocationInfo userLocationInfo,
+	public StoreListByRadiusResponse searchStoresByRadius(
+        UserLocationInfoRequest userLocationInfoRequest,
 		CursorPageRequest cursorPageRequest) {
-		validateUserLocationInfo(userLocationInfo);
 		validateCursorRequest(cursorPageRequest);
 
-		SquareCoordinates coordinates = coordinateUtil.calculateMaxMinCoordinates(userLocationInfo);
+		UserLocationBasedMaxRange coordinates = new UserLocationBasedMaxRange(userLocationInfoRequest);
 
-		List<Store> stores = storeRepository.findStoresByRadius(coordinates.maxX(),
-			coordinates.maxY(),
-			coordinates.minX(),
-			coordinates.minY(),
+		List<Store> stores = storeRepository.findStoresByRadius(coordinates.getMaxX(),
+			coordinates.getMaxY(),
+			coordinates.getMinX(),
+			coordinates.getMinY(),
 			cursorPageRequest.getAfter(),
 			Pageable.ofSize(cursorPageRequest.getSize()));
 
 		List<StoreRadiusSearchResponse> storeListResponse = getStoreListResponse(stores,
-			userLocationInfo);
+            userLocationInfoRequest);
 		CursorPageResponse cursorPageResponse = getCursorPageResponse(storeListResponse);
 
 		return StoreListByRadiusResponse.of(storeListResponse, cursorPageResponse);
@@ -229,10 +227,15 @@ public class StoreService {
 	}
 
 	private List<StoreRadiusSearchResponse> getStoreListResponse(List<Store> stores,
-		UserLocationInfo userLocationInfo) {
+		UserLocationInfoRequest userLocationInfoRequest) {
+		double userX = userLocationInfoRequest.getX();
+		double userY = userLocationInfoRequest.getY();
+		int radius = userLocationInfoRequest.getRadius();
+
 		return stores.stream()
-			.filter(store -> coordinateUtil.isValidDistance(store.getX(), store.getY(),
-				userLocationInfo))
+			.filter(
+				store -> DistanceCalcUtil.isValidDistance(store.getX(), store.getY(), userX, userY,
+					radius))
 			.map(StoreRadiusSearchResponse::from)
 			.toList();
 	}
@@ -247,20 +250,10 @@ public class StoreService {
 			storeListResponse.get(storeListResponse.size() - 1).id());
 	}
 
-	private void validateUserLocationInfo(UserLocationInfo userLocationInfo) {
-		if (!(coordinateUtil.validateLongitude(userLocationInfo.x())
-			&& coordinateUtil.validateLatitude(userLocationInfo.y())
-			&& coordinateUtil.validateRadius(userLocationInfo.radius()))) {
-			throw new InvalidUserLocationException();
-		}
-	}
-
-
 	private void validateCursorRequest(CursorPageRequest cursorPageRequest) {
 		if (cursorPageRequest.getSize() > MAX_PAGE_SIZE) {
 			throw new InvalidPageParameterException();
 		}
 	}
-
 
 }
