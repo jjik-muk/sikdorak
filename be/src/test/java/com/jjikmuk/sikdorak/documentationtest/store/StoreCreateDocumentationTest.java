@@ -57,7 +57,7 @@ class StoreCreateDocumentationTest extends InitDocumentationTest {
 
     @Test
     @DisplayName("권한이 없는 사용자가 가게 생성 요청을 한다면, 예외를 발생시킨다.")
-    void create_store_falied() {
+    void create_store_failed() {
 
         StoreCreateRequest storeCreateRequest = new StoreCreateRequest(
             "새로 생긴 가게",

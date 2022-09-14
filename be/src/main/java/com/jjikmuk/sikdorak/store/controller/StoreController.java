@@ -74,9 +74,11 @@ public class StoreController {
 			storeService.verifyOrSave(verifyOrSaveRequest), HttpStatus.OK);
 	}
 
+	@AdminOnly
 	@PutMapping("/{storeId}")
 	public CommonResponseEntity<Void> modifyStore(@PathVariable("storeId") Long storeId,
-		@RequestBody StoreModifyRequest modifyRequest) {
+		@RequestBody StoreModifyRequest modifyRequest,
+		@AuthenticatedUser LoginUser loginUser) {
 		storeService.modifyStore(storeId, modifyRequest);
 
 		return new CommonResponseEntity<>(STORE_MODIFY_SUCCESS, HttpStatus.OK);
