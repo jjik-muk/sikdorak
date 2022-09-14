@@ -4,7 +4,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-public record UserLocationInfo(
+public record UserLocationInfoRequest(
 
     @NotNull
     @Min(-180)
@@ -20,6 +20,7 @@ public record UserLocationInfo(
     @Min(0)
     @Max(20000)
     int radius
+
 ) {
 
 }

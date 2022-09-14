@@ -17,9 +17,9 @@ import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.store.controller.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreModifyRequest;
 import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyOrSaveRequest;
-import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfo;
+import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfoRequest;
 import com.jjikmuk.sikdorak.store.controller.response.StoreDetailResponse;
-import com.jjikmuk.sikdorak.store.controller.response.StoreRadiusSearchResponse;
+import com.jjikmuk.sikdorak.store.controller.response.StoreListByRadiusResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyOrSaveResponse;
 import com.jjikmuk.sikdorak.store.service.StoreService;
@@ -84,10 +84,12 @@ public class StoreController {
 	}
 
 	@GetMapping(params = {"type=maps"})
-	public CommonResponseEntity<List<StoreRadiusSearchResponse>> searchStoreByRadius(
-		UserLocationInfo userLocationInfo) {
-		List<StoreRadiusSearchResponse> stores = storeService.searchStoresByRadius(
-			userLocationInfo);
+	public CommonResponseEntity<StoreListByRadiusResponse> searchStoreByRadius(
+		UserLocationInfoRequest userLocationInfoRequest,
+		@CursorPageable CursorPageRequest cursorPageRequest) {
+
+		StoreListByRadiusResponse stores = storeService.searchStoresByRadius(
+            userLocationInfoRequest, cursorPageRequest);
 
 		return new CommonResponseEntity<>(STORE_SEARCH_BY_RADIUS_SUCCESS, stores, HttpStatus.OK);
 	}

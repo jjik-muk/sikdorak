@@ -27,20 +27,21 @@ class StoreSearchByRadiusDocumentationTest extends InitDocumentationTest {
                 STORE_SEARCH_BY_RADIUS_RESPONSE_SNIPPET
             ))
             .queryParam("type", "maps")
-            .queryParam("x", "127.123123")
-            .queryParam("y", "37.123123")
-            .queryParam("radius", "100")
+            .queryParam("x", "127.067")
+            .queryParam("y", "37.6557")
+            .queryParam("radius", "500")
+            .queryParam("after", "0")
+            .queryParam("size", "10")
 
         .when()
             .get("/api/stores")
 
         .then()
-            .log().all()
             .statusCode(HttpStatus.OK.value())
             .body("code", equalTo(ResponseCodeAndMessages.STORE_SEARCH_BY_RADIUS_SUCCESS.getCode()))
             .body("message",
                 equalTo(ResponseCodeAndMessages.STORE_SEARCH_BY_RADIUS_SUCCESS.getMessage()))
-            .body("data.stores", hasSize(10));
+            .body("data.stores", hasSize(1));
 
     }
 

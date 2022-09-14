@@ -113,6 +113,33 @@ public class DatabaseConfigurator implements InitializingBean {
 			address,
 			127.105143,
 			37.5093890));
+
+		this.store = storeRepository.save(new Store(
+			456456L,
+			"노원 쉑쉑버거",
+			"02-0000-0000",
+			Address.requiredFieldBuilder("상계동 713 롯데백화점 노원점 지상 1층", "서울 노원구 동일로 1414")
+				.build(),
+			127.0615,
+			37.6547));
+
+		this.store = storeRepository.save(new Store(
+			12356L,
+			"와플대학 노원캠퍼스",
+			"02-0000-0000",
+			Address.requiredFieldBuilder("상계동 713 하하하", "서울 노원구 몰라몰라")
+				.build(),
+			127.0607,
+			37.653));
+
+		this.store = storeRepository.save(new Store(
+			12345L,
+			"위안바오",
+			"02-0000-0000",
+			Address.requiredFieldBuilder("상계동 713 노원 어딘가", "서울 노원구 동일로 동동동")
+				.build(),
+			127.0604,
+			37.656));
 	}
 
 	private void initBasicUserData() {
