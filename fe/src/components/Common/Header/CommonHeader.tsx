@@ -45,7 +45,7 @@ function CommonHeader({ dispatchReviews }: any) {
               </div>
             </Link>
           ))}
-          <Link to={`/userDetail/${userId}`}>
+          <Link to={`/user/${userId}`}>
             <ProfileImageWrap>
               <img src={profileImageUrl} alt="profile" width={24} height={24} />
             </ProfileImageWrap>

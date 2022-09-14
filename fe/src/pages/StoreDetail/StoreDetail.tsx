@@ -1,10 +1,33 @@
-import { STORE } from 'constants/dummyData';
 import CommonHeader from 'components/Common/Header/CommonHeader';
 import StoreInfo from 'components/StoreDetail/StoreInfo/StoreInfo';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { fetchDataThatNeedToLogin } from 'utils/utils';
+
+const INIT_STATE_STORE_INFO = {
+  storeName: '',
+  addressName: '',
+  contactNumber: '',
+  reviewCounts: 0,
+  reviewScoreAverage: 0,
+};
 
 function StoreDetail() {
-  const { storeName, storeRating, reviewCnt, address, phoneNumber } = STORE;
+  const { pathname } = useLocation();
+  const targetId = Number(pathname.split('/').at(-1));
+  const [storeInfo, setStoreInfo] = useState(INIT_STATE_STORE_INFO);
+
+  useEffect(() => {
+    fetchAndStoreRestaurant();
+
+    async function fetchAndStoreRestaurant() {
+      const res = await fetchDataThatNeedToLogin(`api/stores/${targetId}`);
+      setStoreInfo(res.data);
+    }
+  }, []);
+
+  const { storeName, addressName, contactNumber, reviewCounts, reviewScoreAverage } = storeInfo;
 
   return (
     <>
@@ -12,10 +35,10 @@ function StoreDetail() {
       <Wrap>
         <StoreInfo
           storeName={storeName}
-          storeRating={storeRating}
-          reviewCnt={reviewCnt}
-          address={address}
-          phoneNumber={phoneNumber}
+          storeRating={reviewScoreAverage}
+          reviewCnt={reviewCounts}
+          address={addressName}
+          phoneNumber={contactNumber}
         />
       </Wrap>
     </>

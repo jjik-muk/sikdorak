@@ -40,10 +40,12 @@ function App() {
             <Route path="/" element={hasAccessToken() ? <ReviewList /> : <Navigate replace to="/login" />} />
             <Route path="/map" element={hasAccessToken() ? <Map /> : <Navigate replace to="/" />} />
             <Route path="/login" element={hasAccessToken() ? <Navigate replace to="/" /> : <Login />} />
-            <Route path="/userDetail">
+            <Route path="/user">
               <Route path=":userId" element={hasAccessToken() ? <UserDetail /> : <Navigate replace to="/" />} />
             </Route>
-            <Route path="/storeDetail" element={hasAccessToken() ? <StoreDetail /> : <Navigate replace to="/" />} />
+            <Route path="/store">
+              <Route path=":storeId" element={hasAccessToken() ? <StoreDetail /> : <Navigate replace to="/" />} />
+            </Route>
             <Route
               path="/api/oauth/callback"
               element={<Callback accessToken={accessToken} setAccessToken={setAccessToken} />}

@@ -3,7 +3,7 @@ import { STYLE } from 'constants/style';
 import Icon from 'components/Common/Icon/Icon';
 import styled from 'styled-components';
 
-function StoreInfo({ storeName, storeRating, reviewCnt, address, phoneNumber }: StoreInfoProps) {
+function StoreInfo({ storeName, storeRating, reviewCnt, address, phoneNumber }: any) {
   return (
     <Wrap>
       <InfoWrap>
@@ -28,13 +28,13 @@ function StoreInfo({ storeName, storeRating, reviewCnt, address, phoneNumber }: 
 
 export default StoreInfo;
 
-type StoreInfoProps = {
-  storeName: string;
-  storeRating: number;
-  reviewCnt: number;
-  address: string;
-  phoneNumber: string;
-};
+// type StoreInfoProps = {
+//   storeName: string;
+//   storeRating: number;
+//   reviewCnt: number;
+//   address: string;
+//   phoneNumber: string;
+// };
 
 export const Wrap = styled.div`
   width: 800px;
