@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.user.auth.controller;
 
 import com.jjikmuk.sikdorak.user.auth.exception.NeedLoginException;
+import com.jjikmuk.sikdorak.user.user.domain.Authority;
 import lombok.Getter;
 
 @Getter

@@ -3,6 +3,7 @@ package com.jjikmuk.sikdorak.user.auth.controller;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
+import com.jjikmuk.sikdorak.user.user.domain.Authority;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
