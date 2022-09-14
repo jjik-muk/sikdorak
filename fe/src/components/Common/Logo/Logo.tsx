@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
+import LogoIcon from '../../../assets/Logo.png';
 
 function Logo() {
   return (
     <Link to="/">
-      <h1>Sikdorak</h1>
+      <img src={LogoIcon} alt="logo" width={100} />
     </Link>
   );
 }

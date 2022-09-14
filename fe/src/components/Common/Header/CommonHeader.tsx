@@ -8,7 +8,7 @@ import { createKey } from 'utils/utils';
 import Icon, { IconComponentsKeys } from '../Icon/Icon';
 import Logo from '../Logo/Logo';
 import Portal from '../Portal/Portal';
-import { ButtonWrap, IconWrap, Input, SearchFormWrap, Header, Wrap, ProfileImageWrap } from './CommonHeader.styled';
+import { ButtonWrap, Header, Wrap, ProfileImageWrap } from './CommonHeader.styled';
 
 function CommonHeader({ dispatchReviews }: any) {
   const [isReviewWrite, toggleIsReviewWrite] = useToggle(false);
@@ -31,12 +31,12 @@ function CommonHeader({ dispatchReviews }: any) {
     <Wrap>
       <Header>
         <Logo />
-        <SearchFormWrap>
+        {/* <SearchFormWrap>
           <Input type="text" placeholder="검색해주세요." />
           <IconWrap>
             <Icon icon="SearchBtn" width={18} height={18} />
           </IconWrap>
-        </SearchFormWrap>
+        </SearchFormWrap> */}
         <ButtonWrap>
           {iconInfo.map(({ icon, handler, to }, idx) => (
             <Link key={createKey(icon, idx)} to={to}>
