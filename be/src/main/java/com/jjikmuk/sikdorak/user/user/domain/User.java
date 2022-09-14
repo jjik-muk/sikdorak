@@ -55,6 +55,10 @@ public class User extends BaseTimeEntity {
         this(null, uniqueId, nickname, profileImage, email);
     }
 
+    public User(Long uniqueId, String nickname, String profileImage, String email, Authority authority) {
+        this(null, uniqueId, nickname, profileImage, email, authority);
+    }
+
     public User(Long id, Long uniqueId, String nickname, String profileImage, String email) {
         this(id, uniqueId, nickname, profileImage, email, Authority.USER);
     }
