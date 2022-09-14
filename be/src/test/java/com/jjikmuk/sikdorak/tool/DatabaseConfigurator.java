@@ -5,6 +5,7 @@ import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.store.domain.Address;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
+import com.jjikmuk.sikdorak.user.user.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
 import java.sql.Connection;
@@ -33,6 +34,7 @@ public class DatabaseConfigurator implements InitializingBean {
 	public User forky;
 	public User hoi;
 	public User rumka;
+	public User admin;
 	public String user1ValidAuthorizationHeader;
 	public String user2ValidAuthorizationHeader;
 	public String followSendUserValidAuthorizationHeader;
@@ -158,6 +160,9 @@ public class DatabaseConfigurator implements InitializingBean {
 		this.rumka = userRepository.save(
 			new User(5000000L, "럼카", "https://s3.ap-northeast-2.amazonaws.com/user/rumka.jpg",
 				"rumka@gmail.com"));
+		this.admin = userRepository.save(
+			new User(6000000L, "관리자", "https://s3.ap-northeast-2.amazonaws.com/user/admin.jpg",
+				"admin@gmail.com", Authority.ADMIN));
 	}
 
 	private void initFollowingUserData() {

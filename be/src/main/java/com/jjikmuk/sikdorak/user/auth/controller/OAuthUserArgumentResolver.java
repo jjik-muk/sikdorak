@@ -3,6 +3,10 @@ package com.jjikmuk.sikdorak.user.auth.controller;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
+import com.jjikmuk.sikdorak.user.user.domain.Authority;
+import com.jjikmuk.sikdorak.user.user.domain.User;
+import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
+import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +24,7 @@ public class OAuthUserArgumentResolver implements HandlerMethodArgumentResolver 
 	private static final String AUTHORIZATION_HEADER = "Authorization";
 	private static final String TOKEN_TYPE = "Bearer ";
 	private final JwtProvider jwtProvider;
+	private final UserRepository userRepository;
 
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
@@ -41,7 +46,11 @@ public class OAuthUserArgumentResolver implements HandlerMethodArgumentResolver 
 		}
 
 		Long userId = Long.valueOf(jwtProvider.decodeToken(token));
-		return new LoginUser(userId, Authority.USER);
+
+		User user = userRepository.findById(userId)
+			.orElseThrow(NotFoundUserException::new);
+
+		return new LoginUser(user.getId(), user.getAuthority());
 	}
 
 	private String parseAuthorizationHeader(HttpServletRequest request) {

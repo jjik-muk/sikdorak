@@ -1,6 +1,8 @@
 package com.jjikmuk.sikdorak.user.auth.controller;
 
 import com.jjikmuk.sikdorak.user.auth.exception.NeedLoginException;
+import com.jjikmuk.sikdorak.user.user.domain.Authority;
+import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import lombok.Getter;
 
 @Getter
@@ -21,6 +23,14 @@ public class LoginUser {
 
 	public boolean isAnonymous() {
 		return authority.equals(Authority.ANONYMOUS);
+	}
+
+	public void ifNotAdminThrowException() {
+		ifAnonymousThrowException();
+
+		if (!authority.equals(Authority.ADMIN)) {
+			throw new UnauthorizedUserException();
+		}
 	}
 
 	public void ifAnonymousThrowException() {

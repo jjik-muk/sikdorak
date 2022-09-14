@@ -9,6 +9,7 @@ import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_SEARCH_S
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.STORE_VERIFY_OR_SAVE_RESPONSE;
 
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
+import com.jjikmuk.sikdorak.common.aop.AdminOnly;
 import com.jjikmuk.sikdorak.common.controller.CursorPageable;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
@@ -23,6 +24,8 @@ import com.jjikmuk.sikdorak.store.controller.response.StoreListByRadiusResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyOrSaveResponse;
 import com.jjikmuk.sikdorak.store.service.StoreService;
+import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
+import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -53,8 +56,11 @@ public class StoreController {
 		return new CommonResponseEntity<>(STORE_SEARCH_SUCCESS, findResponseList, HttpStatus.OK);
 	}
 
+	@AdminOnly
 	@PostMapping
-	public CommonResponseEntity<Void> createStore(@RequestBody StoreCreateRequest createRequest) {
+	public CommonResponseEntity<Void> createStore(
+		@RequestBody StoreCreateRequest createRequest,
+		@AuthenticatedUser LoginUser loginUser) {
 		storeService.createStore(createRequest);
 
 		return new CommonResponseEntity<>(STORE_CREATE_SUCCESS, null, HttpStatus.CREATED);
@@ -68,16 +74,21 @@ public class StoreController {
 			storeService.verifyOrSave(verifyOrSaveRequest), HttpStatus.OK);
 	}
 
+	@AdminOnly
 	@PutMapping("/{storeId}")
 	public CommonResponseEntity<Void> modifyStore(@PathVariable("storeId") Long storeId,
-		@RequestBody StoreModifyRequest modifyRequest) {
+		@RequestBody StoreModifyRequest modifyRequest,
+		@AuthenticatedUser LoginUser loginUser) {
 		storeService.modifyStore(storeId, modifyRequest);
 
 		return new CommonResponseEntity<>(STORE_MODIFY_SUCCESS, HttpStatus.OK);
 	}
 
+	@AdminOnly
 	@DeleteMapping("/{storeId}")
-	public CommonResponseEntity<Void> removeStore(@PathVariable("storeId") Long storeId) {
+	public CommonResponseEntity<Void> removeStore(
+		@PathVariable("storeId") Long storeId,
+		@AuthenticatedUser LoginUser loginUser) {
 		storeService.removeStore(storeId);
 
 		return new CommonResponseEntity<>(STORE_REMOVE_SUCCESS, HttpStatus.OK);
