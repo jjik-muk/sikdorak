@@ -1,41 +1,76 @@
+=== 전체 목록 (/api/reviews/*)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<리뷰 디테일 조회>> | GET /api/reviews/{reviewId}
+| <<리뷰 목록 조회(피드)>> | GET /api/reviews?after={value}&size={value}
+| <<리뷰 생성>> | POST /api/reviews
+| <<리뷰 수정>> | PUT /api/reviews/{reviewId}
+| <<리뷰 삭제>> | DELETE /api/reviews/{reviewId}
+| <<리뷰 좋아요>> | PUT /api/reviews/{reviewId}/like
+| <<리뷰 좋아요 취소>> | PUT /api/reviews/{reviewId}/unlike
+
+|===
+
 === 리뷰 디테일 조회
 
-API : `GET /api/review/{reviewId}`
+API : `GET /api/reviews/{reviewId}`
 
-=== `200 OK`
+리뷰 아이디를 가지고 리뷰 디테일을 조회합니다.
 
-==== `Request`
+==== `200 OK`
+
+===== Request
 
 operation::review_search_documentation_test/search_review_detail_success[snippets='http-request,path-parameters']
 
-==== `Response`
+===== Response
 
 operation::review_search_documentation_test/search_review_detail_success[snippets='http-response,response-fields']
 
-=== `401 Unauthorized`
+===== `401 Unauthorized`
 
 비회원 유저가 private review 조회한 경우
 
-==== `Request`
+===== Request
 
 operation::review_search_documentation_test/search_review_detail_failed[snippets='http-request,path-parameters']
 
-==== `Response`
+==== Response
 
 operation::review_search_documentation_test/search_review_detail_failed[snippets='http-response,response-fields']
+
+=== 리뷰 목록 조회(피드)
+
+API : `GET /api/reviews?after={after}&size={size}`
+
+메인 페이지 피드뷰에서 리뷰들을 조회합니다. (서버 추천으로)
+
+==== `200 OK`
+
+===== Request
+
+operation::reviews_recommend_documentation_test/review_recommend_success[snippets='http-request,request-parameters']
+
+===== Response
+
+operation::reviews_recommend_documentation_test/review_recommend_success[snippets='http-response,response-fields']
+
 
 === 리뷰 생성
 
 API : `POST /api/reviews`
 
+리뷰를 생성합니다. (단, 로그인 유저만 가능)
 
-=== `201 CREATED`
+==== `201 CREATED`
 
-==== `Request`
+===== Request
 
 operation::review_insert_documentation_test/create_review_success[snippets='http-request,request-fields']
 
-==== `Response`
+===== `Response`
 
 operation::review_insert_documentation_test/create_review_success[snippets='http-response,response-fields']
 
@@ -43,28 +78,30 @@ operation::review_insert_documentation_test/create_review_success[snippets='http
 
 API : `PUT /api/reviews/{reviewId}`
 
-=== `200 OK`
+특정 리뷰를 수정합니다. (단, 로그인 유저만 가능)
+
+==== `200 OK`
 
 리뷰 작성자가 리뷰 수정한 경우
 
-==== `Request`
+===== `Request`
 
 operation::review_modify_documentation_test/modify_review_success[snippets='http-request,path-parameters,request-fields']
 
-==== `Response`
+===== `Response`
 
 operation::review_modify_documentation_test/modify_review_success[snippets='http-response,response-fields']
 
-=== `401 UNATHORIZED`
+===== `401 UNATHORIZED`
 
 리뷰 작성자가 아닌 유저가 수정 요청한 경우
 
 
-==== `Request`
+===== Request
 
 operation::review_modify_documentation_test/modify_review_failed[snippets='http-request']
 
-==== `Response`
+===== Response
 
 operation::review_modify_documentation_test/modify_review_failed[snippets='http-response,response-fields']
 
@@ -72,68 +109,62 @@ operation::review_modify_documentation_test/modify_review_failed[snippets='http-
 
 API : `DELETE /api/reviews/{reviewId}`
 
-=== `200 OK`
+특정 id의 리뷰를 삭제합니다. (단, 로그인 유저만 가능)
+
+
+==== `200 OK`
 
 리뷰 작성자가 리뷰 삭제한 경우
 
-==== `Request`
+===== Request
 
 operation::review_remove_accecptance_test/remove_review_success[snippets='http-request']
 
-==== `Response`
+===== Response
 
 operation::review_remove_accecptance_test/remove_review_success[snippets='http-response,response-fields']
 
-=== `401 UNATHORIZED`
+==== `401 UNATHORIZED`
 
 비회원이 리뷰 삭제 요청한 경우
 
-==== `Request`
+===== Request
 
 operation::review_remove_accecptance_test/remove_review_failed_need_login[snippets='http-request']
 
-==== `Response`
+===== Response
 
 operation::review_remove_accecptance_test/remove_review_failed_need_login[snippets='http-response,response-fields']
 
-=== 리뷰 추천 목록 조회
-
-API : `GET /api/reviews`
-
-=== `200 OK`
-
-==== `Request`
-
-operation::reviews_recommend_documentation_test/review_recommend_success[snippets='http-request,request-parameters']
-
-==== `Response`
-
-operation::reviews_recommend_documentation_test/review_recommend_success[snippets='http-response,response-fields']
 
 === 리뷰 좋아요
 
-API : `GET /api/reviews/{reviewId}/like`
+API : `PUT /api/reviews/{reviewId}/like`
 
-=== `200 OK`
+특정 id의 리뷰 좋아요합니다. (단, 로그인 유저만 가능)
 
-==== `Request`
+==== `200 OK`
+
+===== Request
 
 operation::review_like_documentation_test/review_like_success[snippets='http-request,path-parameters']
 
-==== `Response`
+===== Response
 
 operation::review_like_documentation_test/review_like_success[snippets='http-response,response-fields']
 
 === 리뷰 좋아요 취소
 
-API : `GET /api/reviews/{reviewId}/unlike`
+API : `PUT /api/reviews/{reviewId}/unlike`
 
-=== `200 OK`
+특정 id의 리뷰 좋아요를 취소합니다. (단, 로그인 유저만 가능)
 
-==== `Request`
+==== `200 OK`
+
+===== Request
 
 operation::review_like_documentation_test/review_unlike_success[snippets='http-request,path-parameters']
 
-==== `Response`
+===== Response
 
 operation::review_like_documentation_test/review_unlike_success[snippets='http-response,response-fields']

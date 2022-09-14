@@ -1,31 +1,46 @@
+=== 전체 목록 (/api/oauth/*)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<로그인 페이지 요청>> | GET /api/oauth/login
+| <<유저 로그인 콜백>> | GET /api/oauth/callback?code={value}
+| <<액세스 토큰 갱신>> | GET /api/oauth/refresh
+
+|===
+
 === 로그인 페이지 요청
 
 API : `GET /api/oauth/login`
 
+카카오 로그인 페이지를 리다이렉트합니다.
 
-=== `301 MOVED_PERMANENTLY`
+==== `301 MOVED_PERMANENTLY`
 
-==== `Request`
+===== Request
 
 operation::o_auth_login_documentation_test/redirect_to_social_login_page[snippets='http-request']
 
-==== `Response`
+===== Response
 
 operation::o_auth_login_documentation_test/redirect_to_social_login_page[snippets='http-response']
 
 
 === 유저 로그인 콜백
 
-API : `GET /api/oauth/callback`
+API : `GET /api/oauth/callback?code={value}`
 
+카카오톡 OAuth 로그인 후, 카카오에서 리다이렉트/콜백 응답받는 API 입니다.
 
-=== `200 OK`
+code를 가지고 회원가입/로그인을 합니다.
 
-==== `Request`
+==== `200 OK`
+
+===== Request
 
 operation::o_auth_login_documentation_test/user_login_success[snippets='http-request,request-parameters']
 
-==== `Response`
+===== Response
 
 operation::o_auth_login_documentation_test/user_login_success[snippets='http-response,response-fields']
 
@@ -34,24 +49,24 @@ operation::o_auth_login_documentation_test/user_login_success[snippets='http-res
 
 API : `GET /api/oauth/refresh`
 
+액세스 토큰이 만료되었을 경우, 갱신하는 API 입니다.
 
-=== `200 OK`
+==== `200 OK`
 
-==== `Request`
+===== Request
 
 operation::o_auth_update_token_documentation_test/update_access_token_success[snippets='http-request,request-headers']
 
-==== `Response`
+===== Response
 
 operation::o_auth_update_token_documentation_test/update_access_token_success[snippets='http-response,response-fields']
 
+==== `404 NOT_FOUND`
 
-=== `404 NOT_FOUND`
-
-==== `Request`
+===== Request
 
 operation::o_auth_update_token_documentation_test/update_access_token_fail_user_not_found[snippets='http-request,request-headers']
 
-==== `Response`
+===== Response
 
 operation::o_auth_update_token_documentation_test/update_access_token_fail_user_not_found[snippets='http-response,response-fields']

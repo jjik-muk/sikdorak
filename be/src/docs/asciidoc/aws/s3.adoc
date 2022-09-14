@@ -1,16 +1,25 @@
-=== AWS : 업로드할 수 있는 S3 Presigned URL 생성
+=== 전체 목록 (/api/images/*)
+[cols=2*]
+|===
+| 기능 | API
+
+| <<S3 Presigned URL 생성>> | PUT /api/images/url
+
+|===
+
+=== S3 Presigned URL 생성
 
 API : `PUT /api/images/url`
 
 RequestBody로 이미지 파일 확장자(jpg, jpeg, png) 를 보내야합니다.
 
-=== `201 CREATED`
+==== 201 CREATED
 
 
-==== `Request`
+===== Request
 
 operation::presigned_url_create_documentation_test/create_presigned_url_success[snippets='http-request,request-fields']
 
-==== `Response`
+===== Response
 
 operation::presigned_url_create_documentation_test/create_presigned_url_success[snippets='http-response,response-fields']
