@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.user.user.domain;
 
 import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
+import com.jjikmuk.sikdorak.user.user.exception.InvalidAuthorityException;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -63,7 +64,13 @@ public class User extends BaseTimeEntity {
         this(id, uniqueId, nickname, profileImage, email, Authority.USER);
     }
 
+    /*
+        검증 로직이 여기 있기 때문에 다른 생성자를 추가할 경우
+        최종적으로 이 생성자를 호출하도록 유도 해야함
+     */
     public User(Long id, Long uniqueId, String nickname, String profileImage, String email, Authority authority) {
+        validateAuthority(authority);
+
         this.id = id;
         this.uniqueId = uniqueId;
         this.nickname = new Nickname(nickname);
@@ -72,6 +79,12 @@ public class User extends BaseTimeEntity {
         this.followings = new Followings();
         this.followers = new Followers();
         this.authority = authority;
+    }
+
+    private void validateAuthority(Authority authority) {
+        if (authority.equals(Authority.ANONYMOUS)) {
+            throw new InvalidAuthorityException();
+        }
     }
 
     public Long getId() {
