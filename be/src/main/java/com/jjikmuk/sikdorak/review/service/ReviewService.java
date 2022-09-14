@@ -83,7 +83,8 @@ public class ReviewService {
         List<Review> reviews = getRecommendedReviews(loginUser, pagingInfo);
 
         List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews);
-        CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, cursorPageRequest);
+        CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse,
+            cursorPageRequest);
 
         return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
 
@@ -196,6 +197,31 @@ public class ReviewService {
 
         review.unlike(user);
         return review;
+    }
+
+    @Transactional(readOnly = true)
+    public ReviewListResponse searchReviewsByStoreId(long storeId,
+        CursorPageRequest cursorPageRequest) {
+
+        Store store = storeRepository.findById(storeId)
+            .orElseThrow(NotFoundStoreException::new);
+
+        validateCursorPageSize(cursorPageRequest);
+
+        PagingInfo pagingInfo = convertToPagingInfo(cursorPageRequest);
+
+        List<Review> reviews = getStoreReviews(store.getId(), pagingInfo);
+
+        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews);
+        CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse,
+            cursorPageRequest);
+
+        return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
+    }
+
+    private List<Review> getStoreReviews(long storeId, PagingInfo pagingInfo) {
+        return reviewRepository.findPublicReviewsOfStore(storeId, pagingInfo.cursor(),
+            pagingInfo.pageable());
     }
 
     private void validateReviewWithUser(Review review, User user) {
