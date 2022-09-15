@@ -3,7 +3,7 @@ import { fetchData } from 'utils/utils';
 
 const MAP_POS_DEFAULT = { x: 37.509389, y: 127.105143 };
 const PAGING_SIZE = 5;
-const RADIUS = 500;
+const RADIUS = 2000;
 
 function useStores() {
   const [stores, setStores] = useState([]);
