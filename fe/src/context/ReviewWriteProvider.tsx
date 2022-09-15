@@ -18,6 +18,7 @@ const INIT_STATE = {
 
 const reducer = (state, action: ActionType) => {
   const { year, month, date, day, rating, scope, text, images, presignedUrl, store } = action;
+  const newTags = state.tags.slice(0);
   switch (action.type) {
     case 'SET_DATE':
       return {
@@ -46,6 +47,17 @@ const reducer = (state, action: ActionType) => {
       return {
         ...state,
         tags: [...state.tags, action.tags],
+      };
+    case 'REMOVE_TAG':
+      return {
+        ...state,
+        tags: [...state.tags.filter((tag) => tag !== action.tag)],
+      };
+    case 'MODIFY_TAG':
+      newTags[action.tagIdx] = action.newTag;
+      return {
+        ...state,
+        tags: newTags,
       };
     case 'SET_IMAGES':
       return {
@@ -94,6 +106,10 @@ type ActionType = {
   id?: number;
   address?: string;
   tags?: [];
+  tag?: string;
+  prevTag?: string;
+  newTag?: string;
+  tagIdx?: string;
   images?: string[];
   presignedUrl: string;
   store: {
