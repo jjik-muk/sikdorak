@@ -19,6 +19,9 @@ export const FeedsArea = styled.div`
   padding: 20px;
   overflow-y: auto;
   height: 910px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 export const Buttons = styled.div`
