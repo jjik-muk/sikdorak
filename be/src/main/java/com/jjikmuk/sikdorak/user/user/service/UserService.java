@@ -11,7 +11,7 @@ import com.jjikmuk.sikdorak.user.user.controller.response.UserProfileRelationSta
 import com.jjikmuk.sikdorak.user.user.controller.response.UserSimpleProfileResponse;
 import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
+import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateFollowingException;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateSendAcceptUserException;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
