@@ -269,9 +269,9 @@ public interface StoreSnippet {
 		private static final String CONTACT_NUMBER_DESCRIPTION = "가게 연락처";
 		private static final String ADDRESS_NAME_DESCRIPTION = "지번 주소";
 		private static final String ROAD_ADDRESS_NAME_DESCRIPTION = "도로명 주소";
-		private static final String Y_DESCRIPTION = "위도";
-		private static final String X_DESCRIPTION = "경도";
-		private static final String RADIUS_DESCRIPTION = "위치 반경";
+		private static final String Y_DESCRIPTION = "위도(최대값: 90.0 / 최소값: -90.0)";
+		private static final String X_DESCRIPTION = "경도(최대값: 180.0 / 최소값: -180.0)";
+		private static final String RADIUS_DESCRIPTION = "위치 반경(최대값: 100 / 최소값: 20000)";
 		private static final String KAKAO_PLACE_ID_DESCRIPTION = "API 에서 제공된 장소 ID";
 		private static final String REQUEST_PAGE_TYPE_DESCRIPTION = "요청하는 페이지 타입 - feed | maps 로 나뉩니다.";
 		private static final String REVIEW_SCORE_AVERAGE = "가게의 리뷰 평균 점수 입니다.";
