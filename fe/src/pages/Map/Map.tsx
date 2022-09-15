@@ -1,4 +1,3 @@
-import { REVIEWS } from 'constants/dummyData';
 import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
 import Modal from 'components/Common/Modal/Modal';
@@ -69,7 +68,7 @@ function Map() {
               ))}
             </Modal>
           )}
-          {isActiveStore ? <Stores stores={stores} /> : <Feeds reviews={REVIEWS} isUsedMapPage />}
+          {isActiveStore ? <Stores stores={stores} /> : <Feeds reviews={[]} isUsedMapPage />}
         </FeedsArea>
         <MapArea>
           <MapComponent stores={stores} mapPos={mapPos} setMapPos={setMapPos} />
