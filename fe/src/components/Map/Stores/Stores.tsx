@@ -4,11 +4,12 @@ import { Wrap } from './Stores.styled';
 function Stores({ stores }: any) {
   return (
     <Wrap>
-      {stores.map(({ id, storeName, contactNumber, roadAddressName }) => (
-        <div key={id}>
-          <Store id={id} storeName={storeName} contactNumber={contactNumber} roadAddressName={roadAddressName} />
-        </div>
-      ))}
+      {Boolean(stores.length) &&
+        stores.map(({ id, storeName, contactNumber, roadAddressName }) => (
+          <div key={id}>
+            <Store id={id} storeName={storeName} contactNumber={contactNumber} roadAddressName={roadAddressName} />
+          </div>
+        ))}
     </Wrap>
   );
 }

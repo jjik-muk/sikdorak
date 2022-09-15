@@ -33,6 +33,8 @@ export default function MapComponent({ stores, mapPos, setMapPos }: any) {
   }
 
   function handleOverlay() {
+    if (!stores) return;
+
     const newPositions = stores.map(createPosition);
     const newOverlays = newPositions.map(createCustomOverlay);
 
