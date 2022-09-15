@@ -2,6 +2,7 @@ import Portal from 'components/Common/Portal/Portal';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import ReviewDetailProvider from 'context/ReviewDetailProvider';
 import ReviewsProvider from 'context/ReviewsProvider';
+import ReviewWriteProvider from 'context/ReviewWriteProvider';
 import Callback from 'pages/Callback/Callback';
 import Login from 'pages/Login/Login';
 import Map from 'pages/Map/Map';
@@ -34,35 +35,37 @@ function App() {
   return (
     <ReviewsProvider>
       <ReviewDetailProvider>
-        <GlobalStyle />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<ReviewList />} />
-            <Route path="/map" element={<Map />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/user">
-              <Route path=":userId" element={<UserDetail />} />
-            </Route>
-            <Route path="/store">
-              <Route path=":storeId" element={<StoreDetail />} />
-            </Route>
-            <Route path="/review">
-              <Route path=":reviewId" element={<ReviewShare />} />
-            </Route>
-            <Route
-              path="/api/oauth/callback"
-              element={<Callback accessToken={accessToken} setAccessToken={setAccessToken} />}
-            />
-            <Route
-              path="/reviewWrite"
-              element={
-                <Portal selector="#portal">
-                  <ReviewWrite />
-                </Portal>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
+        <ReviewWriteProvider>
+          <GlobalStyle />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<ReviewList />} />
+              <Route path="/map" element={<Map />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/user">
+                <Route path=":userId" element={<UserDetail />} />
+              </Route>
+              <Route path="/store">
+                <Route path=":storeId" element={<StoreDetail />} />
+              </Route>
+              <Route path="/review">
+                <Route path=":reviewId" element={<ReviewShare />} />
+              </Route>
+              <Route
+                path="/api/oauth/callback"
+                element={<Callback accessToken={accessToken} setAccessToken={setAccessToken} />}
+              />
+              <Route
+                path="/reviewWrite"
+                element={
+                  <Portal selector="#portal">
+                    <ReviewWrite />
+                  </Portal>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </ReviewWriteProvider>
       </ReviewDetailProvider>
     </ReviewsProvider>
   );
