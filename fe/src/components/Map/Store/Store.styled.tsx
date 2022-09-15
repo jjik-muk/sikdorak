@@ -7,4 +7,5 @@ export const Wrap = styled.div`
   gap: 5px;
   ${STYLE.BOX_CONTAINER}
   padding: 10px;
+  cursor: pointer;
 `;

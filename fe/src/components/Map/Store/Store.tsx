@@ -1,8 +1,14 @@
+import { useNavigate } from 'react-router-dom';
 import { Wrap } from './Store.styled';
 
-function Store({ storeName, contactNumber, roadAddressName }: any) {
+function Store({ id, storeName, contactNumber, roadAddressName }: any) {
+  const navigate = useNavigate();
   return (
-    <Wrap>
+    <Wrap
+      onClick={() => {
+        navigate(`/store/${id}`);
+      }}
+    >
       <div>{storeName}</div>
       <div>{contactNumber}</div>
       <div>{roadAddressName}</div>
