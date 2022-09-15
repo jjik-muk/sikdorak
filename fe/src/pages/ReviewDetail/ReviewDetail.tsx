@@ -36,7 +36,7 @@ function ReviewDetail({
   const [comments, setComments] = useState([]);
   const [afterParam, setAfterParam] = useState(0);
   const COMMENT_SIZE = 2;
-  const hasNextComments = afterParam !== 1 && comments.length > 0;
+  const [hasNextComments, setHasNextComments] = useState(true);
   const menuRef = useRef(null);
   useOutsideClick(menuRef, toggleIsActiveMenu);
   useAuth();
@@ -106,7 +106,7 @@ function ReviewDetail({
     const commentRes = await fetchDataThatNeedToLogin(
       `api/reviews/${reviewId}/comments?size=${COMMENT_SIZE}&after=${afterParam}`,
     );
-
+    setHasNextComments(!commentRes.data.page.last);
     if (!commentRes.data) return;
 
     const nextComments = commentRes.data.comments;
