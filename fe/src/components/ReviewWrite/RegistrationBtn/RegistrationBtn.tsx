@@ -3,7 +3,7 @@ import useUploadImage from 'hooks/useUploadImage';
 import { fetchData, fetchDataThatNeedToLogin } from 'utils/utils';
 import { Wrap } from './RegistrationBtn.styled';
 
-function RegistrationBtn({ selectedImg, dispatchReviews }: any) {
+function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: any) {
   const [reviewWriteState] = useReviewWrite();
   const { content, year, month, date, rating, scope, tags, images, store, presignedUrl } = reviewWriteState;
   const { placeId, storeName, x, y } = store;
@@ -24,14 +24,13 @@ function RegistrationBtn({ selectedImg, dispatchReviews }: any) {
   }
 
   async function registerPost() {
-    if (year === 0 && month === 0 && date === 0) {
-      // TODO: 방문일 선택 경고 만들어서 추가하기
-      alert('방문일 선택하세요^^');
+    // TODO: 미입력 경고 추가
+    if (!store) {
+      alert('식당을 선택해주세요.');
       return;
     }
-    if (!store) {
-      // TODO: 식당 미입력 경고 만들어서 추가하기
-      alert('식당 선택하세요^^');
+    if (year === 0 && month === 0 && date === 0) {
+      alert('방문일을 선택해주세요.');
       return;
     }
     const storeValidationRes = await fetchData(`${process.env.REACT_APP_BE_SERVER_URL}/api/stores`, {
@@ -62,6 +61,7 @@ function RegistrationBtn({ selectedImg, dispatchReviews }: any) {
       store,
     };
     dispatchReviews({ type: 'ADD_REVIEW', review: newReview });
+    toggleIsReviewWrite();
   }
 }
 

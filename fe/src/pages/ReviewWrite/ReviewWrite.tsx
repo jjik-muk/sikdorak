@@ -42,8 +42,12 @@ function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps)
             <WriteRating />
             <TagContainer />
             <PostScope />
-            <div onClick={toggleIsReviewWrite}>
-              <RegistrationBtn selectedImg={selectedImg} dispatchReviews={dispatchReviews} />
+            <div>
+              <RegistrationBtn
+                selectedImg={selectedImg}
+                dispatchReviews={dispatchReviews}
+                toggleIsReviewWrite={toggleIsReviewWrite}
+              />
             </div>
           </InputWrap>
         </Content>
