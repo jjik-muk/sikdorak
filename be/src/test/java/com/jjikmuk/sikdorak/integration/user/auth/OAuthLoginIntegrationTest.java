@@ -9,7 +9,7 @@ import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.auth.service.OAuthService;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
+import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

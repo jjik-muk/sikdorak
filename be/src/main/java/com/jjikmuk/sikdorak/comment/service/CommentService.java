@@ -16,7 +16,7 @@ import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
+import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import java.util.List;

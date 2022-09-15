@@ -19,7 +19,7 @@ import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
+import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import java.util.ArrayList;
@@ -231,7 +231,7 @@ public class ReviewService {
     }
 
     private long getCursorOrDefaultCursor(CursorPageRequest cursorPageRequest) {
-        return cursorPageRequest.getAfter() == 0 ? reviewRepository.count()
+        return cursorPageRequest.getAfter() == 0 ? reviewRepository.countAll()
             : cursorPageRequest.getAfter();
     }
 

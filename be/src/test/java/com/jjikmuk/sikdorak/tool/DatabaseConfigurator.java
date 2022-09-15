@@ -7,7 +7,7 @@ import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.user.user.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
+import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
