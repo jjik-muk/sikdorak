@@ -9,6 +9,7 @@ import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import { FeedProps } from 'components/ReviewList/Feed/Feed';
 import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
+import useAuth from 'hooks/useAuth';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import { useEffect, useRef, useState } from 'react';
@@ -25,6 +26,7 @@ function ReviewDetail({
   isActiveHeart,
   likeCnt,
   postLike,
+  tags,
 }: ReviewDetailProps) {
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const hasPicture = images.length > 0;
@@ -37,6 +39,7 @@ function ReviewDetail({
   const hasNextComments = afterParam !== 1 && comments.length > 0;
   const menuRef = useRef(null);
   useOutsideClick(menuRef, toggleIsActiveMenu);
+  useAuth();
 
   useEffect(() => {
     fetchNextComment();
@@ -78,7 +81,7 @@ function ReviewDetail({
             </IconWrap>
           </div>
         </ButtonWrapper>
-        <TagList tags={['#초밥', '#맛집', '#부산']} />
+        <TagList tags={tags} />
         {comments &&
           comments.map(({ author, content, id }) => <Comment key={id} title={author.nickname} content={content} />)}
         {hasNextComments && (

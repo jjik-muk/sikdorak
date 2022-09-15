@@ -12,8 +12,8 @@ export const DETAIL = {
 
 export const FEED = {
   BTN: {
-    WIDTH_NO_IMG: 190,
-    WIDTH_WITH_IMG: 90,
+    WIDTH_NO_IMG: 200,
+    WIDTH_WITH_IMG: 100,
     HEIGHT: 30,
   },
   IMG: {

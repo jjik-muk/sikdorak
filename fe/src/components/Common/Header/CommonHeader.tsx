@@ -8,9 +8,9 @@ import { createKey } from 'utils/utils';
 import Icon, { IconComponentsKeys } from '../Icon/Icon';
 import Logo from '../Logo/Logo';
 import Portal from '../Portal/Portal';
-import { ButtonWrap, IconWrap, Input, SearchFormWrap, Header, Wrap, ProfileImageWrap } from './CommonHeader.styled';
+import { ButtonWrap, Header, Wrap, ProfileImageWrap } from './CommonHeader.styled';
 
-function CommonHeader() {
+function CommonHeader({ dispatchReviews }: any) {
   const [isReviewWrite, toggleIsReviewWrite] = useToggle(false);
   const [, toggleIsUserProfile] = useToggle(false);
   const reviewWriteModalRef = useRef(null);
@@ -31,12 +31,12 @@ function CommonHeader() {
     <Wrap>
       <Header>
         <Logo />
-        <SearchFormWrap>
+        {/* <SearchFormWrap>
           <Input type="text" placeholder="검색해주세요." />
           <IconWrap>
             <Icon icon="SearchBtn" width={18} height={18} />
           </IconWrap>
-        </SearchFormWrap>
+        </SearchFormWrap> */}
         <ButtonWrap>
           {iconInfo.map(({ icon, handler, to }, idx) => (
             <Link key={createKey(icon, idx)} to={to}>
@@ -45,7 +45,7 @@ function CommonHeader() {
               </div>
             </Link>
           ))}
-          <Link to={`/userDetail/${userId}`}>
+          <Link to={`/user/${userId}`}>
             <ProfileImageWrap>
               <img src={profileImageUrl} alt="profile" width={24} height={24} />
             </ProfileImageWrap>
@@ -53,7 +53,7 @@ function CommonHeader() {
         </ButtonWrap>
         {isReviewWrite && (
           <Portal selector="#portal" ref={reviewWriteModalRef}>
-            <ReviewWrite toggleIsReviewWrite={toggleIsReviewWrite} />
+            <ReviewWrite toggleIsReviewWrite={toggleIsReviewWrite} dispatchReviews={dispatchReviews} />
           </Portal>
         )}
       </Header>

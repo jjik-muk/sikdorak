@@ -1,67 +1,73 @@
-import { DEFAULT_IMG, STORE } from 'constants/dummyData';
-import { ICON, STORE_DETAIL } from 'constants/size';
-import TEXT from 'constants/text';
+import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
-import Icon from 'components/Common/Icon/Icon';
-import {
-  DimText,
-  InfoWrap,
-  MoreDim,
-  OtherPicture,
-  PictureWrap,
-  Row,
-  StoreInfo,
-  Text,
-  Title,
-  Wrap,
-} from './StoreDetail.styled';
+import StoreInfo from 'components/StoreDetail/StoreInfo/StoreInfo';
+import useAuth from 'hooks/useAuth';
+import useReviews from 'hooks/useReviews';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+import { fetchDataThatNeedToLogin } from 'utils/utils';
+
+const INIT_STATE_STORE_INFO = {
+  storeName: '',
+  addressName: '',
+  contactNumber: '',
+  reviewCounts: 0,
+  reviewScoreAverage: 0,
+};
 
 function StoreDetail() {
-  const { storeName, storeRating, storePictures, reviewCnt, address, phoneNumber } = STORE;
-  const [firstImg, ...otherImg] = getImagesOfStore({ pictures: storePictures, defaultImg: DEFAULT_IMG });
+  const { pathname } = useLocation();
+  const targetId = Number(pathname.split('/').at(-1));
+  const [storeInfo, setStoreInfo] = useState(INIT_STATE_STORE_INFO);
+  const { storeName, addressName, contactNumber, reviewCounts, reviewScoreAverage } = storeInfo;
+  const { reviews, handleScroll, fetchNextReviews, afterParam } = useReviews();
+  useAuth();
+
+  useEffect(() => {
+    fetchAndStoreRestaurantInfo();
+    fetchNextReviews(getUrl(afterParam, 5));
+  }, []);
 
   return (
-    <>
+    <Wrap
+      onScroll={(e) => {
+        handleScroll(e, getUrl(afterParam, 5));
+      }}
+    >
       <CommonHeader />
-      <Wrap>
-        <PictureWrap>
-          <div>
-            <img src={firstImg} alt={TEXT.ALT.FOOD} width={STORE_DETAIL.IMG.LARGE} height={STORE_DETAIL.IMG.LARGE} />
-          </div>
-          <OtherPicture>
-            {otherImg.map((picture) => (
-              <img src={picture} alt={TEXT.ALT.FOOD} width={STORE_DETAIL.IMG.SMALL} height={STORE_DETAIL.IMG.SMALL} />
-            ))}
-          </OtherPicture>
-          <MoreDim />
-          <DimText>더 보기</DimText>
-        </PictureWrap>
-        <StoreInfo>
-          <InfoWrap>
-            <Title>{storeName}</Title>
-            <Row>
-              <Icon icon="Star" stroke="#fff" fill="#f1c40f" width={ICON.SMALL} height={ICON.SMALL} />
-              <Text>{storeRating} / 5</Text>
-              <Text>리뷰 {reviewCnt}</Text>
-            </Row>
-            <Row>
-              <Icon icon="Location" width={ICON.SMALL} height={ICON.SMALL} fill="#000" />
-              <Text>{address}</Text>
-            </Row>
-            <Row>
-              <Icon icon="Phone" width={ICON.SMALL} height={ICON.SMALL} fill="#000" />
-              <Text>{phoneNumber}</Text>
-            </Row>
-          </InfoWrap>
-        </StoreInfo>
-      </Wrap>
-    </>
+      <ContentsWrap>
+        <StoreInfo
+          storeName={storeName}
+          storeRating={reviewScoreAverage}
+          reviewCnt={reviewCounts}
+          address={addressName}
+          phoneNumber={contactNumber}
+        />
+        <Feeds reviews={reviews} />
+      </ContentsWrap>
+    </Wrap>
   );
 
-  function getImagesOfStore({ pictures, defaultImg }) {
-    const ARR_LEN = 5;
-    return Array.from({ length: ARR_LEN }).map((_, i) => pictures[i] || defaultImg);
+  async function fetchAndStoreRestaurantInfo() {
+    const res = await fetchDataThatNeedToLogin(`api/stores/${targetId}`);
+    setStoreInfo(res.data);
+  }
+
+  function getUrl(after, reviewSize) {
+    return `api/stores/${targetId}/reviews?after=${after}&size=${reviewSize}`;
   }
 }
 
 export default StoreDetail;
+
+const Wrap = styled.div`
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
+`;
+
+const ContentsWrap = styled.div`
+  width: fit-content;
+  margin: 0 auto;
+`;

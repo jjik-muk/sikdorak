@@ -10,26 +10,25 @@ import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import StoreDetail from 'pages/StoreDetail/StoreDetail';
 import UserDetail from 'pages/UserDetail/UserDetail';
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalStyle from 'styles/GlobalStyle';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 
 function App() {
   const [, dispatchMyUserInfo] = useMyUserInfo();
   const [accessToken, setAccessToken] = useState(null);
-  const hasAccessToken = () => localStorage.getItem('accessToken');
 
   useEffect(() => {
     setMyInfo();
 
     async function setMyInfo() {
       const myInfo = await fetchDataThatNeedToLogin(`api/users/me`);
-      const { id, nickname, profileImage } = myInfo.data;
+      const { id, nickname, profileImage } = myInfo.data || { id: null, nickname: null, profileImage: null };
       const myInfoJson = JSON.stringify({ userId: id, nickname, profileImageUrl: profileImage });
       localStorage.setItem('MY_INFO', myInfoJson);
       dispatchMyUserInfo({ type: 'SET_USER', userId: id, nickname, profileImageUrl: profileImage });
     }
-  }, [accessToken]);
+  }, [accessToken, dispatchMyUserInfo]);
 
   return (
     <ReviewsProvider>
@@ -37,13 +36,15 @@ function App() {
         <GlobalStyle />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={hasAccessToken() ? <ReviewList /> : <Navigate replace to="/login" />} />
+            <Route path="/" element={<ReviewList />} />
             <Route path="/map" element={<Map />} />
-            <Route path="/login" element={hasAccessToken() ? <Navigate replace to="/" /> : <Login />} />
-            <Route path="/userDetail">
-              <Route path=":userId" element={hasAccessToken() ? <UserDetail /> : <Navigate replace to="/" />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/user">
+              <Route path=":userId" element={<UserDetail />} />
             </Route>
-            <Route path="/storeDetail" element={hasAccessToken() ? <StoreDetail /> : <Navigate replace to="/" />} />
+            <Route path="/store">
+              <Route path=":storeId" element={<StoreDetail />} />
+            </Route>
             <Route
               path="/api/oauth/callback"
               element={<Callback accessToken={accessToken} setAccessToken={setAccessToken} />}

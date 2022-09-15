@@ -13,10 +13,11 @@ const INIT_STATE = {
   id: 0,
   address: '',
   images: [],
+  store: {},
 };
 
 const reducer = (state, action: ActionType) => {
-  const { year, month, date, day, restaurant, id, address, rating, scope, text, images, presignedUrl } = action;
+  const { year, month, date, day, rating, scope, text, images, presignedUrl, store } = action;
   switch (action.type) {
     case 'SET_DATE':
       return {
@@ -25,13 +26,6 @@ const reducer = (state, action: ActionType) => {
         month,
         date,
         day,
-      };
-    case 'SELECT_RESTAURANT':
-      return {
-        ...state,
-        restaurant,
-        id,
-        address,
       };
     case 'TYPING_TEXT':
       return {
@@ -62,6 +56,11 @@ const reducer = (state, action: ActionType) => {
       return {
         ...state,
         presignedUrl,
+      };
+    case 'SET_STORE':
+      return {
+        ...state,
+        store,
       };
     default:
       return state;
@@ -97,6 +96,12 @@ type ActionType = {
   tags?: [];
   images?: string[];
   presignedUrl: string;
+  store: {
+    placeId: number;
+    storeName: string;
+    x: string;
+    y: string;
+  };
 };
 
 export default ReviewWriteProvider;

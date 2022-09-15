@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useReducer } from 'react';
 
 const INIT_STATE = {
   reviews: [],
@@ -32,12 +32,10 @@ function ReviewsProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const useReviews = () => [useContext(ReviewsContext), useContext(DispatchReviewsContext)];
+export default ReviewsProvider;
 
 type ActionType = {
   type: string;
   reviews: object[];
   reviewId: number;
 };
-
-export default ReviewsProvider;

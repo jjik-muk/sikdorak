@@ -1,13 +1,16 @@
 import Feed, { FeedProps } from 'components/ReviewList/Feed/Feed';
+import GuideText from '../GuideText/GuideText';
 import { Wrap } from './Feeds.styled';
 
 // TODO: 리뷰가 없을 때 적절한 레이아웃 표시
 
-function Feeds({ reviews }: FeedsProps) {
+function Feeds({ reviews, isUsedMapPage }: FeedsProps) {
+  const hasReviews = reviews?.length > 0;
+
   return (
     <Wrap>
-      {reviews.length ? (
-        reviews.map(({ images, like, reviewContent, reviewId, reviewScore, store, user }) => (
+      {hasReviews ? (
+        reviews.map(({ images, like, reviewContent, reviewId, reviewScore, store, user, tags }) => (
           <div key={reviewId}>
             <Feed
               images={images}
@@ -17,11 +20,13 @@ function Feeds({ reviews }: FeedsProps) {
               reviewScore={reviewScore}
               store={store}
               user={user}
+              tags={tags}
+              isUsedMapPage={isUsedMapPage}
             />
           </div>
         ))
       ) : (
-        <div>리뷰가 없습니다.</div>
+        <GuideText text="리뷰가 없습니다." />
       )}
     </Wrap>
   );
@@ -31,4 +36,5 @@ export default Feeds;
 
 type FeedsProps = {
   reviews: FeedProps[];
+  isUsedMapPage?: boolean;
 };

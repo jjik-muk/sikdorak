@@ -1,46 +1,33 @@
 import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
-import { useReviews } from 'context/ReviewsProvider';
-import { useEffect, useState } from 'react';
-import { fetchDataThatNeedToLogin } from 'utils/utils';
+import useAuth from 'hooks/useAuth';
+import useReviews from 'hooks/useReviews';
+import { useEffect } from 'react';
 import { ReviewListWrap } from './ReviewList.styled';
 
+const REVIEW_SIZE = 5;
+
 function ReviewList() {
-  const [{ reviews }, dispatchReviews] = useReviews();
-  const [afterParam, setAfterParam] = useState(0);
-  const [hasNextPage, setHasNextPage] = useState(true);
-  const REVIEW_SIZE = 5;
+  const { reviews, handleScroll, fetchNextReviews, afterParam } = useReviews();
+  useAuth();
 
   useEffect(() => {
-    fetchNextRecommendReviews();
+    fetchNextReviews(getUrl(afterParam, REVIEW_SIZE));
   }, []);
 
   return (
-    <ReviewListWrap onScroll={handleScroll}>
+    <ReviewListWrap
+      onScroll={(e) => {
+        handleScroll(e, getUrl(afterParam, REVIEW_SIZE));
+      }}
+    >
       <CommonHeader />
       <Feeds reviews={reviews} />
     </ReviewListWrap>
   );
 
-  function handleScroll(e) {
-    const { scrollHeight, scrollTop, clientHeight } = e.target as HTMLDivElement;
-    const isScrollEnd = scrollHeight - scrollTop === clientHeight;
-
-    if (hasNextPage && isScrollEnd) {
-      fetchNextRecommendReviews();
-    }
-  }
-
-  async function fetchNextRecommendReviews() {
-    const res = await fetchDataThatNeedToLogin(`api/reviews?after=${afterParam}&size=${REVIEW_SIZE}`);
-    const nextReviews = res.data.reviews;
-    const nextAfterParam = res.data.page.next;
-    dispatchReviews({ type: 'ADD_REVIEWS', reviews: nextReviews });
-    setAfterParam(nextAfterParam);
-
-    if (res.data.page.last) {
-      setHasNextPage(false);
-    }
+  function getUrl(after, reviewSize) {
+    return `api/reviews?after=${after}&size=${reviewSize}`;
   }
 }
 

@@ -21,7 +21,6 @@ export const CommentWrapper = styled.div`
 export const ContentWrapper = styled.div`
   ${STYLE.BOX_CONTAINER}
   padding: 10px;
-  padding-top: 0;
   display: flex;
   gap: 5px;
 `;

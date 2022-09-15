@@ -1,10 +1,10 @@
-import { useReviews } from 'context/ReviewsProvider';
+import useReviews from 'hooks/useReviews';
 import { Ref } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import { Btn, DeleteBtn, Wrap } from './Menu.styled';
 
 function Menu({ menuRef, reviewId }: MenuProps) {
-  const [, dispatchReivews] = useReviews();
+  const { dispatchReviews } = useReviews();
 
   return (
     <Wrap ref={menuRef}>
@@ -20,7 +20,7 @@ function Menu({ menuRef, reviewId }: MenuProps) {
 
   function handleDeleteReview() {
     fetchDataThatNeedToLogin(`api/reviews/${reviewId}`, { method: 'DELETE' });
-    dispatchReivews({ type: 'DELETE_REVIEW', reviewId });
+    dispatchReviews({ type: 'DELETE_REVIEW', reviewId });
   }
 }
 
