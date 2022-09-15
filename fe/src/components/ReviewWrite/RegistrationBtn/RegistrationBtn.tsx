@@ -10,8 +10,8 @@ function RegistrationBtn({ selectedImg, dispatchReviews }: any) {
   const { uploadImageToS3 } = useUploadImage();
 
   return (
-    <Wrap>
-      <div onClick={handleRegistration}>게시</div>
+    <Wrap onClick={handleRegistration}>
+      <div>게시</div>
     </Wrap>
   );
 
