@@ -19,7 +19,9 @@ function useStores() {
       );
       setStores(res.data.stores);
       const nextAfterParam = res.data.page.next;
-      setAfterParam(nextAfterParam);
+      if (!res.data.page.last) {
+        setAfterParam(nextAfterParam);
+      }
     }
   }, [mapPos]);
 

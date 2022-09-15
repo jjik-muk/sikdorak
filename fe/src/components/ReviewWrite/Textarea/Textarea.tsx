@@ -1,20 +1,23 @@
 import { useReviewWrite } from 'context/ReviewWriteProvider';
-import { debounce } from 'utils/utils';
-// import { useState } from 'react';
+import { useState } from 'react';
 import { Input, Wrap } from './Textarea.styled';
 
 function Textarea() {
-  const [, dispatchReviewWriteState] = useReviewWrite();
+  const [reviewWriteContext, dispatchReviewWriteState] = useReviewWrite();
+  const [inputValue, setInputValue] = useState(reviewWriteContext.content);
 
   return (
     <Wrap>
-      <Input onChange={debounce(handleChange, 100)} placeholder="텍스트를 입력해주세요." />
+      <Input
+        value={inputValue}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          dispatchReviewWriteState({ type: 'TYPING_TEXT', text: e.target.value });
+        }}
+        placeholder="텍스트를 입력해주세요."
+      />
     </Wrap>
   );
-
-  function handleChange({ target }) {
-    dispatchReviewWriteState({ type: 'TYPING_TEXT', text: target.value });
-  }
 }
 
 export default Textarea;

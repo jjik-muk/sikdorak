@@ -40,6 +40,7 @@ function Feed({
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const { isActiveHeart, likeCnt, postLike } = useLike({ like, reviewId });
+  console.log('like', like);
   const [copyText, setCopyText] = useState('');
 
   const reviewDetailModalRef = useRef(null);

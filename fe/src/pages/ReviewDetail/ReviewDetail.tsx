@@ -28,7 +28,7 @@ function ReviewDetail({
   postLike,
   tags,
 }: ReviewDetailProps) {
-  const commentRef = useRef<HTMLTextAreaElement>(null);
+  const commentRef = useRef<HTMLInputElement>(null);
   const hasPicture = images.length > 0;
   const wrapWidth = hasPicture ? DETAIL.WRAP.WIDTH_WITH_IMG : DETAIL.WRAP.WIDTH_NO_IMG;
   const btnWidth = hasPicture ? FEED.BTN.WIDTH_WITH_IMG : FEED.BTN.WIDTH_NO_IMG;

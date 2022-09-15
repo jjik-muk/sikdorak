@@ -19,7 +19,9 @@ export default function WriteComment({ commentRef, reviewId, comments, setCommen
 
   function handleRegisterComment(e) {
     const isPressedEnter = e.key === 'Enter';
+    const hasInputValue = commentValue.length > 0;
     if (!isPressedEnter) return;
+    if (!hasInputValue) return;
 
     postWrittingComment();
     setComment('');
@@ -56,7 +58,7 @@ export default function WriteComment({ commentRef, reviewId, comments, setCommen
 // TODO: Dispatch 타입 정의
 
 type WriteCommentProps = {
-  commentRef?: React.MutableRefObject<HTMLTextAreaElement>;
+  commentRef?: React.Ref<HTMLInputElement>;
   reviewId: number;
   comments: string[];
   setComments: any;
