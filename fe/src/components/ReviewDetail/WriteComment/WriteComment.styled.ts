@@ -1,7 +1,7 @@
 import { STYLE } from 'constants/style';
 import styled from 'styled-components';
 
-export const Input = styled.textarea`
+export const Input = styled.input`
   margin-top: 10px;
   width: 100%;
   height: 30px;
