@@ -50,7 +50,7 @@ function UserDetail() {
         <UserInfoWrap>
           <UserInfoHeader>
             {userProfile?.nickname}
-            {!isMyUserDetailPage && <FollowButton />}
+            {!isMyUserDetailPage && <FollowButton alreadyFollowed={userProfile?.relationStatus?.followStatus} />}
           </UserInfoHeader>
           <ActivityInfoWrap>
             <div>게시물 {userProfile?.reviewCount}</div>
