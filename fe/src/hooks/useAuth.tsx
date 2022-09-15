@@ -17,7 +17,7 @@ function useAuth() {
 
     async function isValidAccessToken() {
       const res = await fetchDataThatNeedToLogin('api/users/me');
-      return res.code === 'F-O003';
+      return res.code === 'F-O003' || res.code === 'F-O004';
     }
   }, []);
 }

@@ -50,7 +50,7 @@ function ReviewDetail({
       {hasPicture && <Carousel urls={images} />}
       <ContentsWrap wrapWidth={wrapWidth}>
         <Header>
-          <Profile nickname={user?.userNickname} />
+          <Profile nickname={user?.userNickname} imgUrl={user?.userProfileImage} userId={user?.userId} />
           <div onClick={toggleIsActiveMenu}>
             <Icon icon="MenuBtn" />
             {isActiveMenu && <Menu menuRef={menuRef} reviewId={reviewId} />}
@@ -60,7 +60,7 @@ function ReviewDetail({
           <Contents>{reviewContent}</Contents>
           <Rating rating={reviewScore} />
           <MainFooter>
-            <CompnayProfile company={store?.storeName} region={store?.storeAddress} />
+            <CompnayProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
           </MainFooter>
         </Main>
         <ButtonWrapper>
@@ -81,9 +81,11 @@ function ReviewDetail({
             </IconWrap>
           </div>
         </ButtonWrapper>
-        <TagList tags={tags} />
+        <TagList tags={tags} imgUrl={user.userProfileImage} />
         {comments &&
-          comments.map(({ author, content, id }) => <Comment key={id} title={author.nickname} content={content} />)}
+          comments.map(({ author, content, id }) => (
+            <Comment key={id} title={author.nickname} content={content} imgUrl={author.profileImage} />
+          ))}
         {hasNextComments && (
           <button onClick={fetchNextComment} type="button">
             댓글 더보기

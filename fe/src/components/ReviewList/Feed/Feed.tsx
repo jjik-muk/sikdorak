@@ -55,7 +55,7 @@ function Feed({
       <Wrap onClick={toggleIsClikedFeed}>
         <ContentsWrap wrapWidth={isUsedMapPage ? 500 : DETAIL.WRAP.WIDTH_NO_IMG}>
           <Header>
-            <UserProfile nickname={user?.userNickname} />
+            <UserProfile nickname={user?.userNickname} imgUrl={user?.userProfileImage} userId={user?.userId} />
             <MenuWrap onClick={handleMenu}>
               {isMyFeed && <Icon icon="MenuBtn" />}
               {isActiveMenu && <Menu menuRef={menuRef} reviewId={reviewId} />}
@@ -77,7 +77,7 @@ function Feed({
             </Pictures>
             <Rating rating={reviewScore} />
             <MainFooter>
-              <CompnayProfile company={store?.storeName} region={store?.storeAddress} />
+              <CompnayProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
             </MainFooter>
           </Main>
           <ButtonWrapper>
