@@ -80,4 +80,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
         @Param("storeId") long storeId,
         @Param("targetId") long targetId,
         Pageable pageable);
+
+    @Query(value = "select count(*) from review" , nativeQuery = true)
+    long countAll();
 }

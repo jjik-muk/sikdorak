@@ -8,7 +8,7 @@ import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
 import com.jjikmuk.sikdorak.user.user.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
+import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateFollowingException;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateSendAcceptUserException;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundFollowException;

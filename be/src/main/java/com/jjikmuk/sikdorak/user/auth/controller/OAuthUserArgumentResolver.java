@@ -5,7 +5,7 @@ import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
 import com.jjikmuk.sikdorak.user.user.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
+import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;

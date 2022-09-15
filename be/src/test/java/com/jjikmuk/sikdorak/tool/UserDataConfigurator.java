@@ -4,7 +4,7 @@ import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.domain.UserRepository;
+import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
