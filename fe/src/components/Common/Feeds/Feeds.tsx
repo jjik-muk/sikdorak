@@ -1,4 +1,5 @@
 import Feed, { FeedProps } from 'components/ReviewList/Feed/Feed';
+import GuideText from '../GuideText/GuideText';
 import { Wrap } from './Feeds.styled';
 
 // TODO: 리뷰가 없을 때 적절한 레이아웃 표시
@@ -25,7 +26,7 @@ function Feeds({ reviews, isUsedMapPage }: FeedsProps) {
           </div>
         ))
       ) : (
-        <div>리뷰가 없습니다.</div>
+        <GuideText text="리뷰가 없습니다." />
       )}
     </Wrap>
   );
