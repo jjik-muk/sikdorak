@@ -4,6 +4,7 @@ import Modal from 'components/Common/Modal/Modal';
 import MapComponent from 'components/Map/MapComponent';
 import Stores from 'components/Map/Stores/Stores';
 import useAuth from 'hooks/useAuth';
+import useReviews from 'hooks/useReviews';
 import useSearchBar from 'hooks/useSearchBar';
 import useStores from 'hooks/useStores';
 import { useEffect, useState } from 'react';
@@ -16,6 +17,7 @@ function Map() {
   const { stores, mapPos, setMapPos } = useStores();
   const { inputValue, searchResults, setInputValue, debouncedSearch } = useSearchBar();
   useAuth();
+  const { dispatchReviews } = useReviews();
 
   useEffect(() => {
     const hasInputValue = inputValue.length > 0;
@@ -31,7 +33,7 @@ function Map() {
 
   return (
     <>
-      <CommonHeader />
+      <CommonHeader dispatchReviews={dispatchReviews} />
       <ContentArea>
         <Buttons>
           <button

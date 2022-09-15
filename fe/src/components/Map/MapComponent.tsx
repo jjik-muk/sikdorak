@@ -15,7 +15,7 @@ export default function MapComponent({ stores, mapPos, setMapPos }: any) {
   const mapRef = useRef(null);
 
   useEffect(initMap, []);
-  useEffect(handleOverlay, [mapPos]);
+  useEffect(handleOverlay, [mapPos, stores]);
 
   function initMap() {
     const center = new kakao.maps.LatLng(mapPos.x, mapPos.y);
@@ -35,6 +35,7 @@ export default function MapComponent({ stores, mapPos, setMapPos }: any) {
   function handleOverlay() {
     if (!stores) return;
 
+    console.log('stores', stores);
     const newPositions = stores.map(createPosition);
     const newOverlays = newPositions.map(createCustomOverlay);
 
