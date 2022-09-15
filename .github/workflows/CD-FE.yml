@@ -3,7 +3,14 @@ name: FE Deploy in AWS CloudFront
 on:
   push:
     branches: [dev]
-    paths: ["fe/**"]
+    paths:
+      [
+        "fe/src/**",
+        "fe/public/**",
+        "fe/package.json",
+        "fe/eslintrc",
+        "fe/package-lock.json",
+      ]
 
 permissions:
   contents: read
