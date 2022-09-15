@@ -104,7 +104,7 @@ public class StoreService {
 			Pageable.ofSize(cursorPageRequest.getSize()));
 
 		List<StoreRadiusSearchResponse> storeListResponse = getStoreListResponse(stores);
-		CursorPageResponse cursorPageResponse = getCursorPageResponse(storeListResponse);
+		CursorPageResponse cursorPageResponse = getCursorPageResponse(storeListResponse, cursorPageRequest);
 
 		return StoreListByRadiusResponse.of(storeListResponse, cursorPageResponse);
 	}
@@ -233,14 +233,17 @@ public class StoreService {
 			.toList();
 	}
 
-	private CursorPageResponse getCursorPageResponse(List<StoreRadiusSearchResponse> storeListResponse) {
+	private CursorPageResponse getCursorPageResponse(List<StoreRadiusSearchResponse> storeListResponse,
+		CursorPageRequest cursorPageRequest) {
 
 		if (storeListResponse.isEmpty()) {
 			return new CursorPageResponse(0, 0L, 0L, true);
 		}
 
+		boolean isLast = cursorPageRequest.getSize() > storeListResponse.size();
+
 		return new CursorPageResponse(storeListResponse.size(), 0L,
-			storeListResponse.get(storeListResponse.size() - 1).id());
+			storeListResponse.get(storeListResponse.size() - 1).id(), isLast);
 	}
 
 	private void validateCursorRequest(CursorPageRequest cursorPageRequest) {
