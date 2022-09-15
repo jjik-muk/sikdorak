@@ -9,14 +9,9 @@ function Menu({ menuRef, reviewId }: MenuProps) {
   return (
     <Wrap ref={menuRef}>
       <DeleteBtn onClick={handleDeleteReview}>삭제</DeleteBtn>
-      <Btn onClick={handleModifyReview}>수정</Btn>
       <Btn>취소</Btn>
     </Wrap>
   );
-
-  function handleModifyReview() {
-    console.log('수정');
-  }
 
   function handleDeleteReview() {
     fetchDataThatNeedToLogin(`api/reviews/${reviewId}`, { method: 'DELETE' });
