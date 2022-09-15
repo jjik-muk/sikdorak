@@ -1,8 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { Wrap, Picture, Title, Content, ContentWrapper, CommentWrapper } from './Comment.styled';
 
 const DEFAULT_IMG_URL = 'https://flyclipart.com/thumb2/profile-user-png-icon-free-download-196388.png';
 
-function Comment({ imgUrl = DEFAULT_IMG_URL, title, content }: CommentProps) {
+function Comment({ imgUrl = DEFAULT_IMG_URL, title, content, authorId }: CommentProps) {
+  const navigate = useNavigate();
   // const [isActiveAdditionComment, setIsActiveAdditionComment] = useState(false);
   // const [commentCnt, setCommentCnt] = useState(0);
 
@@ -16,10 +18,21 @@ function Comment({ imgUrl = DEFAULT_IMG_URL, title, content }: CommentProps) {
 
   return (
     <Wrap>
-      <Picture src={imgUrl} />
+      <Picture
+        src={imgUrl}
+        onClick={() => {
+          navigate(`/user/${authorId}`);
+        }}
+      />
       <CommentWrapper>
         <ContentWrapper>
-          <Title>{title}</Title>
+          <Title
+            onClick={() => {
+              navigate(`/user/${authorId}`);
+            }}
+          >
+            {title}
+          </Title>
           <Content>{content}</Content>
         </ContentWrapper>
         {/* <ButtonWrapper>
@@ -49,4 +62,5 @@ type CommentProps = {
   imgUrl?: string;
   title?: string;
   content?: string;
+  authorId?: number;
 };

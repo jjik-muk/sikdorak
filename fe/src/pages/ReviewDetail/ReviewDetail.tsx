@@ -84,7 +84,13 @@ function ReviewDetail({
         <TagList tags={tags} imgUrl={user.userProfileImage} />
         {comments &&
           comments.map(({ author, content, id }) => (
-            <Comment key={id} title={author.nickname} content={content} imgUrl={author.profileImage} />
+            <Comment
+              key={id}
+              authorId={author.id}
+              title={author.nickname}
+              content={content}
+              imgUrl={author.profileImage}
+            />
           ))}
         {hasNextComments && (
           <button onClick={fetchNextComment} type="button">
