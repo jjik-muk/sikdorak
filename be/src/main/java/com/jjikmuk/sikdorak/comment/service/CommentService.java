@@ -122,7 +122,7 @@ public class CommentService {
         if (commentResponses.isEmpty()) {
             return new CommentSearchPagingResponse(
                 commentResponses,
-                getCursorResponse(commentResponses, LAST_CURSOR_ID, pageRequest)
+                getCursorResponse(commentResponses, FIRST_CURSOR_ID, LAST_CURSOR_ID, pageRequest)
             );
         }
 
@@ -131,7 +131,11 @@ public class CommentService {
         // 응답 객체 반환
         return new CommentSearchPagingResponse(
             getCommentSearchResponses(comments, usersMap),
-            getCursorResponse(commentResponses, lastCommentResponse.id(), pageRequest)
+            getCursorResponse(
+                commentResponses,
+                getFirstCommentId(comments),
+                getLastCommentId(comments),
+                pageRequest)
         );
     }
 
@@ -204,18 +208,16 @@ public class CommentService {
             .orElse(0L);
     }
 
-    private CursorPageResponse getCursorResponse(List<?> list, long lastItemId,
+    private CursorPageResponse getCursorResponse(List<?> list, long firstItemId, long lastItemId,
         CursorPageRequest cursorPageRequest) {
         if (list.isEmpty()) {
             return new CursorPageResponse(0, FIRST_CURSOR_ID, LAST_CURSOR_ID, true);
         }
 
         long count = commentRepository.countAllByIdBefore(lastItemId);
-
-        long nextCursorId = lastItemId - 1;
         boolean isLast = count == 0;
 
-        return new CursorPageResponse(cursorPageRequest.getSize(), FIRST_CURSOR_ID, nextCursorId,
+        return new CursorPageResponse(cursorPageRequest.getSize(), firstItemId, lastItemId,
             isLast);
     }
 }
