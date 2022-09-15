@@ -9,6 +9,7 @@ import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import { FeedProps } from 'components/ReviewList/Feed/Feed';
 import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
+import useAuth from 'hooks/useAuth';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import { useEffect, useRef, useState } from 'react';
@@ -38,6 +39,7 @@ function ReviewDetail({
   const hasNextComments = afterParam !== 1 && comments.length > 0;
   const menuRef = useRef(null);
   useOutsideClick(menuRef, toggleIsActiveMenu);
+  useAuth();
 
   useEffect(() => {
     fetchNextComment();

@@ -1,6 +1,7 @@
 import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
 import StoreInfo from 'components/StoreDetail/StoreInfo/StoreInfo';
+import useAuth from 'hooks/useAuth';
 import useReviews from 'hooks/useReviews';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -21,6 +22,7 @@ function StoreDetail() {
   const [storeInfo, setStoreInfo] = useState(INIT_STATE_STORE_INFO);
   const { storeName, addressName, contactNumber, reviewCounts, reviewScoreAverage } = storeInfo;
   const { reviews, handleScroll, fetchNextReviews, afterParam } = useReviews();
+  useAuth();
 
   useEffect(() => {
     fetchAndStoreRestaurantInfo();

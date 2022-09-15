@@ -3,6 +3,7 @@ import CommonHeader from 'components/Common/Header/CommonHeader';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
 import { useMyUserInfo } from 'context/MyUserInfoProvider';
+import useAuth from 'hooks/useAuth';
 import useReviews from 'hooks/useReviews';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -25,6 +26,7 @@ function UserDetail() {
   const targetId = Number(pathname.split('/').at(-1));
   const isMyUserDetailPage = myUserId === targetId;
   const REVIEW_SIZE = 5;
+  useAuth();
 
   useEffect(() => {
     fetchUserInfo();

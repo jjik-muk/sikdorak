@@ -10,14 +10,13 @@ import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import StoreDetail from 'pages/StoreDetail/StoreDetail';
 import UserDetail from 'pages/UserDetail/UserDetail';
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalStyle from 'styles/GlobalStyle';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 
 function App() {
   const [, dispatchMyUserInfo] = useMyUserInfo();
   const [accessToken, setAccessToken] = useState(null);
-  const hasAccessToken = () => localStorage.getItem('accessToken');
 
   useEffect(() => {
     setMyInfo();
@@ -37,14 +36,14 @@ function App() {
         <GlobalStyle />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={hasAccessToken() ? <ReviewList /> : <Navigate replace to="/login" />} />
-            <Route path="/map" element={hasAccessToken() ? <Map /> : <Navigate replace to="/" />} />
-            <Route path="/login" element={hasAccessToken() ? <Navigate replace to="/" /> : <Login />} />
+            <Route path="/" element={<ReviewList />} />
+            <Route path="/map" element={<Map />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/user">
-              <Route path=":userId" element={hasAccessToken() ? <UserDetail /> : <Navigate replace to="/" />} />
+              <Route path=":userId" element={<UserDetail />} />
             </Route>
             <Route path="/store">
-              <Route path=":storeId" element={hasAccessToken() ? <StoreDetail /> : <Navigate replace to="/" />} />
+              <Route path=":storeId" element={<StoreDetail />} />
             </Route>
             <Route
               path="/api/oauth/callback"

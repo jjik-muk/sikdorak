@@ -4,6 +4,7 @@ import CommonHeader from 'components/Common/Header/CommonHeader';
 import Modal from 'components/Common/Modal/Modal';
 import MapComponent from 'components/Map/MapComponent';
 import Stores from 'components/Map/Stores/Stores';
+import useAuth from 'hooks/useAuth';
 import useSearchBar from 'hooks/useSearchBar';
 import useStores from 'hooks/useStores';
 import { useEffect, useState } from 'react';
@@ -15,6 +16,7 @@ function Map() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { stores, mapPos, setMapPos } = useStores();
   const { inputValue, searchResults, setInputValue, debouncedSearch } = useSearchBar();
+  useAuth();
 
   useEffect(() => {
     const hasInputValue = inputValue.length > 0;
@@ -26,7 +28,6 @@ function Map() {
     debouncedSearch({
       url: `${process.env.REACT_APP_BE_SERVER_URL}/api/users?nickname=${inputValue}`,
     });
-    console.log('searchResults', searchResults);
   }, [inputValue]);
 
   return (
