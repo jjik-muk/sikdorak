@@ -1,4 +1,4 @@
-name: FE Test
+name: FE - CI(Test & Build -> SonarCloud)
 
 on:
   push:
@@ -47,7 +47,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: install npm dependencies
+      - name: Install dependencies & build
         run: npm ci
 
       - name: Test React
