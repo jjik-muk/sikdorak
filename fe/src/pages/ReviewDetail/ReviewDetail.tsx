@@ -81,7 +81,7 @@ function ReviewDetail({
             </IconWrap>
           </div>
         </ButtonWrapper>
-        <TagList tags={tags} imgUrl={user.userProfileImage} />
+        {Boolean(tags.length) && <TagList tags={tags} imgUrl={user.userProfileImage} />}
         {comments &&
           comments.map(({ author, content, id }) => (
             <Comment
