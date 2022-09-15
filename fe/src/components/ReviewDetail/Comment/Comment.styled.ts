@@ -10,6 +10,8 @@ export const Wrap = styled.div`
 export const Picture = styled.img`
   width: 42px;
   height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
 `;
 
 export const CommentWrapper = styled.div`
@@ -27,6 +29,7 @@ export const Title = styled.div`
   font-size: 18px;
   font-weight: 500;
   margin-top: 5px;
+  cursor: pointer;
 `;
 
 export const Content = styled.div`
