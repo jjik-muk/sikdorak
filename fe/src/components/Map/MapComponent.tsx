@@ -35,7 +35,6 @@ export default function MapComponent({ stores, mapPos, setMapPos }: any) {
   function handleOverlay() {
     if (!stores) return;
 
-    console.log('stores', stores);
     const newPositions = stores.map(createPosition);
     const newOverlays = newPositions.map(createCustomOverlay);
 
@@ -48,8 +47,8 @@ export default function MapComponent({ stores, mapPos, setMapPos }: any) {
     }
     function createPosition({ storeName, x, y }, idx) {
       return {
-        content: `<div key=${idx} style="${overlayStyle}">${storeName}</div>`,
-        position: new kakao.maps.LatLng(y, x),
+        content: `<div class="custom-overay" key=${idx} style="${overlayStyle}">${storeName}</div>`,
+        position: new kakao.maps.LatLng(y + 0.00005, x - 0.00003),
         map: mapState,
       };
     }
