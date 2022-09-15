@@ -5,6 +5,7 @@ import ReviewsProvider from 'context/ReviewsProvider';
 import Callback from 'pages/Callback/Callback';
 import Login from 'pages/Login/Login';
 import Map from 'pages/Map/Map';
+import ReviewShare from 'pages/ReivewShare/ReviewShare';
 import ReviewList from 'pages/ReviewList/ReviewList';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import StoreDetail from 'pages/StoreDetail/StoreDetail';
@@ -44,6 +45,9 @@ function App() {
             </Route>
             <Route path="/store">
               <Route path=":storeId" element={<StoreDetail />} />
+            </Route>
+            <Route path="/review">
+              <Route path=":reviewId" element={<ReviewShare />} />
             </Route>
             <Route
               path="/api/oauth/callback"

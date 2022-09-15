@@ -10,7 +10,8 @@ import useLike from 'hooks/useLike';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { createKey } from 'utils/utils';
 import {
   ButtonWrapper,
@@ -39,6 +40,7 @@ function Feed({
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const { isActiveHeart, likeCnt, postLike } = useLike({ like, reviewId });
+  const [copyText, setCopyText] = useState('');
 
   const reviewDetailModalRef = useRef(null);
   useOutsideClick(reviewDetailModalRef, toggleIsClikedFeed);
@@ -49,6 +51,12 @@ function Feed({
   const myUserId = myUserInfo.userId;
   const isMyFeed = user?.userId === myUserId;
   const BTN_WIDTH = isUsedMapPage ? 125 : FEED.BTN.WIDTH_NO_IMG;
+  const location = useLocation();
+
+  useEffect(() => {
+    const hostUrl = window.location.href.replace(location.pathname, '');
+    setCopyText(`${hostUrl}/review/${reviewId}`);
+  }, []);
 
   return (
     <>
@@ -131,10 +139,11 @@ function Feed({
   }
 
   function handleCopyURL(e) {
-    const curURL = window.location.href;
     const { clipboard } = navigator;
-
-    clipboard.writeText(curURL);
+    const hostUrl = window.location.href.replace(location.pathname, '');
+    setCopyText(`${hostUrl}/review/${reviewId}`);
+    clipboard.writeText(copyText);
+    alert('공유할 리뷰 페이지가 복사되었습니다.');
     e.stopPropagation();
   }
 }
