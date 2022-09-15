@@ -16,6 +16,52 @@ jobs:
   fe-test:
     name: Test React
     runs-on: ubuntu-20.04
+
+    steps:
+      - name: setup repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SUBMODULES_ACCESS_TOKEN }}
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_REACT_APP_KAKAO_REST_API_KEY: ${{ secrets.REACT_APP_KAKAO_REST_API_KEY }}
+          envkey_REACT_APP_BE_SERVER_URL: ${{ secrets.REACT_APP_BE_SERVER_URL }}
+          envkey_REACT_APP_KAKAO_MAP_API_KEY: ${{ secrets.REACT_APP_KAKAO_MAP_API_KEY }}
+          directory: fe
+          file_name: .env
+          fail_on_empty: false
+
+      - name: Install dependencies & build
+        run: npm ci
+
+      - name: Test React
+        run: npm run coverage
+
+  fe-deploy:
+    needs: fe-test
+    name: Deploy React
+    runs-on: ubuntu-20.04
     environment: ProdWeb
 
     steps:
@@ -49,18 +95,12 @@ jobs:
           envkey_REACT_APP_KAKAO_REST_API_KEY: ${{ secrets.REACT_APP_KAKAO_REST_API_KEY }}
           envkey_REACT_APP_BE_SERVER_URL: ${{ secrets.REACT_APP_BE_SERVER_URL }}
           envkey_REACT_APP_KAKAO_MAP_API_KEY: ${{ secrets.REACT_APP_KAKAO_MAP_API_KEY }}
-          #directory: fe
+          directory: fe
           file_name: .env
           fail_on_empty: false
 
-      - name: install npm dependencies
+      - name: Install dependencies & build
         run: npm ci
-
-      - name: Test React
-        run: npm run coverage
-
-      - name: Build react
-        run: npm run build
 
       # aws user 연결
       - name: Configure AWS credentials
