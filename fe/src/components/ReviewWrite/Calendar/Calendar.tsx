@@ -28,7 +28,16 @@ export default function Calendar({ setIsCalendarOpen }: CalendarProps) {
   const clickDay = ({ target }) => {
     const { innerHTML: date, dataset } = target;
     const { year, month, day } = dataset;
+
     const isSelectedDate = Number(date);
+    const selectedDate = new Date(year, month - 1, date);
+    const curDate = new Date();
+    const isSelectedDateAfterToday = curDate < selectedDate;
+
+    if (isSelectedDateAfterToday) {
+      alert('오늘 이전의 날짜를 선택해주세요.');
+      return;
+    }
 
     if (isSelectedDate) {
       dispatchCalendar({ type: 'SET_DATE', date, year, month, day });

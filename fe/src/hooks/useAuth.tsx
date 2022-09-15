@@ -10,7 +10,6 @@ function useAuth() {
 
     async function moveToLoginPageIfExpiredAccessToken() {
       const isExpiredAccessToken = await validateAccessToken();
-      console.log('isExpiredAccessToken', isExpiredAccessToken);
       if (isExpiredAccessToken) {
         navigate('/login');
       }
@@ -18,7 +17,6 @@ function useAuth() {
 
     async function validateAccessToken() {
       const res = await fetchDataThatNeedToLogin('api/users/me');
-      console.log('res', res);
       return res.code === 'F-O003' || res.code === 'F-O004';
     }
   }, []);
