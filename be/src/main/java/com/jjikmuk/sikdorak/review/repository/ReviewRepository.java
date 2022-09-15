@@ -81,6 +81,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
         @Param("targetId") long targetId,
         Pageable pageable);
 
-    @Query(value = "select count(*) from review" , nativeQuery = true)
-    long countAll();
+    @Query(value = "select max(review_id) from review", nativeQuery = true)
+    long findMaxId();
+
 }

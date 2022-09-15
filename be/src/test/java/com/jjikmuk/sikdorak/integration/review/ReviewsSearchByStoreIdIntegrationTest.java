@@ -12,6 +12,8 @@ import com.jjikmuk.sikdorak.review.domain.ReviewVisibility;
 import com.jjikmuk.sikdorak.review.service.ReviewService;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
+import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
+import com.jjikmuk.sikdorak.user.user.domain.Authority;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -34,10 +36,11 @@ class ReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
             // given
             Store store = testData.store;
             CursorPageRequest pageRequest = new CursorPageRequest(0L, 0L, 10, true);
+            LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
             // when
             ReviewListResponse reviewResponse = reviewService.searchReviewsByStoreId(
-                store.getId(), pageRequest);
+                store.getId(), loginUser, pageRequest);
 
             // then
             assertThat(reviewResponse).isNotNull();
@@ -60,10 +63,12 @@ class ReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
             // given
             long notExistingStoreId = Long.MIN_VALUE;
             CursorPageRequest pageRequest = new CursorPageRequest(0L, 0L, 10, true);
+            LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
             // then
             assertThatThrownBy(
-                () -> reviewService.searchReviewsByStoreId(notExistingStoreId, pageRequest))
+                () -> reviewService.searchReviewsByStoreId(notExistingStoreId, loginUser,
+                    pageRequest))
                 .isInstanceOf(NotFoundStoreException.class);
         }
 
@@ -73,10 +78,11 @@ class ReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
             // given
             Store store = testData.store;
             CursorPageRequest pageRequest = new CursorPageRequest(0L, 0L, 10, true);
+            LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
             // when
             ReviewListResponse reviewResponse = reviewService.searchReviewsByStoreId(
-                store.getId(), pageRequest);
+                store.getId(), loginUser, pageRequest);
 
             // then
             assertThat(reviewResponse).isNotNull();

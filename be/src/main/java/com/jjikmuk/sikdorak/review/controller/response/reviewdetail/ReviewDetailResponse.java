@@ -2,10 +2,12 @@ package com.jjikmuk.sikdorak.review.controller.response.reviewdetail;
 
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.store.domain.Store;
+import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -55,11 +57,12 @@ public record ReviewDetailResponse(
 	LocalDateTime updatedAt
 ) {
 
-	public static ReviewDetailResponse of(Review review, Store store, User user) {
+	public static ReviewDetailResponse of(Review review, Store store, User author, LoginUser loginUser) {
+		boolean likeStatus = !Objects.isNull(loginUser.getId()) && review.isLikedBy(loginUser.getId());
 		return new ReviewDetailResponse(
-			new ReviewDetailUserResponse(user),
+			new ReviewDetailUserResponse(author),
 			new ReviewDetailStoreResponse(store),
-			new ReviewDetailLikeResponse(review.getLikesCount(), review.isLikedBy(user.getId())),
+			new ReviewDetailLikeResponse(review.getLikesCount(), likeStatus),
 			review.getId(),
 			review.getReviewContent(),
 			review.getReviewScore(),

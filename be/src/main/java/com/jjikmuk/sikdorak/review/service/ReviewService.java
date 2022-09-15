@@ -61,7 +61,7 @@ public class ReviewService {
             throw new UnauthorizedUserException();
         }
 
-        return ReviewDetailResponse.of(review, store, reviewOwner);
+        return ReviewDetailResponse.of(review, store, reviewOwner, loginUser);
     }
 
     /*
@@ -82,7 +82,7 @@ public class ReviewService {
         PagingInfo pagingInfo = convertToPagingInfo(cursorPageRequest);
         List<Review> reviews = getRecommendedReviews(loginUser, pagingInfo);
 
-        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews);
+        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews, loginUser);
         CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse,
             cursorPageRequest);
 
@@ -106,7 +106,7 @@ public class ReviewService {
 
         List<Review> userReviews = findUserReviews(loginUser, searchUser, pagingInfo);
 
-        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(userReviews);
+        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(userReviews, loginUser);
         CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, cursorPageRequest);
 
         return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
@@ -201,7 +201,7 @@ public class ReviewService {
 
     @Transactional(readOnly = true)
     public ReviewListResponse searchReviewsByStoreId(long storeId,
-        CursorPageRequest cursorPageRequest) {
+        LoginUser loginUser, CursorPageRequest cursorPageRequest) {
 
         Store store = storeRepository.findById(storeId)
             .orElseThrow(NotFoundStoreException::new);
@@ -212,7 +212,7 @@ public class ReviewService {
 
         List<Review> reviews = getStoreReviews(store.getId(), pagingInfo);
 
-        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews);
+        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews, loginUser);
         CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse,
             cursorPageRequest);
 
@@ -231,11 +231,12 @@ public class ReviewService {
     }
 
     private long getCursorOrDefaultCursor(CursorPageRequest cursorPageRequest) {
-        return cursorPageRequest.getAfter() == 0 ? reviewRepository.countAll()
+        return cursorPageRequest.getAfter() == 0 ? reviewRepository.findMaxId()
             : cursorPageRequest.getAfter();
     }
 
-    private List<ReviewDetailResponse> getReviewsResponse(List<Review> reviews) {
+    private List<ReviewDetailResponse> getReviewsResponse(List<Review> reviews, LoginUser loginUser) {
+
         Map<Long, User> authors = getReviewAuthors(getAuthorIds(reviews));
         Map<Long, Store> stores = getReviewStores(getStoreIds(reviews));
 
@@ -246,7 +247,8 @@ public class ReviewService {
         return reviews.stream()
             .map(review -> ReviewDetailResponse.of(review,
                 stores.get(review.getStoreId()),
-                authors.get(review.getUserId())))
+                authors.get(review.getUserId()),
+                loginUser))
             .toList();
     }
 
