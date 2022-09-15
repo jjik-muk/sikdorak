@@ -116,11 +116,12 @@ public class StoreController {
 	@GetMapping("/{storeId}/reviews")
 	public CommonResponseEntity<ReviewListResponse> searchStoreReviews(
 		@PathVariable long storeId,
+		@AuthenticatedUser LoginUser loginUser,
 		@CursorPageable CursorPageRequest cursorPageRequest
 	) {
 		return new CommonResponseEntity<>(
 			ResponseCodeAndMessages.STORE_SEARCH_REVIEW_SUCCESS,
-			reviewService.searchReviewsByStoreId(storeId, cursorPageRequest),
+			reviewService.searchReviewsByStoreId(storeId, loginUser, cursorPageRequest),
 			HttpStatus.OK);
 	}
 }

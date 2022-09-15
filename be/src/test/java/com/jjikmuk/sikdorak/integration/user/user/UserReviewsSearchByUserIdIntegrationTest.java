@@ -49,7 +49,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("친구인 유저가 특정 유저의 리뷰를 조회한다면 public|protected 리뷰들을 반환한다.")
 	void connection_user_search_user_reviews_success() {
-		long cursorPage = 10;
+		long cursorPage = 0;
 		int size = 5;
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 		LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
