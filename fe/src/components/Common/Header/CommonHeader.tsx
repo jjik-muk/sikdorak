@@ -1,22 +1,21 @@
-import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
+import { observer } from 'mobx-react';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { accountStore } from 'stores/AccountStore';
 import { createKey } from 'utils/utils';
 import Icon, { IconComponentsKeys } from '../Icon/Icon';
 import Logo from '../Logo/Logo';
 import Portal from '../Portal/Portal';
 import { ButtonWrap, Header, Wrap, ProfileImageWrap } from './CommonHeader.styled';
 
-function CommonHeader({ dispatchReviews }: any) {
+const CommonHeader = observer(({ dispatchReviews }: any) => {
   const [isReviewWrite, toggleIsReviewWrite] = useToggle(false);
   const [, toggleIsUserProfile] = useToggle(false);
   const reviewWriteModalRef = useRef(null);
   const userDetailModalRef = useRef(null);
-  const [userInfo] = useMyUserInfo();
-  const { userId, profileImageUrl } = userInfo;
 
   const iconInfo: IconInfoProps[] = [
     { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
@@ -26,6 +25,10 @@ function CommonHeader({ dispatchReviews }: any) {
 
   useOutsideClick(reviewWriteModalRef, toggleIsReviewWrite);
   useOutsideClick(userDetailModalRef, toggleIsUserProfile);
+
+  useEffect(() => {
+    accountStore.setMyInfo();
+  }, []);
 
   return (
     <Wrap>
@@ -45,9 +48,9 @@ function CommonHeader({ dispatchReviews }: any) {
               </div>
             </Link>
           ))}
-          <Link to={`/user/${userId}`}>
+          <Link to={`/user/${accountStore.id}`}>
             <ProfileImageWrap>
-              <img src={profileImageUrl} alt="profile" width={24} height={24} />
+              <img src={accountStore.profileImage} alt="profile" width={24} height={24} />
             </ProfileImageWrap>
           </Link>
         </ButtonWrap>
@@ -59,7 +62,7 @@ function CommonHeader({ dispatchReviews }: any) {
       </Header>
     </Wrap>
   );
-}
+});
 
 type IconInfoProps = {
   icon: IconComponentsKeys;

@@ -5,13 +5,13 @@ import Menu from 'components/ReviewDetail/Menu/Menu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
 import Rating from 'components/ReviewDetail/TotalRating/Rating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
-import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import useLike from 'hooks/useLike';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { accountStore } from 'stores/AccountStore';
 import { createKey } from 'utils/utils';
 import {
   ButtonWrapper,
@@ -48,8 +48,7 @@ function Feed({
   const menuRef = useRef(null);
   useOutsideClick(menuRef, toggleIsActiveMenu);
 
-  const [myUserInfo] = useMyUserInfo();
-  const myUserId = myUserInfo.userId;
+  const myUserId = accountStore.id;
   const isMyFeed = user?.userId === myUserId;
   const BTN_WIDTH = isUsedMapPage ? 125 : FEED.BTN.WIDTH_NO_IMG;
   const location = useLocation();

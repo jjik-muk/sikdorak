@@ -8,13 +8,13 @@ import SelectDay from 'components/ReviewWrite/SelectDay/SelectDay';
 import TagContainer from 'components/ReviewWrite/Tag/TagContainer/TagContainer';
 import Textarea from 'components/ReviewWrite/Textarea/Textarea';
 import WriteRating from 'components/ReviewWrite/WriteRating/WriteRating';
-import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import useUploadImage from 'hooks/useUploadImage';
+import { accountStore } from 'stores/AccountStore';
 import { Content, Img, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
 
 function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps) {
   const { selectedImg, setSelectedImg } = useUploadImage();
-  const [{ nickname, profileImageUrl }] = useMyUserInfo();
+  const { nickname, profileImage } = accountStore;
 
   return (
     <Wrap>
@@ -33,7 +33,7 @@ function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps)
           )}
         </ImgWrap>
         <InputWrap>
-          <Profile imgUrl={profileImageUrl} nickname={nickname} />
+          <Profile imgUrl={profileImage} nickname={nickname} />
           <Textarea />
           <RestaurantSearch />
           <SelectDay />

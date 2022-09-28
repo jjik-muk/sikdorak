@@ -33,6 +33,7 @@
     "jsx-a11y/no-static-element-interactions": 0,
     "jsx-a11y/click-events-have-key-events": 0,
     "prefer-arrow-callback": 0,
-    "prefer-destructuring": 0
+    "prefer-destructuring": 0,
+    "exceptAfterSingleLine": 0
   }
 }
