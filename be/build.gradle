@@ -51,6 +51,7 @@ dependencies {
     // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'commons-validator:commons-validator:1.7'
 
     // Database
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
