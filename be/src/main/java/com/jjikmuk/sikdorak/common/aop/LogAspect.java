@@ -17,13 +17,17 @@ public class LogAspect {
     @Before("bean(*Controller)")
     public void logRequestStart() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        log.info("------------------------------ Start Request : {} ------------------------------", request.getRequestURI());
+        if (log.isInfoEnabled()) {
+            log.info("------------------------------ Start Request : {} ------------------------------", request.getRequestURI());
+        }
     }
 
     @After("bean(*Controller)")
     public void logRequestEnd() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        log.info("------------------------------ End Request : {} ------------------------------", request.getRequestURI());
+        if (log.isInfoEnabled()) {
+            log.info("------------------------------ End Request : {} ------------------------------", request.getRequestURI());
+        }
     }
 
 }

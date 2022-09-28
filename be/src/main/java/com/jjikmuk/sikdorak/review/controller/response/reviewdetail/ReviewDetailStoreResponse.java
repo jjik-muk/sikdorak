@@ -5,8 +5,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- * - [ ] TODO : Store 대표 이미지 추가
+/*
+- [ ] TODO : Store 대표 이미지 추가.
  */
 public record ReviewDetailStoreResponse(
 	@NotNull

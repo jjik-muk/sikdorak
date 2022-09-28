@@ -77,7 +77,9 @@ public class CursorPageableArgumentResolver implements HandlerMethodArgumentReso
 	}
 
 	private Long getCursorOrNull(String cursorParam) {
-		if (cursorParam == null) return null;
+		if (cursorParam == null) {
+			return null;
+		}
 
 		try {
 			return Long.parseLong(cursorParam);

@@ -20,9 +20,9 @@ public class ReviewContent {
 	private String reviewContent;
 
 	public ReviewContent(String reviewContent) {
-		if (Objects.isNull(reviewContent) ||
-			reviewContent.isBlank() ||
-			reviewContent.length() > LIMIT_LENGTH) {
+		if (Objects.isNull(reviewContent)
+			|| reviewContent.isBlank()
+			|| reviewContent.length() > LIMIT_LENGTH) {
 			throw new InvalidReviewContentException();
 		}
 

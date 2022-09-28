@@ -138,7 +138,9 @@ public class UserService {
 
         List<User> followers = userRepository.findFollowersByUserId(targetUser.getId());
 
-        if(followers.isEmpty()) return new ArrayList<>();
+        if (followers.isEmpty()) {
+            return new ArrayList<>();
+        }
 
         return followers.stream()
             .map(user -> FollowUserProfile.of(
@@ -154,7 +156,9 @@ public class UserService {
 
         List<User> followings = userRepository.findFollowingsByUserId(targetUser.getId());
 
-        if(followings.isEmpty()) return new ArrayList<>();
+        if (followings.isEmpty()) {
+            return new ArrayList<>();
+        }
 
         return followings.stream()
             .map(user -> FollowUserProfile.of(

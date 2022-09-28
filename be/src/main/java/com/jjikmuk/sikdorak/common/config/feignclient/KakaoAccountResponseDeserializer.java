@@ -10,7 +10,7 @@ import java.io.IOException;
 public class KakaoAccountResponseDeserializer extends JsonDeserializer<KakaoAccountResponse> {
 
     @Override
-    public KakaoAccountResponse deserialize(JsonParser p, DeserializationContext ctxt) throws IOException{
+    public KakaoAccountResponse deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
 
         JsonNode jsonNode = p.getCodec().readTree(p);
 

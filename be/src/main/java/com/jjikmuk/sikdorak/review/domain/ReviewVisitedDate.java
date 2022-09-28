@@ -23,9 +23,9 @@ public class ReviewVisitedDate {
 
 
 	public ReviewVisitedDate(LocalDate reviewVisitedDate, LocalDate currentDate) {
-		if (Objects.isNull(reviewVisitedDate) ||
-			Objects.isNull(currentDate) ||
-			!validateReviewVisitedDate(reviewVisitedDate, currentDate)) {
+		if (Objects.isNull(reviewVisitedDate)
+			|| Objects.isNull(currentDate)
+			|| !validateReviewVisitedDate(reviewVisitedDate, currentDate)) {
 			throw new InvalidReviewVisitedDateException();
 		}
 

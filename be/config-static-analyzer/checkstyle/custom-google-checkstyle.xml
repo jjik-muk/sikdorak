@@ -46,7 +46,7 @@
 
   <module name="LineLength">
     <property name="fileExtensions" value="java"/>
-    <property name="max" value="120"/>
+    <property name="max" value="140"/>
     <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
   </module>
 
@@ -186,16 +186,16 @@
       <message key="name.invalidPattern"
         value="Type name ''{0}'' must match pattern ''{1}''."/>
     </module>
-    <module name="MemberName">
-      <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>
-      <message key="name.invalidPattern"
-        value="Member name ''{0}'' must match pattern ''{1}''."/>
-    </module>
-    <module name="ParameterName">
-      <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
-      <message key="name.invalidPattern"
-        value="Parameter name ''{0}'' must match pattern ''{1}''."/>
-    </module>
+<!--    <module name="MemberName">-->
+<!--      <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9]*$"/>-->
+<!--      <message key="name.invalidPattern"-->
+<!--        value="Member name ''{0}'' must match pattern ''{1}''."/>-->
+<!--    </module>-->
+<!--    <module name="ParameterName">-->
+<!--      <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>-->
+<!--      <message key="name.invalidPattern"-->
+<!--        value="Parameter name ''{0}'' must match pattern ''{1}''."/>-->
+<!--    </module>-->
     <module name="LambdaParameterName">
       <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
       <message key="name.invalidPattern"
@@ -206,11 +206,11 @@
       <message key="name.invalidPattern"
         value="Catch parameter name ''{0}'' must match pattern ''{1}''."/>
     </module>
-    <module name="LocalVariableName">
-      <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
-      <message key="name.invalidPattern"
-        value="Local variable name ''{0}'' must match pattern ''{1}''."/>
-    </module>
+<!--    <module name="LocalVariableName">-->
+<!--      <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>-->
+<!--      <message key="name.invalidPattern"-->
+<!--        value="Local variable name ''{0}'' must match pattern ''{1}''."/>-->
+<!--    </module>-->
     <module name="PatternVariableName">
       <property name="format" value="^[a-z]([a-z0-9][a-zA-Z0-9]*)?$"/>
       <message key="name.invalidPattern"
@@ -260,14 +260,14 @@
     <!--      <property name="lineWrappingIndentation" value="8"/>-->
     <!--      <property name="arrayInitIndent" value="4"/>-->
     <!--    </module>-->
-    <module name="AbbreviationAsWordInName">
-      <property name="ignoreFinal" value="false"/>
-      <property name="allowedAbbreviationLength" value="0"/>
-      <property name="tokens"
-        value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, ANNOTATION_DEF, ANNOTATION_FIELD_DEF,
-                    PARAMETER_DEF, VARIABLE_DEF, METHOD_DEF, PATTERN_VARIABLE_DEF, RECORD_DEF,
-                    RECORD_COMPONENT_DEF"/>
-    </module>
+<!--    <module name="AbbreviationAsWordInName">-->
+<!--      <property name="ignoreFinal" value="false"/>-->
+<!--      <property name="allowedAbbreviationLength" value="0"/>-->
+<!--      <property name="tokens"-->
+<!--        value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, ANNOTATION_DEF, ANNOTATION_FIELD_DEF,-->
+<!--                    PARAMETER_DEF, VARIABLE_DEF, METHOD_DEF, PATTERN_VARIABLE_DEF, RECORD_DEF,-->
+<!--                    RECORD_COMPONENT_DEF"/>-->
+<!--    </module>-->
     <module name="NoWhitespaceBeforeCaseDefaultColon"/>
     <module name="OverloadMethodsDeclarationOrder"/>
     <module name="VariableDeclarationUsageDistance"/>

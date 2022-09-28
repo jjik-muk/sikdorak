@@ -16,8 +16,8 @@ public class Nickname {
     private String nickname;
 
     public Nickname(String nickname) {
-        if (Objects.isNull(nickname) ||
-                !isValidNickname(nickname)) {
+        if (Objects.isNull(nickname)
+            || !isValidNickname(nickname)) {
             throw new InvalidUserNicknameException();
         }
         this.nickname = nickname;

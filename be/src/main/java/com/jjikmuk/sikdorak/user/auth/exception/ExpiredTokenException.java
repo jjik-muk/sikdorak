@@ -5,6 +5,10 @@ import org.springframework.http.HttpStatus;
 
 public class ExpiredTokenException extends SikdorakRuntimeException {
 
+    public ExpiredTokenException(Throwable cause) {
+        super(cause);
+    }
+
     @Override
     public HttpStatus getHttpStatus() {
         return HttpStatus.UNAUTHORIZED;

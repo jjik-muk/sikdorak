@@ -52,9 +52,9 @@ public class JwtProvider {
                 .build()
                 .parseClaimsJws(token);
         } catch (ExpiredJwtException e) {
-            throw new ExpiredTokenException();
-        }catch (IllegalArgumentException | JwtException e) {
-            throw new InvalidTokenException();
+            throw new ExpiredTokenException(e);
+        } catch (IllegalArgumentException | JwtException e) {
+            throw new InvalidTokenException(e);
         }
     }
 

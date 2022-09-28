@@ -64,8 +64,8 @@ public class Address {
         String mainAddressNo, String subAddressNo, String roadName, String mainBuildingNo,
         String subBuildingNo) {
 
-        if (Objects.isNull(addressName) ||
-            Objects.isNull(roadAddressName)) {
+        if (Objects.isNull(addressName)
+            || Objects.isNull(roadAddressName)) {
             throw new InvalidAddressException();
         }
 

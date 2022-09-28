@@ -19,8 +19,8 @@ public class ReviewScore {
     private Float reviewScore;
 
     public ReviewScore(Float reviewScore) {
-        if (Objects.isNull(reviewScore) ||
-                !validateReviewScore(reviewScore)) {
+        if (Objects.isNull(reviewScore)
+            || !validateReviewScore(reviewScore)) {
             throw new InvalidReviewScoreException();
         }
 

@@ -19,7 +19,9 @@ public class Email {
     }
 
     public Email(String email) {
-        if (!isValidEmailForm(email)) throw new InvalidUserEmailException();
+        if (!isValidEmailForm(email)) {
+            throw new InvalidUserEmailException();
+        }
         this.email = email;
     }
 
