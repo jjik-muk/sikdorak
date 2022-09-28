@@ -46,7 +46,7 @@ class ImageTest {
 				"https:/s3.ap-northeast-2.amazonaws.com//test2.jpg",
 				"https:s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg",
 			})
-			@DisplayName("image 객체를 반환한다")
+			@DisplayName("예외를 발생시킨다.")
 			void It_returns_a_object(String reviewImage) {
 				assertThatThrownBy(() -> new Image(reviewImage))
 					.isInstanceOf(InvalidReviewImageException.class);
