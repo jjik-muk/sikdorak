@@ -19,9 +19,9 @@ public class CommentContent {
 	private String reviewContent;
 
 	public CommentContent(String commentContent) {
-		if (Objects.isNull(commentContent) ||
-			commentContent.isBlank() ||
-			commentContent.length() > LIMIT_LENGTH) {
+		if (Objects.isNull(commentContent)
+			|| commentContent.isBlank()
+			|| commentContent.length() > LIMIT_LENGTH) {
 			throw new InvalidCommentContentException();
 		}
 

@@ -55,7 +55,8 @@ public class UserController {
         @CursorPageable CursorPageRequest cursorPageRequest) {
 
         ReviewListResponse userReviewResponses =
-            reviewService.searchUserReviewsByUserIdAndRelationType(userId, loginUser, cursorPageRequest);
+            reviewService.searchUserReviewsByUserIdAndRelationType(userId, loginUser,
+                cursorPageRequest);
 
         return new CommonResponseEntity<>(
             ResponseCodeAndMessages.USER_SEARCH_REVIEWS_SUCCESS,
@@ -64,11 +65,13 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public CommonResponseEntity<UserDetailProfileResponse> searchUserProfileByUserID(@AuthenticatedUser LoginUser loginUser,
+    public CommonResponseEntity<UserDetailProfileResponse> searchUserProfileByUserID(
+        @AuthenticatedUser LoginUser loginUser,
         @PathVariable Long userId
     ) {
 
-        UserDetailProfileResponse userDetailProfileResponse = userService.searchUserDetailProfile(userId, loginUser);
+        UserDetailProfileResponse userDetailProfileResponse = userService.searchUserDetailProfile(
+            userId, loginUser);
 
         return new CommonResponseEntity<>(ResponseCodeAndMessages.USER_SEARCH_PROFILE_SUCCESS,
             userDetailProfileResponse,
@@ -77,9 +80,11 @@ public class UserController {
 
     @UserOnly
     @GetMapping("/me")
-    public CommonResponseEntity<UserSimpleProfileResponse> searchSelfProfile(@AuthenticatedUser LoginUser loginUser) {
+    public CommonResponseEntity<UserSimpleProfileResponse> searchSelfProfile(
+        @AuthenticatedUser LoginUser loginUser) {
 
-        UserSimpleProfileResponse userSimpleProfileResponse = userService.searchSelfProfile(loginUser);
+        UserSimpleProfileResponse userSimpleProfileResponse = userService.searchSelfProfile(
+            loginUser);
 
         return new CommonResponseEntity<>(ResponseCodeAndMessages.USER_SEARCH_PROFILE_SUCCESS,
             userSimpleProfileResponse,
@@ -131,7 +136,8 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/followers")
-    public CommonResponseEntity<List<FollowUserProfile>> searchUserFollowers(@AuthenticatedUser LoginUser loginUser,
+    public CommonResponseEntity<List<FollowUserProfile>> searchUserFollowers(
+        @AuthenticatedUser LoginUser loginUser,
         @PathVariable Long userId) {
 
         List<FollowUserProfile> followersResponse = userService.searchFollowersByUserId(
@@ -142,7 +148,8 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/followings")
-    public CommonResponseEntity<List<FollowUserProfile>> searchUserFollowings(@AuthenticatedUser LoginUser loginUser,
+    public CommonResponseEntity<List<FollowUserProfile>> searchUserFollowings(
+        @AuthenticatedUser LoginUser loginUser,
         @PathVariable Long userId) {
 
         List<FollowUserProfile> followingsResponse = userService.searchFollowingsByUserId(

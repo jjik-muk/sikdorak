@@ -16,7 +16,7 @@ public class CommonResponseEntity<T> extends ResponseEntity<BaseResponse<T>> {
         this(codeAndMessages, data, null, httpStatus);
     }
 
-    public CommonResponseEntity(CodeAndMessages codeAndMessages, T data, MultiValueMap<String, String> headers,HttpStatus httpStatus) {
+    public CommonResponseEntity(CodeAndMessages codeAndMessages, T data, MultiValueMap<String, String> headers, HttpStatus httpStatus) {
         super(new BaseResponse<>(codeAndMessages.getCode(), codeAndMessages.getMessage(), data),
             headers, httpStatus);
     }

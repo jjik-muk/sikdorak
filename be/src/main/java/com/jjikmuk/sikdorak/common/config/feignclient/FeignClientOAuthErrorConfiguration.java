@@ -14,7 +14,9 @@ public class FeignClientOAuthErrorConfiguration {
 
         return (methodKey, response) -> {
             log.error("{} 요청이 성공하지 못했습니다. requestUrl: {}, requestBody: {}, responseBody: {}",
-                    methodKey, response.request().url(), FeignClientResponseUtils.getRequestBody(response), FeignClientResponseUtils.getResponseBody(response));
+                methodKey, response.request().url(),
+                FeignClientResponseUtils.getRequestBody(response),
+                FeignClientResponseUtils.getResponseBody(response));
 
             return new OAuthServerException();
         };

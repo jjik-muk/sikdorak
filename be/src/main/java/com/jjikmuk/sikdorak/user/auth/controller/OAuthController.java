@@ -44,7 +44,9 @@ public class OAuthController {
     }
 
     @GetMapping("/api/oauth/refresh")
-    public CommonResponseEntity<AccessTokenResponse> updateAccessToken(@CookieValue("refreshToken") Cookie cookie,  HttpServletResponse response) {
+    public CommonResponseEntity<AccessTokenResponse> updateAccessToken(
+        @CookieValue("refreshToken") Cookie cookie,
+        HttpServletResponse response) {
         String refreshToken = cookie.getValue();
         JwtTokenPair jwtTokenPair = oAuthService.updateAccessAndRefreshToken(refreshToken);
         setCookie(response, jwtTokenPair.getRefreshToken());

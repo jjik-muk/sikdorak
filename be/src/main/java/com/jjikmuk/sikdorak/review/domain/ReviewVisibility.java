@@ -4,7 +4,7 @@ import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisibilityException;
 import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 
 public enum ReviewVisibility {
-    PUBLIC ,PROTECTED, PRIVATE;
+    PUBLIC, PROTECTED, PRIVATE;
 
     public static ReviewVisibility create(String visibility) {
         try {

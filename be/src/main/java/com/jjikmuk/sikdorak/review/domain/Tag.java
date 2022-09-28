@@ -1,16 +1,15 @@
 package com.jjikmuk.sikdorak.review.domain;
 
 import com.jjikmuk.sikdorak.review.exception.InvalidTagException;
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,10 +22,10 @@ public class Tag {
 
     public Tag(String text) {
 
-        if (Objects.isNull(text) ||
-                text.isBlank() ||
-                text.length() > LIMIT_LENGTH ||
-                hasSymbols(text)) {
+        if (Objects.isNull(text)
+            || text.isBlank()
+            || text.length() > LIMIT_LENGTH
+            || hasSymbols(text)) {
             throw new InvalidTagException();
         }
 
@@ -38,6 +37,7 @@ public class Tag {
         Matcher matcher = compile.matcher(tag);
         return matcher.find();
     }
+
     public String getText() {
         return text;
     }

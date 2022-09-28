@@ -46,7 +46,7 @@ public class ReviewController {
 	@GetMapping
 	public CommonResponseEntity<ReviewListResponse> getRecommendedReviews(
 		@AuthenticatedUser LoginUser loginUser,
-//		@RequestParam RecommendationType recommendationType, -> 아키텍처 변경되면 사용하지 않을것으로 판단되어 주석처리
+		// @RequestParam RecommendationType recommendationType, -> 아키텍처 변경되면 사용하지 않을것으로 판단되어 주석처리
 		@CursorPageable CursorPageRequest cursorPageRequest) {
 
 		ReviewListResponse recommendedReviews = reviewService.getRecentRecommendedReviews(

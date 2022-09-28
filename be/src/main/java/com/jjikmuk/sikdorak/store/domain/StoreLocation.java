@@ -25,10 +25,10 @@ public class StoreLocation {
     private Double y;
 
     public StoreLocation(Double x, Double y) {
-        if (Objects.isNull(y) ||
-            Objects.isNull(x) ||
-            isNotInRange(x, X_MIN, X_MAX) ||
-            isNotInRange(y, Y_MIN, Y_MAX)) {
+        if (Objects.isNull(y)
+            || Objects.isNull(x)
+            || isNotInRange(x, X_MIN, X_MAX)
+            || isNotInRange(y, Y_MIN, Y_MAX)) {
             throw new InvalidStoreLocationException();
         }
 

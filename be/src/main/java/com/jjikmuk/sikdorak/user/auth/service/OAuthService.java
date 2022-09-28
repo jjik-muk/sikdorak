@@ -17,7 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class OAuthService{
+public class OAuthService {
+
     private final OAuthTokenClient oAuthTokenClient;
     private final OAuthApiClient oAuthApiClient;
     private final KakaoProperties kakaoProperties;
@@ -35,7 +36,8 @@ public class OAuthService{
 
         User user;
         if (!userService.isExistingByUniqueId(userInfo.getUniqueId())) {
-            user = new User(userInfo.getUniqueId(), userInfo.getNickname(), userInfo.getProfileImage(), userInfo.getEmail());
+            user = new User(userInfo.getUniqueId(), userInfo.getNickname(),
+                userInfo.getProfileImage(), userInfo.getEmail());
             userService.createUser(user);
             return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
         }
@@ -58,14 +60,15 @@ public class OAuthService{
 
     private OAuthTokenResponse getOAuthAccessToken(String code) {
         return oAuthTokenClient.getAccessToken(
-                kakaoProperties.getGrantType(),
-                kakaoProperties.getClientId(),
-                kakaoProperties.getRedirectUri(),
-                code);
+            kakaoProperties.getGrantType(),
+            kakaoProperties.getClientId(),
+            kakaoProperties.getRedirectUri(),
+            code);
     }
 
     private KakaoAccountResponse getOAuthUserInformation(OAuthTokenResponse oAuthTokenResponse) {
-        String authorizationHeader = String.format("%s %s", oAuthTokenResponse.getTokenType(), oAuthTokenResponse.getAccessToken());
+        String authorizationHeader = String.format("%s %s", oAuthTokenResponse.getTokenType(),
+            oAuthTokenResponse.getAccessToken());
         return oAuthApiClient.getUserInfo(authorizationHeader);
     }
 }

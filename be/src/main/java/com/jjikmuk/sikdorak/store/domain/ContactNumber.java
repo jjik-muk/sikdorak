@@ -14,18 +14,16 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ContactNumber {
 
-	/**
-	 * 허용되는 전화번호 형식 <br> - 00-000-0000 <br> - 00-0000-0000 <br> - 000-000-0000 <br> - 000-0000-0000
-	 */
-
 	private static final int LIMIT_LENGTH = 13;
 	private static final Pattern numberPattern = Pattern.compile("\\d{2,3}-\\d{3,4}-\\d{4}");
 
 	@Column(length = LIMIT_LENGTH)
 	private String contactNumber;
 
+	/*
+	 * 허용되는 전화번호 형식 <br> - 00-000-0000 <br> - 00-0000-0000 <br> - 000-000-0000 <br> - 000-0000-0000
+	 */
 	public ContactNumber(String contactNumber) {
-
 		if (Objects.nonNull(contactNumber) && (contactNumber.isBlank()
 			|| contactNumber.length() > LIMIT_LENGTH
 			|| !isPatternMatches(contactNumber, numberPattern))) {

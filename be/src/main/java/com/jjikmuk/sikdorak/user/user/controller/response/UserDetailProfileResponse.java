@@ -37,7 +37,11 @@ public record UserDetailProfileResponse(
 
 ) {
 
-    public static UserDetailProfileResponse of(User user, UserProfileRelationStatusResponse userProfileRelationStatusResponse, int followingCount, int followersCount, int reviewCount) {
+    public static UserDetailProfileResponse of(User user,
+        UserProfileRelationStatusResponse userProfileRelationStatusResponse,
+        int followingCount,
+        int followersCount,
+        int reviewCount) {
         return new UserDetailProfileResponse(
             user.getId(),
             user.getNickname(),
