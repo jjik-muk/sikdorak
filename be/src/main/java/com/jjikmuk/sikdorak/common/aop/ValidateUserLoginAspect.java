@@ -24,7 +24,7 @@ public class ValidateUserLoginAspect {
         loginUser.ifNotAdminThrowException();
     }
 
-    private LoginUser findLoginUser(Object[] args) {
+    private LoginUser findLoginUser(Object... args) {
         return Arrays.stream(args)
             .filter(LoginUser.class::isInstance)
             .map(LoginUser.class::cast)

@@ -5,6 +5,13 @@ import org.springframework.http.HttpStatus;
 
 public class InvalidTokenException extends SikdorakRuntimeException {
 
+    public InvalidTokenException() {
+    }
+
+    public InvalidTokenException(Throwable cause) {
+        super(cause);
+    }
+
     @Override
     public HttpStatus getHttpStatus() {
         return HttpStatus.BAD_REQUEST;

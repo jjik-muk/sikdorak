@@ -206,7 +206,9 @@ public class StoreService {
 				.orElseThrow(NotFoundApiAddressException::new);
 		} catch (Exception e) {
 			// 예측하지 못한 예외도 해당 로직을 타게 하기 Exception 으로 선언
-			log.error(e.getMessage(), e);
+			if (log.isErrorEnabled()) {
+				log.error(e.getMessage(), e);
+			}
 			return new AddressResponse(place.addressName(), place.roadAddressName());
 		}
 	}
