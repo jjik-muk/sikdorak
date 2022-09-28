@@ -4,7 +4,6 @@ import com.jjikmuk.sikdorak.review.exception.InvalidReviewImagesException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
@@ -37,7 +36,7 @@ public class Images {
 		List<Image> filteredImages = images.stream()
 			.distinct()
 			.map(Image::new)
-			.collect(Collectors.toList());
+			.toList();
 
 		if (filteredImages.size() > LIMIT_SIZE) {
 			throw new InvalidReviewImagesException();

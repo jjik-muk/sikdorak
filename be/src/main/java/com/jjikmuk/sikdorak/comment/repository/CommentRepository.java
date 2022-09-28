@@ -27,6 +27,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 		@Param("before") long before,
 		Pageable pageable);
 
-//	@Query("select count(c.id) from Comment c where c.id < :lastItemId")
+	//	@Query("select count(c.id) from Comment c where c.id < :lastItemId")
 	long countAllByIdBefore(long id);
 }

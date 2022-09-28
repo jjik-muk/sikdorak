@@ -25,8 +25,9 @@ class ReviewRemoveIntegrationTest extends InitIntegrationTest {
 	@DisplayName("만약 유저가 본인 리뷰에 대한 삭제 요청이 주어진다면 리뷰가 Soft 삭제된다.")
 	void remove_review_valid() {
 		LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+		Long reviewId = testData.user1PublicReview.getId();
 
-		Review removeReview = reviewService.removeReview(loginUser, testData.user1PublicReview.getId());
+		Review removeReview = reviewService.removeReview(loginUser, reviewId);
 
 		assertThat(removeReview.isDeleted()).isTrue();
 	}
@@ -57,8 +58,9 @@ class ReviewRemoveIntegrationTest extends InitIntegrationTest {
 	void remove_review_invalid_user() {
 		long invalidUserId = Long.MAX_VALUE;
 		LoginUser loginUser = new LoginUser(invalidUserId, Authority.USER);
+		Long reviewId = testData.user1PublicReview.getId();
 
-		assertThatThrownBy(() -> reviewService.removeReview(loginUser, testData.user1PublicReview.getId()))
+		assertThatThrownBy(() -> reviewService.removeReview(loginUser, reviewId))
 			.isInstanceOf(NotFoundUserException.class);
 	}
 
@@ -66,8 +68,9 @@ class ReviewRemoveIntegrationTest extends InitIntegrationTest {
 	@DisplayName("만약 유저가 다른 유저의 리뷰에 대한 삭제 요청이 주어진다면 예외를 발생시킨다")
 	void remove_review_invalid_authorized() {
 		LoginUser loginUser = new LoginUser(testData.jay.getId(), Authority.USER);
+		Long reviewId = testData.user1PublicReview.getId();
 
-		assertThatThrownBy(() -> reviewService.removeReview(loginUser, testData.user1PublicReview.getId()))
+		assertThatThrownBy(() -> reviewService.removeReview(loginUser, reviewId))
 			.isInstanceOf(UnauthorizedUserException.class);
 	}
 

@@ -25,7 +25,7 @@ class UserModifyDocumentationTest extends InitDocumentationTest {
         UserModifyRequest userModifyRequest = new UserModifyRequest(
             "포키",
             "forkyy@gmail.com",
-            "https://s3.amazon-test/test.jpg"
+            "https://s3.amazon-test.com/test.jpg"
         );
 
         given(this.spec)

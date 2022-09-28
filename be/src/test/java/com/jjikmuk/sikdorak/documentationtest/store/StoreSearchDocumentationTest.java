@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @DisplayName("문서화 : Store 검색,조회")
-public class StoreSearchDocumentationTest extends InitDocumentationTest {
+class StoreSearchDocumentationTest extends InitDocumentationTest {
 
     @Test
     @DisplayName("가게를 이름으로 검색할때 조건에 맞는 가게가 있으면 가게 목록이 반환된다.")
