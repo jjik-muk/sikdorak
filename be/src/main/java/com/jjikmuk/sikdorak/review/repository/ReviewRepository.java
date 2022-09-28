@@ -52,10 +52,10 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
         Pageable pageable);
 
     @Query("""
-        	select r from Review r
-        	where not r.reviewVisibility = 'PRIVATE'
-        	and r.id <= :targetId and r.userId <> :authorId
-        	order by r.id desc
+        select r from Review r
+        where not r.reviewVisibility = 'PRIVATE'
+        and r.id <= :targetId and r.userId <> :authorId
+        order by r.id desc
         """)
     List<Review> findPublicAndProtectedRecommendedReviewsInRecentOrder(
         @Param("authorId") long authorId,

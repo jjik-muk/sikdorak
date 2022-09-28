@@ -5,15 +5,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.DuplicateUserException;
+import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayName("통합 : User 생성 기능")
-public class UserCreateIntegrationTest extends InitIntegrationTest {
+class UserCreateIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     private UserService userService;

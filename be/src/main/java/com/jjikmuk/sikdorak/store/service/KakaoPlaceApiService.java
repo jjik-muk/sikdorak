@@ -15,7 +15,6 @@ import com.jjikmuk.sikdorak.store.service.dto.PlaceResponse;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceSearchRequest;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceSearchResponse;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +56,7 @@ public class KakaoPlaceApiService implements PlaceApiService {
 				place.getX(),
 				place.getY()
 			))
-			.collect(Collectors.toList());
+			.toList();
 	}
 
 	@Override

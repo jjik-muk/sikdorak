@@ -16,9 +16,9 @@ import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
+import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -125,8 +125,6 @@ public class CommentService {
                 getCursorResponse(commentResponses, FIRST_CURSOR_ID, LAST_CURSOR_ID, pageRequest)
             );
         }
-
-        CommentSearchResponse lastCommentResponse = commentResponses.get(commentResponses.size() - 1);
 
         // 응답 객체 반환
         return new CommentSearchPagingResponse(

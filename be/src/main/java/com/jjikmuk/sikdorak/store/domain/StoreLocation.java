@@ -38,6 +38,6 @@ public class StoreLocation {
     }
 
     private boolean isNotInRange(double value, double min, double max) {
-        return !(min <= value) || !(value <= max);
+        return value < min || max < value;
     }
 }

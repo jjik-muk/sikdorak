@@ -19,9 +19,9 @@ import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.domain.RelationType;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
+import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -64,16 +64,6 @@ public class ReviewService {
         return ReviewDetailResponse.of(review, store, reviewOwner, loginUser);
     }
 
-    /*
-    TODO - 개선사항
-     [x] 비회원인 경우
-        [x] public 상태의 리뷰만 제공한다.
-        [x] 추천하는 피드들을 우선으로 준다. (좋아요 많은 순)
-     [] 회원인 경우
-        [x] public, protected 상태만 준다.
-        [] 친구들의 피드들을 우선으로 준다. (최신순)
-        [] 추천 조건을 변경해서 피드들을 따로 볼 수 있다. (비회원의 추천 피드와 동일하게)
-     */
     @Transactional(readOnly = true)
     public ReviewListResponse getRecentRecommendedReviews(LoginUser loginUser,
         CursorPageRequest cursorPageRequest) {

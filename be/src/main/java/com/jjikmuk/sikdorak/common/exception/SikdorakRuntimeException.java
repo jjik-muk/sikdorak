@@ -8,10 +8,10 @@ public abstract class SikdorakRuntimeException extends RuntimeException {
 
     private final ExceptionCodeAndMessages codeAndMessages = ExceptionCodeAndMessages.findByExceptionClass(getClass());
 
-    public SikdorakRuntimeException() {
+    protected SikdorakRuntimeException() {
     }
 
-    public SikdorakRuntimeException(Throwable cause) {
+    protected SikdorakRuntimeException(Throwable cause) {
         super(cause);
     }
 
