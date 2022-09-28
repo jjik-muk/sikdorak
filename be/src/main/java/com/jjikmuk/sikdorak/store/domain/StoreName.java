@@ -19,9 +19,9 @@ public class StoreName {
     private String storeName;
 
     public StoreName(String storeName) {
-        if (Objects.isNull(storeName) ||
-                storeName.isBlank() ||
-                storeName.length() > LIMIT_LENGTH) {
+        if (Objects.isNull(storeName)
+            || storeName.isBlank()
+            || storeName.length() > LIMIT_LENGTH) {
             throw new InvalidStoreNameException();
         }
 
