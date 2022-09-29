@@ -35,8 +35,8 @@ export default function PostScope() {
           <Typography>게시물 공개 범위</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Switch onChange={handleSetScope} />
           <Typography>{scope[currentScope]}</Typography>
+          <Switch onChange={handleSetScope} />
         </AccordionDetails>
       </Accordion>
     </Wrap>
