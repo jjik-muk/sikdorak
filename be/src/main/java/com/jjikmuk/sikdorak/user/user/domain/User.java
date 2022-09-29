@@ -33,13 +33,13 @@ public class User extends BaseTimeEntity {
     private Long uniqueId;
 
     @Embedded
-    private Nickname nickname;
+    private UserNickname nickname;
 
     @Embedded
-    private ProfileImage profileImage;
+    private UserProfileImage profileImage;
 
     @Embedded
-    private Email email;
+    private UserEmail email;
 
     @Embedded
     private Followings followings;
@@ -73,9 +73,9 @@ public class User extends BaseTimeEntity {
 
         this.id = id;
         this.uniqueId = uniqueId;
-        this.nickname = new Nickname(nickname);
-        this.profileImage = new ProfileImage(profileImage);
-        this.email = Objects.isNull(email) ? new Email() : new Email(email);
+        this.nickname = new UserNickname(nickname);
+        this.profileImage = new UserProfileImage(profileImage);
+        this.email = Objects.isNull(email) ? new UserEmail() : new UserEmail(email);
         this.followings = new Followings();
         this.followers = new Followers();
         this.authority = authority;
@@ -120,9 +120,9 @@ public class User extends BaseTimeEntity {
     }
 
     public void editAll(String nickname, String email, String profileImage) {
-        this.nickname = new Nickname(nickname);
-        this.email = new Email(email);
-        this.profileImage = new ProfileImage(profileImage);
+        this.nickname = new UserNickname(nickname);
+        this.email = new UserEmail(email);
+        this.profileImage = new UserProfileImage(profileImage);
     }
 
     public void follow(User acceptUser) {

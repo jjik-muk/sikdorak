@@ -2,7 +2,7 @@ package com.jjikmuk.sikdorak.unittest.user.user.domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.user.user.domain.ProfileImage;
+import com.jjikmuk.sikdorak.user.user.domain.UserProfileImage;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidUserProfileImageUrlException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayName("단위 : User ProfileImage")
-public class ProfileImageTest {
+public class UserProfileImageTest {
 
     @Nested
     @DisplayName("생성자")
@@ -34,7 +34,7 @@ public class ProfileImageTest {
             })
             @DisplayName("예외를 반환한다.")
             void throw_Exception(String profileImageUrl) {
-                assertThatThrownBy(() -> new ProfileImage(profileImageUrl))
+                assertThatThrownBy(() -> new UserProfileImage(profileImageUrl))
                         .isInstanceOf(InvalidUserProfileImageUrlException.class);
             }
         }

@@ -7,17 +7,17 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 @Getter
 @Embeddable
-public class Email {
+public class UserEmail {
 
     private static final EmailValidator emailValidator = EmailValidator.getInstance();
 
     private String email;
 
-    public Email() {
+    public UserEmail() {
         this.email = "";
     }
 
-    public Email(String email) {
+    public UserEmail(String email) {
         if (!emailValidator.isValid(email)) {
             throw new InvalidUserEmailException();
         }

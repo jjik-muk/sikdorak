@@ -10,13 +10,13 @@ import org.apache.commons.validator.routines.UrlValidator;
 @Getter
 @NoArgsConstructor
 @Embeddable
-public class ProfileImage {
+public class UserProfileImage {
 
     private static final UrlValidator urlValidator = new UrlValidator(new String[]{"http", "https"});
     private String profileImageUrl;
 
 
-    public ProfileImage(String profileImageUrl) {
+    public UserProfileImage(String profileImageUrl) {
         if (Objects.isNull(profileImageUrl)
             || !validateUrlForm(profileImageUrl)) {
             throw new InvalidUserProfileImageUrlException();

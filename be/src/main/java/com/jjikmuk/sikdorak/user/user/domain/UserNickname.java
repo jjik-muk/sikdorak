@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Embeddable
-public class Nickname {
+public class UserNickname {
 
     private static final int MIN_LENGTH = 0;
     private static final int MAX_LENGTH = 30;
     private String nickname;
 
-    public Nickname(String nickname) {
+    public UserNickname(String nickname) {
         if (Objects.isNull(nickname)
             || !isValidNickname(nickname)) {
             throw new InvalidUserNicknameException();

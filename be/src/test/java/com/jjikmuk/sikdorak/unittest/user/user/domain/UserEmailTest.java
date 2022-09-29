@@ -2,7 +2,7 @@ package com.jjikmuk.sikdorak.unittest.user.user.domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.user.user.domain.Email;
+import com.jjikmuk.sikdorak.user.user.domain.UserEmail;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidUserEmailException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayName("단위 : User Email 클래스")
-public class EmailTest {
+public class UserEmailTest {
     @Nested
     @DisplayName("생성자")
     class Describe_constructor {
@@ -33,7 +33,7 @@ public class EmailTest {
             })
             @DisplayName("예외를 반환한다.")
             void throw_Exception(String email) {
-                assertThatThrownBy(() -> new Email(email))
+                assertThatThrownBy(() -> new UserEmail(email))
                         .isInstanceOf(InvalidUserEmailException.class);
             }
         }

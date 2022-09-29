@@ -30,7 +30,7 @@ public class Store extends BaseTimeEntity {
     private StoreName storeName;
 
     @Embedded
-    private ContactNumber contactNumber;
+    private StoreContactNumber contactNumber;
 
     @Embedded
     private Address address;
@@ -43,7 +43,7 @@ public class Store extends BaseTimeEntity {
 
     public Store(String storeName, String contactNumber, Address address, Double x, Double y) {
         this.storeName = new StoreName(storeName);
-        this.contactNumber = new ContactNumber(contactNumber);
+        this.contactNumber = new StoreContactNumber(contactNumber);
         this.address = address;
         this.location = new StoreLocation(x, y);
     }
@@ -51,7 +51,7 @@ public class Store extends BaseTimeEntity {
     public Store(Long placeId, String storeName, String contactNumber, Address address, Double x, Double y) {
         this.placeId = placeId;
         this.storeName = new StoreName(storeName);
-        this.contactNumber = new ContactNumber(contactNumber);
+        this.contactNumber = new StoreContactNumber(contactNumber);
         this.address = address;
         this.location = new StoreLocation(x, y);
     }
@@ -94,7 +94,7 @@ public class Store extends BaseTimeEntity {
 
     public void editAll(String storeName, String contactNumber, Address address, Double y, Double x) {
         this.storeName = new StoreName(storeName);
-        this.contactNumber = new ContactNumber(contactNumber);
+        this.contactNumber = new StoreContactNumber(contactNumber);
         this.address = address;
         this.location = new StoreLocation(x, y);
     }
