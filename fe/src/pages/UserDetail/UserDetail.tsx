@@ -2,11 +2,11 @@ import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
-import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import useAuth from 'hooks/useAuth';
 import useReviews from 'hooks/useReviews';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { accountStore } from 'stores/AccountStore';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import {
   ActivityInfoWrap,
@@ -20,8 +20,7 @@ import {
 function UserDetail() {
   const { reviews, dispatchReviews, fetchNextReviews, afterParam, handleScroll } = useReviews();
   const [userProfile, setUserProfile] = useState(null);
-  const [myUserInfo] = useMyUserInfo();
-  const myUserId = myUserInfo.userId;
+  const myUserId = accountStore.id;
   const { pathname } = useLocation();
   const targetId = Number(pathname.split('/').at(-1));
   const isMyUserDetailPage = myUserId === targetId;

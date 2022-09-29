@@ -1,12 +1,11 @@
-import { useMyUserInfo } from 'context/MyUserInfoProvider';
 import { useState } from 'react';
+import { accountStore } from 'stores/AccountStore';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import { Input } from './WriteComment.styled';
 
 export default function WriteComment({ commentRef, reviewId, comments, setComments }: WriteCommentProps) {
   const [commentValue, setComment] = useState('');
-  const [myUserInfo] = useMyUserInfo();
-  const { userId, nickname, profileImageUrl } = myUserInfo;
+  const { id, nickname, profileImage } = accountStore;
   return (
     <Input
       onChange={handleChange}
@@ -32,9 +31,9 @@ export default function WriteComment({ commentRef, reviewId, comments, setCommen
       id: reviewId,
       content: commentValue,
       author: {
-        id: userId,
+        id,
         nickname,
-        profileImage: profileImageUrl,
+        profileImage,
       },
     };
 
