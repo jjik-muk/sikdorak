@@ -1,8 +1,8 @@
 package com.jjikmuk.sikdorak.aws.controller;
 
-import com.jjikmuk.sikdorak.aws.controller.request.PresignedUrlCreateRequest;
-import com.jjikmuk.sikdorak.aws.controller.response.PresignedUrlCreateResponse;
 import com.jjikmuk.sikdorak.aws.service.GeneratePresignedURLService;
+import com.jjikmuk.sikdorak.aws.service.request.PresignedUrlCreateRequest;
+import com.jjikmuk.sikdorak.aws.service.response.PresignedUrlCreateResponse;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.aop.UserOnly;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;

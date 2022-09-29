@@ -3,10 +3,10 @@ package com.jjikmuk.sikdorak.integration.store;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.store.controller.response.StoreSearchResponse;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;
 import com.jjikmuk.sikdorak.store.service.StoreService;
+import com.jjikmuk.sikdorak.store.service.response.StoreSearchResponse;
 import java.util.List;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.DisplayName;

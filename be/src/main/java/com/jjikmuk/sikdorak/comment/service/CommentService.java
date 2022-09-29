@@ -1,12 +1,12 @@
 package com.jjikmuk.sikdorak.comment.service;
 
-import com.jjikmuk.sikdorak.comment.controller.request.CommentCreateRequest;
-import com.jjikmuk.sikdorak.comment.controller.request.CommentModifyRequest;
-import com.jjikmuk.sikdorak.comment.controller.response.CommentSearchPagingResponse;
-import com.jjikmuk.sikdorak.comment.controller.response.CommentSearchResponse;
 import com.jjikmuk.sikdorak.comment.domain.Comment;
 import com.jjikmuk.sikdorak.comment.exception.NotFoundCommentException;
 import com.jjikmuk.sikdorak.comment.repository.CommentRepository;
+import com.jjikmuk.sikdorak.comment.service.request.CommentCreateRequest;
+import com.jjikmuk.sikdorak.comment.service.request.CommentModifyRequest;
+import com.jjikmuk.sikdorak.comment.service.response.CommentSearchPagingResponse;
+import com.jjikmuk.sikdorak.comment.service.response.CommentSearchResponse;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
 import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;

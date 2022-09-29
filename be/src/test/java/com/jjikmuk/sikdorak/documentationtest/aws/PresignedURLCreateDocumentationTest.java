@@ -5,7 +5,7 @@ import static com.jjikmuk.sikdorak.documentationtest.aws.S3Snippet.PRESIGNED_URL
 import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
-import com.jjikmuk.sikdorak.aws.controller.request.PresignedUrlCreateRequest;
+import com.jjikmuk.sikdorak.aws.service.request.PresignedUrlCreateRequest;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
 import org.hamcrest.Matchers;

@@ -11,11 +11,11 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 
-import com.jjikmuk.sikdorak.review.controller.request.ReviewCreateRequest;
-import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailLikeResponse;
-import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
-import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailStoreResponse;
-import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailUserResponse;
+import com.jjikmuk.sikdorak.review.service.request.ReviewCreateRequest;
+import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailLikeResponse;
+import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailResponse;
+import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailStoreResponse;
+import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailUserResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 

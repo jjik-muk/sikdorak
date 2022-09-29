@@ -5,14 +5,14 @@ import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.COMMENT_MODIFY
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.COMMENT_REMOVE_SUCCESS;
 import static com.jjikmuk.sikdorak.common.ResponseCodeAndMessages.COMMENT_SEARCH_SUCCESS;
 
-import com.jjikmuk.sikdorak.comment.controller.request.CommentCreateRequest;
-import com.jjikmuk.sikdorak.comment.controller.request.CommentModifyRequest;
-import com.jjikmuk.sikdorak.comment.controller.response.CommentSearchPagingResponse;
 import com.jjikmuk.sikdorak.comment.service.CommentService;
+import com.jjikmuk.sikdorak.comment.service.request.CommentCreateRequest;
+import com.jjikmuk.sikdorak.comment.service.request.CommentModifyRequest;
+import com.jjikmuk.sikdorak.comment.service.response.CommentSearchPagingResponse;
 import com.jjikmuk.sikdorak.common.aop.UserOnly;
 import com.jjikmuk.sikdorak.common.controller.CursorPageable;
-import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
+import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
 import lombok.RequiredArgsConstructor;

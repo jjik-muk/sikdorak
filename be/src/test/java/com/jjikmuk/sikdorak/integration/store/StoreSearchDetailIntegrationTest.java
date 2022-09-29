@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.review.domain.ReviewVisibility;
-import com.jjikmuk.sikdorak.store.controller.response.StoreDetailResponse;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.service.StoreService;
+import com.jjikmuk.sikdorak.store.service.response.StoreDetailResponse;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;

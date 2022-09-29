@@ -8,7 +8,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
-import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyOrSaveRequest;
+import com.jjikmuk.sikdorak.store.service.request.StoreVerifyOrSaveRequest;
 import com.jjikmuk.sikdorak.tool.mock.WireMockPlaceApiTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

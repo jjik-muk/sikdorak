@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.store.controller.request.UserLocationInfoRequest;
-import com.jjikmuk.sikdorak.store.controller.response.StoreListByRadiusResponse;
 import com.jjikmuk.sikdorak.store.service.StoreService;
+import com.jjikmuk.sikdorak.store.service.request.UserLocationInfoRequest;
+import com.jjikmuk.sikdorak.store.service.response.StoreListByRadiusResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

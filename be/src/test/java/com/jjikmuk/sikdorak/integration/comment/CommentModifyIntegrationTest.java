@@ -3,11 +3,11 @@ package com.jjikmuk.sikdorak.integration.comment;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.comment.controller.request.CommentModifyRequest;
 import com.jjikmuk.sikdorak.comment.domain.Comment;
 import com.jjikmuk.sikdorak.comment.exception.NotFoundCommentException;
 import com.jjikmuk.sikdorak.comment.repository.CommentRepository;
 import com.jjikmuk.sikdorak.comment.service.CommentService;
+import com.jjikmuk.sikdorak.comment.service.request.CommentModifyRequest;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.review.domain.Review;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;

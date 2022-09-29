@@ -1,10 +1,10 @@
 package com.jjikmuk.sikdorak.user.auth.service;
 
 import com.jjikmuk.sikdorak.common.properties.KakaoProperties;
-import com.jjikmuk.sikdorak.user.auth.controller.response.KakaoAccountResponse;
-import com.jjikmuk.sikdorak.user.auth.controller.response.OAuthTokenResponse;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtTokenPair;
+import com.jjikmuk.sikdorak.user.auth.service.response.KakaoAccountResponse;
+import com.jjikmuk.sikdorak.user.auth.service.response.OAuthTokenResponse;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
