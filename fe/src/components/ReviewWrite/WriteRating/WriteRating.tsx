@@ -1,10 +1,11 @@
+import Typography from '@mui/material/Typography';
 import StarRating from 'components/ReviewWrite/WriteRating/StarRating/StarRating';
-import { Text, Wrap } from './WriteRating.styled';
+import { Wrap } from './WriteRating.styled';
 
 function WriteRating() {
   return (
     <Wrap>
-      <Text>평점 입력</Text>
+      <Typography>평점 입력</Typography>
       <StarRating />
     </Wrap>
   );

@@ -1,6 +1,7 @@
+import TextField from '@mui/material/TextField';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { useState } from 'react';
-import { Input, Wrap } from './Textarea.styled';
+import { Wrap } from './Textarea.styled';
 
 function Textarea() {
   const [reviewWriteContext, dispatchReviewWriteState] = useReviewWrite();
@@ -8,7 +9,13 @@ function Textarea() {
 
   return (
     <Wrap>
-      <Input
+      <TextField
+        fullWidth
+        multiline
+        minRows={5}
+        id="review-content-input"
+        label="리뷰 내용 입력"
+        variant="outlined"
         value={inputValue}
         onChange={(e) => {
           setInputValue(e.target.value);
