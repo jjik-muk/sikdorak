@@ -1,9 +1,10 @@
+import TextField from '@mui/material/TextField';
 import Modal from 'components/Common/Modal/Modal';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import useSearchBar from 'hooks/useSearchBar';
 import { useEffect, useState } from 'react';
 import SearchResult from '../SearchResult/SearchResult';
-import { RestaurantSearchInput, Wrap } from './RestaurantSearch.styled';
+import { Wrap } from './RestaurantSearch.styled';
 
 export default function RestaurantSearch() {
   const [reviewWriteContext] = useReviewWrite();
@@ -30,25 +31,27 @@ export default function RestaurantSearch() {
 
   return (
     <Wrap>
-      <div>
-        <RestaurantSearchInput
-          value={inputValue}
-          onChange={handleChangeSearchBar}
-          onClick={handleClickSearchBar}
-          onFocus={openModal}
-          onBlur={closeModal}
-        />
-        {isModalOpen && (
-          <Modal>
-            <SearchResult
-              searchResults={searchResults}
-              inputValue={inputValue}
-              setInputValue={setInputValue}
-              closeModal={closeModal}
-            />
-          </Modal>
-        )}
-      </div>
+      <TextField
+        fullWidth
+        id="restaurant-search"
+        label="식당 검색"
+        variant="outlined"
+        value={inputValue}
+        onChange={handleChangeSearchBar}
+        onClick={handleClickSearchBar}
+        onFocus={openModal}
+        onBlur={closeModal}
+      />
+      {isModalOpen && (
+        <Modal width="367px">
+          <SearchResult
+            searchResults={searchResults}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            closeModal={closeModal}
+          />
+        </Modal>
+      )}
     </Wrap>
   );
 

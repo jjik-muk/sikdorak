@@ -9,8 +9,9 @@ function TagInput() {
   return (
     <TextField
       id="tag-input"
-      label="태그 입력해주세요."
+      label="태그 입력"
       variant="outlined"
+      fullWidth
       value={value}
       onChange={(e) => setValue(e.target.value)}
       onKeyDown={debounce(handleTagAddition, 100)}
