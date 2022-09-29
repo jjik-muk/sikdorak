@@ -4,7 +4,7 @@ import { flexLayoutMixin } from 'utils/utils';
 export const Wrap = styled.div`
   width: 300px;
   height: 300px;
-  margin: 30px;
+  margin: 0 auto 0 auto;
   border: 1px solid #000;
 `;
 

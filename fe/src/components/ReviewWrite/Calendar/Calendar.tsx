@@ -1,3 +1,5 @@
+import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
+import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import { DispatchReviewWriteContext } from 'context/ReviewWriteProvider';
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { CalendarHead, Day, DayWrapper, Title, Wrap } from './Calendar.styled';
@@ -56,16 +58,12 @@ export default function Calendar({ setIsCalendarOpen }: CalendarProps) {
   return (
     <Wrap>
       <CalendarHead>
-        <button type="button" onClick={() => handleCalendarDate('prev')}>
-          {'<'}
-        </button>
+        <KeyboardArrowLeftOutlinedIcon onClick={() => handleCalendarDate('prev')} sx={{ cursor: 'pointer' }} />
         <Title>
-          <div>{MONTH_LIST[calendarDate.getMonth()]}</div>
           <div>{calendarDate.getFullYear()}</div>
+          <div>{MONTH_LIST[calendarDate.getMonth()]}</div>
         </Title>
-        <button type="button" onClick={() => handleCalendarDate('next')}>
-          {'>'}
-        </button>
+        <KeyboardArrowRightOutlinedIcon onClick={() => handleCalendarDate('next')} sx={{ cursor: 'pointer' }} />
       </CalendarHead>
       <DayWrapper>
         {isTodayInMonth(calendarDate, todayDate) &&
