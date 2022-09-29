@@ -10,8 +10,8 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
   const { uploadImageToS3 } = useUploadImage();
 
   return (
-    <Button variant="contained" onClick={handleRegistration}>
-      <div>게시</div>
+    <Button fullWidth variant="contained" onClick={handleRegistration}>
+      게시
     </Button>
   );
 
