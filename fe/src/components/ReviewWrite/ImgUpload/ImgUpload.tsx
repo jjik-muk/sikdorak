@@ -1,8 +1,8 @@
-import Icon from 'components/Common/Icon/Icon';
+import { Button } from '@mui/material';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import useUploadImage from 'hooks/useUploadImage';
 import { Dispatch } from 'react';
-import { ImgUploadWrapper, ButtonWrapper, Label } from './ImgUpload.styled';
+import { ImgUploadWrapper } from './ImgUpload.styled';
 
 function ImgUpload({ setSelectedImg }: ImgUploadProps) {
   const [, dispatchReviewWrite] = useReviewWrite();
@@ -10,10 +10,10 @@ function ImgUpload({ setSelectedImg }: ImgUploadProps) {
 
   return (
     <ImgUploadWrapper>
-      <Icon icon="Photo" fill="black" />
-      <div>사진을 업로드해주세요</div>
-      <ButtonWrapper id="upload" type="file" accept=".png, .jpg, .jpeg" onChange={handleUploadImg} />
-      <Label htmlFor="upload">사진 업로드</Label>
+      <Button variant="contained" component="label">
+        사진 업로드
+        <input hidden type="file" id="upload" accept=".png, .jpg, .jpeg" onChange={handleUploadImg} />
+      </Button>
     </ImgUploadWrapper>
   );
 
