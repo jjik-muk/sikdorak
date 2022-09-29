@@ -5,12 +5,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
 import com.jjikmuk.sikdorak.user.user.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
+import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
+import com.jjikmuk.sikdorak.user.user.service.request.UserModifyRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

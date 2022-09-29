@@ -10,7 +10,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
-import com.jjikmuk.sikdorak.review.controller.request.ReviewModifyRequest;
+import com.jjikmuk.sikdorak.review.service.request.ReviewModifyRequest;
 import java.time.LocalDate;
 import java.util.List;
 import org.hamcrest.Matchers;

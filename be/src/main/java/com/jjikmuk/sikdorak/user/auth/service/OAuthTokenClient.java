@@ -2,7 +2,7 @@ package com.jjikmuk.sikdorak.user.auth.service;
 
 import com.jjikmuk.sikdorak.common.config.feignclient.FeignClientHeaderConfiguration;
 import com.jjikmuk.sikdorak.common.config.feignclient.FeignClientOAuthErrorConfiguration;
-import com.jjikmuk.sikdorak.user.auth.controller.response.OAuthTokenResponse;
+import com.jjikmuk.sikdorak.user.auth.service.response.OAuthTokenResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;

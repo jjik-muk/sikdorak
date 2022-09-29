@@ -13,15 +13,15 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
-import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailLikeResponse;
-import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailResponse;
-import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailStoreResponse;
-import com.jjikmuk.sikdorak.review.controller.response.reviewdetail.ReviewDetailUserResponse;
-import com.jjikmuk.sikdorak.user.user.controller.request.UserFollowAndUnfollowRequest;
-import com.jjikmuk.sikdorak.user.user.controller.request.UserModifyRequest;
-import com.jjikmuk.sikdorak.user.user.controller.response.FollowUserProfile;
-import com.jjikmuk.sikdorak.user.user.controller.response.UserDetailProfileResponse;
-import com.jjikmuk.sikdorak.user.user.controller.response.UserSimpleProfileResponse;
+import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailLikeResponse;
+import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailResponse;
+import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailStoreResponse;
+import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailUserResponse;
+import com.jjikmuk.sikdorak.user.user.service.request.UserFollowAndUnfollowRequest;
+import com.jjikmuk.sikdorak.user.user.service.request.UserModifyRequest;
+import com.jjikmuk.sikdorak.user.user.service.response.FollowUserProfile;
+import com.jjikmuk.sikdorak.user.user.service.response.UserDetailProfileResponse;
+import com.jjikmuk.sikdorak.user.user.service.response.UserSimpleProfileResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 

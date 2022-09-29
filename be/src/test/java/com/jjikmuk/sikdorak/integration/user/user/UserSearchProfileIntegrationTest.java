@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.controller.response.UserDetailProfileResponse;
 import com.jjikmuk.sikdorak.user.user.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
+import com.jjikmuk.sikdorak.user.user.service.response.UserDetailProfileResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

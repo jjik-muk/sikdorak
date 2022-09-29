@@ -3,8 +3,8 @@ package com.jjikmuk.sikdorak.integration.user.user;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.user.user.controller.response.UserSimpleProfileResponse;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
+import com.jjikmuk.sikdorak.user.user.service.response.UserSimpleProfileResponse;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

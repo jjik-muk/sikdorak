@@ -7,8 +7,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.store.controller.request.StoreVerifyOrSaveRequest;
-import com.jjikmuk.sikdorak.store.controller.response.StoreVerifyOrSaveResponse;
 import com.jjikmuk.sikdorak.store.domain.Address;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
@@ -19,6 +17,8 @@ import com.jjikmuk.sikdorak.store.service.dto.AddressResponse;
 import com.jjikmuk.sikdorak.store.service.dto.AddressSearchResponse;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceResponse;
 import com.jjikmuk.sikdorak.store.service.dto.PlaceSearchResponse;
+import com.jjikmuk.sikdorak.store.service.request.StoreVerifyOrSaveRequest;
+import com.jjikmuk.sikdorak.store.service.response.StoreVerifyOrSaveResponse;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
