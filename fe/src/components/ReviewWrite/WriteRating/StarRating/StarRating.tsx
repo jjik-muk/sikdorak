@@ -1,9 +1,6 @@
-import StarIcon from 'components/ReviewWrite/WriteRating/StarRating/StarIcon/StarIcon';
+import { Rating } from '@mui/material';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
-import { createKey } from 'utils/utils';
 import { Wrap } from './StarRating.styled';
-
-const YELLOW = '#f1c40f';
 
 function StarRating() {
   const [reviewWriteState, dispatchReviewWrite] = useReviewWrite();
@@ -11,24 +8,13 @@ function StarRating() {
   const { rating } = reviewWriteState;
   return (
     <Wrap>
-      {[...Array(rating)].map((_, i) => (
-        <StarIcon
-          key={createKey(_, i)}
-          onClick={() => {
-            handleRating(i + 1);
-          }}
-          fill={YELLOW}
-        />
-      ))}
-      {[...Array(5 - rating)].map((_, i) => (
-        <StarIcon
-          key={createKey(_, i)}
-          onClick={() => {
-            handleRating(i + 1 + rating);
-          }}
-          fill="none"
-        />
-      ))}
+      <Rating
+        name="star-rating"
+        value={rating}
+        onChange={(event, newValue) => {
+          handleRating(newValue);
+        }}
+      />
     </Wrap>
   );
 
