@@ -10,7 +10,7 @@ import Textarea from 'components/ReviewWrite/Textarea/Textarea';
 import WriteRating from 'components/ReviewWrite/WriteRating/WriteRating';
 import useUploadImage from 'hooks/useUploadImage';
 import { accountStore } from 'stores/AccountStore';
-import { Content, Img, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
+import { Content, Header, Img, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
 
 function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps) {
   const { selectedImg, setSelectedImg } = useUploadImage();
@@ -33,20 +33,20 @@ function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps)
           )}
         </ImgWrap>
         <InputWrap>
-          <Profile imgUrl={profileImage} nickname={nickname} />
+          <Header>
+            <Profile imgUrl={profileImage} nickname={nickname} />
+            <RegistrationBtn
+              selectedImg={selectedImg}
+              dispatchReviews={dispatchReviews}
+              toggleIsReviewWrite={toggleIsReviewWrite}
+            />
+          </Header>
           <Textarea />
           <RestaurantSearch />
           <SelectDay />
           <WriteRating />
           <TagContainer />
           <PostScope />
-          <div>
-            <RegistrationBtn
-              selectedImg={selectedImg}
-              dispatchReviews={dispatchReviews}
-              toggleIsReviewWrite={toggleIsReviewWrite}
-            />
-          </div>
         </InputWrap>
       </Content>
     </Wrap>

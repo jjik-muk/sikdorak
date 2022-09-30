@@ -33,7 +33,7 @@ export const InputWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 400px;
-  height: 635px;
+  height: 665px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   overflow-y: auto;
@@ -43,9 +43,9 @@ export const InputWrap = styled.div`
     width: 0;
   }
 
-  > div:not(:last-child) {
+  /* > div:not(:last-child) {
     border-bottom: 1px solid grey;
-  }
+  } */
 `;
 
 export const PostBtnWrap = styled.div`
@@ -56,4 +56,14 @@ export const PostBtnWrap = styled.div`
 
 export const Img = styled.img`
   object-fit: cover;
+`;
+
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 390px;
+  padding: 12px;
+  position: fixed;
+  z-index: 100;
+  background-color: #fff;
 `;
