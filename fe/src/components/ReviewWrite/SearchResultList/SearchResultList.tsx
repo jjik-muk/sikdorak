@@ -49,5 +49,5 @@ const Address = styled.div`
 
 const Hightlight = styled.span`
   font-weight: bold;
-  color: #0c43b7;
+  color: #1565c0;
 `;

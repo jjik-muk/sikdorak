@@ -21,7 +21,6 @@ function Textarea() {
           setInputValue(e.target.value);
           dispatchReviewWriteState({ type: 'TYPING_TEXT', text: e.target.value });
         }}
-        placeholder="텍스트를 입력해주세요."
       />
     </Wrap>
   );
