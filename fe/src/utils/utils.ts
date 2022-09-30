@@ -28,8 +28,7 @@ export async function fetchData(url: string, { headers, method, bodyData }: any 
     const data = await fetch(url, fetchParams);
     return await data.json();
   } catch (error) {
-    console.error(error);
-    return error;
+    return new Error(error);
   }
 }
 

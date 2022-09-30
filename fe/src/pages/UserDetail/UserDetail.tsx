@@ -29,18 +29,18 @@ function UserDetail() {
 
   useEffect(() => {
     fetchUserInfo();
-    fetchNextReviews(getUrl(afterParam, REVIEW_SIZE));
+    fetchNextReviews(getUrl(afterParam, REVIEW_SIZE, targetId));
 
     async function fetchUserInfo() {
       const res = await fetchDataThatNeedToLogin(`api/users/${targetId}`);
       setUserProfile(res.data);
     }
-  }, [targetId]);
+  }, [targetId, afterParam, fetchNextReviews]);
 
   return (
     <Wrap
       onScroll={(e) => {
-        handleScroll(e, getUrl(afterParam, REVIEW_SIZE));
+        handleScroll(e, getUrl(afterParam, REVIEW_SIZE, targetId));
       }}
     >
       <CommonHeader dispatchReviews={dispatchReviews} />
@@ -62,10 +62,10 @@ function UserDetail() {
       <Feeds reviews={reviews} />
     </Wrap>
   );
+}
 
-  function getUrl(after, reviewSize) {
-    return `api/users/${targetId}/reviews?after=${after}&size=${reviewSize}`;
-  }
+function getUrl(after, reviewSize, targetId) {
+  return `api/users/${targetId}/reviews?after=${after}&size=${reviewSize}`;
 }
 
 export default UserDetail;
