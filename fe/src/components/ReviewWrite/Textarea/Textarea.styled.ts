@@ -13,4 +13,5 @@ export const Input = styled.textarea`
 export const Wrap = styled.div`
   width: 100%;
   padding: 12px;
+  margin-top: 60px;
 `;

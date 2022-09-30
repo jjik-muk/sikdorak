@@ -1,7 +1,7 @@
+import { Button } from '@mui/material';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import useUploadImage from 'hooks/useUploadImage';
 import { fetchData, fetchDataThatNeedToLogin } from 'utils/utils';
-import { Wrap } from './RegistrationBtn.styled';
 
 function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: any) {
   const [reviewWriteState] = useReviewWrite();
@@ -10,9 +10,9 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
   const { uploadImageToS3 } = useUploadImage();
 
   return (
-    <Wrap onClick={handleRegistration}>
-      <div>게시</div>
-    </Wrap>
+    <Button variant="contained" onClick={handleRegistration} sx={{ height: '40px' }}>
+      게시
+    </Button>
   );
 
   async function handleRegistration() {

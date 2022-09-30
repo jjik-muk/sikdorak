@@ -1,18 +1,15 @@
-import Icon from 'components/Common/Icon/Icon';
-import Modal from 'components/Common/Modal/Modal';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Switch from '@mui/material/Switch';
+import Typography from '@mui/material/Typography';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { useState } from 'react';
-import {
-  Circle,
-  PostScopeWrapper,
-  ScopeButtonWrapper,
-  ScopeDescriptionArea,
-  ScopeWrapper,
-  Wrap,
-} from './PostScope.styled';
+import { Wrap } from './PostScope.styled';
 
 const scope = {
-  public: '이 게시물을 회원님의 팔로워가 아니더라도 볼 수 있도록 설정합니다.',
+  public: '전체 공개합니다.',
   private: '친구에게만 공개합니다.',
 };
 
@@ -33,21 +30,15 @@ export default function PostScope() {
   };
   return (
     <Wrap>
-      <PostScopeWrapper onClick={handleSetModal}>
-        <div>게시물 공개 범위</div>
-        <Icon icon={isOpenModal ? 'UpArrow' : 'DownArrow'} />
-      </PostScopeWrapper>
-      {isOpenModal && (
-        <Modal height="150px">
-          <ScopeWrapper>
-            <div>{isPublicScope ? '전체 공개' : '친구 공개'}</div>
-            <ScopeButtonWrapper scope={currentScope} onClick={handleSetScope}>
-              <Circle scope={currentScope} />
-            </ScopeButtonWrapper>
-          </ScopeWrapper>
-          <ScopeDescriptionArea>{scope[currentScope]}</ScopeDescriptionArea>
-        </Modal>
-      )}
+      <Accordion expanded={isOpenModal} onChange={handleSetModal}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content" id="panel1bh-header">
+          <Typography>게시물 공개 범위</Typography>
+        </AccordionSummary>
+        <AccordionDetails sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography>{scope[currentScope]}</Typography>
+          <Switch onChange={handleSetScope} />
+        </AccordionDetails>
+      </Accordion>
     </Wrap>
   );
 }

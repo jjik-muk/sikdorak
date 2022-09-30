@@ -1,11 +1,9 @@
-import { STYLE } from 'constants/style';
+import Chip from '@mui/material/Chip';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
-import { useOutsideClick } from 'hooks/useOutsideClick';
-import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { createKey } from 'utils/utils';
 import TagInput from '../TagInput/TagInput';
-import { Item, Wrap } from './TagContainer.styled';
+import { Wrap } from './TagContainer.styled';
 
 function TagContainer() {
   const [reviewWriteState] = useReviewWrite();
@@ -13,12 +11,14 @@ function TagContainer() {
 
   return (
     <Wrap>
-      {tags.map((tag: string, idx: number) => (
-        <div key={createKey(tag, idx)}>
-          <TagItem idx={idx} value={tag} />
-        </div>
-      ))}
       <TagInput />
+      <Tags>
+        {tags.map((tag: string, idx: number) => (
+          <span key={createKey(tag, idx)} style={{ whiteSpace: 'nowrap' }}>
+            <TagItem idx={idx} value={tag} />
+          </span>
+        ))}
+      </Tags>
     </Wrap>
   );
 }
@@ -26,38 +26,20 @@ function TagContainer() {
 export default TagContainer;
 
 function TagItem({ idx, value }: any) {
-  const [isModifing, setIsModifing] = useState(false);
-  const [inputValue, setInputValue] = useState(value);
-  const inputRef = useRef(null);
   const [, dispatchReviewWrite] = useReviewWrite();
-  useOutsideClick(inputRef, () => {
-    setIsModifing(false);
-  });
-  return isModifing ? (
-    <Input
-      ref={inputRef}
-      value={inputValue}
-      onChange={(e) => setInputValue(e.target.value)}
-      onKeyDown={(e) => {
-        const isPressEnter = e.key === 'Enter';
-        if (isPressEnter) {
-          dispatchReviewWrite({ type: 'MODIFY_TAG', tagIdx: idx, newTag: inputValue });
-        }
-      }}
-    />
-  ) : (
-    <Item
-      onClick={() => {
-        setIsModifing(true);
-      }}
-    >
-      #{value}
-    </Item>
-  );
+  return <Chip label={`#${value}`} variant="outlined" onDelete={removeTag} sx={{ margin: '10px 5px 0 0' }} />;
+
+  function removeTag() {
+    dispatchReviewWrite({ type: 'REMOVE_TAG', tagIdx: idx });
+  }
 }
 
-const Input = styled.input`
-  width: 120px;
-  ${STYLE.BOX_CONTAINER}
-  height: 30px;
+const Tags = styled.div`
+  display: inline-block;
+
+  width: 300px;
+  height: fit-content;
+
+  position: relative;
+  vertical-align: top;
 `;

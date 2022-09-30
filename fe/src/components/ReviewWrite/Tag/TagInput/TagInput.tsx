@@ -1,17 +1,20 @@
+import TextField from '@mui/material/TextField';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { useState } from 'react';
 import { debounce } from 'utils/utils';
-import { Input } from './TagInput.styled';
 
 function TagInput() {
   const [value, setValue] = useState('');
   const [, dispatchReviewWriteState] = useReviewWrite();
   return (
-    <Input
+    <TextField
+      id="tag-input"
+      label="태그 입력"
+      variant="outlined"
+      fullWidth
       value={value}
       onChange={(e) => setValue(e.target.value)}
       onKeyDown={debounce(handleTagAddition, 100)}
-      placeholder="#태그 입력"
     />
   );
 
