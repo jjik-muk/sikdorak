@@ -34,6 +34,7 @@
     "jsx-a11y/click-events-have-key-events": 0,
     "prefer-arrow-callback": 0,
     "prefer-destructuring": 0,
-    "exceptAfterSingleLine": 0
+    "exceptAfterSingleLine": 0,
+    "no-alert": 0
   }
 }
