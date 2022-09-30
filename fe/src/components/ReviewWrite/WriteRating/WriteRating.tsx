@@ -4,7 +4,10 @@ import StarRating from 'components/ReviewWrite/WriteRating/StarRating/StarRating
 
 function WriteRating() {
   return (
-    <Card variant="outlined" sx={{ display: 'flex', justifyContent: 'space-between', padding: '12px' }}>
+    <Card
+      variant="outlined"
+      sx={{ display: 'flex', justifyContent: 'space-between', padding: '12px', minHeight: '50px' }}
+    >
       <Typography>평점 입력</Typography>
       <StarRating />
     </Card>
