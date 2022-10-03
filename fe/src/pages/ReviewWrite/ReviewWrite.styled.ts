@@ -10,7 +10,7 @@ export const Wrap = styled.div`
   border-radius: 7px;
 
   @media (max-width: 1400px) {
-    width: 400px;
+    width: calc(50vw + 400px);
   }
 `;
 
@@ -31,9 +31,10 @@ export const ImgWrap = styled.div`
   height: 660px;
   border-radius: 10px;
   margin-left: 10px;
+  overflow: hidden;
 
   @media (max-width: 1400px) {
-    display: none;
+    width: 50vw;
   }
 `;
 

@@ -28,10 +28,3 @@ export const STORE_DETAIL = {
     SMALL: 200,
   },
 };
-
-export const WRITE = {
-  IMG: {
-    WIDTH: 950,
-    HEIGHT: 650,
-  },
-};

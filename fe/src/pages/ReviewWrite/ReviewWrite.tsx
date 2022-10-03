@@ -1,4 +1,3 @@
-import { WRITE } from 'constants/size';
 import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
 import ImgUpload from 'components/ReviewWrite/ImgUpload/ImgUpload';
 import PostScope from 'components/ReviewWrite/PostScope/PostScope';
@@ -22,12 +21,7 @@ function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps)
       <Content>
         <ImgWrap>
           {selectedImg ? (
-            <Img
-              width={WRITE.IMG.WIDTH}
-              height={WRITE.IMG.HEIGHT}
-              src={URL.createObjectURL(selectedImg)}
-              alt="업로드 사진"
-            />
+            <Img width="100%" height="100%" src={URL.createObjectURL(selectedImg)} alt="업로드 사진" />
           ) : (
             <ImgUpload setSelectedImg={setSelectedImg} />
           )}
