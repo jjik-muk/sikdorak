@@ -8,6 +8,10 @@ export const Wrap = styled.div`
   padding: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 7px;
+
+  @media (max-width: 1400px) {
+    width: calc(50vw + 400px);
+  }
 `;
 
 export const Content = styled.div`
@@ -27,6 +31,11 @@ export const ImgWrap = styled.div`
   height: 660px;
   border-radius: 10px;
   margin-left: 10px;
+  overflow: hidden;
+
+  @media (max-width: 1400px) {
+    width: 50vw;
+  }
 `;
 
 export const InputWrap = styled.div`
