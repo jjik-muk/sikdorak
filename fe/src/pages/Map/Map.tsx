@@ -1,3 +1,5 @@
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
 import Modal from 'components/Common/Modal/Modal';
@@ -9,15 +11,15 @@ import useSearchBar from 'hooks/useSearchBar';
 import useStores from 'hooks/useStores';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Buttons, ContentArea, FeedsArea, Input, MapArea } from './Map.styled';
+import { ContentArea, FeedsArea, Input, MapArea } from './Map.styled';
 
 function Map() {
-  const [isActiveStore, setIsActiveStore] = useState(true);
+  const [activeTabIdx, setActiveTabIdx] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { stores, mapPos, setMapPos } = useStores();
   const { inputValue, searchResults, setInputValue, debouncedSearch } = useSearchBar();
-  useAuth();
   const { dispatchReviews } = useReviews();
+  useAuth();
 
   useEffect(() => {
     const hasInputValue = inputValue.length > 0;
@@ -35,26 +37,28 @@ function Map() {
     <>
       <CommonHeader dispatchReviews={dispatchReviews} />
       <ContentArea>
-        <Buttons>
-          <button
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={activeTabIdx}
+          sx={{ borderRight: 1, borderColor: 'divider' }}
+        >
+          <Tab
+            label="가게 목록"
             onClick={() => {
-              setIsActiveStore(true);
+              setActiveTabIdx(0);
             }}
-            type="button"
-          >
-            가게 목록
-          </button>
-          <button
+          />
+          <Tab
+            label="유저 리뷰"
             onClick={() => {
-              setIsActiveStore(false);
+              setActiveTabIdx(1);
             }}
-            type="button"
-          >
-            유저 리뷰
-          </button>
-        </Buttons>
+          />
+        </Tabs>
         <FeedsArea>
-          {!isActiveStore && (
+          {/* 유저 목록 */}
+          {activeTabIdx === 0 && (
             <Input
               value={inputValue}
               onChange={handleChangeSearchBar}
@@ -70,7 +74,8 @@ function Map() {
               ))}
             </Modal>
           )}
-          {isActiveStore ? <Stores stores={stores} /> : <Feeds reviews={[]} isUsedMapPage />}
+          {/* 가게 목록 */}
+          {activeTabIdx === 1 ? <Stores stores={stores} /> : <Feeds reviews={[]} isUsedMapPage />}
         </FeedsArea>
         <MapArea>
           <MapComponent stores={stores} mapPos={mapPos} setMapPos={setMapPos} />
