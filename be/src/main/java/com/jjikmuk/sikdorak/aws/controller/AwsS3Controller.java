@@ -1,8 +1,8 @@
 package com.jjikmuk.sikdorak.aws.controller;
 
-import com.jjikmuk.sikdorak.aws.service.GeneratePresignedURLService;
-import com.jjikmuk.sikdorak.aws.service.request.PresignedUrlCreateRequest;
-import com.jjikmuk.sikdorak.aws.service.response.PresignedUrlCreateResponse;
+import com.jjikmuk.sikdorak.aws.service.GeneratePreSignedURLService;
+import com.jjikmuk.sikdorak.aws.service.request.PreSignedUrlCreateRequest;
+import com.jjikmuk.sikdorak.aws.service.response.PreSignedUrlCreateResponse;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.aop.UserOnly;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
@@ -20,15 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/images/url")
 public class AwsS3Controller {
 
-	private final GeneratePresignedURLService generatePresignedURLService;
+	private final GeneratePreSignedURLService generatePresignedURLService;
+//	private final ImageMetaService imageMetaService;
 
 	@UserOnly
 	@PutMapping
-	public CommonResponseEntity<PresignedUrlCreateResponse> createPresignedUrl(
-		@RequestBody PresignedUrlCreateRequest presignedUrlCreateRequest,
+	public CommonResponseEntity<PreSignedUrlCreateResponse> createPresignedUrl(
+		@RequestBody PreSignedUrlCreateRequest presignedUrlCreateRequest,
 		@AuthenticatedUser LoginUser loginUser) {
-		PresignedUrlCreateResponse presignedUrlCreateResponse = generatePresignedURLService.createPresignedUrl(
+		PreSignedUrlCreateResponse presignedUrlCreateResponse = generatePresignedURLService.createPreSignedUrl(
 			presignedUrlCreateRequest, loginUser);
+//		imageMetaService.createImageMeta(presignedUrlCreateResponse.presignedUrl(), loginUser);
 
 		return new CommonResponseEntity<>(
 			ResponseCodeAndMessages.IMAGES_UPLOAD_PRESIGNED_URL_CREATE_SUCCESS,

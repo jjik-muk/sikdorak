@@ -5,7 +5,7 @@ import static com.jjikmuk.sikdorak.documentationtest.aws.S3Snippet.PRESIGNED_URL
 import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
-import com.jjikmuk.sikdorak.aws.service.request.PresignedUrlCreateRequest;
+import com.jjikmuk.sikdorak.aws.service.request.PreSignedUrlCreateRequest;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
 import org.hamcrest.Matchers;
@@ -15,12 +15,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @DisplayName("문서화 : AWS S3 Presigned URL 생성")
-class PresignedURLCreateDocumentationTest extends InitDocumentationTest {
+class PreSignedURLCreateDocumentationTest extends InitDocumentationTest {
 
 	@Test
 	@DisplayName("PUT S3 presigned URL 생성 요청이 정상적인 경우라면 URL 생성 후 정상 상태 코드와 URL을 반환한다")
 	void create_presignedURL_success() {
-		PresignedUrlCreateRequest presignedUrlCreateRequest = new PresignedUrlCreateRequest("jpg");
+		PreSignedUrlCreateRequest presignedUrlCreateRequest = new PreSignedUrlCreateRequest("jpg");
 
 		given(this.spec)
 			.filter(document(DEFAULT_RESTDOC_PATH,

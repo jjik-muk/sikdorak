@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class PresignedUrlCreateRequest {
+public class PreSignedUrlCreateRequest {
 
 	@NotEmpty
 	@Pattern(regexp = "jpg\\|jpeg\\|png")
 	private String extension;
 
-	public PresignedUrlCreateRequest(String extension) {
+	public PreSignedUrlCreateRequest(String extension) {
 		this.extension = extension;
 	}
 }

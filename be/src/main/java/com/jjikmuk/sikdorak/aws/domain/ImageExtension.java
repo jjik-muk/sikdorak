@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.aws.service;
+package com.jjikmuk.sikdorak.aws.domain;
 
 import com.jjikmuk.sikdorak.aws.service.exception.InvalidImagesExtensionException;
 
