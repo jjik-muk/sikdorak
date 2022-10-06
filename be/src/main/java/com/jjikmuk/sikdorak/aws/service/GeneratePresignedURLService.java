@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.jjikmuk.sikdorak.aws.service.request.PresignedUrlCreateRequest;
 import com.jjikmuk.sikdorak.aws.service.response.PresignedUrlCreateResponse;
 import com.jjikmuk.sikdorak.common.properties.AwsProperties;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
 import java.net.URL;
 import java.time.Instant;
 import java.util.Date;

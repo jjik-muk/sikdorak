@@ -1,8 +1,8 @@
 package com.jjikmuk.sikdorak.review.command.domain;
 
 import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
-import com.jjikmuk.sikdorak.user.user.domain.RelationType;
-import com.jjikmuk.sikdorak.user.user.domain.User;
+import com.jjikmuk.sikdorak.user.user.command.domain.RelationType;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;

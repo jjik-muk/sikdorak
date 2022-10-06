@@ -2,9 +2,9 @@ package com.jjikmuk.sikdorak.tool;
 
 import com.jjikmuk.sikdorak.review.command.domain.Review;
 import com.jjikmuk.sikdorak.review.command.domain.ReviewRepository;
-import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
-import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
+import com.jjikmuk.sikdorak.user.auth.app.JwtProvider;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
+import com.jjikmuk.sikdorak.user.user.command.domain.UserRepository;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;

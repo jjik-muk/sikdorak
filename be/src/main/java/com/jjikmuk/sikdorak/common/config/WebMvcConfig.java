@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.common.config;
 
 import com.jjikmuk.sikdorak.common.controller.CursorPageableArgumentResolver;
-import com.jjikmuk.sikdorak.user.auth.controller.OAuthUserArgumentResolver;
+import com.jjikmuk.sikdorak.user.auth.api.OAuthUserArgumentResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

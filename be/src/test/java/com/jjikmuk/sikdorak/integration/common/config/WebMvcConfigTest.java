@@ -3,8 +3,8 @@ package com.jjikmuk.sikdorak.integration.common.config;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.jjikmuk.sikdorak.user.auth.controller.OAuthUserArgumentResolver;
-import com.jjikmuk.sikdorak.user.user.service.UserService;
+import com.jjikmuk.sikdorak.user.auth.api.OAuthUserArgumentResolver;
+import com.jjikmuk.sikdorak.user.user.command.app.UserService;
 import java.net.URI;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

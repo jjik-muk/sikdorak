@@ -1,8 +1,8 @@
 package com.jjikmuk.sikdorak.comment.query.response;
 
 import com.jjikmuk.sikdorak.comment.command.domain.Comment;
-import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.service.response.UserSimpleProfileResponse;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
+import com.jjikmuk.sikdorak.user.user.query.response.UserSimpleProfileResponse;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

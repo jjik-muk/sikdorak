@@ -13,7 +13,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 
 import com.jjikmuk.sikdorak.comment.command.app.request.CommentCreateRequest;
 import com.jjikmuk.sikdorak.comment.query.response.CommentSearchResponse;
-import com.jjikmuk.sikdorak.user.user.service.response.UserSimpleProfileResponse;
+import com.jjikmuk.sikdorak.user.user.query.response.UserSimpleProfileResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 

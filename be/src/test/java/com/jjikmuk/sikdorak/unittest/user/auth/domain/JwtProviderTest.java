@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.unittest.user.auth.domain;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.common.properties.JwtProperties;
-import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
+import com.jjikmuk.sikdorak.user.auth.app.JwtProvider;
 import com.jjikmuk.sikdorak.user.auth.exception.ExpiredTokenException;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.review.command.domain;
 
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisibilityException;
-import com.jjikmuk.sikdorak.user.user.domain.RelationType;
+import com.jjikmuk.sikdorak.user.user.command.domain.RelationType;
 
 public enum ReviewVisibility {
     PUBLIC, PROTECTED, PRIVATE;

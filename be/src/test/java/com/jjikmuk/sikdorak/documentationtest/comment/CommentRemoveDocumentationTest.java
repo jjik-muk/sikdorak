@@ -9,7 +9,7 @@ import com.jjikmuk.sikdorak.comment.command.domain.Comment;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
 import com.jjikmuk.sikdorak.review.command.domain.Review;
-import com.jjikmuk.sikdorak.user.user.domain.User;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

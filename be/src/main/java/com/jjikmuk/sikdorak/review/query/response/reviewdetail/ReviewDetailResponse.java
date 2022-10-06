@@ -2,8 +2,8 @@ package com.jjikmuk.sikdorak.review.query.response.reviewdetail;
 
 import com.jjikmuk.sikdorak.review.command.domain.Review;
 import com.jjikmuk.sikdorak.store.command.domain.Store;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.domain.User;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

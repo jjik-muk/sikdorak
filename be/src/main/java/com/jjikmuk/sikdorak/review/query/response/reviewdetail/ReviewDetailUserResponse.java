@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.review.query.response.reviewdetail;
 
-import com.jjikmuk.sikdorak.user.user.domain.User;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.URL;

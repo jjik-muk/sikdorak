@@ -12,12 +12,12 @@ import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailRespo
 import com.jjikmuk.sikdorak.store.command.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.command.domain.StoreRepository;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.domain.RelationType;
-import com.jjikmuk.sikdorak.user.user.domain.User;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
+import com.jjikmuk.sikdorak.user.user.command.domain.RelationType;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
-import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
+import com.jjikmuk.sikdorak.user.user.command.domain.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
