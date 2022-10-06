@@ -5,7 +5,7 @@ import static com.jjikmuk.sikdorak.documentationtest.comment.CommentSnippet.COMM
 import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
-import com.jjikmuk.sikdorak.comment.domain.Comment;
+import com.jjikmuk.sikdorak.comment.command.domain.Comment;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
 import com.jjikmuk.sikdorak.review.domain.Review;

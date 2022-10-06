@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.comment.domain;
+package com.jjikmuk.sikdorak.comment.command.domain;
 
 import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
 import com.jjikmuk.sikdorak.common.domain.Deleted;

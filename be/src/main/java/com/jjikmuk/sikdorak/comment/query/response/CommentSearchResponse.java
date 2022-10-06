@@ -1,6 +1,6 @@
-package com.jjikmuk.sikdorak.comment.service.response;
+package com.jjikmuk.sikdorak.comment.query.response;
 
-import com.jjikmuk.sikdorak.comment.domain.Comment;
+import com.jjikmuk.sikdorak.comment.command.domain.Comment;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.service.response.UserSimpleProfileResponse;
 import javax.validation.constraints.Max;

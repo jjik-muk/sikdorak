@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.comment.service.response;
+package com.jjikmuk.sikdorak.comment.query.response;
 
 import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
 import java.util.List;

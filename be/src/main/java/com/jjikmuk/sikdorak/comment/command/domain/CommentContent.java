@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.comment.domain;
+package com.jjikmuk.sikdorak.comment.command.domain;
 
 import com.jjikmuk.sikdorak.comment.exception.InvalidCommentContentException;
 import java.util.Objects;

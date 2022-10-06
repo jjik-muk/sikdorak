@@ -3,9 +3,9 @@ package com.jjikmuk.sikdorak.integration.comment;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.comment.domain.Comment;
-import com.jjikmuk.sikdorak.comment.service.CommentService;
-import com.jjikmuk.sikdorak.comment.service.response.CommentSearchPagingResponse;
+import com.jjikmuk.sikdorak.comment.command.domain.Comment;
+import com.jjikmuk.sikdorak.comment.query.CommentDao;
+import com.jjikmuk.sikdorak.comment.query.response.CommentSearchPagingResponse;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
 import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
@@ -30,7 +30,7 @@ class CommentSearchIntegrationTest extends InitIntegrationTest {
         true);
 
     @Autowired
-    private CommentService commentService;
+    private CommentDao commentDao;
 
     @Autowired
     private ReviewRepository reviewRepository;
@@ -51,7 +51,7 @@ class CommentSearchIntegrationTest extends InitIntegrationTest {
                 forky.getId());
 
             // when
-            CommentSearchPagingResponse response = commentService.searchCommentsByReviewIdWithPaging(
+            CommentSearchPagingResponse response = commentDao.searchCommentsByReviewIdWithPaging(
                 reviewId,
                 loginUser,
                 FIRST_PAGE_REQUEST
@@ -87,7 +87,7 @@ class CommentSearchIntegrationTest extends InitIntegrationTest {
             reviewRepository.delete(review);
 
             // then
-            assertThatThrownBy(() -> commentService.searchCommentsByReviewIdWithPaging(reviewId,
+            assertThatThrownBy(() -> commentDao.searchCommentsByReviewIdWithPaging(reviewId,
                 loginUser,
                 FIRST_PAGE_REQUEST))
                 .isInstanceOf(NotFoundReviewException.class);
@@ -107,7 +107,7 @@ class CommentSearchIntegrationTest extends InitIntegrationTest {
 
             // then
             assertThatThrownBy(
-                () -> commentService.searchCommentsByReviewIdWithPaging(
+                () -> commentDao.searchCommentsByReviewIdWithPaging(
                     reviewId,
                     loginUser,
                     FIRST_PAGE_REQUEST))
@@ -126,7 +126,7 @@ class CommentSearchIntegrationTest extends InitIntegrationTest {
 
             // then
             assertThatThrownBy(
-                () -> commentService.searchCommentsByReviewIdWithPaging(
+                () -> commentDao.searchCommentsByReviewIdWithPaging(
                     reviewId,
                     loginUser,
                     cursorPageRequest))
@@ -142,35 +142,35 @@ class CommentSearchIntegrationTest extends InitIntegrationTest {
                 testData.generator.comment(review, jay, "내용 " + i);
             }
 
-            CommentSearchPagingResponse response = commentService.searchCommentsByReviewIdWithPaging(
+            CommentSearchPagingResponse response = commentDao.searchCommentsByReviewIdWithPaging(
                 review.getId(),
                 testData.generator.createLoginUserWithUserId(jay.getId()),
                 new CursorPageRequest(0L, 0L, 5, true));
 
             CursorPageResponse page = response.page();
 
-            CommentSearchPagingResponse response2 = commentService.searchCommentsByReviewIdWithPaging(
+            CommentSearchPagingResponse response2 = commentDao.searchCommentsByReviewIdWithPaging(
                 review.getId(),
                 testData.generator.createLoginUserWithUserId(jay.getId()),
                 new CursorPageRequest(0L, page.next(), 5, true));
 
             page = response2.page();
 
-            CommentSearchPagingResponse response3 = commentService.searchCommentsByReviewIdWithPaging(
+            CommentSearchPagingResponse response3 = commentDao.searchCommentsByReviewIdWithPaging(
                 review.getId(),
                 testData.generator.createLoginUserWithUserId(jay.getId()),
                 new CursorPageRequest(0L, page.next(), 5, true));
 
             page = response3.page();
 
-            CommentSearchPagingResponse response4 = commentService.searchCommentsByReviewIdWithPaging(
+            CommentSearchPagingResponse response4 = commentDao.searchCommentsByReviewIdWithPaging(
                 review.getId(),
                 testData.generator.createLoginUserWithUserId(jay.getId()),
                 new CursorPageRequest(page.prev(), 0L, 5, false));
 
             page = response4.page();
 
-            CommentSearchPagingResponse response5 = commentService.searchCommentsByReviewIdWithPaging(
+            CommentSearchPagingResponse response5 = commentDao.searchCommentsByReviewIdWithPaging(
                 review.getId(),
                 testData.generator.createLoginUserWithUserId(jay.getId()),
                 new CursorPageRequest(page.prev(), page.next(), 5, false));

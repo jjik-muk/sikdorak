@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.comment.service.request;
+package com.jjikmuk.sikdorak.comment.command.app.request;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
