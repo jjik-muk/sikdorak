@@ -21,7 +21,7 @@ function StoreDetail() {
   const targetId = Number(pathname.split('/').at(-1));
   const [storeInfo, setStoreInfo] = useState(INIT_STATE_STORE_INFO);
   const { storeName, addressName, contactNumber, reviewCounts, reviewScoreAverage } = storeInfo;
-  const { reviews, handleScroll, fetchNextReviews, afterParam } = useReviews();
+  const { reviews, handleScroll, dispatchReviews, fetchNextReviews, afterParam } = useReviews();
   useAuth();
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function StoreDetail() {
         handleScroll(e, getUrl(afterParam, 5));
       }}
     >
-      <CommonHeader />
+      <CommonHeader dispatchReviews={dispatchReviews} />
       <ContentsWrap>
         <StoreInfo
           storeName={storeName}
