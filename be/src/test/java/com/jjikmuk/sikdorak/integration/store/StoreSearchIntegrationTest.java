@@ -3,10 +3,10 @@ package com.jjikmuk.sikdorak.integration.store;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.store.domain.Store;
-import com.jjikmuk.sikdorak.store.repository.StoreRepository;
-import com.jjikmuk.sikdorak.store.service.StoreService;
-import com.jjikmuk.sikdorak.store.service.response.StoreSearchResponse;
+import com.jjikmuk.sikdorak.store.query.response.StoreSearchResponse;
+import com.jjikmuk.sikdorak.store.command.domain.Store;
+import com.jjikmuk.sikdorak.store.command.domain.StoreRepository;
+import com.jjikmuk.sikdorak.store.query.StoreDao;
 import java.util.List;
 import java.util.function.Consumer;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class StoreSearchIntegrationTest extends InitIntegrationTest {
 
 	@Autowired
-	private StoreService storeService;
+	private StoreDao storeDao;
 
 	@Autowired
 	private StoreRepository storeRepository;
@@ -44,7 +44,7 @@ public class StoreSearchIntegrationTest extends InitIntegrationTest {
 			String storeName = testData.store.getStoreName();
 
 			// when
-			List<StoreSearchResponse> storeSearchResponses = storeService.searchStoresByStoreNameContaining(
+			List<StoreSearchResponse> storeSearchResponses = storeDao.searchStoresByStoreNameContaining(
 				storeName);
 
 			// then
@@ -62,7 +62,7 @@ public class StoreSearchIntegrationTest extends InitIntegrationTest {
 			String partOfStoreName = storeFullName.substring(0, storeFullName.length() / 2);
 
 			// when
-			List<StoreSearchResponse> storeSearchResponses = storeService.searchStoresByStoreNameContaining(
+			List<StoreSearchResponse> storeSearchResponses = storeDao.searchStoresByStoreNameContaining(
 				partOfStoreName);
 
 			// then
@@ -79,7 +79,7 @@ public class StoreSearchIntegrationTest extends InitIntegrationTest {
 			String storeName = null;
 
 			// when
-			List<StoreSearchResponse> storeSearchResponses = storeService.searchStoresByStoreNameContaining(
+			List<StoreSearchResponse> storeSearchResponses = storeDao.searchStoresByStoreNameContaining(
 				storeName);
 
 			// then
@@ -93,7 +93,7 @@ public class StoreSearchIntegrationTest extends InitIntegrationTest {
 			String storeName = "존재하지않는가게이름";
 
 			// when
-			List<StoreSearchResponse> storeSearchResponses = storeService.searchStoresByStoreNameContaining(
+			List<StoreSearchResponse> storeSearchResponses = storeDao.searchStoresByStoreNameContaining(
 				storeName);
 
 			// then
@@ -108,7 +108,7 @@ public class StoreSearchIntegrationTest extends InitIntegrationTest {
 			storeRepository.deleteById(deletedStore.getId());
 
 			// when
-			List<StoreSearchResponse> storeSearchResponses = storeService.searchStoresByStoreNameContaining(
+			List<StoreSearchResponse> storeSearchResponses = storeDao.searchStoresByStoreNameContaining(
 				deletedStore.getStoreName());
 
 			// then

@@ -9,7 +9,7 @@ import com.jjikmuk.sikdorak.common.CodeAndMessages;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.exception.ExceptionCodeAndMessages;
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
-import com.jjikmuk.sikdorak.store.service.request.StoreCreateRequest;
+import com.jjikmuk.sikdorak.store.command.app.request.StoreCreateRequest;
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;

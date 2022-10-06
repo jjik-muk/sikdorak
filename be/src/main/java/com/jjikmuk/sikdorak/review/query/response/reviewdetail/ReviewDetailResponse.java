@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.review.query.response.reviewdetail;
 
 import com.jjikmuk.sikdorak.review.command.domain.Review;
-import com.jjikmuk.sikdorak.store.domain.Store;
+import com.jjikmuk.sikdorak.store.command.domain.Store;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import java.time.LocalDate;

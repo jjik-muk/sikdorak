@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.store.domain.Store;
+import com.jjikmuk.sikdorak.store.command.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
-import com.jjikmuk.sikdorak.store.repository.StoreRepository;
-import com.jjikmuk.sikdorak.store.service.StoreService;
+import com.jjikmuk.sikdorak.store.command.domain.StoreRepository;
+import com.jjikmuk.sikdorak.store.command.app.StoreService;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

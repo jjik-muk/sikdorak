@@ -2,9 +2,9 @@ package com.jjikmuk.sikdorak.tool;
 
 import com.jjikmuk.sikdorak.review.command.domain.Review;
 import com.jjikmuk.sikdorak.review.command.domain.ReviewRepository;
-import com.jjikmuk.sikdorak.store.domain.Address;
-import com.jjikmuk.sikdorak.store.domain.Store;
-import com.jjikmuk.sikdorak.store.repository.StoreRepository;
+import com.jjikmuk.sikdorak.store.command.domain.Address;
+import com.jjikmuk.sikdorak.store.command.domain.Store;
+import com.jjikmuk.sikdorak.store.command.domain.StoreRepository;
 import com.jjikmuk.sikdorak.user.user.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.repository.UserRepository;

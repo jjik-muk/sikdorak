@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.review.query.response.reviewdetail;
 
-import com.jjikmuk.sikdorak.store.domain.Store;
+import com.jjikmuk.sikdorak.store.command.domain.Store;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

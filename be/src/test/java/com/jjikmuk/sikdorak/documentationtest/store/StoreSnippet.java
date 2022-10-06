@@ -21,13 +21,13 @@ import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailLikeR
 import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailStoreResponse;
 import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailUserResponse;
-import com.jjikmuk.sikdorak.store.service.request.StoreCreateRequest;
-import com.jjikmuk.sikdorak.store.service.request.StoreModifyRequest;
-import com.jjikmuk.sikdorak.store.service.request.StoreVerifyOrSaveRequest;
-import com.jjikmuk.sikdorak.store.service.response.StoreDetailResponse;
-import com.jjikmuk.sikdorak.store.service.response.StoreRadiusSearchResponse;
-import com.jjikmuk.sikdorak.store.service.response.StoreSearchResponse;
-import com.jjikmuk.sikdorak.store.service.response.StoreVerifyOrSaveResponse;
+import com.jjikmuk.sikdorak.store.command.app.request.StoreCreateRequest;
+import com.jjikmuk.sikdorak.store.command.app.request.StoreModifyRequest;
+import com.jjikmuk.sikdorak.store.command.app.request.StoreVerifyOrSaveRequest;
+import com.jjikmuk.sikdorak.store.query.response.StoreDetailResponse;
+import com.jjikmuk.sikdorak.store.query.response.StoreRadiusSearchResponse;
+import com.jjikmuk.sikdorak.store.query.response.StoreSearchResponse;
+import com.jjikmuk.sikdorak.store.command.app.response.StoreVerifyOrSaveResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 

@@ -10,7 +10,7 @@ import com.jjikmuk.sikdorak.review.command.domain.ReviewVisibility;
 import com.jjikmuk.sikdorak.review.query.ReviewDao;
 import com.jjikmuk.sikdorak.review.query.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailResponse;
-import com.jjikmuk.sikdorak.store.domain.Store;
+import com.jjikmuk.sikdorak.store.command.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.domain.Authority;
