@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.tool;
 
-import com.jjikmuk.sikdorak.review.domain.Review;
-import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
+import com.jjikmuk.sikdorak.review.command.domain.Review;
+import com.jjikmuk.sikdorak.review.command.domain.ReviewRepository;
 import com.jjikmuk.sikdorak.store.domain.Address;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.repository.StoreRepository;

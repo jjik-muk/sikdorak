@@ -5,8 +5,8 @@ import com.jjikmuk.sikdorak.common.aop.UserOnly;
 import com.jjikmuk.sikdorak.common.controller.CursorPageable;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
-import com.jjikmuk.sikdorak.review.service.ReviewService;
-import com.jjikmuk.sikdorak.review.service.response.ReviewListResponse;
+import com.jjikmuk.sikdorak.review.query.ReviewDao;
+import com.jjikmuk.sikdorak.review.query.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.domain.AuthenticatedUser;
 import com.jjikmuk.sikdorak.user.user.service.UserService;
@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserService userService;
-    private final ReviewService reviewService;
+    private final ReviewDao reviewDao;
 
     @GetMapping
     public CommonResponseEntity<List<UserSimpleProfileResponse>> searchUsers(
@@ -55,7 +55,7 @@ public class UserController {
         @CursorPageable CursorPageRequest cursorPageRequest) {
 
         ReviewListResponse userReviewResponses =
-            reviewService.searchUserReviewsByUserIdAndRelationType(userId, loginUser,
+            reviewDao.searchUserReviewsByUserIdAndRelationType(userId, loginUser,
                 cursorPageRequest);
 
         return new CommonResponseEntity<>(

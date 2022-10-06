@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.unittest.review.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.review.domain.ReviewVisitedDate;
+import com.jjikmuk.sikdorak.review.command.domain.ReviewVisitedDate;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewVisitedDateException;
 import java.time.LocalDate;
 import java.util.stream.Stream;

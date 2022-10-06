@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.review.domain.ReviewVisibility;
+import com.jjikmuk.sikdorak.review.command.domain.ReviewVisibility;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.service.StoreService;

@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.review.domain.ReviewVisibility;
-import com.jjikmuk.sikdorak.review.service.ReviewService;
-import com.jjikmuk.sikdorak.review.service.response.ReviewListResponse;
-import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailResponse;
+import com.jjikmuk.sikdorak.review.command.domain.ReviewVisibility;
+import com.jjikmuk.sikdorak.review.query.ReviewDao;
+import com.jjikmuk.sikdorak.review.query.response.ReviewListResponse;
+import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 class ReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
 
     @Autowired
-    private ReviewService reviewService;
+    private ReviewDao reviewDao;
 
     @Nested
     @DisplayName("특정 가게의 리뷰를 조회할 때")
@@ -39,7 +39,7 @@ class ReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
             LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
             // when
-            ReviewListResponse reviewResponse = reviewService.searchReviewsByStoreId(
+            ReviewListResponse reviewResponse = reviewDao.searchReviewsByStoreId(
                 store.getId(), loginUser, pageRequest);
 
             // then
@@ -67,7 +67,7 @@ class ReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
 
             // then
             assertThatThrownBy(
-                () -> reviewService.searchReviewsByStoreId(notExistingStoreId, loginUser,
+                () -> reviewDao.searchReviewsByStoreId(notExistingStoreId, loginUser,
                     pageRequest))
                 .isInstanceOf(NotFoundStoreException.class);
         }
@@ -81,7 +81,7 @@ class ReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
             LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
             // when
-            ReviewListResponse reviewResponse = reviewService.searchReviewsByStoreId(
+            ReviewListResponse reviewResponse = reviewDao.searchReviewsByStoreId(
                 store.getId(), loginUser, pageRequest);
 
             // then

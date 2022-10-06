@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.unittest.review.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.review.domain.Images;
+import com.jjikmuk.sikdorak.review.command.domain.Images;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewImagesException;
 import java.util.ArrayList;
 import java.util.List;

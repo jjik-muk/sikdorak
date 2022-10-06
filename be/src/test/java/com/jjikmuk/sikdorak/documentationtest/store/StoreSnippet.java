@@ -17,10 +17,10 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
 import com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator;
-import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailLikeResponse;
-import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailResponse;
-import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailStoreResponse;
-import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailUserResponse;
+import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailLikeResponse;
+import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailResponse;
+import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailStoreResponse;
+import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailUserResponse;
 import com.jjikmuk.sikdorak.store.service.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.service.request.StoreModifyRequest;
 import com.jjikmuk.sikdorak.store.service.request.StoreVerifyOrSaveRequest;

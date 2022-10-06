@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.store.service;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.controller.response.CursorPageResponse;
 import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
-import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
+import com.jjikmuk.sikdorak.review.command.domain.ReviewRepository;
 import com.jjikmuk.sikdorak.store.domain.Address;
 import com.jjikmuk.sikdorak.store.domain.Store;
 import com.jjikmuk.sikdorak.store.domain.UserLocationInfo;

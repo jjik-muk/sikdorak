@@ -13,8 +13,8 @@ import com.jjikmuk.sikdorak.common.aop.AdminOnly;
 import com.jjikmuk.sikdorak.common.controller.CursorPageable;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
-import com.jjikmuk.sikdorak.review.service.ReviewService;
-import com.jjikmuk.sikdorak.review.service.response.ReviewListResponse;
+import com.jjikmuk.sikdorak.review.query.ReviewDao;
+import com.jjikmuk.sikdorak.review.query.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.store.service.StoreService;
 import com.jjikmuk.sikdorak.store.service.request.StoreCreateRequest;
 import com.jjikmuk.sikdorak.store.service.request.StoreModifyRequest;
@@ -45,7 +45,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StoreController {
 
 	private final StoreService storeService;
-	private final ReviewService reviewService;
+	private final ReviewDao reviewDao;
 
 	@GetMapping
 	public CommonResponseEntity<List<StoreSearchResponse>> findStoresByStoreName(
@@ -121,7 +121,7 @@ public class StoreController {
 	) {
 		return new CommonResponseEntity<>(
 			ResponseCodeAndMessages.STORE_SEARCH_REVIEW_SUCCESS,
-			reviewService.searchReviewsByStoreId(storeId, loginUser, cursorPageRequest),
+			reviewDao.searchReviewsByStoreId(storeId, loginUser, cursorPageRequest),
 			HttpStatus.OK);
 	}
 }

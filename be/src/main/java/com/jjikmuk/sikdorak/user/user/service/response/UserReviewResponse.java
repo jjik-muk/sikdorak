@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.user.user.service.response;
 
-import com.jjikmuk.sikdorak.review.domain.Review;
+import com.jjikmuk.sikdorak.review.command.domain.Review;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.tool;
 
-import com.jjikmuk.sikdorak.review.domain.Review;
-import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
+import com.jjikmuk.sikdorak.review.command.domain.Review;
+import com.jjikmuk.sikdorak.review.command.domain.ReviewRepository;
 import com.jjikmuk.sikdorak.user.auth.domain.JwtProvider;
 import com.jjikmuk.sikdorak.user.user.domain.User;
 import com.jjikmuk.sikdorak.user.user.repository.UserRepository;

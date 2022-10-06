@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.review.service.ReviewService;
-import com.jjikmuk.sikdorak.review.service.response.ReviewListResponse;
+import com.jjikmuk.sikdorak.review.query.ReviewDao;
+import com.jjikmuk.sikdorak.review.query.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
 import com.jjikmuk.sikdorak.user.user.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 
 	@Autowired
-	private ReviewService reviewService;
+	private ReviewDao reviewDao;
 
 	@Test
 	@DisplayName("게스트가 특정 유저의 리뷰를 조회한다면 public 리뷰들만 반환한다.")
@@ -28,7 +28,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 		LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
-		ReviewListResponse reviews = reviewService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser, cursorPageRequest);
+		ReviewListResponse reviews = reviewDao.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser, cursorPageRequest);
 
 		assertThat(reviews.reviews()).hasSize(1);
 	}
@@ -41,7 +41,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 		LoginUser loginUser = new LoginUser(testData.jay.getId(), Authority.USER);
 
-		ReviewListResponse reviews = reviewService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser, cursorPageRequest);
+		ReviewListResponse reviews = reviewDao.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser, cursorPageRequest);
 
 		assertThat(reviews.reviews()).hasSize(1);
 	}
@@ -54,7 +54,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 		LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
 
-		ReviewListResponse reviews = reviewService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser, cursorPageRequest);
+		ReviewListResponse reviews = reviewDao.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser, cursorPageRequest);
 
 		assertThat(reviews.reviews()).hasSize(2);
 	}
@@ -67,7 +67,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 		LoginUser loginUser = new LoginUser(testData.hoi.getId(), Authority.USER);
 
-		ReviewListResponse reviews = reviewService.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser, cursorPageRequest);
+		ReviewListResponse reviews = reviewDao.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser, cursorPageRequest);
 
 		assertThat(reviews.reviews()).hasSize(3);
 	}
@@ -82,7 +82,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		long invalidUserId = Long.MAX_VALUE;
 
 		assertThatThrownBy(() ->
-			reviewService.searchUserReviewsByUserIdAndRelationType(invalidUserId, loginUser, cursorPageRequest))
+			reviewDao.searchUserReviewsByUserIdAndRelationType(invalidUserId, loginUser, cursorPageRequest))
 			.isInstanceOf(NotFoundUserException.class);
 	}
 
@@ -94,7 +94,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 		LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
-		ReviewListResponse reviews = reviewService.searchUserReviewsByUserIdAndRelationType(
+		ReviewListResponse reviews = reviewDao.searchUserReviewsByUserIdAndRelationType(
 			testData.jay.getId(), loginUser,cursorPageRequest);
 
 		assertThat(reviews.reviews()).isEmpty();
@@ -108,7 +108,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 		LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
-		ReviewListResponse reviews = reviewService.searchUserReviewsByUserIdAndRelationType(
+		ReviewListResponse reviews = reviewDao.searchUserReviewsByUserIdAndRelationType(
 			testData.forky.getId(), loginUser,cursorPageRequest);
 
 		assertThat(reviews.reviews()).hasSize(5);
