@@ -79,7 +79,7 @@ function Map() {
               </Modal>
             )}
           </UserSearchBarWrap>
-          {isSelectedRestaurantList ? <Stores stores={stores} /> : <Feeds reviews={[]} isUsedMapPage />}
+          {isSelectedRestaurantList ? <Stores stores={stores} /> : <Feeds reviews={[]} />}
         </FeedsArea>
         <MapArea>
           <MapComponent stores={stores} mapPos={mapPos} setMapPos={setMapPos} />

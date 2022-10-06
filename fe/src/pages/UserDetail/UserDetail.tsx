@@ -35,7 +35,7 @@ function UserDetail() {
       const res = await fetchDataThatNeedToLogin(`api/users/${targetId}`);
       setUserProfile(res.data);
     }
-  }, [targetId, afterParam, fetchNextReviews]);
+  }, [targetId, afterParam]);
 
   return (
     <Wrap

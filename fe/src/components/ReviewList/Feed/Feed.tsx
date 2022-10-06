@@ -1,5 +1,8 @@
-import { DETAIL, FEED } from 'constants/size';
-import Icon from 'components/Common/Icon/Icon';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ModeCommentIcon from '@mui/icons-material/ModeComment';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ShareIcon from '@mui/icons-material/Share';
+import { Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material';
 import Portal from 'components/Common/Portal/Portal';
 import Menu from 'components/ReviewDetail/Menu/Menu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
@@ -12,19 +15,7 @@ import ReviewDetail from 'pages/ReviewDetail/ReviewDetail';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { accountStore } from 'stores/AccountStore';
-import { createKey } from 'utils/utils';
-import {
-  ButtonWrapper,
-  Contents,
-  ContentsWrap,
-  Header,
-  IconWrap,
-  Main,
-  MainFooter,
-  MenuWrap,
-  Pictures,
-  Wrap,
-} from './Feed.styled';
+import styled from 'styled-components';
 
 function Feed({
   images,
@@ -35,12 +26,10 @@ function Feed({
   store,
   user,
   tags,
-  isUsedMapPage,
 }: FeedProps) {
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const { isActiveHeart, likeCnt, postLike } = useLike({ like, reviewId });
-  console.log('like', like);
   const [copyText, setCopyText] = useState('');
 
   const reviewDetailModalRef = useRef(null);
@@ -50,7 +39,6 @@ function Feed({
 
   const myUserId = accountStore.id;
   const isMyFeed = user?.userId === myUserId;
-  const BTN_WIDTH = isUsedMapPage ? 125 : FEED.BTN.WIDTH_NO_IMG;
   const location = useLocation();
 
   useEffect(() => {
@@ -59,55 +47,38 @@ function Feed({
   }, []);
 
   return (
-    <>
-      <Wrap onClick={toggleIsClikedFeed}>
-        <ContentsWrap wrapWidth={isUsedMapPage ? 500 : DETAIL.WRAP.WIDTH_NO_IMG}>
-          <Header>
-            <UserProfile nickname={user?.userNickname} imgUrl={user?.userProfileImage} userId={user?.userId} />
-            <MenuWrap onClick={handleMenu}>
-              {isMyFeed && <Icon icon="MenuBtn" />}
-              {isActiveMenu && <Menu menuRef={menuRef} reviewId={reviewId} />}
-            </MenuWrap>
-          </Header>
-          <Main>
-            <Contents>{reviewContent}</Contents>
-            <Pictures>
-              {images &&
-                images.map((image, i) => (
-                  <img
-                    key={createKey(image, i)}
-                    src={image}
-                    alt="음식"
-                    width={FEED.IMG.WIDTH}
-                    height={FEED.IMG.HEIGHT}
-                  />
-                ))}
-            </Pictures>
-            <Rating rating={reviewScore} />
-            <MainFooter>
-              <CompnayProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
-            </MainFooter>
-          </Main>
-          <ButtonWrapper>
-            <div onClick={handleLike}>
-              <IconWrap width={BTN_WIDTH} height={FEED.BTN.HEIGHT}>
-                <Icon icon="Heart" fill={isActiveHeart ? 'red' : '#FFF'} />
-                {likeCnt}
-              </IconWrap>
-            </div>
-            <div>
-              <IconWrap width={BTN_WIDTH} height={FEED.BTN.HEIGHT}>
-                <Icon icon="TalkBubble" fill={isActiveHeart ? 'red' : '#FFF'} />
-              </IconWrap>
-            </div>
-            <div onClick={handleCopyURL}>
-              <IconWrap width={BTN_WIDTH} height={FEED.BTN.HEIGHT}>
-                <Icon icon="ShareArrow" fill={isActiveHeart ? 'red' : '#FFF'} />
-              </IconWrap>
-            </div>
-          </ButtonWrapper>
-        </ContentsWrap>
-      </Wrap>
+    <Wrap>
+      <Card onClick={toggleIsClikedFeed}>
+        <CardHeader
+          avatar={<UserProfile nickname={user?.userNickname} imgUrl={user?.userProfileImage} userId={user?.userId} />}
+          action={
+            isMyFeed && (
+              <div onClick={handleMenu}>
+                <IconButton aria-label="settings">
+                  <MoreVertIcon />
+                </IconButton>
+                {isActiveMenu && <Menu menuRef={menuRef} reviewId={reviewId} />}
+              </div>
+            )
+          }
+        />
+        <CardMedia component="img" height="194" image={images[0]} alt="picture of user" />
+        <Rating rating={reviewScore} />
+        <CardContent>{reviewContent}</CardContent>
+        <CompnayProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
+        <CardActions>
+          <IconButton aria-label="like" onClick={handleLike}>
+            <FavoriteIcon color={isActiveHeart ? 'warning' : 'action'} />
+            <Typography>{likeCnt}</Typography>
+          </IconButton>
+          <IconButton aria-label="comment">
+            <ModeCommentIcon />
+          </IconButton>
+          <IconButton aria-label="share" onClick={handleCopyURL}>
+            <ShareIcon />
+          </IconButton>
+        </CardActions>
+      </Card>
       {isClikedFeed && (
         <Portal selector="#portal" ref={reviewDetailModalRef}>
           <ReviewDetail
@@ -125,7 +96,7 @@ function Feed({
           />
         </Portal>
       )}
-    </>
+    </Wrap>
   );
 
   function handleMenu(e) {
@@ -159,5 +130,12 @@ export type FeedProps = {
   store: { storeId: number; storeName: string; storeAddress: string };
   user: { userId: number; userNickname: string; userProfileImage: string };
   tags: string[];
-  isUsedMapPage?: boolean;
 };
+
+const Wrap = styled.div`
+  max-width: 600px;
+
+  @media (max-width: 600px) {
+    max-width: 100%;
+  }
+`;
