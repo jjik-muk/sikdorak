@@ -28,7 +28,7 @@ class PreSignedURLCreateDocumentationTest extends InitDocumentationTest {
 				PRESIGNED_URL_CREATE_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
-			.header("Authorization", testData.user1ValidAuthorizationHeader)
+			.header("Authorization", testData.kukimValidAuthorizationHeader)
 			.body(presignedUrlCreateRequest)
 
 		.when()

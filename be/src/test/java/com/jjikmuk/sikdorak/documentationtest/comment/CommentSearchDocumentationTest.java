@@ -22,7 +22,7 @@ class CommentSearchDocumentationTest extends InitDocumentationTest {
 	@Test
 	@DisplayName("댓글 조회 요청이 정상적인 경우라면 댓글 목록과 정상 상태 코드를 반환한다")
 	void search_comment_success() {
-		Review review = testData.user1PublicReview;
+		Review review = testData.kukimPublicReview;
 		User kukim = testData.kukim;
 
 		testData.generator.comment(review, kukim, "맛집이군요");

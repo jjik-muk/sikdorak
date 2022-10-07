@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.documentationtest;
+package com.jjikmuk.sikdorak.tool.mock;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

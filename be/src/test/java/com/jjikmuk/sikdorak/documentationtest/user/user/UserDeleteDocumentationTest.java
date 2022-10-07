@@ -22,7 +22,7 @@ class UserDeleteDocumentationTest extends InitDocumentationTest {
                 DEFAULT_RESTDOC_PATH,
                 USER_DELETE_RESPONSE_SNIPPET
             ))
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
 
         .when()
             .delete("/api/users")

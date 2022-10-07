@@ -39,7 +39,7 @@ class ReviewModifyIntegrationTest extends InitIntegrationTest {
 			List.of("tag1", "tag2"),
 			List.of("https://s3.ap-northeast-2.amazonaws.com/sikdorak/test.jpg"));
 
-		Review modifyReview = reviewService.modifyReview(loginUser, testData.user1PublicReview.getId(),
+		Review modifyReview = reviewService.modifyReview(loginUser, testData.kukimPublicReview.getId(),
 			reviewModifyRequest);
 
 		assertThat(modifyReview.getReviewContent()).isEqualTo(
@@ -71,7 +71,7 @@ class ReviewModifyIntegrationTest extends InitIntegrationTest {
 	void modify_review_invalid_store() {
 		long invalidStoreId = Long.MAX_VALUE;
 		LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
-		Long reviewId = testData.user1PublicReview.getId();
+		Long reviewId = testData.kukimPublicReview.getId();
 		ReviewModifyRequest reviewModifyRequest = new ReviewModifyRequest(
 			"Modify Test review contents",
 			invalidStoreId,
@@ -91,7 +91,7 @@ class ReviewModifyIntegrationTest extends InitIntegrationTest {
 	void modify_review_invalid_user() {
 		long invalidUserId = Long.MAX_VALUE;
 		LoginUser loginUser = new LoginUser(invalidUserId, Authority.USER);
-		Long reviewId = testData.user1PublicReview.getId();
+		Long reviewId = testData.kukimPublicReview.getId();
 		ReviewModifyRequest reviewModifyRequest = new ReviewModifyRequest(
 			"Modify Test review contents",
 			testData.store.getId(),

@@ -35,7 +35,7 @@ class UserModifyDocumentationTest extends InitDocumentationTest {
                     USER_MODIFY_RESPONSE_SNIPPET))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
             .body(userModifyRequest)
 
         .when()

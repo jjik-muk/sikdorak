@@ -33,7 +33,7 @@ class StoreSearchDocumentationTest extends InitDocumentationTest {
             .filter(document(DEFAULT_RESTDOC_PATH, STORE_SEARCH_REQUEST, STORE_SEARCH_RESPONSE))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
             .param("storeName", storeNameSearchKeywork)
 
         .when()
@@ -56,7 +56,7 @@ class StoreSearchDocumentationTest extends InitDocumentationTest {
         given()
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
             .param("storeName", notExistStoreName)
 
         .when()

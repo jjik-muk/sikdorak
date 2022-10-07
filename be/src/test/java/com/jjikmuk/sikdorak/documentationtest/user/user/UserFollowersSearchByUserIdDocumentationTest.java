@@ -26,7 +26,7 @@ class UserFollowersSearchByUserIdDocumentationTest extends InitDocumentationTest
                 USER_SEARCH_FOLLOWERS_FOLLOWINGS_RESPONSE_SNIPPET
             ))
             .accept(MediaType.APPLICATION_JSON_VALUE)
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
 
         .when()
             .get("/api/users/{userId}/followers", testData.rumka.getId())

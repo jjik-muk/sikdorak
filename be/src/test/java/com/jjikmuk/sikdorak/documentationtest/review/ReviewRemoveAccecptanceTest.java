@@ -32,10 +32,10 @@ class ReviewRemoveAccecptanceTest extends InitDocumentationTest {
 					REVIEW_REMOVE_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
-			.header("Authorization", testData.user1ValidAuthorizationHeader)
+			.header("Authorization", testData.kukimValidAuthorizationHeader)
 
 		.when()
-			.delete("/api/reviews/{reviewId}", testData.user1PublicReview.getId())
+			.delete("/api/reviews/{reviewId}", testData.kukimPublicReview.getId())
 
 		.then()
 			.statusCode(HttpStatus.OK.value())
@@ -56,7 +56,7 @@ class ReviewRemoveAccecptanceTest extends InitDocumentationTest {
 			.header("Content-type", "application/json")
 
 		.when()
-			.delete("/api/reviews/{reviewId}", testData.user1PublicReview.getId())
+			.delete("/api/reviews/{reviewId}", testData.kukimPublicReview.getId())
 
 		.then()
 			.statusCode(HttpStatus.UNAUTHORIZED.value())

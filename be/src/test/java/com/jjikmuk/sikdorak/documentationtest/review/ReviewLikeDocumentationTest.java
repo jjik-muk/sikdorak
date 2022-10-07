@@ -26,10 +26,10 @@ class ReviewLikeDocumentationTest extends InitDocumentationTest {
                 REVIEW_LIKE_SUCCESS_REQUEST_SNIPPET,
                 REVIEW_LIKE_SUCCESS_RESPONSE_SNIPPET
             ))
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
 
         .when()
-            .put("/api/reviews/{reviewId}/like", testData.user1PublicReview.getId())
+            .put("/api/reviews/{reviewId}/like", testData.kukimPublicReview.getId())
 
         .then()
             .statusCode(HttpStatus.OK.value())
@@ -46,7 +46,7 @@ class ReviewLikeDocumentationTest extends InitDocumentationTest {
                 REVIEW_LIKE_SUCCESS_REQUEST_SNIPPET,
                 REVIEW_LIKE_SUCCESS_RESPONSE_SNIPPET
                 ))
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
 
         .when()
             .put("/api/reviews/{reviewId}/unlike", testData.followAcceptUserProtectedReview.getId())
@@ -64,7 +64,7 @@ class ReviewLikeDocumentationTest extends InitDocumentationTest {
         given()
 
         .when()
-            .put("/api/reviews/{reviewId}/like", testData.user1PublicReview.getId())
+            .put("/api/reviews/{reviewId}/like", testData.kukimPublicReview.getId())
 
         .then()
             .statusCode(HttpStatus.UNAUTHORIZED.value())

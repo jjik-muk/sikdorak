@@ -41,7 +41,7 @@ class ReviewInsertDocumentationTest extends InitDocumentationTest {
 					REVIEW_CREATE_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
-			.header("Authorization", testData.user1ValidAuthorizationHeader)
+			.header("Authorization", testData.kukimValidAuthorizationHeader)
 			.body(reviewCreateRequest)
 
 		.when()
