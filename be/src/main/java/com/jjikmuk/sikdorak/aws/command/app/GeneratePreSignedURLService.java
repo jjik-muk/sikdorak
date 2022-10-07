@@ -28,13 +28,13 @@ public class GeneratePreSignedURLService {
 	private final UserRepository userRepository;
 
 	/**
-	 * 이미지 파일 확장자에 따른 s3 저장할 수 있는 presignedURL을 리턴합니다. 현재는 유저에 따른 이미지 폴더 경로로 저장하지 않습니다.
+	 * 이미지 파일 확장자에 따른 s3 저장할 수 있는 PUT presignedURL을 리턴합니다. 현재는 유저에 따른 이미지 폴더 경로로 저장하지 않습니다.
 	 *
 	 * @param presignedUrlCreateRequest 이미지 파일 확장자를 담고있는 요청 객체
 	 * @param loginUser 로그인 유저 정보
 	 * @return presignedURL를 담고있는 응답 객체
 	 */
-	public PreSignedUrlCreateResponse createPreSignedUrl(
+	public PreSignedUrlCreateResponse createPutPreSignedUrl(
 		PreSignedUrlCreateRequest presignedUrlCreateRequest, LoginUser loginUser) {
 		userRepository.findById(loginUser.getId())
 			.orElseThrow(NotFoundUserException::new);

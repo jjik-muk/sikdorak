@@ -29,7 +29,7 @@ public class AwsCommandApi {
 	public CommonResponseEntity<PreSignedUrlCreateResponse> createPresignedUrl(
 		@RequestBody PreSignedUrlCreateRequest presignedUrlCreateRequest,
 		@AuthenticatedUser LoginUser loginUser) {
-		PreSignedUrlCreateResponse presignedUrlCreateResponse = generatePresignedURLService.createPreSignedUrl(
+		PreSignedUrlCreateResponse presignedUrlCreateResponse = generatePresignedURLService.createPutPreSignedUrl(
 			presignedUrlCreateRequest, loginUser);
 		imageMetaDataService.initImageMetaData(presignedUrlCreateResponse.fileName(), loginUser);
 
