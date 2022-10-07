@@ -22,8 +22,8 @@ public interface S3Snippet {
 		responseFieldsOfCommon(),
 
 		responseFieldsOfObjectWithConstraintsAndFields(PreSignedUrlCreateResponse.class,
-			fieldWithPath("preSignedUrl").type(JsonFieldType.STRING).description("PUT S3 presigned URL"))
-
+			fieldWithPath("preSignedUrl").type(JsonFieldType.STRING).description("PUT S3 presigned URL"),
+			fieldWithPath("fileName").type(JsonFieldType.STRING).description("S3에 저장될 파일 이름"))
 	);
 
 }
