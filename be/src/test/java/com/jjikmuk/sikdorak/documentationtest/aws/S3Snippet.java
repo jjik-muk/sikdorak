@@ -6,8 +6,8 @@ import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.res
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.responseFieldsOfObjectWithConstraintsAndFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 
-import com.jjikmuk.sikdorak.aws.service.request.PreSignedUrlCreateRequest;
-import com.jjikmuk.sikdorak.aws.service.response.PreSignedUrlCreateResponse;
+import com.jjikmuk.sikdorak.aws.command.app.request.PreSignedUrlCreateRequest;
+import com.jjikmuk.sikdorak.aws.command.app.response.PreSignedUrlCreateResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 

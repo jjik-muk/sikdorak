@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.aws.service.response;
+package com.jjikmuk.sikdorak.aws.command.app.response;
 
 import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;

@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.aws.service.request;
+package com.jjikmuk.sikdorak.aws.command.app.request;
 
 
 import javax.validation.constraints.NotEmpty;

@@ -1,12 +1,12 @@
-package com.jjikmuk.sikdorak.aws.service;
+package com.jjikmuk.sikdorak.aws.command.app;
 
-import com.jjikmuk.sikdorak.aws.domain.ImageMetaData;
-import com.jjikmuk.sikdorak.aws.repository.ImageMetaDataRepository;
-import com.jjikmuk.sikdorak.aws.service.exception.DuplicateImageMetaDataException;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.domain.User;
+import com.jjikmuk.sikdorak.aws.command.domain.ImageMetaData;
+import com.jjikmuk.sikdorak.aws.command.domain.ImageMetaDataRepository;
+import com.jjikmuk.sikdorak.aws.exception.DuplicateImageMetaDataException;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
+import com.jjikmuk.sikdorak.user.user.command.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
-import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

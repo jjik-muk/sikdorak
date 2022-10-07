@@ -1,8 +1,8 @@
 package com.jjikmuk.sikdorak.common.exception;
 
-import com.jjikmuk.sikdorak.aws.service.exception.DuplicateImageMetaDataException;
-import com.jjikmuk.sikdorak.aws.service.exception.InvalidImagesExtensionException;
-import com.jjikmuk.sikdorak.aws.service.exception.NotFoundImageMetaDataException;
+import com.jjikmuk.sikdorak.aws.exception.DuplicateImageMetaDataException;
+import com.jjikmuk.sikdorak.aws.exception.InvalidImagesExtensionException;
+import com.jjikmuk.sikdorak.aws.exception.NotFoundImageMetaDataException;
 import com.jjikmuk.sikdorak.comment.exception.InvalidCommentContentException;
 import com.jjikmuk.sikdorak.comment.exception.NotFoundCommentException;
 import com.jjikmuk.sikdorak.common.CodeAndMessages;

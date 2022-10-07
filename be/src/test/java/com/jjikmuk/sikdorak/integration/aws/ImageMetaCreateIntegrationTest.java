@@ -4,12 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import com.jjikmuk.sikdorak.aws.domain.ImageMetaData;
-import com.jjikmuk.sikdorak.aws.service.ImageMetaDataService;
-import com.jjikmuk.sikdorak.aws.service.exception.DuplicateImageMetaDataException;
+import com.jjikmuk.sikdorak.aws.command.app.ImageMetaDataService;
+import com.jjikmuk.sikdorak.aws.command.domain.ImageMetaData;
+import com.jjikmuk.sikdorak.aws.exception.DuplicateImageMetaDataException;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.domain.Authority;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
+import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

@@ -1,6 +1,6 @@
-package com.jjikmuk.sikdorak.aws.domain;
+package com.jjikmuk.sikdorak.aws.command.domain;
 
-import com.jjikmuk.sikdorak.aws.service.exception.InvalidImagesExtensionException;
+import com.jjikmuk.sikdorak.aws.exception.InvalidImagesExtensionException;
 
 public enum ImageExtension {
 	JPG(".jpg"), JPEG(".jpeg"), PNG(".png");

@@ -1,6 +1,5 @@
-package com.jjikmuk.sikdorak.aws.repository;
+package com.jjikmuk.sikdorak.aws.command.domain;
 
-import com.jjikmuk.sikdorak.aws.domain.ImageMetaData;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ImageMetaDataRepository extends JpaRepository<ImageMetaData, Long> {

@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.aws.service.exception;
+package com.jjikmuk.sikdorak.aws.exception;
 
 import com.jjikmuk.sikdorak.common.exception.SikdorakRuntimeException;
 import org.springframework.http.HttpStatus;
