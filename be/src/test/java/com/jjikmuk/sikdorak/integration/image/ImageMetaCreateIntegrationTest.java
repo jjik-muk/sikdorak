@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.integration.aws;
+package com.jjikmuk.sikdorak.integration.image;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.documentationtest.aws;
+package com.jjikmuk.sikdorak.documentationtest.image;
 
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.createResponseSnippetWithFields;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.requestSnippetWithConstraintsAndFields;

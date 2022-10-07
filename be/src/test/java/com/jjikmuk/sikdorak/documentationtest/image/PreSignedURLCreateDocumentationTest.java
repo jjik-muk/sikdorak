@@ -1,7 +1,7 @@
-package com.jjikmuk.sikdorak.documentationtest.aws;
+package com.jjikmuk.sikdorak.documentationtest.image;
 
-import static com.jjikmuk.sikdorak.documentationtest.aws.S3Snippet.PRESIGNED_URL_CREATE_REQUEST_SNIPPET;
-import static com.jjikmuk.sikdorak.documentationtest.aws.S3Snippet.PRESIGNED_URL_CREATE_RESPONSE_SNIPPET;
+import static com.jjikmuk.sikdorak.documentationtest.image.S3Snippet.PRESIGNED_URL_CREATE_REQUEST_SNIPPET;
+import static com.jjikmuk.sikdorak.documentationtest.image.S3Snippet.PRESIGNED_URL_CREATE_RESPONSE_SNIPPET;
 import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
