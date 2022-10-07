@@ -4,7 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.URL;
 
 public record PreSignedUrlCreateResponse(
-	@NotEmpty @URL String presignedUrl) {
-
+	@NotEmpty @URL String preSignedUrl,
+	@NotEmpty String fileName ) {
 }
 

@@ -1,6 +1,7 @@
 package com.jjikmuk.sikdorak.aws.controller;
 
 import com.jjikmuk.sikdorak.aws.service.GeneratePreSignedURLService;
+import com.jjikmuk.sikdorak.aws.service.ImageMetaDataService;
 import com.jjikmuk.sikdorak.aws.service.request.PreSignedUrlCreateRequest;
 import com.jjikmuk.sikdorak.aws.service.response.PreSignedUrlCreateResponse;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AwsS3Controller {
 
 	private final GeneratePreSignedURLService generatePresignedURLService;
-//	private final ImageMetaService imageMetaService;
+	private final ImageMetaDataService imageMetaDataService;
 
 	@UserOnly
 	@PutMapping
@@ -30,7 +31,7 @@ public class AwsS3Controller {
 		@AuthenticatedUser LoginUser loginUser) {
 		PreSignedUrlCreateResponse presignedUrlCreateResponse = generatePresignedURLService.createPreSignedUrl(
 			presignedUrlCreateRequest, loginUser);
-//		imageMetaService.createImageMeta(presignedUrlCreateResponse.presignedUrl(), loginUser);
+		imageMetaDataService.initImageMetaData(presignedUrlCreateResponse.fileName(), loginUser);
 
 		return new CommonResponseEntity<>(
 			ResponseCodeAndMessages.IMAGES_UPLOAD_PRESIGNED_URL_CREATE_SUCCESS,

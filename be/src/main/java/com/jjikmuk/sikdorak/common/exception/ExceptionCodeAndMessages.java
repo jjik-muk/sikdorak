@@ -1,6 +1,8 @@
 package com.jjikmuk.sikdorak.common.exception;
 
+import com.jjikmuk.sikdorak.aws.service.exception.DuplicateImageMetaDataException;
 import com.jjikmuk.sikdorak.aws.service.exception.InvalidImagesExtensionException;
+import com.jjikmuk.sikdorak.aws.service.exception.NotFoundImageMetaDataException;
 import com.jjikmuk.sikdorak.comment.exception.InvalidCommentContentException;
 import com.jjikmuk.sikdorak.comment.exception.NotFoundCommentException;
 import com.jjikmuk.sikdorak.common.CodeAndMessages;
@@ -65,6 +67,9 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     // Images
     INVALID_IMAGES_EXTENSION("F-I001", "유효하지 않은 이미지 확장자 입니다.",
         InvalidImagesExtensionException.class),
+    NOT_FOUND_IMAGE_META_DATA("F-I002", "유효하지 않은 이미지 URL 입니다.",
+        NotFoundImageMetaDataException.class),
+    DUPLICATE_IMAGE_META_DATA("F-I003", "이미지 메타 정보가 중복됩니다.", DuplicateImageMetaDataException.class),
 
     // Store
     NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", NotFoundStoreException.class),

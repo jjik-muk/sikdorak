@@ -22,7 +22,7 @@ public interface S3Snippet {
 		responseFieldsOfCommon(),
 
 		responseFieldsOfObjectWithConstraintsAndFields(PreSignedUrlCreateResponse.class,
-			fieldWithPath("presignedUrl").type(JsonFieldType.STRING).description("PUT S3 presigned URL"))
+			fieldWithPath("preSignedUrl").type(JsonFieldType.STRING).description("PUT S3 presigned URL"))
 
 	);
 

@@ -43,7 +43,7 @@ public class GeneratePreSignedURLService {
 		String fileName = generateRandomImageFileName(presignedUrlCreateRequest);
 		URL url = generatePutPreSignedUrl(fileName);
 
-		return new PreSignedUrlCreateResponse(url.toString());
+		return new PreSignedUrlCreateResponse(url.toString(), fileName);
 	}
 
 	private URL generatePutPreSignedUrl(String fileName) {
