@@ -6,11 +6,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.exception.InvalidPageParameterException;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.review.domain.ReviewVisibility;
-import com.jjikmuk.sikdorak.review.service.ReviewService;
-import com.jjikmuk.sikdorak.review.service.response.ReviewListResponse;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.domain.Authority;
+import com.jjikmuk.sikdorak.review.command.domain.ReviewVisibility;
+import com.jjikmuk.sikdorak.review.query.ReviewDao;
+import com.jjikmuk.sikdorak.review.query.response.ReviewListResponse;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
+import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
 
     @Autowired
-    private ReviewService reviewService;
+    private ReviewDao reviewDao;
 
     @Test
     @DisplayName("비회원이 리뷰 피드 목록 조회 요청을 할 경우 공개범위가 public 인 리뷰들을 좋아요 순서대로 반환한다.")
@@ -29,7 +29,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
-        ReviewListResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
+        ReviewListResponse recommendedReviews = reviewDao.getRecentRecommendedReviews(
             loginUser, cursorPageRequest);
         long firstReviewLikeCount = recommendedReviews.reviews().get(0).like().count();
         long secondReviewLikeCount = recommendedReviews.reviews().get(1).like().count();
@@ -47,7 +47,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
-        ReviewListResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
+        ReviewListResponse recommendedReviews = reviewDao.getRecentRecommendedReviews(
             loginUser, cursorPageRequest);
 
         assertThat(recommendedReviews.reviews().stream().anyMatch(
@@ -62,7 +62,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, invalidPage, size, true);
 
-        ReviewListResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
+        ReviewListResponse recommendedReviews = reviewDao.getRecentRecommendedReviews(
             loginUser, cursorPageRequest);
 
         assertThat(recommendedReviews.reviews()).isEmpty();
@@ -76,7 +76,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
-        ReviewListResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
+        ReviewListResponse recommendedReviews = reviewDao.getRecentRecommendedReviews(
             loginUser, cursorPageRequest);
 
         assertThat(recommendedReviews.reviews()).hasSize(size);
@@ -90,7 +90,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
-        ReviewListResponse recommendedReviews = reviewService.getRecentRecommendedReviews(
+        ReviewListResponse recommendedReviews = reviewDao.getRecentRecommendedReviews(
             loginUser, cursorPageRequest);
 
         assertThat(recommendedReviews.reviews()).hasSize(size);
@@ -105,7 +105,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
-        assertThatThrownBy(() -> reviewService.getRecentRecommendedReviews(loginUser, cursorPageRequest))
+        assertThatThrownBy(() -> reviewDao.getRecentRecommendedReviews(loginUser, cursorPageRequest))
             .isInstanceOf(InvalidPageParameterException.class);
     }
 

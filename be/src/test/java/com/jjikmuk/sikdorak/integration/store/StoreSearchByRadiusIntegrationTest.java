@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.store.service.StoreService;
-import com.jjikmuk.sikdorak.store.service.request.UserLocationInfoRequest;
-import com.jjikmuk.sikdorak.store.service.response.StoreListByRadiusResponse;
+import com.jjikmuk.sikdorak.store.query.request.UserLocationInfoRequest;
+import com.jjikmuk.sikdorak.store.query.response.StoreListByRadiusResponse;
+import com.jjikmuk.sikdorak.store.query.StoreDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 class StoreSearchByRadiusIntegrationTest extends InitIntegrationTest {
 
     @Autowired
-    private StoreService storeService;
+    private StoreDao storeDao;
 
     @Test
     @DisplayName("유저의 위치정보가 올바르다면 해당 반경 내의 가게목록을 페이징으로 반환한다")
@@ -26,7 +26,7 @@ class StoreSearchByRadiusIntegrationTest extends InitIntegrationTest {
         UserLocationInfoRequest userLocationInfoRequest = new UserLocationInfoRequest(127.067, 37.6557, 1000);
 
         StoreListByRadiusResponse storeRadiusSearchResponses =
-            storeService.searchStoresByRadius(userLocationInfoRequest, cursorPageRequest);
+            storeDao.searchStoresByRadius(userLocationInfoRequest, cursorPageRequest);
 
         assertThat(storeRadiusSearchResponses.stores()).hasSize(3);
     }
@@ -40,7 +40,7 @@ class StoreSearchByRadiusIntegrationTest extends InitIntegrationTest {
         UserLocationInfoRequest userLocationInfoRequest = new UserLocationInfoRequest(127.067, 37.6557, 100);
 
         StoreListByRadiusResponse storeRadiusSearchResponses =
-            storeService.searchStoresByRadius(userLocationInfoRequest, cursorPageRequest);
+            storeDao.searchStoresByRadius(userLocationInfoRequest, cursorPageRequest);
 
         assertThat(storeRadiusSearchResponses.stores()).isEmpty();
     }

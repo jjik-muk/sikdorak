@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.unittest.review.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.review.domain.ReviewScore;
+import com.jjikmuk.sikdorak.review.command.domain.ReviewScore;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewScoreException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

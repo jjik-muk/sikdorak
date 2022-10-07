@@ -6,7 +6,7 @@ import static io.restassured.RestAssured.given;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
-import com.jjikmuk.sikdorak.review.service.request.ReviewCreateRequest;
+import com.jjikmuk.sikdorak.review.command.app.request.ReviewCreateRequest;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

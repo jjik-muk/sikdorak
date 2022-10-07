@@ -5,11 +5,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.domain.Authority;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
+import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
-import com.jjikmuk.sikdorak.user.user.service.UserService;
-import com.jjikmuk.sikdorak.user.user.service.response.UserDetailProfileResponse;
+import com.jjikmuk.sikdorak.user.user.query.response.UserDetailProfileResponse;
+import com.jjikmuk.sikdorak.user.user.query.UserDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +22,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 class UserSearchProfileIntegrationTest extends InitIntegrationTest {
 
     @Autowired
-    private UserService userService;
+    private UserDao userDao;
 
     @Test
     @DisplayName("유저 본인의 정보를 조회할 경우 유저 정보를 반환한다.")
     void user_search_self_profile() {
         LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
 
-        UserDetailProfileResponse userDetailProfileResponse = userService.searchUserDetailProfile(
+        UserDetailProfileResponse userDetailProfileResponse = userDao.searchUserDetailProfile(
             testData.kukim.getId(), loginUser);
 
         assertAll(
@@ -48,7 +48,7 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
     void anonymous_user_search_user_profile() {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
-        UserDetailProfileResponse userDetailProfileResponse = userService.searchUserDetailProfile(
+        UserDetailProfileResponse userDetailProfileResponse = userDao.searchUserDetailProfile(
             testData.kukim.getId(), loginUser);
 
         assertAll(
@@ -67,7 +67,7 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
     void user_search_following_user_profile() {
         LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
 
-        UserDetailProfileResponse userDetailProfileResponse = userService.searchUserDetailProfile(
+        UserDetailProfileResponse userDetailProfileResponse = userDao.searchUserDetailProfile(
             testData.hoi.getId(), loginUser);
 
         assertAll(
@@ -87,7 +87,7 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
     void user_search_unfollowing_user_profile() {
         LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
 
-        UserDetailProfileResponse userDetailProfileResponse = userService.searchUserDetailProfile(
+        UserDetailProfileResponse userDetailProfileResponse = userDao.searchUserDetailProfile(
             testData.jay.getId(), loginUser);
 
         assertAll(
@@ -106,7 +106,7 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
     void not_found_user_search_another_user_profile() {
         LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
 
-        assertThatThrownBy(() -> userService.searchUserDetailProfile(
+        assertThatThrownBy(() -> userDao.searchUserDetailProfile(
             9999L, loginUser))
             .isInstanceOf(NotFoundUserException.class);
     }

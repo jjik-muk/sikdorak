@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.unittest.review.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.review.domain.Image;
+import com.jjikmuk.sikdorak.review.command.domain.Image;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewImageException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

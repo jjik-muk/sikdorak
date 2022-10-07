@@ -3,8 +3,8 @@ package com.jjikmuk.sikdorak.unittest.user.user.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.user.user.domain.Authority;
-import com.jjikmuk.sikdorak.user.user.domain.User;
+import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidAuthorityException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

@@ -5,11 +5,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.store.exception.InvalidXYException;
-import com.jjikmuk.sikdorak.store.service.PlaceApiService;
-import com.jjikmuk.sikdorak.store.service.dto.AddressSearchRequest;
-import com.jjikmuk.sikdorak.store.service.dto.AddressSearchResponse;
-import com.jjikmuk.sikdorak.store.service.dto.PlaceSearchRequest;
-import com.jjikmuk.sikdorak.store.service.dto.PlaceSearchResponse;
+import com.jjikmuk.sikdorak.store.command.app.internal.PlaceApiService;
+import com.jjikmuk.sikdorak.store.command.app.internal.dto.AddressSearchRequest;
+import com.jjikmuk.sikdorak.store.command.app.internal.dto.AddressSearchResponse;
+import com.jjikmuk.sikdorak.store.command.app.internal.dto.PlaceSearchRequest;
+import com.jjikmuk.sikdorak.store.command.app.internal.dto.PlaceSearchResponse;
 import com.jjikmuk.sikdorak.tool.mock.WireMockPlaceApiTest;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

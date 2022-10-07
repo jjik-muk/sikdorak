@@ -6,10 +6,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
-import com.jjikmuk.sikdorak.review.service.ReviewService;
-import com.jjikmuk.sikdorak.review.service.response.reviewdetail.ReviewDetailResponse;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.domain.Authority;
+import com.jjikmuk.sikdorak.review.query.ReviewDao;
+import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailResponse;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
+import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 class ReviewSearchIntegrationTest extends InitIntegrationTest {
 
 	@Autowired
-	ReviewService reviewService;
+	ReviewDao reviewDao;
 
 	@Test
 	@DisplayName("유저가 본인의 전체 공개 리뷰를 조회한 경우 디테일 리뷰응답 객체를 반환한다.")
@@ -28,7 +28,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 			Authority.USER);
 		Long searchReviewId = testData.followAcceptUserPublicReview.getId();
 
-		ReviewDetailResponse reviewDetailResponse = reviewService.searchReviewDetail(
+		ReviewDetailResponse reviewDetailResponse = reviewDao.searchReviewDetail(
 			reviewOwnerUser, searchReviewId);
 
 		assertThat(reviewDetailResponse.reviewId()).isEqualTo(searchReviewId);
@@ -43,7 +43,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 			Authority.USER);
 		Long searchReviewId = testData.followAcceptUserPrivateReview.getId();
 
-		ReviewDetailResponse reviewDetailResponse = reviewService.searchReviewDetail(
+		ReviewDetailResponse reviewDetailResponse = reviewDao.searchReviewDetail(
 			reviewOwnerUser, searchReviewId);
 
 		assertThat(reviewDetailResponse.reviewId()).isEqualTo(searchReviewId);
@@ -57,7 +57,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 		LoginUser reviewFriendUser = new LoginUser(testData.forky.getId(), Authority.USER);
 		Long searchReviewId = testData.followAcceptUserProtectedReview.getId();
 
-		ReviewDetailResponse reviewDetailResponse = reviewService.searchReviewDetail(
+		ReviewDetailResponse reviewDetailResponse = reviewDao.searchReviewDetail(
 			reviewFriendUser, searchReviewId);
 
 		assertThat(reviewDetailResponse.reviewId()).isEqualTo(searchReviewId);
@@ -71,7 +71,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 		LoginUser guestUser = new LoginUser(Authority.ANONYMOUS);
 		Long searchReviewId = Long.MAX_VALUE;
 
-		assertThatThrownBy(() ->  reviewService.searchReviewDetail(
+		assertThatThrownBy(() ->  reviewDao.searchReviewDetail(
 			guestUser, searchReviewId))
 			.isInstanceOf(NotFoundReviewException.class);
 	}
@@ -82,7 +82,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 		LoginUser guestUser = new LoginUser(Authority.ANONYMOUS);
 		Long searchReviewId = testData.followAcceptUserPrivateReview.getId();
 
-		assertThatThrownBy(() ->  reviewService.searchReviewDetail(
+		assertThatThrownBy(() ->  reviewDao.searchReviewDetail(
 			guestUser, searchReviewId))
 			.isInstanceOf(UnauthorizedUserException.class);
 	}

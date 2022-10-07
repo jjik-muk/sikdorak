@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.unittest.store.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.store.domain.StoreContactNumber;
+import com.jjikmuk.sikdorak.store.command.domain.StoreContactNumber;
 import com.jjikmuk.sikdorak.store.exception.InvalidContactNumberException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

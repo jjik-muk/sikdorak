@@ -3,13 +3,13 @@ package com.jjikmuk.sikdorak.integration.comment;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.comment.domain.Comment;
-import com.jjikmuk.sikdorak.comment.service.CommentService;
-import com.jjikmuk.sikdorak.comment.service.request.CommentCreateRequest;
+import com.jjikmuk.sikdorak.comment.command.app.CommentService;
+import com.jjikmuk.sikdorak.comment.command.app.request.CommentCreateRequest;
+import com.jjikmuk.sikdorak.comment.command.domain.Comment;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.domain.Authority;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
+import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

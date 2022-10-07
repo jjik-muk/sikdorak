@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.unittest.review.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.review.domain.Tags;
+import com.jjikmuk.sikdorak.review.command.domain.Tags;
 import com.jjikmuk.sikdorak.review.exception.InvalidTagsException;
 import java.util.ArrayList;
 import java.util.List;

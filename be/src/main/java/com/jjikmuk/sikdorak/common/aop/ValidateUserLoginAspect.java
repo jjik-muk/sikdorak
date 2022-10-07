@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.common.aop;
 
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.exception.NeedLoginException;
 import java.util.Arrays;
 import org.aspectj.lang.JoinPoint;

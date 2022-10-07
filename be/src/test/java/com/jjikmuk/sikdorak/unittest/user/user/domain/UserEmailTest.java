@@ -2,7 +2,7 @@ package com.jjikmuk.sikdorak.unittest.user.user.domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.user.user.domain.UserEmail;
+import com.jjikmuk.sikdorak.user.user.command.domain.UserEmail;
 import com.jjikmuk.sikdorak.user.user.exception.InvalidUserEmailException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
