@@ -1,8 +1,8 @@
-package com.jjikmuk.sikdorak.aws.command.app;
+package com.jjikmuk.sikdorak.image.command.app;
 
-import com.jjikmuk.sikdorak.aws.command.domain.ImageMetaData;
-import com.jjikmuk.sikdorak.aws.command.domain.ImageMetaDataRepository;
-import com.jjikmuk.sikdorak.aws.exception.DuplicateImageMetaDataException;
+import com.jjikmuk.sikdorak.image.command.domain.ImageMetaData;
+import com.jjikmuk.sikdorak.image.command.domain.ImageMetaDataRepository;
+import com.jjikmuk.sikdorak.image.exception.DuplicateImageMetaDataException;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
 import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import com.jjikmuk.sikdorak.user.user.command.domain.UserRepository;

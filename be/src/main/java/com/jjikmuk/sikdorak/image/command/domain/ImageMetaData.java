@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.aws.command.domain;
+package com.jjikmuk.sikdorak.image.command.domain;
 
 import com.jjikmuk.sikdorak.common.domain.BaseTimeEntity;
 import javax.persistence.Column;

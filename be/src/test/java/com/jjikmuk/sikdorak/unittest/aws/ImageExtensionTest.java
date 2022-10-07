@@ -3,8 +3,8 @@ package com.jjikmuk.sikdorak.unittest.aws;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.aws.command.domain.ImageExtension;
-import com.jjikmuk.sikdorak.aws.exception.InvalidImagesExtensionException;
+import com.jjikmuk.sikdorak.image.command.domain.ImageExtension;
+import com.jjikmuk.sikdorak.image.exception.InvalidImagesExtensionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;

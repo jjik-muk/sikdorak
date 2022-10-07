@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.aws.command.domain;
+package com.jjikmuk.sikdorak.image.command.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

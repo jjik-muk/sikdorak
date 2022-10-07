@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import com.jjikmuk.sikdorak.aws.command.app.ImageMetaDataService;
-import com.jjikmuk.sikdorak.aws.command.domain.ImageMetaData;
-import com.jjikmuk.sikdorak.aws.exception.DuplicateImageMetaDataException;
+import com.jjikmuk.sikdorak.image.command.app.ImageMetaDataService;
+import com.jjikmuk.sikdorak.image.command.domain.ImageMetaData;
+import com.jjikmuk.sikdorak.image.exception.DuplicateImageMetaDataException;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
 import com.jjikmuk.sikdorak.user.user.command.domain.Authority;

@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.aws.command.app.request;
+package com.jjikmuk.sikdorak.image.command.app.request;
 
 
 import javax.validation.constraints.NotEmpty;

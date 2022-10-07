@@ -1,12 +1,12 @@
-package com.jjikmuk.sikdorak.aws.command.app;
+package com.jjikmuk.sikdorak.image.command.app;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
-import com.jjikmuk.sikdorak.aws.command.app.request.PreSignedUrlCreateRequest;
-import com.jjikmuk.sikdorak.aws.command.app.response.PreSignedUrlCreateResponse;
-import com.jjikmuk.sikdorak.aws.command.domain.ImageExtension;
 import com.jjikmuk.sikdorak.common.properties.AwsProperties;
+import com.jjikmuk.sikdorak.image.command.app.request.PreSignedUrlCreateRequest;
+import com.jjikmuk.sikdorak.image.command.app.response.PreSignedUrlCreateResponse;
+import com.jjikmuk.sikdorak.image.command.domain.ImageExtension;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
 import com.jjikmuk.sikdorak.user.user.command.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;

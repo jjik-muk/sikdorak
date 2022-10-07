@@ -1,11 +1,11 @@
 package com.jjikmuk.sikdorak.common.exception;
 
-import com.jjikmuk.sikdorak.aws.exception.DuplicateImageMetaDataException;
-import com.jjikmuk.sikdorak.aws.exception.InvalidImagesExtensionException;
-import com.jjikmuk.sikdorak.aws.exception.NotFoundImageMetaDataException;
 import com.jjikmuk.sikdorak.comment.exception.InvalidCommentContentException;
 import com.jjikmuk.sikdorak.comment.exception.NotFoundCommentException;
 import com.jjikmuk.sikdorak.common.CodeAndMessages;
+import com.jjikmuk.sikdorak.image.exception.DuplicateImageMetaDataException;
+import com.jjikmuk.sikdorak.image.exception.InvalidImagesExtensionException;
+import com.jjikmuk.sikdorak.image.exception.NotFoundImageMetaDataException;
 import com.jjikmuk.sikdorak.review.exception.DuplicateLikeUserException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewImageException;
