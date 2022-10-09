@@ -7,6 +7,7 @@ import com.jjikmuk.sikdorak.common.properties.AwsProperties;
 import com.jjikmuk.sikdorak.image.command.app.request.PreSignedUrlCreateRequest;
 import com.jjikmuk.sikdorak.image.command.app.response.PreSignedUrlCreateResponse;
 import com.jjikmuk.sikdorak.image.command.domain.ImageExtension;
+import com.jjikmuk.sikdorak.image.exception.NotFoundImageException;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
 import com.jjikmuk.sikdorak.user.user.command.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 public class GeneratePreSignedURLService {
 
 	public static final int FIVE_MINUTE = 1000 * 60 * 5;
+	public static final String BUCKET_ORIGIN_FILE_PATH = "origin/";
 
 	private final AmazonS3 amazonS3;
 	private final AwsProperties awsProperties;
@@ -31,7 +33,7 @@ public class GeneratePreSignedURLService {
 	 * 이미지 파일 확장자에 따른 s3 저장할 수 있는 PUT presignedURL을 리턴합니다. 현재는 유저에 따른 이미지 폴더 경로로 저장하지 않습니다.
 	 *
 	 * @param presignedUrlCreateRequest 이미지 파일 확장자를 담고있는 요청 객체
-	 * @param loginUser 로그인 유저 정보
+	 * @param loginUser                 로그인 유저 정보
 	 * @return presignedURL를 담고있는 응답 객체
 	 */
 	public PreSignedUrlCreateResponse createPutPreSignedUrl(
@@ -48,7 +50,7 @@ public class GeneratePreSignedURLService {
 
 	private URL generatePutPreSignedUrl(String fileName) {
 		GeneratePresignedUrlRequest generatePresignedUrlRequest =
-			new GeneratePresignedUrlRequest(awsProperties.getBucket(), "origin/" + fileName)
+			new GeneratePresignedUrlRequest(awsProperties.getBucket(), BUCKET_ORIGIN_FILE_PATH + fileName)
 				.withMethod(HttpMethod.PUT)
 				.withExpiration(getExpiration(FIVE_MINUTE));
 		return amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
@@ -67,5 +69,20 @@ public class GeneratePreSignedURLService {
 		expTimeMillis += expirationAsMilliseconds;
 		expiration.setTime(expTimeMillis);
 		return expiration;
+	}
+
+	/**
+	 * S3 버킷에서 fileName의 사이드를 반환합니다.
+	 *
+	 * @param fileName 파일 이름
+	 * @return 이미지 사이즈 크기
+	 */
+	public long getS3ObjectSize(String fileName) {
+		try {
+			return amazonS3.getObjectMetadata(awsProperties.getBucket(),
+				BUCKET_ORIGIN_FILE_PATH + fileName).getContentLength();
+		} catch (Exception e) {
+			throw new NotFoundImageException();
+		}
 	}
 }

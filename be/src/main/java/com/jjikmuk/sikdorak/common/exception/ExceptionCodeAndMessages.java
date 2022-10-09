@@ -4,7 +4,10 @@ import com.jjikmuk.sikdorak.comment.exception.InvalidCommentContentException;
 import com.jjikmuk.sikdorak.comment.exception.NotFoundCommentException;
 import com.jjikmuk.sikdorak.common.CodeAndMessages;
 import com.jjikmuk.sikdorak.image.exception.DuplicateImageMetaDataException;
+import com.jjikmuk.sikdorak.image.exception.InvalidImageOriginUrlException;
+import com.jjikmuk.sikdorak.image.exception.InvalidImageSizeException;
 import com.jjikmuk.sikdorak.image.exception.InvalidImagesExtensionException;
+import com.jjikmuk.sikdorak.image.exception.NotFoundImageException;
 import com.jjikmuk.sikdorak.image.exception.NotFoundImageMetaDataException;
 import com.jjikmuk.sikdorak.review.exception.DuplicateLikeUserException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
@@ -70,6 +73,9 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NOT_FOUND_IMAGE_META_DATA("F-I002", "유효하지 않은 이미지 URL 입니다.",
         NotFoundImageMetaDataException.class),
     DUPLICATE_IMAGE_META_DATA("F-I003", "이미지 메타 정보가 중복됩니다.", DuplicateImageMetaDataException.class),
+    NOT_FOUND_IMAGE("F-I004", "클라우드 저장소에서 이미지를 찾을 수 없습니다.", NotFoundImageException.class),
+    INVALID_IMAGE_ORIGIN_URL("F-I005", "유효하지 않은 오리지널 이미지 url 입니다.", InvalidImageOriginUrlException.class),
+    INVALID_IMAGE_SIZE("F-I006", "유효하지 않은 이미지 사이즈 입니다. 업로드가 완료되지 않았습ㄴ디ㅏ.", InvalidImageSizeException.class),
 
     // Store
     NOT_FOUND_STORE("F-S001", "Store Id를 찾을 수 없습니다.", NotFoundStoreException.class),
