@@ -9,9 +9,6 @@ import com.jjikmuk.sikdorak.image.command.app.response.PreSignedUrlCreateRespons
 import com.jjikmuk.sikdorak.image.command.domain.ImageExtension;
 import com.jjikmuk.sikdorak.image.exception.NotFoundImageException;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
-import com.jjikmuk.sikdorak.user.user.command.domain.User;
-import com.jjikmuk.sikdorak.user.user.command.domain.UserRepository;
-import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import java.net.URL;
 import java.time.Instant;
 import java.util.Date;
@@ -28,7 +25,6 @@ public class AwsS3ImageService {
 
 	private final AmazonS3 amazonS3;
 	private final AwsProperties awsProperties;
-	private final UserRepository userRepository;
 
 	/**
 	 * 이미지 파일 확장자에 따른 s3 저장할 수 있는 PUT presignedURL을 리턴합니다. 현재는 유저에 따른 이미지 폴더 경로로 저장하지 않습니다.
@@ -39,9 +35,6 @@ public class AwsS3ImageService {
 	 */
 	public PreSignedUrlCreateResponse createPutPreSignedUrl(
 		PreSignedUrlCreateRequest presignedUrlCreateRequest, LoginUser loginUser) {
-		User user = userRepository.findById(loginUser.getId())
-			.orElseThrow(NotFoundUserException::new);
-
 		// Generate the presigned URL.
 		String fileName = generateRandomImageFileName(presignedUrlCreateRequest);
 		URL url = generatePutPreSignedUrl(fileName);
@@ -65,7 +58,7 @@ public class AwsS3ImageService {
 	}
 
 	private Date getExpiration(long expirationAsMilliseconds) {
-		java.util.Date expiration = new java.util.Date();
+		Date expiration = new Date();
 		long expTimeMillis = Instant.now().toEpochMilli();
 		expTimeMillis += expirationAsMilliseconds;
 		expiration.setTime(expTimeMillis);
