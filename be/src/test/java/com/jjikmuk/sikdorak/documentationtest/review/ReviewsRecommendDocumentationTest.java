@@ -25,7 +25,7 @@ class ReviewsRecommendDocumentationTest extends InitDocumentationTest {
                 REVIEW_RECOMMEND_REQUEST_SNIPPET,
                 REVIEW_RECOMMEND_RESPONSE_SNIPPET
             ))
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
             .queryParam("after", 0)
             .queryParam("size", 1)
 

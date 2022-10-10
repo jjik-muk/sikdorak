@@ -31,7 +31,7 @@ class StoreDetailDocumentationTest extends InitDocumentationTest {
                 STORE_SEARCH_DETAIL_RESPONSE_SNIPPET))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
 
         .when()
             .get("/api/stores/{storeId}", savedStore.getId())
@@ -55,7 +55,7 @@ class StoreDetailDocumentationTest extends InitDocumentationTest {
         given()
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
 
         .when()
             .get("/api/stores/{storeId}", notExistStoreId)

@@ -27,7 +27,7 @@ class OAuthUpdateTokenDocumentationTest extends InitDocumentationTest {
             .filter(document(DEFAULT_RESTDOC_PATH,
                 UPDATE_ACCESS_TOKEN_REQUEST_SNIPPET,
                 UPDATE_ACCESS_TOKEN_SUCCESS_RESPONSE_SNIPPET))
-            .header("Cookie", "refreshToken=" + testData.user1RefreshToken)
+            .header("Cookie", "refreshToken=" + testData.kukimRefreshToken)
             .accept(MediaType.APPLICATION_JSON_VALUE)
 
         .when()
@@ -35,7 +35,7 @@ class OAuthUpdateTokenDocumentationTest extends InitDocumentationTest {
 
         .then()
             .statusCode(HttpStatus.OK.value())
-            .cookie("refreshToken", not(equalTo(testData.user1RefreshToken)))
+            .cookie("refreshToken", not(equalTo(testData.kukimRefreshToken)))
             .body("data.accessToken", notNullValue());
     }
 

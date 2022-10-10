@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jjikmuk.sikdorak.common.properties.AwsProperties;
 import com.jjikmuk.sikdorak.tool.DatabaseConfigurator;
+import com.jjikmuk.sikdorak.tool.mock.AWSMockConfig;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.ObjectMapperConfig;
@@ -46,10 +47,10 @@ public class InitDocumentationTest {
 	protected DatabaseConfigurator testData;
 
 	@Autowired
-	AmazonS3 amazonS3;
+	protected AmazonS3 amazonS3;
 
 	@Autowired
-	AwsProperties awsProperties;
+	protected AwsProperties awsProperties;
 
 	{
 		setUpRestAssured();

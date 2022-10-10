@@ -23,7 +23,7 @@ class CommentRemoveDocumentationTest extends InitDocumentationTest {
 	@Test
 	@DisplayName("댓글 삭제 요청이 정상적인 경우라면 댓글 삭제 후 정상 상태 코드를 반환한다")
 	void remove_comment_success() {
-		Review review = testData.user1PublicReview;
+		Review review = testData.kukimPublicReview;
 		User kukim = testData.kukim;
 		Comment savedComment = testData.generator.comment(review, kukim, "안녕하세요");
 

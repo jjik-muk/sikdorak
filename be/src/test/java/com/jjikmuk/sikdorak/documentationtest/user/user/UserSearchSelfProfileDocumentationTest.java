@@ -23,7 +23,7 @@ class UserSearchSelfProfileDocumentationTest extends InitDocumentationTest {
                 DEFAULT_RESTDOC_PATH,
                 USER_SEARCH_SELF_PROFILE_RESPONSE_SNIPPET))
             .accept(MediaType.APPLICATION_JSON_VALUE)
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
 
         .when()
             .get("/api/users/me")

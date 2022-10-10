@@ -3,11 +3,12 @@ package com.jjikmuk.sikdorak.review.api;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.aop.UserOnly;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
+import com.jjikmuk.sikdorak.image.command.app.ImageMetaDataService;
 import com.jjikmuk.sikdorak.review.command.app.ReviewService;
 import com.jjikmuk.sikdorak.review.command.app.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.command.app.request.ReviewModifyRequest;
-import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.api.AuthenticatedUser;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReviewCommandApi {
 
 	private final ReviewService reviewService;
+	private final ImageMetaDataService imageMetaDataService;
 
 	@PostMapping
 	@UserOnly
@@ -31,6 +33,7 @@ public class ReviewCommandApi {
 		@AuthenticatedUser LoginUser loginUser,
 		@RequestBody ReviewCreateRequest reviewCreateRequest) {
 		reviewService.createReview(loginUser, reviewCreateRequest);
+		imageMetaDataService.updateImageMetaData(reviewCreateRequest.getImages(), loginUser);
 
 		return new CommonResponseEntity<>(ResponseCodeAndMessages.REVIEW_CREATE_SUCCESS,
 			HttpStatus.CREATED);

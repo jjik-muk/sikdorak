@@ -46,11 +46,11 @@ class ReviewModifyDocumentationTest extends InitDocumentationTest {
 					REVIEW_MODIFY_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
-			.header("Authorization", testData.user1ValidAuthorizationHeader)
+			.header("Authorization", testData.kukimValidAuthorizationHeader)
 			.body(reviewModifyRequest)
 
 		.when()
-			.put("/api/reviews/{reviewId}", testData.user1PublicReview.getId())
+			.put("/api/reviews/{reviewId}", testData.kukimPublicReview.getId())
 
 		.then()
 			.statusCode(HttpStatus.OK.value())
@@ -79,11 +79,11 @@ class ReviewModifyDocumentationTest extends InitDocumentationTest {
 					REVIEW_MODIFY_RESPONSE_SNIPPET))
 			.accept(MediaType.APPLICATION_JSON_VALUE)
 			.header("Content-type", "application/json")
-			.header("Authorization", testData.user2ValidAuthorizationHeader)
+			.header("Authorization", testData.jayValidAuthorizationHeader)
 			.body(reviewModifyRequest)
 
 		.when()
-			.put("/api/reviews/{reviewId}", testData.user1PublicReview.getId())
+			.put("/api/reviews/{reviewId}", testData.kukimPublicReview.getId())
 
 		.then()
 			.statusCode(HttpStatus.UNAUTHORIZED.value())

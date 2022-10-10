@@ -33,7 +33,7 @@ class UserFollowUnfollowDocumentationTest extends InitDocumentationTest {
             ))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .contentType(ContentType.JSON)
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
             .body(userFollowAndUnfollowRequest)
 
         .when()

@@ -79,7 +79,7 @@ class CommentSearchIntegrationTest extends InitIntegrationTest {
         @DisplayName("삭제 처리된 리뷰에 대해 댓글 조회 요청이 주어진다면 예외를 발생시킨다")
         void search_comment_with_deleted_review_will_failed() {
             // given
-            Review review = testData.user1PublicReview;
+            Review review = testData.kukimPublicReview;
             Long reviewId = review.getId();
             LoginUser loginUser = testData.generator.createLoginUserWithUserId(
                 testData.kukim.getId());

@@ -16,7 +16,7 @@ include::{docdir}/review/review.adoc[]
 
 = 이미지 생성 API
 
-include::{docdir}/aws/s3.adoc[]
+include::{docdir}/image/s3.adoc[]
 
 = 댓글 API
 
