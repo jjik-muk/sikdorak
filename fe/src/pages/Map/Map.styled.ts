@@ -6,6 +6,7 @@ export const MapArea = styled.div`
   height: 1024px;
   background-color: green;
   z-index: 0;
+  position: relative;
 `;
 
 export const ContentArea = styled.div`

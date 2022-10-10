@@ -26,8 +26,16 @@ function StoreDetail() {
 
   useEffect(() => {
     fetchAndStoreRestaurantInfo();
+
+    async function fetchAndStoreRestaurantInfo() {
+      const res = await fetchDataThatNeedToLogin(`api/stores/${targetId}`);
+      setStoreInfo(res.data);
+    }
+  }, [targetId]);
+
+  useEffect(() => {
     fetchNextReviews(getUrl(afterParam, 5));
-  }, []);
+  });
 
   return (
     <Wrap
@@ -48,11 +56,6 @@ function StoreDetail() {
       </ContentsWrap>
     </Wrap>
   );
-
-  async function fetchAndStoreRestaurantInfo() {
-    const res = await fetchDataThatNeedToLogin(`api/stores/${targetId}`);
-    setStoreInfo(res.data);
-  }
 
   function getUrl(after, reviewSize) {
     return `api/stores/${targetId}/reviews?after=${after}&size=${reviewSize}`;

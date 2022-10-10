@@ -8,14 +8,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { accountStore } from 'stores/AccountStore';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
-import {
-  ActivityInfoWrap,
-  ProfileInfoWrap,
-  UserDetailWrap,
-  UserInfoHeader,
-  UserInfoWrap,
-  Wrap,
-} from './UserDetail.styled';
+import { ActivityInfoWrap, UserDetailWrap, UserInfoHeader, UserInfoWrap, Wrap } from './UserDetail.styled';
 
 function UserDetail() {
   const { reviews, dispatchReviews, fetchNextReviews, afterParam, handleScroll } = useReviews();
@@ -29,13 +22,15 @@ function UserDetail() {
 
   useEffect(() => {
     fetchUserInfo();
-    fetchNextReviews(getUrl(afterParam, REVIEW_SIZE, targetId));
 
     async function fetchUserInfo() {
       const res = await fetchDataThatNeedToLogin(`api/users/${targetId}`);
       setUserProfile(res.data);
     }
-  }, [targetId, afterParam]);
+  }, [targetId]);
+  useEffect(() => {
+    fetchNextReviews(getUrl(afterParam, REVIEW_SIZE, targetId));
+  });
 
   return (
     <Wrap
@@ -56,7 +51,6 @@ function UserDetail() {
             <div>팔로우 {userProfile?.followingCount}</div>
             <div>팔로워 {userProfile?.followersCount}</div>
           </ActivityInfoWrap>
-          <ProfileInfoWrap>자신을 소개해주세요.</ProfileInfoWrap>
         </UserInfoWrap>
       </UserDetailWrap>
       <Feeds reviews={reviews} />
