@@ -1,3 +1,6 @@
+import { TextField } from '@mui/material';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import Feeds from 'components/Common/Feeds/Feeds';
 import CommonHeader from 'components/Common/Header/CommonHeader';
 import Modal from 'components/Common/Modal/Modal';
@@ -9,15 +12,19 @@ import useSearchBar from 'hooks/useSearchBar';
 import useStores from 'hooks/useStores';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Buttons, ContentArea, FeedsArea, Input, MapArea } from './Map.styled';
+import { ContentArea, FeedsArea, MapArea } from './Map.styled';
+
+const TABS = [{ label: '가게 목록' }, { label: '유저 리뷰' }];
 
 function Map() {
-  const [isActiveStore, setIsActiveStore] = useState(true);
+  const [activeTabIdx, setActiveTabIdx] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { stores, mapPos, setMapPos } = useStores();
   const { inputValue, searchResults, setInputValue, debouncedSearch } = useSearchBar();
-  useAuth();
   const { dispatchReviews } = useReviews();
+  useAuth();
+  const isSelectedRestaurantList = activeTabIdx === 0;
+  const isSelectedUserReviews = activeTabIdx === 1;
 
   useEffect(() => {
     const hasInputValue = inputValue.length > 0;
@@ -35,42 +42,44 @@ function Map() {
     <>
       <CommonHeader dispatchReviews={dispatchReviews} />
       <ContentArea>
-        <Buttons>
-          <button
-            onClick={() => {
-              setIsActiveStore(true);
-            }}
-            type="button"
-          >
-            가게 목록
-          </button>
-          <button
-            onClick={() => {
-              setIsActiveStore(false);
-            }}
-            type="button"
-          >
-            유저 리뷰
-          </button>
-        </Buttons>
-        <FeedsArea>
-          {!isActiveStore && (
-            <Input
-              value={inputValue}
-              onChange={handleChangeSearchBar}
-              onClick={handleClickSearchBar}
-              onFocus={openModal}
-              onBlur={closeModal}
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={activeTabIdx}
+          sx={{ borderRight: 1, borderColor: 'divider' }}
+        >
+          {TABS.map(({ label }, idx) => (
+            <Tab
+              label={label}
+              onClick={() => {
+                setActiveTabIdx(idx);
+              }}
             />
-          )}
-          {isModalOpen && (
-            <Modal>
-              {searchResults?.data?.map(({ id, nickname, profileImage }) => (
-                <UserSearchResultList id={id} nickname={nickname} profileImage={profileImage} />
-              ))}
-            </Modal>
-          )}
-          {isActiveStore ? <Stores stores={stores} /> : <Feeds reviews={[]} isUsedMapPage />}
+          ))}
+        </Tabs>
+        <FeedsArea>
+          <UserSearchBarWrap>
+            {isSelectedUserReviews && (
+              <TextField
+                fullWidth
+                label="유저 검색"
+                variant="outlined"
+                value={inputValue}
+                onChange={handleChangeSearchBar}
+                onClick={handleClickSearchBar}
+                onFocus={openModal}
+                onBlur={closeModal}
+              />
+            )}
+            {isModalOpen && (
+              <Modal>
+                {searchResults?.data?.map(({ id, nickname, profileImage }) => (
+                  <UserSearchResultList id={id} nickname={nickname} profileImage={profileImage} />
+                ))}
+              </Modal>
+            )}
+          </UserSearchBarWrap>
+          {isSelectedRestaurantList ? <Stores stores={stores} /> : <Feeds reviews={[]} />}
         </FeedsArea>
         <MapArea>
           <MapComponent stores={stores} mapPos={mapPos} setMapPos={setMapPos} />
@@ -125,5 +134,9 @@ const Profile = styled.img`
 `;
 
 const Nickname = styled.span``;
+
+const UserSearchBarWrap = styled.div`
+  position: relative;
+`;
 
 export default Map;

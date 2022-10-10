@@ -2,12 +2,20 @@ import Store from '../Store/Store';
 import { Wrap } from './Stores.styled';
 
 function Stores({ stores }: any) {
+  const hasStores = stores.length > 0;
   return (
     <Wrap>
-      {Boolean(stores.length) &&
-        stores.map(({ id, storeName, contactNumber, roadAddressName }) => (
+      {hasStores &&
+        stores.map(({ id, storeName, contactNumber, roadAddressName, reviewCounts, reviewScoreAverage }) => (
           <div key={id}>
-            <Store id={id} storeName={storeName} contactNumber={contactNumber} roadAddressName={roadAddressName} />
+            <Store
+              id={id}
+              storeName={storeName}
+              contactNumber={contactNumber}
+              roadAddressName={roadAddressName}
+              reviewCounts={reviewCounts}
+              reviewScoreAverage={reviewScoreAverage}
+            />
           </div>
         ))}
     </Wrap>

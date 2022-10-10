@@ -32,12 +32,14 @@ export const REVIEWS = [
       userLikeStatus: true,
     },
     reviewId: 1,
-    reviewContent: 'asdfasfd',
+    reviewContent: `동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세`,
     reviewScore: 5,
     reviewVisibility: 'PUBLIC',
     visitedDate: '2022-09-03',
     tags: ['1'],
-    images: ['https://sikdorak-images.s3.ap-northeast-2.amazonaws.com/origin/0bc5b0f6-0825-4492-be6c-43844a12c7ee.png'],
+    images: [
+      'https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20201002142956&q=80',
+    ],
     createdAt: '2022-09-12T01:50:06.011286',
     updatedAt: '2022-09-12T01:50:06.011286',
   },
@@ -65,5 +67,24 @@ export const REVIEWS = [
     images: ['https://sikdorak-images.s3.ap-northeast-2.amazonaws.com/origin/0bc5b0f6-0825-4492-be6c-43844a12c7ee.png'],
     createdAt: '2022-09-12T01:50:06.011286',
     updatedAt: '2022-09-12T01:50:06.011286',
+  },
+];
+
+export const STORES = [
+  {
+    id: 0,
+    storeName: '모구모구',
+    contactNumber: '010-1234-5678',
+    roadAddressName: '김포시 어딘가',
+    reviewCounts: 34,
+    reviewScoreAverage: 4.9,
+  },
+  {
+    id: 1,
+    storeName: '모구모구2',
+    contactNumber: '010-1234-5679',
+    roadAddressName: '김포시 어딘가 2',
+    reviewCounts: 52,
+    reviewScoreAverage: 4.5,
   },
 ];

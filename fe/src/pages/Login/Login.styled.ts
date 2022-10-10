@@ -8,7 +8,7 @@ export const Wrap = styled.div`
 
 export const Form = styled.form`
   ${() => flexLayoutMixin('column', 'center', 'center')}
-  gap: 16px;
+  gap: 32px;
 
   span {
     color: #4e4b66;

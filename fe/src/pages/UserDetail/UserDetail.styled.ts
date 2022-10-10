@@ -10,10 +10,14 @@ export const Wrap = styled.div`
 
 export const UserDetailWrap = styled.div`
   ${() => flexLayoutMixin('', 'center', 'center')};
-  width: 800px;
+  width: 600px;
   margin: 20px auto 20px auto;
-  padding: 20px 0 20px 0;
+  padding: 20px;
   ${STYLE.BOX_CONTAINER};
+
+  @media (max-width: 600px) {
+    max-width: 100%;
+  }
 `;
 
 export const UserInfoWrap = styled.div`
@@ -27,6 +31,7 @@ export const UserInfoHeader = styled.div`
 
 export const ActivityInfoWrap = styled.div`
   ${() => flexLayoutMixin('', 'space-between')};
+  width: 90%;
   margin-top: 20px;
 `;
 

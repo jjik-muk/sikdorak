@@ -21,13 +21,21 @@ function StoreDetail() {
   const targetId = Number(pathname.split('/').at(-1));
   const [storeInfo, setStoreInfo] = useState(INIT_STATE_STORE_INFO);
   const { storeName, addressName, contactNumber, reviewCounts, reviewScoreAverage } = storeInfo;
-  const { reviews, handleScroll, fetchNextReviews, afterParam } = useReviews();
+  const { reviews, handleScroll, dispatchReviews, fetchNextReviews, afterParam } = useReviews();
   useAuth();
 
   useEffect(() => {
     fetchAndStoreRestaurantInfo();
+
+    async function fetchAndStoreRestaurantInfo() {
+      const res = await fetchDataThatNeedToLogin(`api/stores/${targetId}`);
+      setStoreInfo(res.data);
+    }
+  }, [targetId]);
+
+  useEffect(() => {
     fetchNextReviews(getUrl(afterParam, 5));
-  }, []);
+  });
 
   return (
     <Wrap
@@ -35,7 +43,7 @@ function StoreDetail() {
         handleScroll(e, getUrl(afterParam, 5));
       }}
     >
-      <CommonHeader />
+      <CommonHeader dispatchReviews={dispatchReviews} />
       <ContentsWrap>
         <StoreInfo
           storeName={storeName}
@@ -48,11 +56,6 @@ function StoreDetail() {
       </ContentsWrap>
     </Wrap>
   );
-
-  async function fetchAndStoreRestaurantInfo() {
-    const res = await fetchDataThatNeedToLogin(`api/stores/${targetId}`);
-    setStoreInfo(res.data);
-  }
 
   function getUrl(after, reviewSize) {
     return `api/stores/${targetId}/reviews?after=${after}&size=${reviewSize}`;

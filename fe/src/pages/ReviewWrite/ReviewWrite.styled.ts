@@ -1,3 +1,4 @@
+import { STYLE } from 'constants/style';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
 
@@ -6,8 +7,7 @@ export const Wrap = styled.div`
   width: 1400px;
   flex-direction: column;
   padding: 10px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 7px;
+  box-shadow: ${STYLE.BOX_CONTAINER};
 
   @media (max-width: 1400px) {
     width: calc(50vw + 400px);
@@ -73,6 +73,5 @@ export const Header = styled.div`
   width: 390px;
   padding: 12px;
   position: fixed;
-  z-index: 100;
   background-color: #fff;
 `;

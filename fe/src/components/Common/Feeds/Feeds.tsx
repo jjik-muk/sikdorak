@@ -4,7 +4,7 @@ import { Wrap } from './Feeds.styled';
 
 // TODO: 리뷰가 없을 때 적절한 레이아웃 표시
 
-function Feeds({ reviews, isUsedMapPage }: FeedsProps) {
+function Feeds({ reviews }: FeedsProps) {
   const hasReviews = reviews?.length > 0;
 
   return (
@@ -21,7 +21,6 @@ function Feeds({ reviews, isUsedMapPage }: FeedsProps) {
               store={store}
               user={user}
               tags={tags}
-              isUsedMapPage={isUsedMapPage}
             />
           </div>
         ))
@@ -36,5 +35,4 @@ export default Feeds;
 
 type FeedsProps = {
   reviews: FeedProps[];
-  isUsedMapPage?: boolean;
 };

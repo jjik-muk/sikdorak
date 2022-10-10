@@ -6,6 +6,7 @@ export const MapArea = styled.div`
   height: 1024px;
   background-color: green;
   z-index: 0;
+  position: relative;
 `;
 
 export const ContentArea = styled.div`
@@ -15,7 +16,6 @@ export const ContentArea = styled.div`
 
 export const FeedsArea = styled.div`
   flex: 2;
-  border: 1px solid black;
   padding: 20px;
   overflow-y: auto;
   height: 910px;

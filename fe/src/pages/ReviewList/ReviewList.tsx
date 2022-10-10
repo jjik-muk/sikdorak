@@ -8,7 +8,7 @@ import { ReviewListWrap } from './ReviewList.styled';
 const REVIEW_SIZE = 5;
 
 function ReviewList() {
-  const { reviews, handleScroll, fetchNextReviews, afterParam } = useReviews();
+  const { reviews, dispatchReviews, handleScroll, fetchNextReviews, afterParam } = useReviews();
   useAuth();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function ReviewList() {
         handleScroll(e, getUrl(afterParam, REVIEW_SIZE));
       }}
     >
-      <CommonHeader />
+      <CommonHeader dispatchReviews={dispatchReviews} />
       <Feeds reviews={reviews} />
     </ReviewListWrap>
   );
