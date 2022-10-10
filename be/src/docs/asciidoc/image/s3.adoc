@@ -18,8 +18,8 @@ RequestBody로 이미지 파일 확장자(jpg, jpeg, png) 를 보내야합니다
 
 ===== Request
 
-operation::presigned_url_create_documentation_test/create_presigned_url_success[snippets='http-request,request-fields']
+operation::pre_signed_url_create_documentation_test/create_presigned_url_success[snippets='http-request,request-fields']
 
 ===== Response
 
-operation::presigned_url_create_documentation_test/create_presigned_url_success[snippets='http-response,response-fields']
+operation::pre_signed_url_create_documentation_test/create_presigned_url_success[snippets='http-response,response-fields']
