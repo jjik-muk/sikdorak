@@ -26,7 +26,7 @@ class UserSearchProfileDocumentationTest extends InitDocumentationTest {
                 USER_SEARCH_PROFILE_RESPONSE_SNIPPET)
             )
             .accept(MediaType.APPLICATION_JSON_VALUE)
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
 
         .when()
             .get("/api/users/{userId}", testData.jay.getId())

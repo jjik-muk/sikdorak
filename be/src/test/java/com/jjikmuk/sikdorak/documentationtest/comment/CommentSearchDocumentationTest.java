@@ -8,8 +8,8 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
-import com.jjikmuk.sikdorak.review.domain.Review;
-import com.jjikmuk.sikdorak.user.user.domain.User;
+import com.jjikmuk.sikdorak.review.command.domain.Review;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class CommentSearchDocumentationTest extends InitDocumentationTest {
 	@Test
 	@DisplayName("댓글 조회 요청이 정상적인 경우라면 댓글 목록과 정상 상태 코드를 반환한다")
 	void search_comment_success() {
-		Review review = testData.user1PublicReview;
+		Review review = testData.kukimPublicReview;
 		User kukim = testData.kukim;
 
 		testData.generator.comment(review, kukim, "맛집이군요");

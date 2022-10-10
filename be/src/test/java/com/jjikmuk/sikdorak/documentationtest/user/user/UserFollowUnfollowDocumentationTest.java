@@ -9,7 +9,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.exception.ExceptionCodeAndMessages;
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
-import com.jjikmuk.sikdorak.user.user.service.request.UserFollowAndUnfollowRequest;
+import com.jjikmuk.sikdorak.user.user.command.app.request.UserFollowAndUnfollowRequest;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ class UserFollowUnfollowDocumentationTest extends InitDocumentationTest {
             ))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .contentType(ContentType.JSON)
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
             .body(userFollowAndUnfollowRequest)
 
         .when()

@@ -1,0 +1,96 @@
+name: FE - 테스트 서버 배포(Firebase Hosting)
+
+on:
+  pull_request:
+    branches: [dev]
+    paths: ["fe/**"]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+defaults:
+  run:
+    working-directory: ./fe
+
+jobs:
+  fe-build-preview-deploy:
+    name: Test React
+    runs-on: ubuntu-20.04
+    environment: TestWeb
+    
+    steps:
+      - name: setup repo
+        uses: actions/checkout@v3
+        with:
+          submodules: false
+
+      - name: setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_REACT_APP_KAKAO_REST_API_KEY: ${{ secrets.REACT_APP_KAKAO_REST_API_KEY }}
+          envkey_REACT_APP_BE_SERVER_URL: ${{ secrets.REACT_APP_BE_TEST_SERVER_URL }}
+          envkey_REACT_APP_KAKAO_MAP_API_KEY: ${{ secrets.REACT_APP_KAKAO_MAP_API_KEY }}
+          directory: fe
+          file_name: .env
+          fail_on_empty: false
+
+      - name: Install dependencies & build
+        run: npm ci
+      
+      - name: Build React
+        run: npm run build
+
+      - name: Deploy Preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        id: firebase_hosting_preview
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SIKDORAK_FE_TEST }}'
+          projectId: sikdorak-fe-test
+
+      - name: Print outputs
+        run: |
+          echo expire_time ${{steps.firebase_hosting_preview.outputs.expire_time}}
+          echo details_url ${{steps.firebase_hosting_preview.outputs.details_url}}
+
+      - name: Noti Discord - Test Success
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ steps.firebase_hosting_preview.outputs.details_url != '' }}
+        with:
+          severity: info
+          details: Test Succeeded!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Noti Discord - Test Failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ steps.firebase_hosting_preview.outputs.details_url == '' }}
+        with:
+          severity: error
+          details: Test Failed!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Noti Discord - Test Cancelled
+        uses: rjstone/discord-webhook-notify@v1
+        if: cancelled()
+        with:
+          severity: warn
+          details: Test Cancelled!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}

@@ -5,11 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.domain.Authority;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
+import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
-import com.jjikmuk.sikdorak.user.user.service.UserService;
-import com.jjikmuk.sikdorak.user.user.service.response.FollowUserProfile;
+import com.jjikmuk.sikdorak.user.user.query.response.FollowUserProfile;
+import com.jjikmuk.sikdorak.user.user.query.UserDao;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,14 +19,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 class UserFollowersSearchByUserIdIntegrationTest extends InitIntegrationTest {
 
     @Autowired
-    private UserService userService;
+    private UserDao userDao;
 
     @Test
     @DisplayName("특정 유저에 대한 팔로워 목록 요청이 올바를 경우 팔로워 목록을 반환한다.")
     void search_followers_by_user() {
         LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
 
-        List<FollowUserProfile> followers = userService.searchFollowersByUserId(testData.rumka.getId(), loginUser);
+        List<FollowUserProfile> followers = userDao.searchFollowersByUserId(testData.rumka.getId(), loginUser);
 
         assertThat(followers).hasSize(2);
     }
@@ -36,7 +36,7 @@ class UserFollowersSearchByUserIdIntegrationTest extends InitIntegrationTest {
     void search_followers_is_empty() {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
-        List<FollowUserProfile> followers = userService.searchFollowersByUserId(testData.kukim.getId(), loginUser);
+        List<FollowUserProfile> followers = userDao.searchFollowersByUserId(testData.kukim.getId(), loginUser);
 
         assertThat(followers).isEmpty();
     }
@@ -46,7 +46,7 @@ class UserFollowersSearchByUserIdIntegrationTest extends InitIntegrationTest {
     void search_not_found_user_followers() {
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
-        assertThatThrownBy(() -> userService.searchFollowersByUserId(98989898L, loginUser))
+        assertThatThrownBy(() -> userDao.searchFollowersByUserId(98989898L, loginUser))
             .isInstanceOf(NotFoundUserException.class);
     }
 }

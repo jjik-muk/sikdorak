@@ -5,12 +5,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.review.domain.ReviewVisibility;
-import com.jjikmuk.sikdorak.store.domain.Store;
+import com.jjikmuk.sikdorak.review.command.domain.ReviewVisibility;
+import com.jjikmuk.sikdorak.store.command.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
-import com.jjikmuk.sikdorak.store.service.StoreService;
-import com.jjikmuk.sikdorak.store.service.response.StoreDetailResponse;
-import com.jjikmuk.sikdorak.user.user.domain.User;
+import com.jjikmuk.sikdorak.store.query.response.StoreDetailResponse;
+import com.jjikmuk.sikdorak.store.query.StoreDao;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 class StoreSearchDetailIntegrationTest extends InitIntegrationTest {
 
 	@Autowired
-	private StoreService storeService;
+	private StoreDao storeDao;
 
 	@Nested
 	@DisplayName("가게 상세를 검색할 때")
@@ -38,7 +38,7 @@ class StoreSearchDetailIntegrationTest extends InitIntegrationTest {
 			createReviewNTimes(user, store, 3.0f, expectedReviewCounts);
 
 			// when
-			StoreDetailResponse storeDetailResponse = storeService.searchDetail(store.getId());
+			StoreDetailResponse storeDetailResponse = storeDao.searchDetail(store.getId());
 
 			// then
 			assertThat(storeDetailResponse).isNotNull()
@@ -69,7 +69,7 @@ class StoreSearchDetailIntegrationTest extends InitIntegrationTest {
 			Store store = testData.generator.store();
 
 			// when
-			StoreDetailResponse storeDetailResponse = storeService.searchDetail(store.getId());
+			StoreDetailResponse storeDetailResponse = storeDao.searchDetail(store.getId());
 
 			// then
 			assertThat(storeDetailResponse).isNotNull()
@@ -98,7 +98,7 @@ class StoreSearchDetailIntegrationTest extends InitIntegrationTest {
 			long notExistingStoreId = Long.MIN_VALUE;
 
 			// then
-			assertThatThrownBy(() -> storeService.searchDetail(notExistingStoreId))
+			assertThatThrownBy(() -> storeDao.searchDetail(notExistingStoreId))
 				.isInstanceOf(NotFoundStoreException.class);
 		}
 

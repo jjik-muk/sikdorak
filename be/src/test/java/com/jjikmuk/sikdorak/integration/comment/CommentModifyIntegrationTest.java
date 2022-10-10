@@ -3,17 +3,17 @@ package com.jjikmuk.sikdorak.integration.comment;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.comment.domain.Comment;
+import com.jjikmuk.sikdorak.comment.command.app.CommentService;
+import com.jjikmuk.sikdorak.comment.command.app.request.CommentModifyRequest;
+import com.jjikmuk.sikdorak.comment.command.domain.Comment;
+import com.jjikmuk.sikdorak.comment.command.domain.CommentRepository;
 import com.jjikmuk.sikdorak.comment.exception.NotFoundCommentException;
-import com.jjikmuk.sikdorak.comment.repository.CommentRepository;
-import com.jjikmuk.sikdorak.comment.service.CommentService;
-import com.jjikmuk.sikdorak.comment.service.request.CommentModifyRequest;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.review.domain.Review;
+import com.jjikmuk.sikdorak.review.command.domain.Review;
+import com.jjikmuk.sikdorak.review.command.domain.ReviewRepository;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
-import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.domain.User;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -40,7 +40,7 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
         @DisplayName("정상적인 댓글 수정 요청이 주어진다면, 댓글이 수정된다.")
         void create_comment_success() {
             // given
-            Review review = testData.user1PublicReview;
+            Review review = testData.kukimPublicReview;
             User user1 = testData.forky;
             Comment comment = testData.generator.comment(review, user1, "잘보고가요");
             String updatedContent = "정말 맛있겠네요";
@@ -64,7 +64,7 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
         @DisplayName("삭제 처리된 리뷰에 대해 댓글 수정 요청이 주어진다면 예외를 발생시킨다")
         void modify_comment_with_deleted_review_will_failed() {
             // given
-            Review review = testData.user1PublicReview;
+            Review review = testData.kukimPublicReview;
             User user1 = testData.forky;
             Comment comment = testData.generator.comment(review, user1, "잘보고가요");
             Long reviewId = review.getId();
@@ -86,7 +86,7 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
         @DisplayName("존재하지 않는 댓글에 대해 수정 요청이 주어진다면 예외를 발생시킨다")
         void modify_comment_with_not_existing_comment_will_failed() {
             // given
-            Review review = testData.user1PublicReview;
+            Review review = testData.kukimPublicReview;
             User user1 = testData.forky;
             long notExistingCommentId = Long.MIN_VALUE;
             Long reviewId = review.getId();
@@ -105,7 +105,7 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
         @DisplayName("삭제 처리된 댓글에 대해 수정 요청이 주어진다면 예외를 발생시킨다")
         void modify_comment_with_deleted_comment_will_failed() {
             // given
-            Review review = testData.user1PublicReview;
+            Review review = testData.kukimPublicReview;
             User user1 = testData.forky;
             Comment comment = testData.generator.comment(review, user1, "잘보고가요");
             commentRepository.delete(comment);
@@ -126,7 +126,7 @@ class CommentModifyIntegrationTest extends InitIntegrationTest {
         @DisplayName("유저가 본인이 작성한 댓글이 아닌데 수정 요청을 한다면 예외를 발생시킨다")
         void modify_comment_with_not_autor_will_failed() {
             // given
-            Review review = testData.user1PublicReview;
+            Review review = testData.kukimPublicReview;
             User user1 = testData.forky;
             Comment comment = testData.generator.comment(review, user1, "잘보고가요");
             Long reviewId = review.getId();

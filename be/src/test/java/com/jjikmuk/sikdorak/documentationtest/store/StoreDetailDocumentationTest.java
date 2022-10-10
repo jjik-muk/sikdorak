@@ -10,7 +10,7 @@ import com.jjikmuk.sikdorak.common.CodeAndMessages;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.exception.ExceptionCodeAndMessages;
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
-import com.jjikmuk.sikdorak.store.domain.Store;
+import com.jjikmuk.sikdorak.store.command.domain.Store;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ class StoreDetailDocumentationTest extends InitDocumentationTest {
                 STORE_SEARCH_DETAIL_RESPONSE_SNIPPET))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
 
         .when()
             .get("/api/stores/{storeId}", savedStore.getId())
@@ -55,7 +55,7 @@ class StoreDetailDocumentationTest extends InitDocumentationTest {
         given()
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
 
         .when()
             .get("/api/stores/{storeId}", notExistStoreId)

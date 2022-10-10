@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.unittest.store.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.jjikmuk.sikdorak.store.domain.StoreLocation;
+import com.jjikmuk.sikdorak.store.command.domain.StoreLocation;
 import com.jjikmuk.sikdorak.store.exception.InvalidStoreLocationException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

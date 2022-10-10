@@ -1,13 +1,13 @@
 package com.jjikmuk.sikdorak.tool;
 
-import com.jjikmuk.sikdorak.review.domain.Review;
-import com.jjikmuk.sikdorak.review.repository.ReviewRepository;
-import com.jjikmuk.sikdorak.store.domain.Address;
-import com.jjikmuk.sikdorak.store.domain.Store;
-import com.jjikmuk.sikdorak.store.repository.StoreRepository;
-import com.jjikmuk.sikdorak.user.user.domain.Authority;
-import com.jjikmuk.sikdorak.user.user.domain.User;
-import com.jjikmuk.sikdorak.user.user.repository.UserRepository;
+import com.jjikmuk.sikdorak.review.command.domain.Review;
+import com.jjikmuk.sikdorak.review.command.domain.ReviewRepository;
+import com.jjikmuk.sikdorak.store.command.domain.Address;
+import com.jjikmuk.sikdorak.store.command.domain.Store;
+import com.jjikmuk.sikdorak.store.command.domain.StoreRepository;
+import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
+import com.jjikmuk.sikdorak.user.user.command.domain.UserRepository;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,17 +35,18 @@ public class DatabaseConfigurator implements InitializingBean {
 	public User hoi;
 	public User rumka;
 	public User admin;
-	public String user1ValidAuthorizationHeader;
-	public String user2ValidAuthorizationHeader;
+	public String kukimValidAuthorizationHeader;
+	public String jayValidAuthorizationHeader;
 	public String followSendUserValidAuthorizationHeader;
 	public String followAcceptUserValidAuthorizationHeader;
-	public String user1RefreshToken;
-	public String user1ExpiredRefreshToken;
-	public String user1InvalidRefreshToken;
-	public Review user1PublicReview;
+	public String kukimRefreshToken;
+	public String kukimExpiredRefreshToken;
+	public String kukimInvalidRefreshToken;
+	public Review kukimPublicReview;
 	public Review followAcceptUserPublicReview;
 	public Review followAcceptUserProtectedReview;
 	public Review followAcceptUserPrivateReview;
+	public String kukimImageFileName = "abcde-1234-testimage-jjikmuk.png";
 	@PersistenceContext
 	private EntityManager entityManager;
 	private List<String> tableNames;
@@ -179,22 +180,22 @@ public class DatabaseConfigurator implements InitializingBean {
 		Date now = new Date();
 		Date accessTokenExpiredTime = new Date(now.getTime() + 1800000);
 
-		this.user1ValidAuthorizationHeader = generator.validAuthorizationHeader(kukim,
+		this.kukimValidAuthorizationHeader = generator.validAuthorizationHeader(kukim,
 			accessTokenExpiredTime);
-		this.user2ValidAuthorizationHeader = generator.validAuthorizationHeader(jay,
+		this.jayValidAuthorizationHeader = generator.validAuthorizationHeader(jay,
 			accessTokenExpiredTime);
 		this.followSendUserValidAuthorizationHeader = generator.validAuthorizationHeader(forky,
 			accessTokenExpiredTime);
 		this.followAcceptUserValidAuthorizationHeader = generator.validAuthorizationHeader(hoi,
 			accessTokenExpiredTime);
-		this.user1RefreshToken = generator.refreshToken(kukim, new Date(now.getTime() + 8000000));
-		this.user1ExpiredRefreshToken = generator.refreshToken(kukim,
+		this.kukimRefreshToken = generator.refreshToken(kukim, new Date(now.getTime() + 8000000));
+		this.kukimExpiredRefreshToken = generator.refreshToken(kukim,
 			new Date(now.getTime() - 1000));
-		this.user1InvalidRefreshToken = user1RefreshToken + "invalid";
+		this.kukimInvalidRefreshToken = kukimRefreshToken + "invalid";
 	}
 
 	private void initReviewData() {
-		this.user1PublicReview = reviewRepository.save(new Review(this.kukim.getId(),
+		this.kukimPublicReview = reviewRepository.save(new Review(this.kukim.getId(),
 			this.store.getId(),
 			"Test review contents",
 			3.f,

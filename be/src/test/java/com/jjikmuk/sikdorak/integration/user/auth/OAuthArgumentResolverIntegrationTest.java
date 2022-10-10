@@ -3,9 +3,9 @@ package com.jjikmuk.sikdorak.integration.user.auth;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.auth.controller.OAuthUserArgumentResolver;
-import com.jjikmuk.sikdorak.user.user.domain.Authority;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
+import com.jjikmuk.sikdorak.user.auth.api.OAuthUserArgumentResolver;
+import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ class OAuthArgumentResolverIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("올바른 유저 Id가 넘어오는 경우 로그인 유저 객체를 반환한다.")
 	void oAuth_argument_resolver_success() {
-		mockHttpServletRequest.addHeader("Authorization", testData.user1ValidAuthorizationHeader);
+		mockHttpServletRequest.addHeader("Authorization", testData.kukimValidAuthorizationHeader);
 
 		LoginUser loginUser = (LoginUser) oAuthUserArgumentResolver.resolveArgument(null, null,
 			new ServletWebRequest(mockHttpServletRequest), null);

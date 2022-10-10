@@ -4,11 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
-import com.jjikmuk.sikdorak.user.auth.controller.LoginUser;
-import com.jjikmuk.sikdorak.user.user.domain.Authority;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
+import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
-import com.jjikmuk.sikdorak.user.user.service.UserService;
-import com.jjikmuk.sikdorak.user.user.service.response.UserSimpleProfileResponse;
+import com.jjikmuk.sikdorak.user.user.query.response.UserSimpleProfileResponse;
+import com.jjikmuk.sikdorak.user.user.query.UserDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 class UserSearchSelfProfileIntegrationTest extends InitIntegrationTest {
 
     @Autowired
-    private UserService userService;
+    private UserDao userDao;
 
     @Test
     @DisplayName("유저 본인의 프로필 정보를 요청할 경우 유저 프로필 정보를 반환한다.")
     void search_user_self_profile() {
         LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
 
-        UserSimpleProfileResponse userSimpleProfileResponse = userService.searchSelfProfile(
+        UserSimpleProfileResponse userSimpleProfileResponse = userDao.searchSelfProfile(
             loginUser);
 
         assertThat(userSimpleProfileResponse.id()).isEqualTo(testData.kukim.getId());
@@ -37,7 +37,7 @@ class UserSearchSelfProfileIntegrationTest extends InitIntegrationTest {
     void search_not_found_user_self_profile() {
         LoginUser loginUser = new LoginUser(989898989L, Authority.USER);
 
-        assertThatThrownBy(() -> userService.searchSelfProfile(loginUser))
+        assertThatThrownBy(() -> userDao.searchSelfProfile(loginUser))
             .isInstanceOf(NotFoundUserException.class);
     }
 

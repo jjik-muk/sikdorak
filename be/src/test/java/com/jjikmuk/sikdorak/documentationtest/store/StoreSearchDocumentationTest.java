@@ -12,7 +12,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
-import com.jjikmuk.sikdorak.store.domain.Store;
+import com.jjikmuk.sikdorak.store.command.domain.Store;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -33,7 +33,7 @@ class StoreSearchDocumentationTest extends InitDocumentationTest {
             .filter(document(DEFAULT_RESTDOC_PATH, STORE_SEARCH_REQUEST, STORE_SEARCH_RESPONSE))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
             .param("storeName", storeNameSearchKeywork)
 
         .when()
@@ -56,7 +56,7 @@ class StoreSearchDocumentationTest extends InitDocumentationTest {
         given()
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
             .param("storeName", notExistStoreName)
 
         .when()

@@ -9,7 +9,7 @@ import static org.springframework.restdocs.restassured3.RestAssuredRestDocumenta
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.exception.ExceptionCodeAndMessages;
 import com.jjikmuk.sikdorak.documentationtest.InitDocumentationTest;
-import com.jjikmuk.sikdorak.user.user.service.request.UserModifyRequest;
+import com.jjikmuk.sikdorak.user.user.command.app.request.UserModifyRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -35,7 +35,7 @@ class UserModifyDocumentationTest extends InitDocumentationTest {
                     USER_MODIFY_RESPONSE_SNIPPET))
             .accept(MediaType.APPLICATION_JSON_VALUE)
             .header("Content-type", "application/json")
-            .header("Authorization", testData.user1ValidAuthorizationHeader)
+            .header("Authorization", testData.kukimValidAuthorizationHeader)
             .body(userModifyRequest)
 
         .when()

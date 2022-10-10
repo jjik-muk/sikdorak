@@ -8,8 +8,8 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 
-import com.jjikmuk.sikdorak.user.auth.domain.JwtTokenPair;
-import com.jjikmuk.sikdorak.user.auth.service.response.AccessTokenResponse;
+import com.jjikmuk.sikdorak.user.auth.app.dto.JwtTokenPair;
+import com.jjikmuk.sikdorak.user.auth.app.response.AccessTokenResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 

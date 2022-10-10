@@ -11,9 +11,9 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 
-import com.jjikmuk.sikdorak.comment.service.request.CommentCreateRequest;
-import com.jjikmuk.sikdorak.comment.service.response.CommentSearchResponse;
-import com.jjikmuk.sikdorak.user.user.service.response.UserSimpleProfileResponse;
+import com.jjikmuk.sikdorak.comment.command.app.request.CommentCreateRequest;
+import com.jjikmuk.sikdorak.comment.query.response.CommentSearchResponse;
+import com.jjikmuk.sikdorak.user.user.query.response.UserSimpleProfileResponse;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 
