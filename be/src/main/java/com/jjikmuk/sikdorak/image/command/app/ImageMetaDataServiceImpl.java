@@ -20,7 +20,7 @@ public class ImageMetaDataServiceImpl implements ImageMetaDataService {
 
 	private final UserRepository userRepository;
 	private final ImageMetaDataRepository imageMetaDataRepository;
-	private final GeneratePreSignedURLService generatePreSignedURLService;
+	private final AwsS3ImageService awsS3ImageService;
 
 	/**
 	 * 이미지 메타 데이터 초기 생성을 합니다. 초기 image 데이터 사이즈는 0KB로 초기화 됩니다. 메타데이터 크기는 리뷰 작성, 수정할 떄 수정됩니다.
@@ -68,7 +68,7 @@ public class ImageMetaDataServiceImpl implements ImageMetaDataService {
 					.orElseThrow(NotFoundImageMetaDataException::new);
 
 				imageMetaData.updateSize(
-					user, generatePreSignedURLService.getS3ObjectSize(imageMetaData.getFileName()));
+					user, awsS3ImageService.getS3ObjectSize(imageMetaData.getFileName()));
 
 				return imageMetaData;
 			})

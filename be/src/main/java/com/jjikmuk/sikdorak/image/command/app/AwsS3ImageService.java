@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class GeneratePreSignedURLService {
+public class AwsS3ImageService {
 
 	public static final int FIVE_MINUTE = 1000 * 60 * 5;
 	public static final String BUCKET_ORIGIN_FILE_PATH = "origin/";
@@ -72,7 +72,7 @@ public class GeneratePreSignedURLService {
 	}
 
 	/**
-	 * S3 버킷에서 fileName의 사이드를 반환합니다.
+	 * S3 버킷에서 fileName의 사이즈를 반환합니다.
 	 *
 	 * @param fileName 파일 이름
 	 * @return 이미지 사이즈 크기

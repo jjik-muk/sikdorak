@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.image.api;
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.aop.UserOnly;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
-import com.jjikmuk.sikdorak.image.command.app.GeneratePreSignedURLService;
+import com.jjikmuk.sikdorak.image.command.app.AwsS3ImageService;
 import com.jjikmuk.sikdorak.image.command.app.ImageMetaDataService;
 import com.jjikmuk.sikdorak.image.command.app.request.PreSignedUrlCreateRequest;
 import com.jjikmuk.sikdorak.image.command.app.response.PreSignedUrlCreateResponse;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/images/url")
 public class AwsCommandApi {
 
-	private final GeneratePreSignedURLService generatePresignedURLService;
+	private final AwsS3ImageService generatePresignedURLService;
 	private final ImageMetaDataService imageMetaDataService;
 
 	@UserOnly
