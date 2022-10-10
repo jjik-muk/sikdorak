@@ -9,6 +9,7 @@ import com.jjikmuk.sikdorak.image.command.app.response.PreSignedUrlCreateRespons
 import com.jjikmuk.sikdorak.image.command.domain.ImageExtension;
 import com.jjikmuk.sikdorak.image.exception.NotFoundImageException;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import com.jjikmuk.sikdorak.user.user.command.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import java.net.URL;
@@ -38,7 +39,7 @@ public class AwsS3ImageService {
 	 */
 	public PreSignedUrlCreateResponse createPutPreSignedUrl(
 		PreSignedUrlCreateRequest presignedUrlCreateRequest, LoginUser loginUser) {
-		userRepository.findById(loginUser.getId())
+		User user = userRepository.findById(loginUser.getId())
 			.orElseThrow(NotFoundUserException::new);
 
 		// Generate the presigned URL.
@@ -82,7 +83,7 @@ public class AwsS3ImageService {
 			return amazonS3.getObjectMetadata(awsProperties.getBucket(),
 				BUCKET_ORIGIN_FILE_PATH + fileName).getContentLength();
 		} catch (Exception e) {
-			throw new NotFoundImageException();
+			throw new NotFoundImageException(e);
 		}
 	}
 }

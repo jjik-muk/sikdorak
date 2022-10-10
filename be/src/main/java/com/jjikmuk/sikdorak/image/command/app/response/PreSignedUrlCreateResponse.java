@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.URL;
 
 public record PreSignedUrlCreateResponse(
 	@NotEmpty @URL String preSignedUrl,
-	@NotEmpty String fileName ) {
+	@NotEmpty String fileName) {
+
 }
 
