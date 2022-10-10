@@ -37,7 +37,7 @@ export default StoreInfo;
 // };
 
 export const Wrap = styled.div`
-  width: 800px;
+  width: 600px;
   height: fit-content;
   padding: 10px;
   ${STYLE.BOX_CONTAINER}

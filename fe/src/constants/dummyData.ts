@@ -69,3 +69,22 @@ export const REVIEWS = [
     updatedAt: '2022-09-12T01:50:06.011286',
   },
 ];
+
+export const STORES = [
+  {
+    id: 0,
+    storeName: '모구모구',
+    contactNumber: '010-1234-5678',
+    roadAddressName: '김포시 어딘가',
+    reviewCounts: 34,
+    reviewScoreAverage: 4.9,
+  },
+  {
+    id: 1,
+    storeName: '모구모구2',
+    contactNumber: '010-1234-5679',
+    roadAddressName: '김포시 어딘가 2',
+    reviewCounts: 52,
+    reviewScoreAverage: 4.5,
+  },
+];
