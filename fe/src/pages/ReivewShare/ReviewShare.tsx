@@ -1,5 +1,5 @@
+import Feed from 'components/Common/Feed/Feed';
 import CommonHeader from 'components/Common/Header/CommonHeader';
-import Feed from 'components/ReviewList/Feed/Feed';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';

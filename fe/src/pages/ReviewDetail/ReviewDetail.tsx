@@ -1,4 +1,5 @@
 import { DETAIL, FEED } from 'constants/size';
+import { FeedProps } from 'components/Common/Feed/Feed';
 import Icon from 'components/Common/Icon/Icon';
 import Carousel from 'components/ReviewDetail/Carousel/Carousel';
 import Comment from 'components/ReviewDetail/Comment/Comment';
@@ -7,7 +8,6 @@ import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/Restaurant
 import Rating from 'components/ReviewDetail/TotalRating/Rating';
 import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
-import { FeedProps } from 'components/ReviewList/Feed/Feed';
 import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
 import useAuth from 'hooks/useAuth';
 import { useOutsideClick } from 'hooks/useOutsideClick';

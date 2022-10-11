@@ -1,8 +1,9 @@
+import { REVIEWS } from 'constants/dummyData';
 import { useReducer, useState } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 
 function useReviews() {
-  const [reviews, dispatchReviews] = useReducer(reducer, []);
+  const [reviews, dispatchReviews] = useReducer(reducer, REVIEWS);
   const [afterParam, setAfterParam] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
 
