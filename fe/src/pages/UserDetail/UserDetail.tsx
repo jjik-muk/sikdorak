@@ -1,5 +1,5 @@
 import Feeds from 'components/Common/Feeds/Feeds';
-import CommonHeader from 'components/Common/Header/CommonHeader';
+import CommonHeader from 'components/Common/CommonHeader/CommonHeader';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
 import useAuth from 'hooks/useAuth';

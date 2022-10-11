@@ -1,5 +1,5 @@
+import CommonHeader from 'components/Common/CommonHeader/CommonHeader';
 import Feed from 'components/Common/Feed/Feed';
-import CommonHeader from 'components/Common/Header/CommonHeader';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';

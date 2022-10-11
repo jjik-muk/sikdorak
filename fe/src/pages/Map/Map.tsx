@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Feeds from 'components/Common/Feeds/Feeds';
-import CommonHeader from 'components/Common/Header/CommonHeader';
+import CommonHeader from 'components/Common/CommonHeader/CommonHeader';
 import Modal from 'components/Common/Modal/Modal';
 import MapComponent from 'components/Map/MapComponent';
 import Stores from 'components/Map/Stores/Stores';
