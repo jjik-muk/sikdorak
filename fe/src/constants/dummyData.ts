@@ -36,7 +36,7 @@ export const REVIEWS = [
     reviewScore: 5,
     reviewVisibility: 'PUBLIC',
     visitedDate: '2022-09-03',
-    tags: ['1'],
+    tags: ['1', '초밥', '맛있다', '모구모구', '존맛탱', '김포에 있어요', '1', '초밥', '맛있다', '모구모구', '존맛탱', '김포에 있어요'],
     images: ['https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20201002142956&q=80'],
     createdAt: '2022-09-12T01:50:06.011286',
     updatedAt: '2022-09-12T01:50:06.011286',

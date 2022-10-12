@@ -23,7 +23,7 @@ function FeedCard({ images, reviewContent, reviewId, reviewScore, store, user, i
         avatar={<UserProfile nickname={user?.userNickname} imgUrl={user?.userProfileImage} userId={user?.userId} />}
         action={<KebabMenu reviewId={reviewId} isMyFeed={isMyFeed} />}
       />
-      {hasPicture && !isUsedModal && <CardMedia component="img" height="194" image={images[0]} alt="picture of user" />}
+      {hasPicture && !isUsedModal && <CardMedia component="img" height="194" image={images[0]} alt="User profile" />}
       <Rating rating={reviewScore} />
       <CardContent>{reviewContent}</CardContent>
       <CompnayProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
