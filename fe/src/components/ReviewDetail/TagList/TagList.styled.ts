@@ -17,7 +17,7 @@ export const Picture = styled.img`
 export const CommentWrapper = styled.div`
   width: 100%;
   margin-left: 10px;
-  whitespace: 'nowrap';
+  white-space: 'nowrap';
 `;
 
 export const ContentWrapper = styled.div`

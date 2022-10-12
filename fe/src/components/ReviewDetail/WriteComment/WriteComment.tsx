@@ -1,18 +1,21 @@
+import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { accountStore } from 'stores/AccountStore';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
-import { Input } from './WriteComment.styled';
 
 export default function WriteComment({ commentRef, reviewId, comments, setComments }: WriteCommentProps) {
   const [commentValue, setComment] = useState('');
   const { id, nickname, profileImage } = accountStore;
   return (
-    <Input
+    <TextField
+      fullWidth
       onChange={handleChange}
       onKeyDown={handleRegisterComment}
       value={commentValue}
       ref={commentRef}
-      placeholder="댓글을 남겨주세요..."
+      label="댓글 입력"
+      variant="outlined"
+      sx={{ marginTop: '20px' }}
     />
   );
 
