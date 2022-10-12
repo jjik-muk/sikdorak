@@ -20,20 +20,12 @@ function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps)
       <Title>리뷰 작성하기</Title>
       <Content>
         <ImgWrap>
-          {selectedImg ? (
-            <Img width="100%" height="100%" src={URL.createObjectURL(selectedImg)} alt="업로드 사진" />
-          ) : (
-            <ImgUpload setSelectedImg={setSelectedImg} />
-          )}
+          {selectedImg ? <Img width="100%" height="100%" src={URL.createObjectURL(selectedImg)} alt="업로드 사진" /> : <ImgUpload setSelectedImg={setSelectedImg} />}
         </ImgWrap>
         <InputWrap>
           <Header>
             <Profile imgUrl={profileImage} nickname={nickname} />
-            <RegistrationBtn
-              selectedImg={selectedImg}
-              dispatchReviews={dispatchReviews}
-              toggleIsReviewWrite={toggleIsReviewWrite}
-            />
+            <RegistrationBtn selectedImg={selectedImg} dispatchReviews={dispatchReviews} toggleIsReviewWrite={toggleIsReviewWrite} />
           </Header>
           <Textarea />
           <RestaurantSearch />
