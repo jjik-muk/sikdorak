@@ -6,11 +6,11 @@ const GlobalStyle = createGlobalStyle`
   
   * {
     box-sizing: border-box;
-    font-family: 'Noto Sans KR', sans-serif;
   }
 
   body {
     overflow: hidden;
+    font-family: 'Noto Sans KR', sans-serif;
   }
 
   button {
