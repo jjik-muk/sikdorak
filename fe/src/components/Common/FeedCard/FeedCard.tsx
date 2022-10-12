@@ -61,4 +61,5 @@ export default FeedCard;
 
 const CARD_STYLE = {
   borderTop: '1px solid rgba(0 0 0 / 20%)',
+  overflow: 'visible',
 };

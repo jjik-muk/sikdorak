@@ -30,7 +30,7 @@ function UserDetail() {
   }, [targetId]);
   useEffect(() => {
     fetchNextReviews(getUrl(afterParam, REVIEW_SIZE, targetId));
-  });
+  }, []);
 
   return (
     <Wrap
