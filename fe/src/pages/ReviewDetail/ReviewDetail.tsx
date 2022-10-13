@@ -7,7 +7,7 @@ import Comment from 'components/ReviewDetail/Comment/Comment';
 import TagList from 'components/ReviewDetail/TagList/TagList';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import useAuth from 'hooks/useAuth';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import { ContentsWrap, Wrap } from './ReviewDetail.styled';
 
@@ -20,10 +20,11 @@ function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, use
   const COMMENT_SIZE = 2;
   const [hasNextComments, setHasNextComments] = useState(false);
   useAuth();
+  const fetchInitComment = useCallback(fetchNextComment, [afterParam, comments, reviewId]);
 
   useEffect(() => {
-    fetchNextComment();
-  }, []);
+    fetchInitComment();
+  }, [fetchInitComment]);
 
   return (
     <Wrap>

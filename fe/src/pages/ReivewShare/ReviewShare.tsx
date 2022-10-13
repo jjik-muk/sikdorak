@@ -20,22 +20,13 @@ function ReviewShare() {
       const res = await fetchDataThatNeedToLogin(`api/reviews/${Id}`);
       setReview(res.data);
     }
-  }, []);
+  }, [Id]);
 
   return (
     <Wrap>
       <CommonHeader />
       <FeedWrap>
-        <Feed
-          images={images}
-          like={like}
-          reviewContent={reviewContent}
-          reviewId={reviewId}
-          reviewScore={reviewScore}
-          store={store}
-          user={user}
-          tags={tags}
-        />
+        <Feed images={images} like={like} reviewContent={reviewContent} reviewId={reviewId} reviewScore={reviewScore} store={store} user={user} tags={tags} />
       </FeedWrap>
     </Wrap>
   );

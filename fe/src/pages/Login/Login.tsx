@@ -16,7 +16,7 @@ function Login() {
     if (!isExpiredAccessToken) {
       navigate('/');
     }
-  }, []);
+  }, [navigate]);
   async function isValidAccessToken() {
     const res = await fetchDataThatNeedToLogin('api/users/me');
     return res.code === 'F-O003';
