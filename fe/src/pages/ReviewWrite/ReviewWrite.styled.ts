@@ -74,4 +74,5 @@ export const Header = styled.div`
   padding: 12px;
   position: fixed;
   background-color: #fff;
+  z-index: 10;
 `;

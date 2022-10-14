@@ -1,111 +1,59 @@
-import { DETAIL, FEED } from 'constants/size';
-import Icon from 'components/Common/Icon/Icon';
+import { DETAIL } from 'constants/size';
+import { Button } from '@mui/material';
+import { FeedProps } from 'components/Common/Feed/Feed';
+import FeedCard from 'components/Common/FeedCard/FeedCard';
 import Carousel from 'components/ReviewDetail/Carousel/Carousel';
 import Comment from 'components/ReviewDetail/Comment/Comment';
-import Menu from 'components/ReviewDetail/Menu/Menu';
-import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
-import Rating from 'components/ReviewDetail/TotalRating/Rating';
-import Profile from 'components/ReviewDetail/UserProfile/UserProfile';
+import TagList from 'components/ReviewDetail/TagList/TagList';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
-import { FeedProps } from 'components/ReviewList/Feed/Feed';
-import TagList from 'components/ReviewWrite/Tag/TagList/TagList';
 import useAuth from 'hooks/useAuth';
-import { useOutsideClick } from 'hooks/useOutsideClick';
-import useToggle from 'hooks/useToggle';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
-import { ButtonWrapper, Contents, ContentsWrap, Header, IconWrap, Main, MainFooter, Wrap } from './ReviewDetail.styled';
+import { ContentsWrap, Wrap } from './ReviewDetail.styled';
 
-function ReviewDetail({
-  images,
-  reviewContent,
-  reviewId,
-  reviewScore,
-  store,
-  user,
-  isActiveHeart,
-  likeCnt,
-  postLike,
-  tags,
-}: ReviewDetailProps) {
+function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, user, isActiveHeart, likeCnt, postLike, tags }: ReviewDetailProps) {
   const commentRef = useRef<HTMLInputElement>(null);
   const hasPicture = images.length > 0;
   const wrapWidth = hasPicture ? DETAIL.WRAP.WIDTH_WITH_IMG : DETAIL.WRAP.WIDTH_NO_IMG;
-  const btnWidth = hasPicture ? FEED.BTN.WIDTH_WITH_IMG : FEED.BTN.WIDTH_NO_IMG;
-  const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const [comments, setComments] = useState([]);
   const [afterParam, setAfterParam] = useState(0);
   const COMMENT_SIZE = 2;
-  const [hasNextComments, setHasNextComments] = useState(true);
-  const menuRef = useRef(null);
-  useOutsideClick(menuRef, toggleIsActiveMenu);
+  const [hasNextComments, setHasNextComments] = useState(false);
   useAuth();
+  const fetchInitComment = useCallback(fetchNextComment, [afterParam, comments, reviewId]);
 
   useEffect(() => {
-    fetchNextComment();
-  }, []);
+    fetchInitComment();
+  }, [fetchInitComment]);
 
   return (
     <Wrap>
       {hasPicture && <Carousel urls={images} />}
       <ContentsWrap wrapWidth={wrapWidth}>
-        <Header>
-          <Profile nickname={user?.userNickname} imgUrl={user?.userProfileImage} userId={user?.userId} />
-          <div onClick={toggleIsActiveMenu}>
-            <Icon icon="MenuBtn" />
-            {isActiveMenu && <Menu menuRef={menuRef} reviewId={reviewId} />}
-          </div>
-        </Header>
-        <Main>
-          <Contents>{reviewContent}</Contents>
-          <Rating rating={reviewScore} />
-          <MainFooter>
-            <CompnayProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
-          </MainFooter>
-        </Main>
-        <ButtonWrapper>
-          <div onClick={postLike}>
-            <IconWrap width={btnWidth} height={FEED.BTN.HEIGHT}>
-              <Icon icon="Heart" fill={isActiveHeart ? 'red' : '#FFF'} />
-              {likeCnt}
-            </IconWrap>
-          </div>
-          <div onClick={focusWrittingComment}>
-            <IconWrap width={btnWidth} height={FEED.BTN.HEIGHT}>
-              <Icon icon="TalkBubble" fill={isActiveHeart ? 'red' : '#FFF'} />
-            </IconWrap>
-          </div>
-          <div onClick={handleCopyURL}>
-            <IconWrap width={btnWidth} height={FEED.BTN.HEIGHT}>
-              <Icon icon="ShareArrow" fill={isActiveHeart ? 'red' : '#FFF'} />
-            </IconWrap>
-          </div>
-        </ButtonWrapper>
-        {Boolean(tags.length) && <TagList tags={tags} imgUrl={user.userProfileImage} />}
-        {comments &&
-          comments.map(({ author, content, id }) => (
-            <Comment
-              key={id}
-              authorId={author.id}
-              title={author.nickname}
-              content={content}
-              imgUrl={author.profileImage}
-            />
-          ))}
-        {hasNextComments && (
-          <button onClick={fetchNextComment} type="button">
-            댓글 더보기
-          </button>
-        )}
-        <WriteComment commentRef={commentRef} reviewId={reviewId} comments={comments} setComments={setComments} />
+        <FeedCard
+          images={images}
+          reviewContent={reviewContent}
+          reviewId={reviewId}
+          reviewScore={reviewScore}
+          store={store}
+          user={user}
+          isActiveHeart={isActiveHeart}
+          likeCnt={likeCnt}
+          postLike={postLike}
+          isUsedModal
+        />
+        <div style={{ padding: '0 10px 10px 10px' }}>
+          {Boolean(tags.length) && <TagList tags={tags} imgUrl={user.userProfileImage} />}
+          {comments && comments.map(({ author, content, id }) => <Comment key={id} authorId={author.id} title={author.nickname} content={content} imgUrl={author.profileImage} />)}
+          {hasNextComments && <Button onClick={fetchNextComment}>댓글 더보기</Button>}
+          <WriteComment commentRef={commentRef} reviewId={reviewId} comments={comments} setComments={setComments} />
+        </div>
       </ContentsWrap>
     </Wrap>
   );
 
   async function fetchNextComment() {
-    const commentRes = await fetchDataThatNeedToLogin(
-      `api/reviews/${reviewId}/comments?size=${COMMENT_SIZE}&after=${afterParam}`,
-    );
+    const commentRes = await fetchDataThatNeedToLogin(`api/reviews/${reviewId}/comments?size=${COMMENT_SIZE}&after=${afterParam}`);
     setHasNextComments(!commentRes.data.page.last);
     if (!commentRes.data) return;
 
@@ -113,16 +61,6 @@ function ReviewDetail({
     const nextAfterParam = commentRes.data.page.next;
     setComments([...comments, ...nextComments]);
     setAfterParam(nextAfterParam);
-  }
-
-  function handleCopyURL() {
-    const curURL = window.location.href;
-    const { clipboard } = navigator;
-    clipboard.writeText(curURL);
-  }
-
-  function focusWrittingComment() {
-    commentRef.current.focus();
   }
 }
 

@@ -1,5 +1,5 @@
-import CommonHeader from 'components/Common/Header/CommonHeader';
-import Feed from 'components/ReviewList/Feed/Feed';
+import CommonHeader from 'components/Common/CommonHeader/CommonHeader';
+import Feed from 'components/Common/Feed/Feed';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
@@ -20,22 +20,13 @@ function ReviewShare() {
       const res = await fetchDataThatNeedToLogin(`api/reviews/${Id}`);
       setReview(res.data);
     }
-  }, []);
+  }, [Id]);
 
   return (
     <Wrap>
       <CommonHeader />
       <FeedWrap>
-        <Feed
-          images={images}
-          like={like}
-          reviewContent={reviewContent}
-          reviewId={reviewId}
-          reviewScore={reviewScore}
-          store={store}
-          user={user}
-          tags={tags}
-        />
+        <Feed images={images} like={like} reviewContent={reviewContent} reviewId={reviewId} reviewScore={reviewScore} store={store} user={user} tags={tags} />
       </FeedWrap>
     </Wrap>
   );

@@ -10,7 +10,7 @@ const Callback = observer(() => {
 
   useEffect(() => {
     accountStore.setAccessToken(kakaoAuthorizationCode);
-  }, []);
+  }, [kakaoAuthorizationCode]);
 
   if (!accountStore.accessToken) {
     return <Loading />;

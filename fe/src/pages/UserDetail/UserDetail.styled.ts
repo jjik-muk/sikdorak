@@ -27,6 +27,7 @@ export const UserInfoWrap = styled.div`
 
 export const UserInfoHeader = styled.div`
   ${() => flexLayoutMixin('', 'space-between')};
+  align-items: center;
 `;
 
 export const ActivityInfoWrap = styled.div`

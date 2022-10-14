@@ -19,7 +19,7 @@ function useAuth() {
       const res = await fetchDataThatNeedToLogin('api/users/me');
       return res.code === 'F-O003' || res.code === 'F-O004';
     }
-  }, []);
+  }, [navigate]);
 }
 
 export default useAuth;

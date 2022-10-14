@@ -1,8 +1,8 @@
 import { TextField } from '@mui/material';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+import CommonHeader from 'components/Common/CommonHeader/CommonHeader';
 import Feeds from 'components/Common/Feeds/Feeds';
-import CommonHeader from 'components/Common/Header/CommonHeader';
 import Modal from 'components/Common/Modal/Modal';
 import MapComponent from 'components/Map/MapComponent';
 import Stores from 'components/Map/Stores/Stores';
@@ -36,18 +36,13 @@ function Map() {
     debouncedSearch({
       url: `${process.env.REACT_APP_BE_SERVER_URL}/api/users?nickname=${inputValue}`,
     });
-  }, [inputValue]);
+  }, [debouncedSearch, inputValue]);
 
   return (
     <>
       <CommonHeader dispatchReviews={dispatchReviews} />
       <ContentArea>
-        <Tabs
-          orientation="vertical"
-          variant="scrollable"
-          value={activeTabIdx}
-          sx={{ borderRight: 1, borderColor: 'divider' }}
-        >
+        <Tabs orientation="vertical" variant="scrollable" value={activeTabIdx} sx={{ borderRight: 1, borderColor: 'divider' }}>
           {TABS.map(({ label }, idx) => (
             <Tab
               label={label}

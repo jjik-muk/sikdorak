@@ -32,7 +32,6 @@ export const IconWrap = styled.div<{ width: number; height: number }>`
 
 export const ContentsWrap = styled.div<{ wrapWidth: number }>`
   width: ${({ wrapWidth }) => wrapWidth}px;
-  padding: 20px;
   max-height: 600px;
   overflow-y: auto;
 `;

@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useCallback, useReducer, useState } from 'react';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 
 function useReviews() {
@@ -14,7 +14,7 @@ function useReviews() {
       fetchNextReviews(url);
     }
   }
-  async function fetchNextReviews(url) {
+  const fetchNextReviews = useCallback(async (url) => {
     const res = await fetchDataThatNeedToLogin(url);
     const nextReviews = res.data.reviews;
     const nextAfterParam = res.data.page.next;
@@ -26,7 +26,7 @@ function useReviews() {
     if (isLastPage) {
       setHasNextPage(false);
     }
-  }
+  }, []);
 
   return { reviews, dispatchReviews, handleScroll, fetchNextReviews, afterParam };
 }

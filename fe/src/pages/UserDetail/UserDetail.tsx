@@ -1,5 +1,5 @@
+import CommonHeader from 'components/Common/CommonHeader/CommonHeader';
 import Feeds from 'components/Common/Feeds/Feeds';
-import CommonHeader from 'components/Common/Header/CommonHeader';
 import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
 import useAuth from 'hooks/useAuth';
@@ -28,9 +28,11 @@ function UserDetail() {
       setUserProfile(res.data);
     }
   }, [targetId]);
+
   useEffect(() => {
-    fetchNextReviews(getUrl(afterParam, REVIEW_SIZE, targetId));
-  });
+    const INIT_AFTER_PARAM = 0;
+    fetchNextReviews(getUrl(INIT_AFTER_PARAM, REVIEW_SIZE, targetId));
+  }, [fetchNextReviews, targetId]);
 
   return (
     <Wrap

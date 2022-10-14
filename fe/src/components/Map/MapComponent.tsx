@@ -14,7 +14,9 @@ export default function MapComponent({ stores, mapPos, setMapPos }: any) {
   const [overlays, setOverlays] = useState([]);
   const mapRef = useRef(null);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(initMap, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(handleOverlay, [mapPos, stores]);
 
   function initMap() {

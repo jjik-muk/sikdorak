@@ -34,12 +34,6 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
     <Wrap>
       <Header>
         <Logo />
-        {/* <SearchFormWrap>
-          <Input type="text" placeholder="검색해주세요." />
-          <IconWrap>
-            <Icon icon="SearchBtn" width={18} height={18} />
-          </IconWrap>
-        </SearchFormWrap> */}
         <ButtonWrap>
           {iconInfo.map(({ icon, handler, to }, idx) => (
             <Link key={createKey(icon, idx)} to={to}>

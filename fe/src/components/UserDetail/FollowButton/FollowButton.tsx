@@ -1,7 +1,7 @@
+import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
-import { Wrap } from './FollowButton.styled';
 
 function FollowButton({ alreadyFollowed }: FollowButtonProps) {
   const [isFriendship, setIsFriendship] = useState(alreadyFollowed);
@@ -12,7 +12,15 @@ function FollowButton({ alreadyFollowed }: FollowButtonProps) {
     setIsFriendship(alreadyFollowed);
   }, [alreadyFollowed]);
 
-  return isFriendship ? <Wrap onClick={postUnFollow}>언팔로우</Wrap> : <Wrap onClick={postFollow}>팔로우</Wrap>;
+  return isFriendship ? (
+    <Button variant="contained" onClick={postUnFollow}>
+      언팔로우
+    </Button>
+  ) : (
+    <Button variant="contained" onClick={postFollow}>
+      팔로우
+    </Button>
+  );
 
   function postFollow() {
     fetchDataThatNeedToLogin(`api/users/follow`, {
@@ -20,6 +28,7 @@ function FollowButton({ alreadyFollowed }: FollowButtonProps) {
       bodyData: { userId: IDtoFollow },
     });
     setIsFriendship(!isFriendship);
+    // TODO: UserStore.fetchUser();
   }
   function postUnFollow() {
     fetchDataThatNeedToLogin(`api/users/unfollow`, {
@@ -27,6 +36,7 @@ function FollowButton({ alreadyFollowed }: FollowButtonProps) {
       bodyData: { userId: IDtoFollow },
     });
     setIsFriendship(!isFriendship);
+    // TODO: UserStore.fetchUser();
   }
 }
 

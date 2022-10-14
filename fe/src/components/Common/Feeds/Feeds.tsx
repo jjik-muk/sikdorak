@@ -1,4 +1,4 @@
-import Feed, { FeedProps } from 'components/ReviewList/Feed/Feed';
+import Feed, { FeedProps } from 'components/Common/Feed/Feed';
 import GuideText from '../GuideText/GuideText';
 import { Wrap } from './Feeds.styled';
 

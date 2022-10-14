@@ -10,11 +10,10 @@ export default function RestaurantSearch() {
   const [reviewWriteContext] = useReviewWrite();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { inputValue, searchResults, setInputValue, debouncedSearch } = useSearchBar();
-  const headers = { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` };
 
   useEffect(() => {
     setInputValue(reviewWriteContext.store.storeName);
-  }, []);
+  }, [reviewWriteContext.store.storeName, setInputValue]);
 
   useEffect(() => {
     const hasInputValue = inputValue?.length > 0;
@@ -23,11 +22,12 @@ export default function RestaurantSearch() {
       return;
     }
 
+    const headers = { Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_REST_API_KEY}` };
     debouncedSearch({
       url: `https://dapi.kakao.com/v2/local/search/keyword.json?query=${inputValue}&category_group_code=FD6`,
       headers,
     });
-  }, [inputValue]);
+  }, [debouncedSearch, inputValue]);
 
   return (
     <Wrap>
@@ -44,12 +44,7 @@ export default function RestaurantSearch() {
       />
       {isModalOpen && (
         <Modal width="367px">
-          <SearchResult
-            searchResults={searchResults}
-            inputValue={inputValue}
-            setInputValue={setInputValue}
-            closeModal={closeModal}
-          />
+          <SearchResult searchResults={searchResults} inputValue={inputValue} setInputValue={setInputValue} closeModal={closeModal} />
         </Modal>
       )}
     </Wrap>

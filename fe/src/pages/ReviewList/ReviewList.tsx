@@ -1,5 +1,5 @@
+import CommonHeader from 'components/Common/CommonHeader/CommonHeader';
 import Feeds from 'components/Common/Feeds/Feeds';
-import CommonHeader from 'components/Common/Header/CommonHeader';
 import useAuth from 'hooks/useAuth';
 import useReviews from 'hooks/useReviews';
 import { useEffect } from 'react';
@@ -13,7 +13,7 @@ function ReviewList() {
 
   useEffect(() => {
     fetchNextReviews(getUrl(afterParam, REVIEW_SIZE));
-  }, []);
+  }, [fetchNextReviews, afterParam]);
 
   return (
     <ReviewListWrap
