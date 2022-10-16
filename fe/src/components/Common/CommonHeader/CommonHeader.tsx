@@ -1,3 +1,4 @@
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import { observer } from 'mobx-react';
@@ -9,7 +10,7 @@ import { createKey } from 'utils/utils';
 import Icon, { IconComponentsKeys } from '../Icon/Icon';
 import Logo from '../Logo/Logo';
 import Portal from '../Portal/Portal';
-import { ButtonWrap, Header, Wrap, ProfileImageWrap } from './CommonHeader.styled';
+import { ButtonWrap, Header, ProfileImageWrap, Wrap } from './CommonHeader.styled';
 
 const CommonHeader = observer(({ dispatchReviews }: any) => {
   const [isReviewWrite, toggleIsReviewWrite] = useToggle(false);
@@ -17,11 +18,16 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
   const reviewWriteModalRef = useRef(null);
   const userDetailModalRef = useRef(null);
 
-  const iconInfo: IconInfoProps[] = [
-    { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
-    { icon: 'Map', to: '/map' },
-    { icon: 'PostBtn', handler: toggleIsReviewWrite, to: '' },
-  ];
+  const iconInfo: IconInfoProps[] = accountStore.id
+    ? [
+        { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
+        { icon: 'Map', to: '/map' },
+        { icon: 'PostBtn', handler: toggleIsReviewWrite, to: '' },
+      ]
+    : [
+        { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
+        { icon: 'Map', to: '/map' },
+      ];
 
   useOutsideClick(reviewWriteModalRef, toggleIsReviewWrite);
   useOutsideClick(userDetailModalRef, toggleIsUserProfile);
@@ -42,9 +48,9 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
               </div>
             </Link>
           ))}
-          <Link to={`/user/${accountStore.id}`}>
+          <Link to={accountStore.id ? `/user/${accountStore.id}` : '/login'}>
             <ProfileImageWrap>
-              <img src={accountStore.profileImage} alt="profile" width={24} height={24} />
+              {accountStore.profileImage ? <img src={accountStore.profileImage} alt="profile" width={24} height={24} /> : <AccountCircleIcon sx={{ width: 24, height: 24 }} />}
             </ProfileImageWrap>
           </Link>
         </ButtonWrap>

@@ -8,6 +8,7 @@ import TagList from 'components/ReviewDetail/TagList/TagList';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import useAuth from 'hooks/useAuth';
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { accountStore } from 'stores/AccountStore';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import { ContentsWrap, Wrap } from './ReviewDetail.styled';
 
@@ -46,7 +47,7 @@ function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, use
           {Boolean(tags.length) && <TagList tags={tags} imgUrl={user.userProfileImage} />}
           {comments && comments.map(({ author, content, id }) => <Comment key={id} authorId={author.id} title={author.nickname} content={content} imgUrl={author.profileImage} />)}
           {hasNextComments && <Button onClick={fetchNextComment}>댓글 더보기</Button>}
-          <WriteComment commentRef={commentRef} reviewId={reviewId} comments={comments} setComments={setComments} />
+          {accountStore.id && <WriteComment commentRef={commentRef} reviewId={reviewId} comments={comments} setComments={setComments} />}
         </div>
       </ContentsWrap>
     </Wrap>

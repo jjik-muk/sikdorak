@@ -6,11 +6,12 @@ import KebabMenu from 'components/Common/KebabMenu/KebabMenu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
 import Rating from 'components/ReviewDetail/TotalRating/Rating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
+import { observer } from 'mobx-react';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { accountStore } from 'stores/AccountStore';
 
-function FeedCard({ images, reviewContent, reviewId, reviewScore, store, user, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal }: any) {
+const FeedCard = observer(({ images, reviewContent, reviewId, reviewScore, store, user, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal }: any) => {
   const [copyText, setCopyText] = useState('');
   const myUserId = accountStore.id;
   const isMyFeed = user?.userId === myUserId;
@@ -32,9 +33,11 @@ function FeedCard({ images, reviewContent, reviewId, reviewScore, store, user, i
           <FavoriteIcon color={isActiveHeart ? 'warning' : 'action'} />
           <Typography>{likeCnt}</Typography>
         </IconButton>
-        <IconButton aria-label="comment">
-          <ModeCommentIcon />
-        </IconButton>
+        {accountStore.id && (
+          <IconButton aria-label="comment">
+            <ModeCommentIcon />
+          </IconButton>
+        )}
         <IconButton aria-label="share" onClick={handleCopyURL}>
           <ShareIcon />
         </IconButton>
@@ -55,7 +58,7 @@ function FeedCard({ images, reviewContent, reviewId, reviewScore, store, user, i
     alert('공유할 리뷰 페이지가 복사되었습니다.');
     e.stopPropagation();
   }
-}
+});
 
 export default FeedCard;
 

@@ -4,15 +4,15 @@ import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
 import useAuth from 'hooks/useAuth';
 import useReviews from 'hooks/useReviews';
-import { useEffect, useState } from 'react';
+import { observer } from 'mobx-react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { accountStore } from 'stores/AccountStore';
-import { fetchDataThatNeedToLogin } from 'utils/utils';
+import { userStore } from 'stores/userStore';
 import { ActivityInfoWrap, UserDetailWrap, UserInfoHeader, UserInfoWrap, Wrap } from './UserDetail.styled';
 
-function UserDetail() {
+const UserDetail = observer(() => {
   const { reviews, dispatchReviews, fetchNextReviews, afterParam, handleScroll } = useReviews();
-  const [userProfile, setUserProfile] = useState(null);
   const myUserId = accountStore.id;
   const { pathname } = useLocation();
   const targetId = Number(pathname.split('/').at(-1));
@@ -21,12 +21,7 @@ function UserDetail() {
   useAuth();
 
   useEffect(() => {
-    fetchUserInfo();
-
-    async function fetchUserInfo() {
-      const res = await fetchDataThatNeedToLogin(`api/users/${targetId}`);
-      setUserProfile(res.data);
-    }
+    userStore.fetchUserProfile(targetId);
   }, [targetId]);
 
   useEffect(() => {
@@ -42,23 +37,23 @@ function UserDetail() {
     >
       <CommonHeader dispatchReviews={dispatchReviews} />
       <UserDetailWrap>
-        <UserProfilePhoto src={userProfile?.profileImage} />
+        <UserProfilePhoto src={userStore?.userProfile?.profileImage} />
         <UserInfoWrap>
           <UserInfoHeader>
-            {userProfile?.nickname}
-            {!isMyUserDetailPage && <FollowButton alreadyFollowed={userProfile?.relationStatus?.followStatus} />}
+            {userStore?.userProfile?.nickname}
+            {!isMyUserDetailPage && accountStore.id && <FollowButton />}
           </UserInfoHeader>
           <ActivityInfoWrap>
-            <div>게시물 {userProfile?.reviewCount}</div>
-            <div>팔로우 {userProfile?.followingCount}</div>
-            <div>팔로워 {userProfile?.followersCount}</div>
+            <div>게시물 {userStore?.userProfile?.reviewCount}</div>
+            <div>팔로우 {userStore?.userProfile?.followingCount}</div>
+            <div>팔로워 {userStore?.userProfile?.followersCount}</div>
           </ActivityInfoWrap>
         </UserInfoWrap>
       </UserDetailWrap>
       <Feeds reviews={reviews} />
     </Wrap>
   );
-}
+});
 
 function getUrl(after, reviewSize, targetId) {
   return `api/users/${targetId}/reviews?after=${after}&size=${reviewSize}`;

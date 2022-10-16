@@ -12,16 +12,7 @@ function Feeds({ reviews }: FeedsProps) {
       {hasReviews ? (
         reviews.map(({ images, like, reviewContent, reviewId, reviewScore, store, user, tags }) => (
           <div key={reviewId}>
-            <Feed
-              images={images}
-              like={like}
-              reviewContent={reviewContent}
-              reviewId={reviewId}
-              reviewScore={reviewScore}
-              store={store}
-              user={user}
-              tags={tags}
-            />
+            <Feed images={images} like={like} reviewContent={reviewContent} reviewId={reviewId} reviewScore={reviewScore} store={store} user={user} tags={tags} />
           </div>
         ))
       ) : (

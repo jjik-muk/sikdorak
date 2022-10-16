@@ -1,5 +1,6 @@
 import { useCallback, useReducer, useState } from 'react';
-import { fetchDataThatNeedToLogin } from 'utils/utils';
+import { accountStore } from 'stores/AccountStore';
+import { fetchData, fetchDataThatNeedToLogin } from 'utils/utils';
 
 function useReviews() {
   const [reviews, dispatchReviews] = useReducer(reducer, []);
@@ -15,7 +16,7 @@ function useReviews() {
     }
   }
   const fetchNextReviews = useCallback(async (url) => {
-    const res = await fetchDataThatNeedToLogin(url);
+    const res = accountStore.id ? await fetchDataThatNeedToLogin(url) : await fetchData(`${process.env.REACT_APP_BE_SERVER_URL}/${url}`);
     const nextReviews = res.data.reviews;
     const nextAfterParam = res.data.page.next;
 
