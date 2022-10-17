@@ -1,4 +1,4 @@
-const TEXT = {
+export const TEXT = {
   LOGIN_BTN: {
     KAKAO: 'Kakao 계정으로 로그인',
     NORMAL: '아이디로 로그인',
@@ -11,5 +11,3 @@ const TEXT = {
     FOOD: '음식',
   },
 };
-
-export default TEXT;
