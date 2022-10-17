@@ -44,7 +44,7 @@ class AccountStore {
     const resJson = await res.json();
     const { code, data } = resJson;
 
-    if (code === STATUS_CODE.FAIL_COMMUNICATION_WITH_OAUTH_SERVER) {
+    if (code === STATUS_CODE.FAILURE.COMMUNICATION_WITH_OAUTH_SERVER) {
       alert('OAuth 서버와의 통신이 원할하지 않습니다.');
       throw new Error('OAuth 서버와의 통신이 원할하지 않습니다.');
     }

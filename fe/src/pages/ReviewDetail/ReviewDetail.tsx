@@ -12,7 +12,7 @@ import { accountStore } from 'stores/AccountStore';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import { ContentsWrap, Wrap } from './ReviewDetail.styled';
 
-function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, user, isActiveHeart, likeCnt, postLike, tags }: ReviewDetailProps) {
+function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, user, isActiveHeart, likeCnt, postLike, tags, postUnlike }: ReviewDetailProps) {
   const commentRef = useRef<HTMLInputElement>(null);
   const hasPicture = images.length > 0;
   const wrapWidth = hasPicture ? DETAIL.WRAP.WIDTH_WITH_IMG : DETAIL.WRAP.WIDTH_NO_IMG;
@@ -41,6 +41,7 @@ function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, use
           isActiveHeart={isActiveHeart}
           likeCnt={likeCnt}
           postLike={postLike}
+          postUnlike={postUnlike}
           isUsedModal
         />
         <div style={{ padding: '0 10px 10px 10px' }}>
@@ -71,4 +72,5 @@ type ReviewDetailProps = FeedProps & {
   isActiveHeart: boolean;
   likeCnt: number;
   postLike: () => void;
+  postUnlike: () => void;
 };

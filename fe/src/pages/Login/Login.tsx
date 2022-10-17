@@ -1,4 +1,4 @@
-import TEXT from 'constants/text';
+import { TEXT } from 'constants/text';
 import Logo from 'components/Common/Logo/Logo';
 import LoginButton from 'components/Login/LoginButton/LoginButton';
 import { useEffect } from 'react';
@@ -30,10 +30,6 @@ function Login() {
         <KakaoLogin href={`${process.env.REACT_APP_BE_SERVER_URL}/api/oauth/login`}>
           <LoginButton text={KAKAO} />
         </KakaoLogin>
-        {/* <LoginInput type={ID} />
-        <LoginInput type={PASSWORD} />
-        <LoginButton text={NORMAL} />
-        <span>회원가입</span> */}
       </Form>
     </Wrap>
   );

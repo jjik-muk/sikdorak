@@ -1,4 +1,4 @@
-import TEXT from 'constants/text';
+import { TEXT } from 'constants/text';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
 

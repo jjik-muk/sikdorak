@@ -24,7 +24,7 @@ function useAuth() {
       }
 
       async function validateAccessToken() {
-        const { code } = await fetchDataThatNeedToLogin(API_PATH.USER.GET_MY_PROFILE);
+        const { code } = await fetchDataThatNeedToLogin(API_PATH.USER.MY_PROFILE);
         const isFailure = FAILURE_STATUS_CODES.includes(code);
         return !isFailure;
       }

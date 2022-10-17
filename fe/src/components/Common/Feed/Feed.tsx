@@ -9,7 +9,7 @@ import FeedCard from '../FeedCard/FeedCard';
 
 function Feed({ images, like = { count: 0, userLikeStatus: false }, reviewContent, reviewId, reviewScore, store, user, tags }: FeedProps) {
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
-  const { isActiveHeart, likeCnt, postLike } = useLike({ like, reviewId });
+  const { isActiveHeart, likeCnt, postLike, postUnlike } = useLike({ like, reviewId });
   const reviewDetailModalRef = useRef(null);
   useOutsideClick(reviewDetailModalRef, toggleIsClikedFeed);
 
@@ -25,6 +25,7 @@ function Feed({ images, like = { count: 0, userLikeStatus: false }, reviewConten
         isActiveHeart={isActiveHeart}
         likeCnt={likeCnt}
         postLike={postLike}
+        postUnlike={postUnlike}
         toggleIsClikedFeed={toggleIsClikedFeed}
       />
       {isClikedFeed && (
@@ -40,6 +41,7 @@ function Feed({ images, like = { count: 0, userLikeStatus: false }, reviewConten
             isActiveHeart={isActiveHeart}
             likeCnt={likeCnt}
             postLike={postLike}
+            postUnlike={postUnlike}
             tags={tags}
           />
         </Portal>

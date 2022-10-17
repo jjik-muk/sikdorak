@@ -1,6 +1,6 @@
 import { DEFAULT_IMG, STORE } from 'constants/dummyData';
 import { STORE_DETAIL } from 'constants/size';
-import TEXT from 'constants/text';
+import { TEXT } from 'constants/text';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
 

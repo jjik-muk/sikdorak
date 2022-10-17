@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { accountStore } from 'stores/AccountStore';
 
-const FeedCard = observer(({ images, reviewContent, reviewId, reviewScore, store, user, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal }: any) => {
+const FeedCard = observer(({ images, reviewContent, reviewId, reviewScore, store, user, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal, postUnlike }: any) => {
   const [copyText, setCopyText] = useState('');
   const myUserId = accountStore.id;
   const isMyFeed = user?.userId === myUserId;
@@ -29,7 +29,7 @@ const FeedCard = observer(({ images, reviewContent, reviewId, reviewScore, store
       <CardContent>{reviewContent}</CardContent>
       <CompnayProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
       <CardActions>
-        <IconButton aria-label="like" onClick={handleLike}>
+        <IconButton aria-label="like" onClick={isActiveHeart ? handleUnlike : handleLike}>
           <FavoriteIcon color={isActiveHeart ? 'warning' : 'action'} />
           <Typography>{likeCnt}</Typography>
         </IconButton>
@@ -47,6 +47,11 @@ const FeedCard = observer(({ images, reviewContent, reviewId, reviewScore, store
 
   function handleLike(e) {
     postLike();
+    e.stopPropagation();
+  }
+
+  function handleUnlike(e) {
+    postUnlike();
     e.stopPropagation();
   }
 

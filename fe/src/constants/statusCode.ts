@@ -2,6 +2,8 @@ export const STATUS_CODE = {
   SUCCESS: {
     LOGIN: 'T-O001',
     REISSUE_ACCESS_TOKEN: 'T-O002',
+    LIKE: 'T-R006',
+    CANCEL_LIKE: 'T-R007',
   },
   FAILURE: {
     COMMUNICATION_WITH_OAUTH_SERVER: 'F-O001',
@@ -10,5 +12,5 @@ export const STATUS_CODE = {
   },
 };
 
-export const SUCCESS_STATUS_CODES = [...Object.values(STATUS_CODE.SUCCESS)];
-export const FAILURE_STATUS_CODES = [...Object.values(STATUS_CODE.FAILURE)];
+export const SUCCESS_STATUS_CODES = Object.values(STATUS_CODE.SUCCESS);
+export const FAILURE_STATUS_CODES = Object.values(STATUS_CODE.FAILURE);
