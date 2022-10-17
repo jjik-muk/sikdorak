@@ -107,6 +107,7 @@ Temporary Items
 
 # 빌드 시 복사된 application.yml 파일
 src/main/resources/*.yml
+src/main/resources/*.xml
 
 # 빌드 시 복사된 db 관련 파일들
 src/main/resources/db/**
