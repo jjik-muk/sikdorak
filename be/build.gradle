@@ -87,6 +87,14 @@ dependencies {
     // aws : https://spring.io/blog/2021/03/17/spring-cloud-aws-2-3-is-now-available#why-has-the-package-name-changed
     implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.2'
     testImplementation "org.testcontainers:localstack:1.17.3"
+
+    // Monitoring
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-cloudwatch2:1.9.1'
+
+    // Logging
+    implementation 'ca.pjer:logback-awslogs-appender:1.6.0'
+    implementation 'org.codehaus.janino:janino:3.1.8'
 }
 
 test {
@@ -102,6 +110,7 @@ task copyGitSubmodule(type: Copy) {
     from './config'
     into './src/main/resources'
     include '*.yml'
+    include '*.xml'
     include 'db/**'
 }
 
