@@ -124,7 +124,8 @@ public class ReviewDao {
     }
 
     private long getCursorOrDefaultCursor(CursorPageRequest cursorPageRequest) {
-        return cursorPageRequest.getAfter() == 0 ? reviewRepository.findMaxId()
+        return cursorPageRequest.getAfter() == 0
+            ? reviewRepository.findMaxId().orElse(0L)
             : cursorPageRequest.getAfter();
     }
 

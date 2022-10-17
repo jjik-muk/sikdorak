@@ -81,6 +81,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
         Pageable pageable);
 
     @Query(value = "select max(review_id) from review", nativeQuery = true)
-    long findMaxId();
+    Optional<Long> findMaxId();
 
 }
