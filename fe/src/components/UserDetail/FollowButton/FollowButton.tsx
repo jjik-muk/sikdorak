@@ -1,47 +1,21 @@
 import Button from '@mui/material/Button';
-import { useEffect, useState } from 'react';
+import { observer } from 'mobx-react';
 import { useLocation } from 'react-router-dom';
-import { fetchDataThatNeedToLogin } from 'utils/utils';
+import { userStore } from 'stores/userStore';
 
-function FollowButton({ alreadyFollowed }: FollowButtonProps) {
-  const [isFriendship, setIsFriendship] = useState(alreadyFollowed);
+const FollowButton = observer(() => {
   const { pathname } = useLocation();
   const IDtoFollow = Number(pathname.split('/').at(-1));
 
-  useEffect(() => {
-    setIsFriendship(alreadyFollowed);
-  }, [alreadyFollowed]);
-
-  return isFriendship ? (
-    <Button variant="contained" onClick={postUnFollow}>
+  return userStore?.followStatus ? (
+    <Button variant="contained" onClick={() => userStore.postUnFollow(IDtoFollow)}>
       언팔로우
     </Button>
   ) : (
-    <Button variant="contained" onClick={postFollow}>
+    <Button variant="contained" onClick={() => userStore.postFollow(IDtoFollow)}>
       팔로우
     </Button>
   );
-
-  function postFollow() {
-    fetchDataThatNeedToLogin(`api/users/follow`, {
-      method: 'PUT',
-      bodyData: { userId: IDtoFollow },
-    });
-    setIsFriendship(!isFriendship);
-    // TODO: UserStore.fetchUser();
-  }
-  function postUnFollow() {
-    fetchDataThatNeedToLogin(`api/users/unfollow`, {
-      method: 'PUT',
-      bodyData: { userId: IDtoFollow },
-    });
-    setIsFriendship(!isFriendship);
-    // TODO: UserStore.fetchUser();
-  }
-}
-
-type FollowButtonProps = {
-  alreadyFollowed?: boolean;
-};
+});
 
 export default FollowButton;
