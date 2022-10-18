@@ -1,3 +1,5 @@
+import { MESSAGE } from 'constants/message';
+import { FEED } from 'constants/size';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import ShareIcon from '@mui/icons-material/Share';
@@ -25,7 +27,7 @@ const FeedCard = observer(({ review, isActiveHeart, likeCnt, postLike, toggleIsC
         avatar={<UserProfile nickname={user?.userNickname} imgUrl={user?.userProfileImage} userId={user?.userId} />}
         action={<KebabMenu reviewId={reviewId} isMyFeed={isMyFeed} />}
       />
-      {hasPicture && !isUsedModal && <CardMedia component="img" height="194" image={images[0]} alt="User profile" />}
+      {hasPicture && !isUsedModal && <CardMedia component="img" height={FEED.IMG.HEIGHT} image={images[0]} alt="User profile" />}
       <Rating rating={reviewScore} />
       <CardContent>{reviewContent}</CardContent>
       <CompnayProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
@@ -61,7 +63,7 @@ const FeedCard = observer(({ review, isActiveHeart, likeCnt, postLike, toggleIsC
     const hostUrl = window.location.href.replace(location.pathname, '');
     setCopyText(`${hostUrl}/review/${reviewId}`);
     clipboard.writeText(copyText);
-    alert('공유할 리뷰 페이지가 복사되었습니다.');
+    alert(MESSAGE.SUCCESS.SHARE_REVIEW);
     e.stopPropagation();
   }
 });
