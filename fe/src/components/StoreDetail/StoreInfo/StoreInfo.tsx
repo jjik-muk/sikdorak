@@ -2,6 +2,7 @@ import { ICON } from 'styles/size';
 import { STYLE } from 'styles/style';
 import Icon from 'components/Common/Icon/Icon';
 import styled from 'styled-components';
+import { COLOR } from 'styles/color';
 
 function StoreInfo({ storeName, storeRating, reviewCnt, address, phoneNumber }: any) {
   return (
@@ -9,16 +10,16 @@ function StoreInfo({ storeName, storeRating, reviewCnt, address, phoneNumber }: 
       <InfoWrap>
         <Title>{storeName}</Title>
         <Row>
-          <Icon icon="Star" stroke="#fff" fill="#f1c40f" width={ICON.SMALL} height={ICON.SMALL} />
+          <Icon icon="Star" stroke={COLOR.WHITE} fill={COLOR.YELLOW} width={ICON.SMALL} height={ICON.SMALL} />
           <Text>{storeRating} / 5</Text>
           <Text>리뷰 {reviewCnt}</Text>
         </Row>
         <Row>
-          <Icon icon="Location" width={ICON.SMALL} height={ICON.SMALL} fill="#000" />
+          <Icon icon="Location" width={ICON.SMALL} height={ICON.SMALL} fill={COLOR.BLACK} />
           <Text>{address}</Text>
         </Row>
         <Row>
-          <Icon icon="Phone" width={ICON.SMALL} height={ICON.SMALL} fill="#000" />
+          <Icon icon="Phone" width={ICON.SMALL} height={ICON.SMALL} fill={COLOR.BLACK} />
           <Text>{phoneNumber}</Text>
         </Row>
       </InfoWrap>

@@ -3,6 +3,7 @@ import { STORE_DETAIL } from 'styles/size';
 import { TEXT } from 'constants/text';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
+import { COLOR } from 'styles/color';
 
 function StorePictures() {
   const { storePictures } = STORE;
@@ -61,7 +62,7 @@ export const DimText = styled.div`
   width: 200px;
   height: 200px;
   ${() => flexLayoutMixin('', 'center', 'center')}
-  color: #fff;
+  color: ${COLOR.WHITE};
   font-weight: 500;
   right: 0;
   bottom: 0;

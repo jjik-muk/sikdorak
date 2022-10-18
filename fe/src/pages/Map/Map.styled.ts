@@ -1,5 +1,6 @@
 import { STYLE } from 'styles/style';
 import styled from 'styled-components';
+import { COLOR } from 'styles/color';
 
 export const MapArea = styled.div`
   flex: 5;
@@ -31,7 +32,7 @@ export const Buttons = styled.div`
   > button {
     width: 60px;
     height: 60px;
-    background-color: #fff;
+    background-color: ${COLOR.WHITE};
     ${STYLE.BOX_CONTAINER}
   }
 `;

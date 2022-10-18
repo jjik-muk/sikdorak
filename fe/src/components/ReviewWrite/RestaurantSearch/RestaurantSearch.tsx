@@ -3,6 +3,7 @@ import Modal from 'components/Common/Modal/Modal';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import useSearchBar from 'hooks/useSearchBar';
 import { useEffect, useState } from 'react';
+import { REVIEW_WRITE } from 'styles/size';
 import SearchResult from '../SearchResult/SearchResult';
 import { Wrap } from './RestaurantSearch.styled';
 
@@ -43,7 +44,7 @@ export default function RestaurantSearch() {
         onBlur={closeModal}
       />
       {isModalOpen && (
-        <Modal width={367} height={200}>
+        <Modal width={REVIEW_WRITE.RESTAURANT_SEARCH_MODAL.WIDTH}>
           <SearchResult searchResults={searchResults} inputValue={inputValue} setInputValue={setInputValue} closeModal={closeModal} />
         </Modal>
       )}
@@ -51,7 +52,7 @@ export default function RestaurantSearch() {
   );
 
   function closeModal() {
-    // setIsModalOpen(false);
+    setIsModalOpen(false);
   }
   function openModal() {
     setIsModalOpen(true);

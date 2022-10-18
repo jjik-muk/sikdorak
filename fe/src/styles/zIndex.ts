@@ -4,4 +4,7 @@ export const Z_INDEX = {
     CONTENTS: 100,
   },
   COMMON_HEADER: 0,
+  REVIEW_WRITE: {
+    HEADER: 10,
+  },
 };

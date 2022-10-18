@@ -19,6 +19,12 @@ export const MODAL = {
   },
 };
 
+export const REVIEW_WRITE = {
+  RESTAURANT_SEARCH_MODAL: {
+    WIDTH: 367,
+  },
+};
+
 export const DETAIL = {
   WRAP: {
     WIDTH_NO_IMG: 800,

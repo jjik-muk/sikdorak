@@ -55,3 +55,7 @@ export async function fetchDataThatNeedToLogin(path: string, { headers, method, 
     localStorage.setItem('accessToken', refreshResJson.data.accessToken);
   }
 }
+
+export function createErrorMessage(code: string, message: string) {
+  return `${code} : ${message}`;
+}

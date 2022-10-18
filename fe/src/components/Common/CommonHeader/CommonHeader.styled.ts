@@ -2,13 +2,14 @@ import { STYLE } from 'styles/style';
 import { Z_INDEX } from 'styles/zIndex';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
+import { COLOR } from 'styles/color';
 
 export const Wrap = styled.div`
   ${() => flexLayoutMixin('', 'center', 'center')};
   position: sticky;
   top: 0;
   padding: 10px 0 10px 0;
-  background-color: #fff;
+  background-color: ${COLOR.WHITE};
   z-index: ${Z_INDEX.COMMON_HEADER};
 `;
 
