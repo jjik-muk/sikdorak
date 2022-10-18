@@ -3,8 +3,9 @@ import { Z_INDEX } from 'constants/zIndex';
 import styled from 'styled-components';
 
 type ModalWrapperProps = {
-  width?: string;
-  height?: string;
+  width?: number;
+  height?: number;
+  fullWidth: boolean;
 };
 
 export const ModalWrapper = styled.div<ModalWrapperProps>`
@@ -12,8 +13,8 @@ export const ModalWrapper = styled.div<ModalWrapperProps>`
   z-index: ${Z_INDEX.MODAL.CONTENTS};
   background-color: #fff;
   border: 1px solid #000;
-  ${({ width }) => `width:${width}`};
-  ${({ height }) => `height:${height}`};
+  ${({ width, fullWidth }) => (fullWidth ? 'width: 100%' : `width: ${width}`)};
+  ${({ height }) => `height: ${height}`};
   overflow: auto;
   ${STYLE.BOX_CONTAINER}
 `;

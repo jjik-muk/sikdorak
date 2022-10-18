@@ -1,3 +1,4 @@
+import { COLOR } from 'constants/color';
 import { ICON } from 'constants/size';
 import { ReactComponent as Alarm } from 'assets/Alarm.svg';
 import { ReactComponent as DownArrow } from 'assets/DownArrow.svg';
@@ -15,7 +16,6 @@ import { ReactComponent as ShareArrow } from 'assets/ShareArrow.svg';
 import { ReactComponent as Star } from 'assets/Star.svg';
 import { ReactComponent as TalkBubble } from 'assets/TalkBubble.svg';
 import { ReactComponent as UpArrow } from 'assets/UpArrow.svg';
-import { COLOR } from 'constants/color';
 
 export const iconComponents = {
   Photo,

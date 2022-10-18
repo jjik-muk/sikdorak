@@ -70,7 +70,7 @@ function Map() {
               />
             )}
             {isModalOpen && (
-              <Modal>
+              <Modal fullWidth>
                 {searchResults?.data?.map(({ id, nickname, profileImage }) => (
                   <UserSearchResultList id={id} nickname={nickname} profileImage={profileImage} />
                 ))}

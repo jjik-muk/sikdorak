@@ -9,7 +9,7 @@ import { Wrap } from './RestaurantSearch.styled';
 export default function RestaurantSearch() {
   const [reviewWriteContext] = useReviewWrite();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { inputValue, searchResults, setInputValue, debouncedSearch } = useSearchBar();
+  const { inputValue, setInputValue, searchResults, debouncedSearch } = useSearchBar();
 
   useEffect(() => {
     setInputValue(reviewWriteContext.store.storeName);
@@ -43,7 +43,7 @@ export default function RestaurantSearch() {
         onBlur={closeModal}
       />
       {isModalOpen && (
-        <Modal width="367px">
+        <Modal width={367} height={200}>
           <SearchResult searchResults={searchResults} inputValue={inputValue} setInputValue={setInputValue} closeModal={closeModal} />
         </Modal>
       )}
@@ -51,7 +51,7 @@ export default function RestaurantSearch() {
   );
 
   function closeModal() {
-    setIsModalOpen(false);
+    // setIsModalOpen(false);
   }
   function openModal() {
     setIsModalOpen(true);
