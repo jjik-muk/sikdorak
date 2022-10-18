@@ -10,7 +10,9 @@ import ReviewList from 'pages/ReviewList/ReviewList';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import StoreDetail from 'pages/StoreDetail/StoreDetail';
 import UserDetail from 'pages/UserDetail/UserDetail';
+import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { accountStore } from 'stores/AccountStore';
 import GlobalStyle from 'styles/GlobalStyle';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -18,6 +20,10 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 function App() {
+  useEffect(() => {
+    accountStore.setMyInfo();
+  }, []);
+
   return (
     <ReviewsProvider>
       <ReviewDetailProvider>
