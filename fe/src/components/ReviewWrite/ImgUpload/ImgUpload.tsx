@@ -23,7 +23,6 @@ function ImgUpload({ setSelectedImg }: ImgUploadProps) {
     const allowedExtensions = ['png', 'jpg', 'jpeg'];
 
     if (!allowedExtensions.includes(extension)) {
-      // TODO: alert 에서 유저 알림 레이아웃으로 변경
       alert('허용된 확장자(png, jpg, jpeg)가 아닙니다.');
       return;
     }

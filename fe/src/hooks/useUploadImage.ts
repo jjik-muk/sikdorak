@@ -9,7 +9,7 @@ function useUploadImage() {
       method: 'PUT',
       bodyData: { extension },
     });
-    return res.data.presignedUrl;
+    return res.data.preSignedUrl;
   }
 
   async function uploadImageToS3(presigendUrl, image) {
