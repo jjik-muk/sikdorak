@@ -22,6 +22,7 @@ function StoreDetail() {
   const [storeInfo, setStoreInfo] = useState(INIT_STATE_STORE_INFO);
   const { storeName, addressName, contactNumber, reviewCounts, reviewScoreAverage } = storeInfo;
   const { reviews, handleScroll, dispatchReviews, fetchNextReviews, afterParam } = useReviews();
+  const REVIEW_SIZE = 5;
   useAuth();
 
   useEffect(() => {
@@ -34,13 +35,14 @@ function StoreDetail() {
   }, [targetId]);
 
   useEffect(() => {
-    fetchNextReviews(getUrl(afterParam, 5));
-  });
+    const INIT_AFTER_PARAM = 0;
+    fetchNextReviews(getUrl(INIT_AFTER_PARAM, REVIEW_SIZE, targetId));
+  }, [fetchNextReviews, targetId]);
 
   return (
     <Wrap
       onScroll={(e) => {
-        handleScroll(e, getUrl(afterParam, 5));
+        handleScroll(e, getUrl(afterParam, REVIEW_SIZE, targetId));
       }}
     >
       <CommonHeader dispatchReviews={dispatchReviews} />
@@ -50,10 +52,10 @@ function StoreDetail() {
       </ContentsWrap>
     </Wrap>
   );
+}
 
-  function getUrl(after, reviewSize) {
-    return `api/stores/${targetId}/reviews?after=${after}&size=${reviewSize}`;
-  }
+function getUrl(after, reviewSize, targetId) {
+  return `api/stores/${targetId}/reviews?after=${after}&size=${reviewSize}`;
 }
 
 export default StoreDetail;
