@@ -23,7 +23,7 @@ function useReviews() {
     dispatchReviews({ type: 'ADD_REVIEWS', reviews: nextReviews });
     setAfterParam(nextAfterParam);
 
-    const isLastPage = Boolean(res.data.page.last);
+    const isLastPage = res.data.page.last;
     if (isLastPage) {
       setHasNextPage(false);
     }

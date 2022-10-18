@@ -1,3 +1,7 @@
+import { API_PATH } from 'constants/apiPath';
+import { MESSAGE } from 'constants/message';
+import { ROUTE_PATH } from 'constants/routePath';
+import { FAILURE_STATUS_CODES } from 'constants/statusCode';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
@@ -7,22 +11,23 @@ function useAuth() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    moveToLoginPageIfExpiredAccessToken();
+    moveToLoginPageIfNotValidateAccessToken();
 
-    async function moveToLoginPageIfExpiredAccessToken() {
-      if (!accountStore.id) {
+    async function moveToLoginPageIfNotValidateAccessToken() {
+      const isLogin = accountStore.id;
+      if (!isLogin) {
         return;
       }
-      const isExpiredAccessToken = await validateAccessToken();
-      if (isExpiredAccessToken) {
-        console.log('?!!!');
-        navigate('/login');
+      if (!validateAccessToken()) {
+        alert(MESSAGE.ERROR.EXPIRED_ACCESS_TOKEN);
+        navigate(ROUTE_PATH.LOGIN);
       }
-    }
 
-    async function validateAccessToken() {
-      const res = await fetchDataThatNeedToLogin('api/users/me');
-      return res.code === 'F-O003' || res.code === 'F-O004';
+      async function validateAccessToken() {
+        const { code } = await fetchDataThatNeedToLogin(API_PATH.USER.MY_PROFILE);
+        const isFailure = FAILURE_STATUS_CODES.includes(code);
+        return !isFailure;
+      }
     }
   }, [navigate]);
 }

@@ -36,10 +36,8 @@ function TagItem({ idx, value }: any) {
 
 const Tags = styled.div`
   display: inline-block;
-
   width: 300px;
   height: fit-content;
-
   position: relative;
   vertical-align: top;
 `;

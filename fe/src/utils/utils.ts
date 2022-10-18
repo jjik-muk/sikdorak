@@ -32,10 +32,7 @@ export async function fetchData(url: string, { headers, method, bodyData }: any 
   }
 }
 
-export async function fetchDataThatNeedToLogin(
-  path: string,
-  { headers, method, bodyData }: any = { header: '', method: 'GET' },
-) {
+export async function fetchDataThatNeedToLogin(path: string, { headers, method, bodyData }: any = { header: '', method: 'GET' }) {
   const accessToken = localStorage.getItem('accessToken');
   const defaultHeaders = {
     'Content-Type': 'application/json; charset=utf-8',
@@ -47,7 +44,7 @@ export async function fetchDataThatNeedToLogin(
   const res = await fetch(`${process.env.REACT_APP_BE_SERVER_URL}/${path}`, fetchParams);
   const resJson = await res.json();
 
-  if (resJson.code === STATUS_CODE.EXPIRED_ACCESS_TOKEN) {
+  if (resJson.code === STATUS_CODE.FAILURE.EXPIRED_ACCESS_TOKEN) {
     reissueAccessToken();
   }
   return resJson;
@@ -57,4 +54,8 @@ export async function fetchDataThatNeedToLogin(
     const refreshResJson = await refreshRes.json();
     localStorage.setItem('accessToken', refreshResJson.data.accessToken);
   }
+}
+
+export function createErrorMessage(code: string, message: string) {
+  return `${code} : ${message}`;
 }

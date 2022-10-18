@@ -1,5 +1,6 @@
-import { STYLE } from 'constants/style';
+import { STYLE } from 'styles/style';
 import styled from 'styled-components';
+import { COLOR } from 'styles/color';
 
 export const KakaoMap = styled.div`
   width: 100%;
@@ -23,11 +24,11 @@ export const overlayStyle = `
   position: relative;
   padding: 10px;
   height: 40px;
-  background-color: #fff;
+  background-color: ${COLOR.WHITE};
   border-radius: 50%;
-  font-weight:700;
+  font-weight: 700;
   font-size: 20px;
   background-color: black;
-  color: #fff;
+  color: ${COLOR.WHITE};
   ${STYLE.BOX_CONTAINER}
 `;

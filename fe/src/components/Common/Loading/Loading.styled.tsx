@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { COLOR } from 'styles/color';
 
 export const Wrap = styled.div`
   width: 100vw;
@@ -21,7 +22,7 @@ export const Spinner = styled.div`
   width: 100px;
   height: 100px;
   border: 10px solid grey;
-  border-top-color: #fff;
+  border-top-color: ${COLOR.WHITE};
   border-radius: 50%;
   animation: ${rotate} 1s linear infinite;
 `;

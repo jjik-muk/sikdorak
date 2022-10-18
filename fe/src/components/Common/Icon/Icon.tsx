@@ -1,4 +1,5 @@
-import { ICON } from 'constants/size';
+import { COLOR } from 'styles/color';
+import { ICON } from 'styles/size';
 import { ReactComponent as Alarm } from 'assets/Alarm.svg';
 import { ReactComponent as DownArrow } from 'assets/DownArrow.svg';
 import { ReactComponent as Heart } from 'assets/Heart.svg';
@@ -35,13 +36,11 @@ export const iconComponents = {
   Phone,
 };
 
-function Icon({ icon, width = ICON.MEDIUM, height = ICON.MEDIUM, fill = 'none', stroke = '#000', onClick }: IconProps) {
+function Icon({ icon, width = ICON.MEDIUM, height = ICON.MEDIUM, fill = 'none', stroke = COLOR.BLACK, onClick }: IconProps) {
   const SelectedIcon = iconComponents[icon];
-
   if (!SelectedIcon) {
     throw new Error(`${icon} 컴포넌트를 찾을 수 없습니다. `);
   }
-
   return <SelectedIcon width={width} height={height} fill={fill} stroke={stroke} onClick={onClick} />;
 }
 

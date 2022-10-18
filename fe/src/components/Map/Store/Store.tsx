@@ -1,4 +1,4 @@
-import { STYLE } from 'constants/style';
+import { STYLE } from 'styles/style';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';

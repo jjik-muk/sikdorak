@@ -1,7 +1,8 @@
-import { STYLE } from 'constants/style';
-import { Z_INDEX } from 'constants/zIndex';
+import { STYLE } from 'styles/style';
+import { Z_INDEX } from 'styles/zIndex';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
+import { COLOR } from 'styles/color';
 
 export const Modal = styled.div`
   position: fixed;
@@ -16,7 +17,7 @@ export const Background = styled.div`
   position: relative;
   width: fit-content;
   max-height: 800px;
-  background-color: #fff;
+  background-color: ${COLOR.WHITE};
   ${STYLE.BOX_CONTAINER}
   z-index: ${Z_INDEX.MODAL.CONTENTS};
 `;

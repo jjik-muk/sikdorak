@@ -6,13 +6,14 @@ import { Wrap } from './Textarea.styled';
 function Textarea() {
   const [reviewWriteContext, dispatchReviewWriteState] = useReviewWrite();
   const [inputValue, setInputValue] = useState(reviewWriteContext.content);
+  const MIN_ROWS = 5;
 
   return (
     <Wrap>
       <TextField
         fullWidth
         multiline
-        minRows={5}
+        minRows={MIN_ROWS}
         id="review-content-input"
         label="리뷰 내용 입력"
         variant="outlined"

@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { CompanyName, Picture, Wrap, Region } from './RestaurantProfile.styled';
+import { CompanyName, Wrap, Region } from './RestaurantProfile.styled';
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+import { COLOR } from 'styles/color';
+import { ICON } from 'styles/size';
 
-const DEFAULT_IMG_URL = 'https://flyclipart.com/thumb2/profile-user-png-icon-free-download-196388.png';
-
-function RestaurantProfile({ imgUrl = DEFAULT_IMG_URL, company, region, storeId }: RestaurantProfileProps) {
+function RestaurantProfile({ company, region, storeId }: RestaurantProfileProps) {
   const navigate = useNavigate();
 
   return (
@@ -13,7 +14,7 @@ function RestaurantProfile({ imgUrl = DEFAULT_IMG_URL, company, region, storeId 
         navigate(`/store/${storeId}`);
       }}
     >
-      <Picture src={imgUrl} />
+      <RestaurantMenuIcon style={{ border: `1px solid ${COLOR.GREY[100]}`, borderRadius: '50%', width: `${ICON.MEDIUM}px`, height: `${ICON.MEDIUM}px` }} />
       <div>
         <CompanyName>{company}</CompanyName>
         <Region>{region}</Region>
@@ -25,7 +26,6 @@ function RestaurantProfile({ imgUrl = DEFAULT_IMG_URL, company, region, storeId 
 export default RestaurantProfile;
 
 type RestaurantProfileProps = {
-  imgUrl?: string;
   company: string;
   region: string;
   storeId?: number;

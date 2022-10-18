@@ -12,6 +12,7 @@ import useSearchBar from 'hooks/useSearchBar';
 import useStores from 'hooks/useStores';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { createKey } from 'utils/utils';
 import { ContentArea, FeedsArea, MapArea } from './Map.styled';
 
 const TABS = [{ label: '가게 목록' }, { label: '유저 리뷰' }];
@@ -44,12 +45,14 @@ function Map() {
       <ContentArea>
         <Tabs orientation="vertical" variant="scrollable" value={activeTabIdx} sx={{ borderRight: 1, borderColor: 'divider' }}>
           {TABS.map(({ label }, idx) => (
-            <Tab
-              label={label}
-              onClick={() => {
-                setActiveTabIdx(idx);
-              }}
-            />
+            <div key={createKey(label, idx)}>
+              <Tab
+                label={label}
+                onClick={() => {
+                  setActiveTabIdx(idx);
+                }}
+              />
+            </div>
           ))}
         </Tabs>
         <FeedsArea>
@@ -67,7 +70,7 @@ function Map() {
               />
             )}
             {isModalOpen && (
-              <Modal>
+              <Modal fullWidth>
                 {searchResults?.data?.map(({ id, nickname, profileImage }) => (
                   <UserSearchResultList id={id} nickname={nickname} profileImage={profileImage} />
                 ))}

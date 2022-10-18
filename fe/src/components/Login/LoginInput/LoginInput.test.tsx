@@ -1,4 +1,4 @@
-import TEXT from 'constants/text';
+import { TEXT } from 'constants/text';
 import { render, screen } from '@testing-library/react';
 import LoginInput from './LoginInput';
 

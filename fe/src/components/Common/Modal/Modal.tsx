@@ -1,15 +1,17 @@
+import { MODAL } from 'styles/size';
 import { ModalWrapper } from './Modal.styled';
 
-type ModalProps = {
-  children: React.ReactNode;
-  width?: string;
-  height?: string;
-};
-
-export default function Modal({ children, width = '100%', height = '200px' }: ModalProps) {
+export default function Modal({ children, width, height = MODAL.DEFAULT.HEIGHT, fullWidth }: ModalProps) {
   return (
-    <ModalWrapper width={width} height={height}>
+    <ModalWrapper width={width} height={height} fullWidth={fullWidth}>
       {children}
     </ModalWrapper>
   );
 }
+
+type ModalProps = {
+  children: React.ReactNode;
+  width?: number;
+  height?: number;
+  fullWidth?: boolean;
+};

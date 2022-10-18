@@ -1,6 +1,6 @@
 import { STATUS_CODE } from 'constants/statusCode';
 import { action, makeObservable, observable, runInAction } from 'mobx';
-import { fetchDataThatNeedToLogin } from 'utils/utils';
+import { createErrorMessage, fetchDataThatNeedToLogin } from 'utils/utils';
 
 class AccountStore {
   @observable
@@ -42,11 +42,12 @@ class AccountStore {
       credentials: 'include',
     });
     const resJson = await res.json();
-    const { code, data } = resJson;
+    const { code, data, message } = resJson;
 
-    if (code === STATUS_CODE.FAIL_COMMUNICATION_WITH_OAUTH_SERVER) {
-      alert('OAuth 서버와의 통신이 원할하지 않습니다.');
-      throw new Error('OAuth 서버와의 통신이 원할하지 않습니다.');
+    if (code === STATUS_CODE.FAILURE.COMMUNICATION_WITH_OAUTH_SERVER) {
+      const errorMessage = createErrorMessage(code, message);
+      alert(errorMessage);
+      throw new Error(errorMessage);
     }
 
     this.accessToken = data.accessToken;

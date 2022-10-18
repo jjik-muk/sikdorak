@@ -6,6 +6,7 @@ import { debounce } from 'utils/utils';
 function TagInput() {
   const [value, setValue] = useState('');
   const [, dispatchReviewWriteState] = useReviewWrite();
+  const DELAY_MS = 100;
   return (
     <TextField
       id="tag-input"
@@ -14,7 +15,7 @@ function TagInput() {
       fullWidth
       value={value}
       onChange={(e) => setValue(e.target.value)}
-      onKeyDown={debounce(handleTagAddition, 100)}
+      onKeyDown={debounce(handleTagAddition, DELAY_MS)}
     />
   );
 

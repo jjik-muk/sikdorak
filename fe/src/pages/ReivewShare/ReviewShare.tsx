@@ -11,7 +11,6 @@ function ReviewShare() {
   const { pathname } = useLocation();
   const Id = Number(pathname.split('/').at(-1));
   const [review, setReview] = useState(INIT_STATE);
-  const { images, like, reviewContent, reviewId, reviewScore, store, user, tags } = review;
 
   useEffect(() => {
     fetchReview();
@@ -26,7 +25,7 @@ function ReviewShare() {
     <Wrap>
       <CommonHeader />
       <FeedWrap>
-        <Feed images={images} like={like} reviewContent={reviewContent} reviewId={reviewId} reviewScore={reviewScore} store={store} user={user} tags={tags} />
+        <Feed review={review} />
       </FeedWrap>
     </Wrap>
   );

@@ -1,6 +1,8 @@
-import { STYLE } from 'constants/style';
+import { STYLE } from 'styles/style';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';
+import { COLOR } from 'styles/color';
+import { Z_INDEX } from 'styles/zIndex';
 
 export const Wrap = styled.div`
   display: flex;
@@ -51,10 +53,6 @@ export const InputWrap = styled.div`
   ::-webkit-scrollbar {
     width: 0;
   }
-
-  /* > div:not(:last-child) {
-    border-bottom: 1px solid grey;
-  } */
 `;
 
 export const PostBtnWrap = styled.div`
@@ -73,6 +71,6 @@ export const Header = styled.div`
   width: 390px;
   padding: 12px;
   position: fixed;
-  background-color: #fff;
-  z-index: 10;
+  background-color: ${COLOR.WHITE};
+  z-index: ${Z_INDEX.REVIEW_WRITE.HEADER};
 `;

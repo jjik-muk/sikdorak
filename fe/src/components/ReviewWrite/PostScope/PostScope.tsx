@@ -4,28 +4,24 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
+import { TEXT } from 'constants/text';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { useState } from 'react';
 import { Wrap } from './PostScope.styled';
-
-const scope = {
-  public: '전체 공개합니다.',
-  private: '친구에게만 공개합니다.',
-};
 
 export default function PostScope() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [reviewWriteState, dispatchReviewWriteState] = useReviewWrite();
 
   const { scope: currentScope } = reviewWriteState;
-  const isPublicScope = currentScope === 'public';
+  const isPublicScope = currentScope === 'PUBLIC';
 
   const handleSetModal = () => {
     setIsOpenModal(!isOpenModal);
   };
 
   const handleSetScope = () => {
-    const nextScope = isPublicScope ? 'private' : 'public';
+    const nextScope = isPublicScope ? 'PRIVATE' : 'PUBLIC';
     dispatchReviewWriteState({ type: 'SET_SCOPE', scope: nextScope });
   };
   return (
@@ -35,7 +31,7 @@ export default function PostScope() {
           <Typography>게시물 공개 범위</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography>{scope[currentScope]}</Typography>
+          <Typography>{TEXT.SCOPE[currentScope]}</Typography>
           <Switch onChange={handleSetScope} />
         </AccordionDetails>
       </Accordion>

@@ -1,6 +1,5 @@
-import { DETAIL } from 'constants/size';
+import { DETAIL } from 'styles/size';
 import { Button } from '@mui/material';
-import { FeedProps } from 'components/Common/Feed/Feed';
 import FeedCard from 'components/Common/FeedCard/FeedCard';
 import Carousel from 'components/ReviewDetail/Carousel/Carousel';
 import Comment from 'components/ReviewDetail/Comment/Comment';
@@ -12,7 +11,8 @@ import { accountStore } from 'stores/AccountStore';
 import { fetchDataThatNeedToLogin } from 'utils/utils';
 import { ContentsWrap, Wrap } from './ReviewDetail.styled';
 
-function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, user, isActiveHeart, likeCnt, postLike, tags }: ReviewDetailProps) {
+function ReviewDetail({ review, isActiveHeart, likeCnt, postLike, postUnlike }: any) {
+  const { images, reviewId, user, tags } = review;
   const commentRef = useRef<HTMLInputElement>(null);
   const hasPicture = images.length > 0;
   const wrapWidth = hasPicture ? DETAIL.WRAP.WIDTH_WITH_IMG : DETAIL.WRAP.WIDTH_NO_IMG;
@@ -31,18 +31,7 @@ function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, use
     <Wrap>
       {hasPicture && <Carousel urls={images} />}
       <ContentsWrap wrapWidth={wrapWidth}>
-        <FeedCard
-          images={images}
-          reviewContent={reviewContent}
-          reviewId={reviewId}
-          reviewScore={reviewScore}
-          store={store}
-          user={user}
-          isActiveHeart={isActiveHeart}
-          likeCnt={likeCnt}
-          postLike={postLike}
-          isUsedModal
-        />
+        <FeedCard review={review} isActiveHeart={isActiveHeart} likeCnt={likeCnt} postLike={postLike} postUnlike={postUnlike} isUsedModal />
         <div style={{ padding: '0 10px 10px 10px' }}>
           {Boolean(tags.length) && <TagList tags={tags} imgUrl={user.userProfileImage} />}
           {comments && comments.map(({ author, content, id }) => <Comment key={id} authorId={author.id} title={author.nickname} content={content} imgUrl={author.profileImage} />)}
@@ -66,9 +55,3 @@ function ReviewDetail({ images, reviewContent, reviewId, reviewScore, store, use
 }
 
 export default ReviewDetail;
-
-type ReviewDetailProps = FeedProps & {
-  isActiveHeart: boolean;
-  likeCnt: number;
-  postLike: () => void;
-};

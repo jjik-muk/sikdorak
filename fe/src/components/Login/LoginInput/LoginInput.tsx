@@ -1,5 +1,5 @@
-import TEXT from "constants/text";
-import { Wrap } from "./LoginInput.styled";
+import { TEXT } from 'constants/text';
+import { Wrap } from './LoginInput.styled';
 
 const { ID, PASSWORD } = TEXT.INPUT;
 
@@ -8,10 +8,10 @@ function LoginInput({ type }: { type: string }) {
 }
 
 function getLoginInputType(type: string) {
-  if (type === ID) return "text";
-  if (type === PASSWORD) return "password";
+  if (type === ID) return 'text';
+  if (type === PASSWORD) return 'password';
 
-  throw new Error("로그인 인풋 타입이 올바르지 않습니다.");
+  throw new Error('로그인 인풋 타입이 올바르지 않습니다.');
 }
 
 export default LoginInput;

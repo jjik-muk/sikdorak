@@ -7,6 +7,7 @@ import SelectDay from 'components/ReviewWrite/SelectDay/SelectDay';
 import TagContainer from 'components/ReviewWrite/Tag/TagContainer/TagContainer';
 import Textarea from 'components/ReviewWrite/Textarea/Textarea';
 import WriteRating from 'components/ReviewWrite/WriteRating/WriteRating';
+import { TEXT } from 'constants/text';
 import useUploadImage from 'hooks/useUploadImage';
 import { accountStore } from 'stores/AccountStore';
 import { Content, Header, Img, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
@@ -20,7 +21,7 @@ function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps)
       <Title>리뷰 작성하기</Title>
       <Content>
         <ImgWrap>
-          {selectedImg ? <Img width="100%" height="100%" src={URL.createObjectURL(selectedImg)} alt="업로드 사진" /> : <ImgUpload setSelectedImg={setSelectedImg} />}
+          {selectedImg ? <Img width="100%" height="100%" src={URL.createObjectURL(selectedImg)} alt={TEXT.ALT.PHOTOGRAPH} /> : <ImgUpload setSelectedImg={setSelectedImg} />}
         </ImgWrap>
         <InputWrap>
           <Header>

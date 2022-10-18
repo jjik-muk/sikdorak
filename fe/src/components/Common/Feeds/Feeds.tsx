@@ -1,4 +1,4 @@
-import Feed, { FeedProps } from 'components/Common/Feed/Feed';
+import Feed, { ReviewType } from 'components/Common/Feed/Feed';
 import GuideText from '../GuideText/GuideText';
 import { Wrap } from './Feeds.styled';
 
@@ -10,9 +10,9 @@ function Feeds({ reviews }: FeedsProps) {
   return (
     <Wrap>
       {hasReviews ? (
-        reviews.map(({ images, like, reviewContent, reviewId, reviewScore, store, user, tags }) => (
-          <div key={reviewId}>
-            <Feed images={images} like={like} reviewContent={reviewContent} reviewId={reviewId} reviewScore={reviewScore} store={store} user={user} tags={tags} />
+        reviews.map((review) => (
+          <div key={review.reviewId}>
+            <Feed review={review} />
           </div>
         ))
       ) : (
@@ -25,5 +25,5 @@ function Feeds({ reviews }: FeedsProps) {
 export default Feeds;
 
 type FeedsProps = {
-  reviews: FeedProps[];
+  reviews: ReviewType[];
 };

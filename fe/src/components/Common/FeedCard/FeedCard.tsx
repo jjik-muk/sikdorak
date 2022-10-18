@@ -1,3 +1,5 @@
+import { MESSAGE } from 'constants/message';
+import { FEED } from 'styles/size';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import ShareIcon from '@mui/icons-material/Share';
@@ -11,7 +13,8 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { accountStore } from 'stores/AccountStore';
 
-const FeedCard = observer(({ images, reviewContent, reviewId, reviewScore, store, user, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal }: any) => {
+const FeedCard = observer(({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal, postUnlike }: any) => {
+  const { user, images, reviewId, reviewScore, reviewContent, store } = review;
   const [copyText, setCopyText] = useState('');
   const myUserId = accountStore.id;
   const isMyFeed = user?.userId === myUserId;
@@ -24,12 +27,12 @@ const FeedCard = observer(({ images, reviewContent, reviewId, reviewScore, store
         avatar={<UserProfile nickname={user?.userNickname} imgUrl={user?.userProfileImage} userId={user?.userId} />}
         action={<KebabMenu reviewId={reviewId} isMyFeed={isMyFeed} />}
       />
-      {hasPicture && !isUsedModal && <CardMedia component="img" height="194" image={images[0]} alt="User profile" />}
+      {hasPicture && !isUsedModal && <CardMedia component="img" height={FEED.IMG.HEIGHT} image={images[0]} alt="User profile" />}
       <Rating rating={reviewScore} />
       <CardContent>{reviewContent}</CardContent>
       <CompnayProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
       <CardActions>
-        <IconButton aria-label="like" onClick={handleLike}>
+        <IconButton aria-label="like" onClick={isActiveHeart ? handleUnlike : handleLike}>
           <FavoriteIcon color={isActiveHeart ? 'warning' : 'action'} />
           <Typography>{likeCnt}</Typography>
         </IconButton>
@@ -50,12 +53,17 @@ const FeedCard = observer(({ images, reviewContent, reviewId, reviewScore, store
     e.stopPropagation();
   }
 
+  function handleUnlike(e) {
+    postUnlike();
+    e.stopPropagation();
+  }
+
   function handleCopyURL(e) {
     const { clipboard } = navigator;
     const hostUrl = window.location.href.replace(location.pathname, '');
     setCopyText(`${hostUrl}/review/${reviewId}`);
     clipboard.writeText(copyText);
-    alert('공유할 리뷰 페이지가 복사되었습니다.');
+    alert(MESSAGE.SUCCESS.SHARE_REVIEW);
     e.stopPropagation();
   }
 });

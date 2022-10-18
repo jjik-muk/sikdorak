@@ -1,5 +1,6 @@
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import styled from 'styled-components';
+import { COLOR } from 'styles/color';
 
 function SearchResultList({ placeId, storeName, address, x, y, inputValue, setInputValue, closeModal }: any) {
   const [, dispatchReviewWrite] = useReviewWrite();
@@ -25,9 +26,7 @@ function StoreName({ storeName, inputValue }: any) {
   if (isEqualName) {
     return <Hightlight>{storeName}</Hightlight>;
   }
-  return storeName
-    .split(inputValue)
-    .map((word) => (word ? <span>{word}</span> : <Hightlight>{inputValue}</Hightlight>));
+  return storeName.split(inputValue).map((word) => (word ? <span>{word}</span> : <Hightlight>{inputValue}</Hightlight>));
 }
 
 export default SearchResultList;
@@ -38,7 +37,7 @@ const Wrap = styled.div`
   border-radius: 10px;
 
   :hover {
-    background-color: #bdc3c7;
+    background-color: ${COLOR.GREY[500]};
   }
 `;
 
