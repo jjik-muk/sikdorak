@@ -24,6 +24,10 @@ export const DETAIL = {
     WIDTH_NO_IMG: 800,
     WIDTH_WITH_IMG: 400,
   },
+  IMG: {
+    WIDTH: 600,
+    HEIGHT: 600,
+  },
 };
 
 export const STORE_DETAIL = {

@@ -1,6 +1,10 @@
 import { useId, useState } from 'react';
+import { DETAIL } from 'styles/size';
 import { createKey } from 'utils/utils';
+import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
+import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
 import { Btns, Container, PrevBtn, NextBtn, Wrap } from './Carousel.styled';
+import { TEXT } from 'constants/text';
 
 function Carousel({ urls }: { urls: string[] }) {
   const [idx, setIdx] = useState(0);
@@ -14,10 +18,10 @@ function Carousel({ urls }: { urls: string[] }) {
     <Wrap>
       <Btns>
         <PrevBtn onClick={handlePrevBtn} disabled={isMoving || isFirstIdx}>
-          {'<'}
+          <KeyboardArrowLeftOutlinedIcon />
         </PrevBtn>
         <NextBtn onClick={handleNextBtn} disabled={isMoving || isLastIdx}>
-          {'>'}
+          <KeyboardArrowRightOutlinedIcon />
         </NextBtn>
       </Btns>
       <Container
@@ -26,10 +30,9 @@ function Carousel({ urls }: { urls: string[] }) {
           setIsMoving(false);
         }}
       >
-        {urls.map((url, i) => {
-          const PICTURE_SIZE = 600;
-          return <img key={createKey(id, i)} width={PICTURE_SIZE} height={PICTURE_SIZE} src={url} alt="food" />;
-        })}
+        {urls.map((url, i) => (
+          <img key={createKey(id, i)} width={DETAIL.IMG.WIDTH} height={DETAIL.IMG.HEIGHT} src={url} alt={TEXT.ALT.PHOTOGRAPH} />
+        ))}
       </Container>
     </Wrap>
   );

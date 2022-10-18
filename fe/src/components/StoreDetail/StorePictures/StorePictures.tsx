@@ -11,11 +11,11 @@ function StorePictures() {
   return (
     <PictureWrap>
       <div>
-        <img src={firstImg} alt={TEXT.ALT.FOOD} width={STORE_DETAIL.IMG.LARGE} height={STORE_DETAIL.IMG.LARGE} />
+        <img src={firstImg} alt={TEXT.ALT.PHOTOGRAPH} width={STORE_DETAIL.IMG.LARGE} height={STORE_DETAIL.IMG.LARGE} />
       </div>
       <OtherPicture>
         {otherImg.map((picture) => (
-          <img src={picture} alt={TEXT.ALT.FOOD} width={STORE_DETAIL.IMG.SMALL} height={STORE_DETAIL.IMG.SMALL} />
+          <img src={picture} alt={TEXT.ALT.PHOTOGRAPH} width={STORE_DETAIL.IMG.SMALL} height={STORE_DETAIL.IMG.SMALL} />
         ))}
       </OtherPicture>
       <MoreDim />

@@ -8,6 +8,6 @@ export const TEXT = {
     PASSWORD: '비밀번호',
   },
   ALT: {
-    FOOD: '음식',
+    PHOTOGRAPH: '유저가 업로드한 음식 또는 가게 사진',
   },
 };

@@ -25,7 +25,7 @@ export const overlayStyle = `
   height: 40px;
   background-color: #fff;
   border-radius: 50%;
-  font-weight:700;
+  font-weight: 700;
   font-size: 20px;
   background-color: black;
   color: #fff;
