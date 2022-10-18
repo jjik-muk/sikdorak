@@ -1,18 +1,18 @@
 import Icon from 'components/Common/Icon/Icon';
 import { useId } from 'react';
+import { COLOR } from 'styles/color';
+import { ICON } from 'styles/size';
 import { createKey } from 'utils/utils';
 import { Wrap } from './Rating.styled';
 
 function Rating({ rating }: TotalRatingProps) {
   const yellowStarLen = rating;
   const greyStarLen = 5 - rating;
-  const YELLOW = '#f1c40f';
-  const GREY = '#bdc3c7';
 
   return (
     <Wrap>
-      <Star length={yellowStarLen} color={YELLOW} />
-      <Star length={greyStarLen} color={GREY} />
+      <Star length={yellowStarLen} color={COLOR.YELLOW} />
+      <Star length={greyStarLen} color={COLOR.GREY[500]} />
     </Wrap>
   );
 }
@@ -22,8 +22,8 @@ function Star({ length, color }: StarProps) {
 
   return (
     <>
-      {Array.from({ length }).map((_, i) => (
-        <Icon key={createKey(id, i)} icon="Star" stroke="#fff" fill={color} width={15} height={15} />
+      {Array.from({ length }).map((_, idx) => (
+        <Icon key={createKey(id, idx)} icon="Star" stroke={COLOR.WHITE} fill={color} width={ICON.SMALL} height={ICON.SMALL} />
       ))}
     </>
   );

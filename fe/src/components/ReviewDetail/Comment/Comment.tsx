@@ -1,20 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { Wrap, Picture, Title, Content, ContentWrapper, CommentWrapper } from './Comment.styled';
 
-const DEFAULT_IMG_URL = 'https://flyclipart.com/thumb2/profile-user-png-icon-free-download-196388.png';
-
-function Comment({ imgUrl = DEFAULT_IMG_URL, title, content, authorId }: CommentProps) {
+function Comment({ imgUrl, title, content, authorId }: CommentProps) {
   const navigate = useNavigate();
-  // const [isActiveAdditionComment, setIsActiveAdditionComment] = useState(false);
-  // const [commentCnt, setCommentCnt] = useState(0);
-
-  // const clickComment = (type?: string) => {
-  //   if (type === 'ADD') {
-  //     setCommentCnt(commentCnt + 1);
-  //     return;
-  //   }
-  //   setCommentCnt(commentCnt - 1);
-  // };
 
   return (
     <Wrap>
@@ -35,25 +23,9 @@ function Comment({ imgUrl = DEFAULT_IMG_URL, title, content, authorId }: Comment
           </Title>
           <Content>{content}</Content>
         </ContentWrapper>
-        {/* <ButtonWrapper>
-          {commentCnt ? (
-            <Button onClick={() => clickComment()}>{commentCnt} 좋아요</Button>
-          ) : (
-            <Button onClick={() => clickComment('ADD')}>좋아요</Button>
-          )}
-          <Button onClick={handleAdditionComment}>댓글 추가</Button>
-        </ButtonWrapper> */}
       </CommentWrapper>
     </Wrap>
   );
-
-  // function handleAdditionComment() {
-  //   if (isActiveAdditionComment) {
-  //     setIsActiveAdditionComment(false);
-  //     return;
-  //   }
-  //   setIsActiveAdditionComment(true);
-  // }
 }
 
 export default Comment;

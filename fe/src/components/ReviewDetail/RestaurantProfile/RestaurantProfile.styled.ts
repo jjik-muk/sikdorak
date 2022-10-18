@@ -10,12 +10,6 @@ export const Wrap = styled.div`
   cursor: pointer;
 `;
 
-// TODO: width, height 매직 넘버 추출
-export const Picture = styled.img`
-  width: 42px;
-  height: 42px;
-`;
-
 export const CompanyName = styled.div`
   display: flex;
   align-items: center;
