@@ -7,43 +7,19 @@ import { useRef } from 'react';
 import styled from 'styled-components';
 import FeedCard from '../FeedCard/FeedCard';
 
-function Feed({ images, like = { count: 0, userLikeStatus: false }, reviewContent, reviewId, reviewScore, store, user, tags }: FeedProps) {
+function Feed({ review }: { review: ReviewType }) {
   const [isClikedFeed, toggleIsClikedFeed] = useToggle(false);
+  const { like, reviewId } = review;
   const { isActiveHeart, likeCnt, postLike, postUnlike } = useLike({ like, reviewId });
   const reviewDetailModalRef = useRef(null);
   useOutsideClick(reviewDetailModalRef, toggleIsClikedFeed);
 
   return (
     <Wrap>
-      <FeedCard
-        images={images}
-        reviewContent={reviewContent}
-        reviewId={reviewId}
-        reviewScore={reviewScore}
-        store={store}
-        user={user}
-        isActiveHeart={isActiveHeart}
-        likeCnt={likeCnt}
-        postLike={postLike}
-        postUnlike={postUnlike}
-        toggleIsClikedFeed={toggleIsClikedFeed}
-      />
+      <FeedCard review={review} isActiveHeart={isActiveHeart} likeCnt={likeCnt} postLike={postLike} postUnlike={postUnlike} toggleIsClikedFeed={toggleIsClikedFeed} />
       {isClikedFeed && (
         <Portal selector="#portal" ref={reviewDetailModalRef}>
-          <ReviewDetail
-            images={images}
-            like={like}
-            reviewContent={reviewContent}
-            reviewId={reviewId}
-            reviewScore={reviewScore}
-            store={store}
-            user={user}
-            isActiveHeart={isActiveHeart}
-            likeCnt={likeCnt}
-            postLike={postLike}
-            postUnlike={postUnlike}
-            tags={tags}
-          />
+          <ReviewDetail review={review} isActiveHeart={isActiveHeart} likeCnt={likeCnt} postLike={postLike} postUnlike={postUnlike} />
         </Portal>
       )}
     </Wrap>
@@ -52,7 +28,7 @@ function Feed({ images, like = { count: 0, userLikeStatus: false }, reviewConten
 
 export default Feed;
 
-export type FeedProps = {
+export type ReviewType = {
   images: string[];
   like: { count: number; userLikeStatus: boolean };
   reviewContent: string;

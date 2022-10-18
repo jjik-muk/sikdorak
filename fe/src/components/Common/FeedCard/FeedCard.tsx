@@ -11,7 +11,8 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { accountStore } from 'stores/AccountStore';
 
-const FeedCard = observer(({ images, reviewContent, reviewId, reviewScore, store, user, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal, postUnlike }: any) => {
+const FeedCard = observer(({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal, postUnlike }: any) => {
+  const { user, images, reviewId, reviewScore, reviewContent, store } = review;
   const [copyText, setCopyText] = useState('');
   const myUserId = accountStore.id;
   const isMyFeed = user?.userId === myUserId;
