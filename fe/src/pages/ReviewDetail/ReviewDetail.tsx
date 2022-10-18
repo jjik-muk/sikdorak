@@ -1,4 +1,4 @@
-import { DETAIL } from 'constants/size';
+import { DETAIL } from 'styles/size';
 import { Button } from '@mui/material';
 import FeedCard from 'components/Common/FeedCard/FeedCard';
 import Carousel from 'components/ReviewDetail/Carousel/Carousel';

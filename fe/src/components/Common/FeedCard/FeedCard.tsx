@@ -1,5 +1,5 @@
 import { MESSAGE } from 'constants/message';
-import { FEED } from 'constants/size';
+import { FEED } from 'styles/size';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import ShareIcon from '@mui/icons-material/Share';

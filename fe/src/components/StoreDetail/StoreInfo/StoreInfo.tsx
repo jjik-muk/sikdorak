@@ -1,5 +1,5 @@
-import { ICON } from 'constants/size';
-import { STYLE } from 'constants/style';
+import { ICON } from 'styles/size';
+import { STYLE } from 'styles/style';
 import Icon from 'components/Common/Icon/Icon';
 import styled from 'styled-components';
 

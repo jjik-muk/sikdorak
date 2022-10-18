@@ -1,4 +1,4 @@
-import { COLOR } from 'constants/color';
+import { COLOR } from 'styles/color';
 import { TEXT } from 'constants/text';
 import styled from 'styled-components';
 import { flexLayoutMixin } from 'utils/utils';

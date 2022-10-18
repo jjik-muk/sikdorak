@@ -1,6 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "import"],
+  "plugins": ["@typescript-eslint"],
   "extends": ["react-app", "react-app/jest", "airbnb", "airbnb-typescript", "prettier"],
   "parserOptions": {
     "project": ["./tsconfig.json"]
@@ -9,23 +9,6 @@
     "import/parsers": { "@typescript-eslint/parser": [".ts"] }
   },
   "rules": {
-    "import/order": [
-      "error",
-      {
-        "groups": ["builtin", "external", ["parent", "sibling"], "index"],
-        "pathGroups": [
-          {
-            "pattern": "react",
-            "group": "external",
-            "position": "before"
-          }
-        ],
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": true
-        }
-      }
-    ],
     "react/react-in-jsx-scope": 0,
     "react/require-default-props": 0,
     "import/prefer-default-export": 0,

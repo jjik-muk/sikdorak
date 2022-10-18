@@ -1,4 +1,4 @@
-import { LOGO } from 'constants/size';
+import { LOGO } from 'styles/size';
 import { Link } from 'react-router-dom';
 import LogoIcon from '../../../assets/Logo.png';
 

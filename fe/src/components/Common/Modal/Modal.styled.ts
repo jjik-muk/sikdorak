@@ -1,5 +1,5 @@
-import { STYLE } from 'constants/style';
-import { Z_INDEX } from 'constants/zIndex';
+import { STYLE } from 'styles/style';
+import { Z_INDEX } from 'styles/zIndex';
 import styled from 'styled-components';
 
 type ModalWrapperProps = {

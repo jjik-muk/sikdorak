@@ -1,4 +1,4 @@
-import { STYLE } from 'constants/style';
+import { STYLE } from 'styles/style';
 import styled from 'styled-components';
 
 export const Input = styled.input`

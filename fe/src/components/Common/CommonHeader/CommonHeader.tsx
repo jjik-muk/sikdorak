@@ -1,4 +1,4 @@
-import { ICON } from 'constants/size';
+import { ICON } from 'styles/size';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';

@@ -1,4 +1,4 @@
-import { MODAL } from 'constants/size';
+import { MODAL } from 'styles/size';
 import { ModalWrapper } from './Modal.styled';
 
 export default function Modal({ children, width, height = MODAL.DEFAULT.HEIGHT, fullWidth }: ModalProps) {

@@ -1,5 +1,5 @@
-import { COLOR } from 'constants/color';
-import { ICON } from 'constants/size';
+import { COLOR } from 'styles/color';
+import { ICON } from 'styles/size';
 import { ReactComponent as Alarm } from 'assets/Alarm.svg';
 import { ReactComponent as DownArrow } from 'assets/DownArrow.svg';
 import { ReactComponent as Heart } from 'assets/Heart.svg';
