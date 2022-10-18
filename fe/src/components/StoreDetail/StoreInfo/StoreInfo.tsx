@@ -28,14 +28,6 @@ function StoreInfo({ storeName, storeRating, reviewCnt, address, phoneNumber }: 
 
 export default StoreInfo;
 
-// type StoreInfoProps = {
-//   storeName: string;
-//   storeRating: number;
-//   reviewCnt: number;
-//   address: string;
-//   phoneNumber: string;
-// };
-
 export const Wrap = styled.div`
   width: 600px;
   height: fit-content;

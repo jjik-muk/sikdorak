@@ -1,6 +1,6 @@
 export const ICON = {
-  MEDIUM: 30,
-  SMALL: 15,
+  MEDIUM: 24,
+  SMALL: 16,
 };
 
 export const DETAIL = {

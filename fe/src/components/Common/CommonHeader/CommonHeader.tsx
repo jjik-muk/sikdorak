@@ -1,3 +1,4 @@
+import { ICON } from 'constants/size';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
@@ -40,13 +41,17 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
           {iconInfo.map(({ icon, handler, to }, idx) => (
             <Link key={createKey(icon, idx)} to={to}>
               <div onClick={handler}>
-                <Icon icon={icon} width={24} height={24} />
+                <Icon icon={icon} width={ICON.MEDIUM} height={ICON.MEDIUM} />
               </div>
             </Link>
           ))}
           <Link to={accountStore.id ? `/user/${accountStore.id}` : '/login'}>
             <ProfileImageWrap>
-              {accountStore.profileImage ? <img src={accountStore.profileImage} alt="profile" width={24} height={24} /> : <AccountCircleIcon sx={{ width: 24, height: 24 }} />}
+              {accountStore.profileImage ? (
+                <img src={accountStore.profileImage} alt="profile" width={ICON.MEDIUM} height={ICON.MEDIUM} />
+              ) : (
+                <AccountCircleIcon sx={{ width: ICON.MEDIUM, height: ICON.MEDIUM }} />
+              )}
             </ProfileImageWrap>
           </Link>
         </ButtonWrap>
