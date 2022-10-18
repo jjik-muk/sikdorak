@@ -1,3 +1,7 @@
+export const LOGO = {
+  WIDTH: 100,
+};
+
 export const ICON = {
   MEDIUM: 24,
   SMALL: 16,
@@ -17,8 +21,7 @@ export const FEED = {
     HEIGHT: 30,
   },
   IMG: {
-    WIDTH: 100,
-    HEIGHT: 70,
+    HEIGHT: 200,
   },
 };
 
