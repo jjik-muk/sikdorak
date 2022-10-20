@@ -9,12 +9,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.cloudwatch.CloudWatchAsyncClient;
 
 @Configuration
+@Profile("prod")
 public class MonitoringConfig {
 
     @Value("${cloud.aws.credentials.accessKey}")
@@ -59,7 +61,8 @@ public class MonitoringConfig {
 
             private final Map<String, String> config = Map.of(
                 "cloudwatch.namespace", "sikdorak",
-                "cloudwatch.step", Duration.ofMinutes(1).toString()
+                "cloudwatch.step", Duration.ofMinutes(1).toString(), // 1분마다 전송
+                "cloudwatch.enabled", Boolean.FALSE.toString() // false(비활성화), true(활성화, 기본값)
             );
 
             @Override
