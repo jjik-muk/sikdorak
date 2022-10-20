@@ -41,7 +41,7 @@ const UserDetail = observer(() => {
         <UserInfoWrap>
           <UserInfoHeader>
             {userStore?.userProfile?.nickname}
-            {!isMyUserDetailPage && accountStore.id && <FollowButton />}
+            {!isMyUserDetailPage && <FollowButton />}
           </UserInfoHeader>
           <ActivityInfoWrap>
             <div>게시물 {userStore?.userProfile?.reviewCount}</div>
