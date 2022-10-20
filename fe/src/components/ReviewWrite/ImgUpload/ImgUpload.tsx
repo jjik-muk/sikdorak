@@ -5,7 +5,7 @@ import { Dispatch } from 'react';
 import { openErrorToast } from 'utils/toast';
 import { ImgUploadWrapper } from './ImgUpload.styled';
 
-function ImgUpload({ setSelectedImg }: ImgUploadProps) {
+function ImgUpload({ setSelectedImg, setSelectedImgUrl }: ImgUploadProps) {
   const [, dispatchReviewWrite] = useReviewWrite();
   const { fetchPresignedUrl } = useUploadImage();
 
@@ -29,6 +29,8 @@ function ImgUpload({ setSelectedImg }: ImgUploadProps) {
     }
 
     setSelectedImg(selectedImg);
+    const selectedImgUrl = URL.createObjectURL(selectedImg);
+    setSelectedImgUrl(selectedImgUrl);
     const presignedUrl = await fetchPresignedUrl({ extension: 'png' });
     const fileName = presignedUrl.split('/')[4].split('?')[0];
     const imageUrl = `https://sikdorak-images.s3.ap-northeast-2.amazonaws.com/origin/${fileName}`;
@@ -42,4 +44,5 @@ export default ImgUpload;
 
 type ImgUploadProps = {
   setSelectedImg?: Dispatch<any>;
+  setSelectedImgUrl?: Dispatch<any>;
 };

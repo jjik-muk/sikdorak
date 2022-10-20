@@ -9,7 +9,7 @@ const INIT_STATE = {
   content: '',
   rating: 0,
   tags: [],
-  scope: 'public',
+  scope: 'PUBLIC',
   id: 0,
   address: '',
   images: [],
@@ -42,10 +42,15 @@ const reducer = (state, action: ActionType) => {
         ...state,
         scope,
       };
-    case 'SET_TAGS':
+    case 'ADD_TAG':
       return {
         ...state,
         tags: [...state.tags, action.tags],
+      };
+    case 'SET_TAGS':
+      return {
+        ...state,
+        tags: action.tags,
       };
     case 'REMOVE_TAG':
       return {

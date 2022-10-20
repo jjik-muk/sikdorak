@@ -12,9 +12,13 @@ import useUploadImage from 'hooks/useUploadImage';
 import { accountStore } from 'stores/AccountStore';
 import { Content, Header, Img, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
 import CloseIcon from '@mui/icons-material/Close';
+import { Button } from '@mui/material';
+import { useReviewWrite } from 'context/ReviewWriteProvider';
+import { requestReviewModification } from 'request/request';
 
-function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps) {
-  const { selectedImg, setSelectedImg } = useUploadImage();
+function ReviewWrite({ toggleIsReviewWrite, dispatchReviews, isModify, reviewId }: ReviewWriteProps) {
+  const [reviewWrite, dispatchReviewWrite] = useReviewWrite();
+  const { selectedImg, setSelectedImg, selectedImgUrl, setSelectedImgUrl, uploadImageToS3 } = useUploadImage();
   const { nickname, profileImage } = accountStore;
 
   return (
@@ -22,19 +26,25 @@ function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps)
       <Title>리뷰 작성하기</Title>
       <Content>
         <ImgWrap>
-          {selectedImg ? (
+          {reviewWrite.images[0] ? (
             <>
-              <Img width="90%" height="90%" src={URL.createObjectURL(selectedImg)} alt={TEXT.ALT.PHOTOGRAPH} />
+              <Img width="90%" height="90%" src={selectedImgUrl} alt={TEXT.ALT.PHOTOGRAPH} />
               <CloseIcon onClick={handleRemoveSelectedImg} sx={{ position: 'absolute', top: '20px', right: '15px', cursor: 'pointer' }} />
             </>
           ) : (
-            <ImgUpload setSelectedImg={setSelectedImg} />
+            <ImgUpload setSelectedImg={setSelectedImg} setSelectedImgUrl={setSelectedImgUrl} />
           )}
         </ImgWrap>
         <InputWrap>
           <Header>
             <Profile imgUrl={profileImage} nickname={nickname} />
-            <RegistrationBtn selectedImg={selectedImg} dispatchReviews={dispatchReviews} toggleIsReviewWrite={toggleIsReviewWrite} />
+            {isModify ? (
+              <Button onClick={handleReviewModification} variant="contained" sx={{ height: '40px' }}>
+                수정
+              </Button>
+            ) : (
+              <RegistrationBtn selectedImg={selectedImg} dispatchReviews={dispatchReviews} toggleIsReviewWrite={toggleIsReviewWrite} />
+            )}
           </Header>
           <Textarea />
           <RestaurantSearch />
@@ -47,8 +57,34 @@ function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps)
     </Wrap>
   );
 
+  async function handleReviewModification() {
+    const month = String(reviewWrite.month).length === 1 ? `0${reviewWrite.month}` : reviewWrite.month;
+    const date = String(reviewWrite.date).length === 1 ? `0${reviewWrite.date}` : reviewWrite.date;
+
+    const hasImageThatNeedToUpload = reviewWrite.presignedUrl;
+    if (hasImageThatNeedToUpload) {
+      await uploadImageToS3(reviewWrite.presignedUrl, selectedImg);
+    }
+
+    requestReviewModification({
+      reviewId,
+      body: {
+        reviewContent: reviewWrite.content,
+        storeId: reviewWrite.store.storeId,
+        reviewScore: reviewWrite.rating,
+        reviewVisibility: reviewWrite.scope,
+        visitedDate: `${reviewWrite.year}-${month}-${date}`,
+        tags: reviewWrite.tags,
+        images: reviewWrite.images,
+      },
+    });
+    dispatchReviewWrite({ type: 'RESET_STATE' });
+    toggleIsReviewWrite();
+  }
+
   function handleRemoveSelectedImg() {
     setSelectedImg(null);
+    dispatchReviewWrite({ type: 'SET_IMAGES', images: [] });
   }
 }
 
@@ -57,4 +93,6 @@ export default ReviewWrite;
 type ReviewWriteProps = {
   toggleIsReviewWrite?: () => void;
   dispatchReviews?: any;
+  isModify?: boolean;
+  reviewId?: number;
 };

@@ -23,7 +23,7 @@ function TagInput() {
     const isPressEnter = e.key === 'Enter';
     const hasInputValue = value.length > 0;
     if (isPressEnter && hasInputValue) {
-      dispatchReviewWriteState({ type: 'SET_TAGS', tags: `${value}` });
+      dispatchReviewWriteState({ type: 'ADD_TAG', tags: `${value}` });
       setValue('');
     }
   }
