@@ -13,7 +13,7 @@ const INIT_STATE = {
   id: 0,
   address: '',
   images: [],
-  store: {},
+  store: { placeId: 0, storeName: '', x: 0, y: 0 },
 };
 
 const reducer = (state, action: ActionType) => {
@@ -67,6 +67,8 @@ const reducer = (state, action: ActionType) => {
         ...state,
         store,
       };
+    case 'RESET_STATE':
+      return INIT_STATE;
     default:
       return state;
   }

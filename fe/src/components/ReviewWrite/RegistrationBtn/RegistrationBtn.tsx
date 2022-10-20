@@ -5,7 +5,7 @@ import { fetchData } from 'utils/fetch';
 import { openWarningToast } from 'utils/toast';
 
 function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: any) {
-  const [reviewWriteState] = useReviewWrite();
+  const [reviewWriteState, dispatchReviewWriteState] = useReviewWrite();
   const { content, year, month, date, rating, scope, tags, images, store, presignedUrl } = reviewWriteState;
   const { placeId, storeName, x, y } = store;
   const { uploadImageToS3 } = useUploadImage();
@@ -25,7 +25,7 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
   }
 
   async function registerPost() {
-    if (!store.placeId) {
+    if (!store?.placeId) {
       openWarningToast('식당을 선택해주세요.');
       return;
     }
@@ -62,6 +62,7 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
       store,
     };
     dispatchReviews({ type: 'ADD_REVIEW', review: newReview });
+    dispatchReviewWriteState({ type: 'RESET_STATE' });
     toggleIsReviewWrite();
   }
 }
