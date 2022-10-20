@@ -13,7 +13,7 @@ function ReviewList() {
 
   useEffect(() => {
     fetchNextReviews(getUrl(afterParam, REVIEW_SIZE));
-  }, [fetchNextReviews, afterParam]);
+  }, []);
 
   return (
     <ReviewListWrap
