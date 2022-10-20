@@ -6,9 +6,9 @@ import Comment from 'components/ReviewDetail/Comment/Comment';
 import TagList from 'components/ReviewDetail/TagList/TagList';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import useAuth from 'hooks/useAuth';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { accountStore } from 'stores/AccountStore';
-import { fetchDataThatNeedToLogin } from 'utils/utils';
+import { fetchData } from 'utils/fetch';
 import { ContentsWrap, Wrap } from './ReviewDetail.styled';
 
 function ReviewDetail({ review, isActiveHeart, likeCnt, postLike, postUnlike }: any) {
@@ -21,11 +21,10 @@ function ReviewDetail({ review, isActiveHeart, likeCnt, postLike, postUnlike }: 
   const COMMENT_SIZE = 2;
   const [hasNextComments, setHasNextComments] = useState(false);
   useAuth();
-  const fetchInitComment = useCallback(fetchNextComment, [afterParam, comments, reviewId]);
 
   useEffect(() => {
-    fetchInitComment();
-  }, [fetchInitComment]);
+    fetchNextComment();
+  }, []);
 
   return (
     <Wrap>
@@ -43,7 +42,7 @@ function ReviewDetail({ review, isActiveHeart, likeCnt, postLike, postUnlike }: 
   );
 
   async function fetchNextComment() {
-    const commentRes = await fetchDataThatNeedToLogin(`api/reviews/${reviewId}/comments?size=${COMMENT_SIZE}&after=${afterParam}`);
+    const commentRes = await fetchData({ path: `api/reviews/${reviewId}/comments?size=${COMMENT_SIZE}&after=${afterParam}` });
     setHasNextComments(!commentRes.data.page.last);
     if (!commentRes.data) return;
 
