@@ -1,10 +1,12 @@
 import { ICON } from 'styles/size';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import { observer } from 'mobx-react';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import { useRef, useEffect } from 'react';
+import { MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { accountStore } from 'stores/AccountStore';
 import { createKey } from 'utils/utils';
@@ -12,12 +14,17 @@ import Icon, { IconComponentsKeys } from '../Icon/Icon';
 import Logo from '../Logo/Logo';
 import Portal from '../Portal/Portal';
 import { ButtonWrap, Header, ProfileImageWrap, Wrap } from './CommonHeader.styled';
+import styled from 'styled-components';
+import { ROUTE_PATH } from 'constants/routePath';
+import { COLOR } from 'styles/color';
 
 const CommonHeader = observer(({ dispatchReviews }: any) => {
   const [isReviewWrite, toggleIsReviewWrite] = useToggle(false);
   const [, toggleIsUserProfile] = useToggle(false);
   const reviewWriteModalRef = useRef(null);
   const userDetailModalRef = useRef(null);
+  const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
+  const menuRef = useRef(null);
 
   const iconInfo: IconInfoProps[] = accountStore.id
     ? [
@@ -32,6 +39,7 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
 
   useOutsideClick(reviewWriteModalRef, toggleIsReviewWrite);
   useOutsideClick(userDetailModalRef, toggleIsUserProfile);
+  useOutsideClick(menuRef, toggleIsActiveMenu);
 
   useEffect(() => {
     accountStore.setMyInfo();
@@ -49,15 +57,27 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
               </div>
             </Link>
           ))}
-          <Link to={accountStore.id ? `/user/${accountStore.id}` : '/login'}>
-            <ProfileImageWrap>
-              {accountStore.profileImage ? (
-                <img src={accountStore.profileImage} alt="profile" width={ICON.MEDIUM} height={ICON.MEDIUM} />
-              ) : (
-                <AccountCircleIcon sx={{ width: ICON.MEDIUM, height: ICON.MEDIUM }} />
-              )}
-            </ProfileImageWrap>
-          </Link>
+          <ProfileImageWrap>
+            {accountStore.profileImage ? (
+              <div onClick={toggleIsActiveMenu}>
+                <Avatar src={accountStore.profileImage} alt="profile" sx={{ width: ICON.MEDIUM, height: ICON.MEDIUM }} />
+                {isActiveMenu && (
+                  <MenuWrap ref={menuRef}>
+                    <MenuItem>
+                      <Link to={`/user/${accountStore.id}`}>내 프로필</Link>
+                    </MenuItem>
+                    <MenuItem onClick={handleLogout}>
+                      <Link to={ROUTE_PATH.LOGIN}>로그아웃</Link>
+                    </MenuItem>
+                  </MenuWrap>
+                )}
+              </div>
+            ) : (
+              <Link to="/login">
+                <Button variant="contained">로그인</Button>
+              </Link>
+            )}
+          </ProfileImageWrap>
         </ButtonWrap>
         {isReviewWrite && (
           <Portal selector="#portal" ref={reviewWriteModalRef}>
@@ -69,6 +89,10 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
   );
 });
 
+function handleLogout() {
+  localStorage.removeItem('accessToken');
+}
+
 type IconInfoProps = {
   icon: IconComponentsKeys;
   handler?: React.MouseEventHandler<HTMLDivElement>;
@@ -76,3 +100,14 @@ type IconInfoProps = {
 };
 
 export default CommonHeader;
+
+const MenuWrap = styled.div`
+  position: absolute;
+  width: 100px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  background-color: ${COLOR.WHITE};
+  border-radius: 5px;
+`;
