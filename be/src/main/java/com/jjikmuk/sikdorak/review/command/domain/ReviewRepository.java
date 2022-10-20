@@ -22,7 +22,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("""
         select r from Review as r
-        where r.userId = :userId and not r.reviewVisibility = 'PRIVATE' and r.id <= :targetId
+        where r.userId = :userId and r.id <= :targetId and not r.reviewVisibility = 'PRIVATE'
         order by r.id desc
         """)
     List<Review> findByUserIdAndConnection(@Param("userId") long userId,
@@ -31,7 +31,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("""
         select r from Review as r
-        where r.userId = :userId and r.reviewVisibility = 'PUBLIC' and r.id <= :targetId
+        where r.userId = :userId and r.id <= :targetId and r.reviewVisibility = 'PUBLIC'
         order by r.id desc
         """)
     List<Review> findByUserIdAndDisconnection(@Param("userId") Long userId,
@@ -42,7 +42,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query(value = """
         select * from review as r
-        where r.review_visibility = 'PUBLIC' and r.review_id <= :targetId
+        where r.review_id <= :targetId and r.review_visibility = 'PUBLIC'  
         order by (select count(*) from likes as l where l.review_id = r.review_id) desc, r.review_id desc 
         """,
         nativeQuery = true)
@@ -52,8 +52,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query("""
         select r from Review r
-        where not r.reviewVisibility = 'PRIVATE'
-        and r.id <= :targetId and r.userId <> :authorId
+        where r.id <= :targetId and r.userId <> :authorId
+        and not r.reviewVisibility = 'PRIVATE'
         order by r.id desc
         """)
     List<Review> findPublicAndProtectedRecommendedReviewsInRecentOrder(
