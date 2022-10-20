@@ -47,7 +47,4 @@ export const ButtonWrap = styled.div`
   }
 `;
 
-export const ProfileImageWrap = styled.div`
-  border-radius: 50%;
-  overflow: hidden;
-`;
+export const ProfileImageWrap = styled.div``;
