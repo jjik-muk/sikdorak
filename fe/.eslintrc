@@ -19,6 +19,7 @@
     "prefer-destructuring": 0,
     "exceptAfterSingleLine": 0,
     "no-alert": 0,
-    "import/order": 0
+    "import/order": 0,
+    "prefer-object-spread": 0
   }
 }

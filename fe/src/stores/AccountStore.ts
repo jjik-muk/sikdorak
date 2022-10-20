@@ -1,6 +1,8 @@
+import { API_PATH } from 'constants/apiPath';
 import { STATUS_CODE } from 'constants/statusCode';
 import { action, makeObservable, observable, runInAction } from 'mobx';
-import { createErrorMessage, fetchDataThatNeedToLogin } from 'utils/utils';
+import { fetchData } from 'utils/fetch';
+import { createErrorMessage } from 'utils/utils';
 
 class AccountStore {
   @observable
@@ -22,7 +24,7 @@ class AccountStore {
 
   @action
   async setMyInfo() {
-    const myInfo = await fetchDataThatNeedToLogin(`api/users/me`);
+    const myInfo = await fetchData({ path: API_PATH.USER.MY_PROFILE, withAccessToken: true });
 
     if (!myInfo.data) {
       return;
@@ -37,21 +39,31 @@ class AccountStore {
   }
 
   @action
-  async setAccessToken(kakaoAuthorizationCode) {
-    const res = await fetch(`${process.env.REACT_APP_BE_SERVER_URL}/api/oauth/callback?code=${kakaoAuthorizationCode}`, {
-      credentials: 'include',
-    });
-    const resJson = await res.json();
-    const { code, data, message } = resJson;
+  async setAccessToken(kakaoAuthorizationCode: string) {
+    const res = await fetchData({ path: `api/oauth/callback?code=${kakaoAuthorizationCode}`, customHeaders: { credentials: 'include' } });
+    const { code, data, message } = res;
 
     if (code === STATUS_CODE.FAILURE.COMMUNICATION_WITH_OAUTH_SERVER) {
       const errorMessage = createErrorMessage(code, message);
       alert(errorMessage);
       throw new Error(errorMessage);
     }
+    this.updateAccessToken(data.accessToken);
+  }
 
-    this.accessToken = data.accessToken;
-    localStorage.setItem('accessToken', this.accessToken);
+  @action
+  async reissueAccessToken() {
+    const res = await fetchData({ path: API_PATH.LOGIN.REISSUE_ACCESS_TOKEN, customHeaders: { credentials: 'include' } });
+    const resJson = await res.json();
+    this.updateAccessToken(resJson.data.accessToken);
+  }
+
+  @action
+  updateAccessToken(newAccessToken: string) {
+    runInAction(() => {
+      this.accessToken = newAccessToken;
+    });
+    localStorage.setItem('accessToken', newAccessToken);
   }
 }
 

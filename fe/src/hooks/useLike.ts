@@ -1,7 +1,7 @@
 import { API_PATH } from 'constants/apiPath';
 import { STATUS_CODE } from 'constants/statusCode';
 import { useState } from 'react';
-import { fetchDataThatNeedToLogin } from 'utils/utils';
+import { fetchData } from 'utils/fetch';
 import useToggle from './useToggle';
 
 function useLike({ like, reviewId }) {
@@ -9,7 +9,7 @@ function useLike({ like, reviewId }) {
   const [likeCnt, setLikeCnt] = useState(like.count);
 
   async function postLike() {
-    const { message, code } = await fetchDataThatNeedToLogin(API_PATH.REVIEW.LIKE(reviewId), { method: 'PUT' });
+    const { message, code } = await fetchData({ path: API_PATH.REVIEW.LIKE(reviewId), method: 'PUT', withAccessToken: true });
     if (code !== STATUS_CODE.SUCCESS.LIKE) {
       alert(`${code} : ${message}`);
       return;
@@ -19,7 +19,7 @@ function useLike({ like, reviewId }) {
   }
 
   async function postUnlike() {
-    const { message, code } = await fetchDataThatNeedToLogin(API_PATH.REVIEW.UNLIKE(reviewId), { method: 'PUT' });
+    const { message, code } = await fetchData({ path: API_PATH.REVIEW.UNLIKE(reviewId), method: 'PUT', withAccessToken: true });
     if (code !== STATUS_CODE.SUCCESS.CANCEL_LIKE) {
       alert(`${code} : ${message}`);
       return;

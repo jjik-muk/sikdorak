@@ -1,14 +1,11 @@
 import { useState } from 'react';
-import { fetchDataThatNeedToLogin } from 'utils/utils';
+import { fetchData } from 'utils/fetch';
 
 function useUploadImage() {
   const [selectedImg, setSelectedImg] = useState(null);
 
   async function fetchPresignedUrl({ extension }) {
-    const res = await fetchDataThatNeedToLogin(`api/images/url`, {
-      method: 'PUT',
-      bodyData: { extension },
-    });
+    const res = await fetchData({ path: `api/images/url`, method: 'PUT', bodyData: { extension }, withAccessToken: true });
     return res.data.preSignedUrl;
   }
 

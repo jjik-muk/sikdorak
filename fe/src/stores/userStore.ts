@@ -1,5 +1,5 @@
 import { action, makeObservable, observable, runInAction } from 'mobx';
-import { fetchData, fetchDataThatNeedToLogin } from 'utils/utils';
+import { fetchData } from 'utils/fetch';
 
 class UserStore {
   @observable userProfile;
@@ -12,7 +12,7 @@ class UserStore {
 
   @action
   async fetchUserProfile(id: number) {
-    const res = await fetchData(`${process.env.REACT_APP_BE_SERVER_URL}/api/users/${id}`);
+    const res = await fetchData({ path: `api/users/${id}` });
     runInAction(() => {
       this.userProfile = res.data;
       this.followStatus = res.data?.relationStatus?.followStatus;
@@ -21,19 +21,13 @@ class UserStore {
 
   @action
   async postFollow(id: number) {
-    await fetchDataThatNeedToLogin(`api/users/follow`, {
-      method: 'PUT',
-      bodyData: { userId: id },
-    });
+    await fetchData({ path: `api/users/follow`, method: 'PUT', bodyData: { userId: id }, withAccessToken: true });
     this.followStatus = true;
   }
 
   @action
   async postUnFollow(id: number) {
-    await fetchDataThatNeedToLogin(`api/users/unfollow`, {
-      method: 'PUT',
-      bodyData: { userId: id },
-    });
+    await fetchData({ path: `api/users/unfollow`, method: 'PUT', bodyData: { userId: id }, withAccessToken: true });
     this.followStatus = false;
   }
 }

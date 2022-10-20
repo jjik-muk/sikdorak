@@ -2,6 +2,7 @@ export const STATUS_CODE = {
   SUCCESS: {
     LOGIN: 'T-O001',
     REISSUE_ACCESS_TOKEN: 'T-O002',
+    MY_USER_PROFILE: 'T-U005',
     LIKE: 'T-R006',
     CANCEL_LIKE: 'T-R007',
   },

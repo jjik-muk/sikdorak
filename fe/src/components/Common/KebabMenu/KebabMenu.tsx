@@ -2,11 +2,12 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { IconButton, MenuItem } from '@mui/material';
+import { API_PATH } from 'constants/apiPath';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useReviews from 'hooks/useReviews';
 import useToggle from 'hooks/useToggle';
 import { useRef } from 'react';
-import { fetchDataThatNeedToLogin } from 'utils/utils';
+import { fetchData } from 'utils/fetch';
 import { Wrap } from './KebabMenu.styled';
 
 function KebabMenu({ reviewId, isMyFeed }: MenuProps) {
@@ -38,7 +39,7 @@ function KebabMenu({ reviewId, isMyFeed }: MenuProps) {
   );
 
   function handleDeleteReview() {
-    fetchDataThatNeedToLogin(`api/reviews/${reviewId}`, { method: 'DELETE' });
+    fetchData({ path: API_PATH.REVIEW.DELETE(reviewId), method: 'DELETE', withAccessToken: true });
     dispatchReviews({ type: 'DELETE_REVIEW', reviewId });
   }
 

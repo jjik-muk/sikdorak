@@ -1,7 +1,7 @@
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { accountStore } from 'stores/AccountStore';
-import { fetchDataThatNeedToLogin } from 'utils/utils';
+import { fetchData } from 'utils/fetch';
 
 export default function WriteComment({ commentRef, reviewId, comments, setComments }: WriteCommentProps) {
   const [commentValue, setComment] = useState('');
@@ -44,11 +44,13 @@ export default function WriteComment({ commentRef, reviewId, comments, setCommen
   }
 
   async function postWrittingComment() {
-    fetchDataThatNeedToLogin(`api/reviews/${reviewId}/comments`, {
+    fetchData({
+      path: `api/reviews/${reviewId}/comments`,
       method: 'POST',
       bodyData: {
         content: commentValue,
       },
+      withAccessToken: true,
     });
   }
 
