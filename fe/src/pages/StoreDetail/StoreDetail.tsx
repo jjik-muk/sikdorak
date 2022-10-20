@@ -6,7 +6,7 @@ import useReviews from 'hooks/useReviews';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { fetchDataThatNeedToLogin } from 'utils/utils';
+import { fetchData } from 'utils/fetch';
 
 const INIT_STATE_STORE_INFO = {
   storeName: '',
@@ -29,7 +29,7 @@ function StoreDetail() {
     fetchAndStoreRestaurantInfo();
 
     async function fetchAndStoreRestaurantInfo() {
-      const res = await fetchDataThatNeedToLogin(`api/stores/${targetId}`);
+      const res = await fetchData({ path: `api/stores/${targetId}` });
       setStoreInfo(res.data);
     }
   }, [targetId]);

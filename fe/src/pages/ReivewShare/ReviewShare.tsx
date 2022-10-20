@@ -3,7 +3,7 @@ import Feed from 'components/Common/Feed/Feed';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { fetchDataThatNeedToLogin } from 'utils/utils';
+import { fetchData } from 'utils/fetch';
 
 const INIT_STATE: any = {};
 
@@ -16,7 +16,7 @@ function ReviewShare() {
     fetchReview();
 
     async function fetchReview() {
-      const res = await fetchDataThatNeedToLogin(`api/reviews/${Id}`);
+      const res = await fetchData({ path: `api/reviews/${Id}`, withAccessToken: true });
       setReview(res.data);
     }
   }, [Id]);

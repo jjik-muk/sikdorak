@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { debounce, fetchData } from 'utils/utils';
+import { debounce } from 'utils/utils';
 
 const INIT_STATE: any = {};
 
@@ -10,9 +10,9 @@ function useSearchBar() {
 
   const debouncedSearch = useCallback(({ url, headers }: any) => {
     debounce(async function fetchSearchResults() {
-      const options = { headers };
-      const searchRes = await fetchData(url, options);
-      setSearchResults(searchRes);
+      const res = await fetch(url, { headers });
+      const resJson = await res.json();
+      setSearchResults(resJson);
     }, DELAY_MS)();
   }, []);
 

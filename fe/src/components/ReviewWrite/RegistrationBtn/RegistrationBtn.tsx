@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import useUploadImage from 'hooks/useUploadImage';
-import { fetchData, fetchDataThatNeedToLogin } from 'utils/utils';
+import { fetchData } from 'utils/fetch';
 
 function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: any) {
   const [reviewWriteState] = useReviewWrite();
@@ -24,7 +24,6 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
   }
 
   async function registerPost() {
-    // TODO: 미입력 경고 추가
     if (!store) {
       alert('식당을 선택해주세요.');
       return;
@@ -33,7 +32,8 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
       alert('방문일을 선택해주세요.');
       return;
     }
-    const storeValidationRes = await fetchData(`${process.env.REACT_APP_BE_SERVER_URL}/api/stores`, {
+    const storeValidationRes = await fetchData({
+      path: `api/stores`,
       method: 'PUT',
       bodyData: {
         placeId,
@@ -51,7 +51,7 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
       tags,
       images,
     };
-    fetchDataThatNeedToLogin(`api/reviews`, { method: 'POST', bodyData });
+    fetchData({ path: `api/reviews`, method: 'POST', bodyData, withAccessToken: true });
     const newReview = {
       reviewContent: content,
       reviewScore: rating,
