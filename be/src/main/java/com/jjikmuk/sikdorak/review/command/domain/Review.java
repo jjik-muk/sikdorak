@@ -14,6 +14,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -22,6 +24,8 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @SQLDelete(sql = "update review set deleted = true where review_id = ?")
 @Where(clause = "deleted = false")
+@Table(name = "review",
+	indexes = @Index(name = "reviewVisibility", columnList = "reviewVisibility"))
 public class Review extends BaseTimeEntity {
 
 	@Id
