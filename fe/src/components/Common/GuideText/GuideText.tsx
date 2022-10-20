@@ -14,7 +14,9 @@ interface GuideTextProps {
   text: string;
 }
 
-const Wrap = styled.div``;
+const Wrap = styled.div`
+  text-align: center;
+`;
 
 const Text = styled.span`
   font-size: 20px;

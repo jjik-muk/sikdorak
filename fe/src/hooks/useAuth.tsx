@@ -3,6 +3,7 @@ import { ROUTE_PATH } from 'constants/routePath';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { validateAccessToken } from 'utils/fetch';
+import { openErrorToast } from 'utils/toast';
 import { accountStore } from '../stores/AccountStore';
 
 function useAuth() {
@@ -17,7 +18,7 @@ function useAuth() {
         return;
       }
       if (!validateAccessToken()) {
-        alert(MESSAGE.ERROR.EXPIRED_ACCESS_TOKEN);
+        openErrorToast(MESSAGE.ERROR.EXPIRED_ACCESS_TOKEN);
         navigate(ROUTE_PATH.LOGIN);
       }
     }

@@ -2,6 +2,7 @@ import { API_PATH } from 'constants/apiPath';
 import { STATUS_CODE } from 'constants/statusCode';
 import { useState } from 'react';
 import { fetchData } from 'utils/fetch';
+import { openErrorToast } from 'utils/toast';
 import useToggle from './useToggle';
 
 function useLike({ like, reviewId }) {
@@ -11,7 +12,7 @@ function useLike({ like, reviewId }) {
   async function postLike() {
     const { message, code } = await fetchData({ path: API_PATH.REVIEW.LIKE(reviewId), method: 'PUT', withAccessToken: true });
     if (code !== STATUS_CODE.SUCCESS.LIKE) {
-      alert(`${code} : ${message}`);
+      openErrorToast(`${code} : ${message}`);
       return;
     }
     setLikeCnt(likeCnt + 1);
@@ -21,7 +22,7 @@ function useLike({ like, reviewId }) {
   async function postUnlike() {
     const { message, code } = await fetchData({ path: API_PATH.REVIEW.UNLIKE(reviewId), method: 'PUT', withAccessToken: true });
     if (code !== STATUS_CODE.SUCCESS.CANCEL_LIKE) {
-      alert(`${code} : ${message}`);
+      openErrorToast(`${code} : ${message}`);
       return;
     }
     setLikeCnt(likeCnt - 1);

@@ -2,6 +2,7 @@ import { API_PATH } from 'constants/apiPath';
 import { STATUS_CODE } from 'constants/statusCode';
 import { action, makeObservable, observable, runInAction } from 'mobx';
 import { fetchData } from 'utils/fetch';
+import { openErrorToast } from 'utils/toast';
 import { createErrorMessage } from 'utils/utils';
 
 class AccountStore {
@@ -45,7 +46,7 @@ class AccountStore {
 
     if (code === STATUS_CODE.FAILURE.COMMUNICATION_WITH_OAUTH_SERVER) {
       const errorMessage = createErrorMessage(code, message);
-      alert(errorMessage);
+      openErrorToast(errorMessage);
       throw new Error(errorMessage);
     }
     this.updateAccessToken(data.accessToken);

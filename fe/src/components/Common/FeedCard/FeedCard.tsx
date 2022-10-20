@@ -12,6 +12,7 @@ import { observer } from 'mobx-react';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { accountStore } from 'stores/AccountStore';
+import { openSuccessToast } from 'utils/toast';
 
 const FeedCard = observer(({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal, postUnlike }: any) => {
   const { user, images, reviewId, reviewScore, reviewContent, store } = review;
@@ -63,7 +64,7 @@ const FeedCard = observer(({ review, isActiveHeart, likeCnt, postLike, toggleIsC
     const hostUrl = window.location.href.replace(location.pathname, '');
     setCopyText(`${hostUrl}/review/${reviewId}`);
     clipboard.writeText(copyText);
-    alert(MESSAGE.SUCCESS.SHARE_REVIEW);
+    openSuccessToast(MESSAGE.SUCCESS.SHARE_REVIEW);
     e.stopPropagation();
   }
 });
