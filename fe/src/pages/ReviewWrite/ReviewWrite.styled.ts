@@ -32,8 +32,8 @@ export const ImgWrap = styled.div`
   width: 1000px;
   height: 660px;
   border-radius: 10px;
-  margin-left: 10px;
   overflow: hidden;
+  justify-content: center;
 
   @media (max-width: 1400px) {
     width: 50vw;

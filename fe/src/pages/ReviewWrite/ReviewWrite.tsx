@@ -11,6 +11,7 @@ import { TEXT } from 'constants/text';
 import useUploadImage from 'hooks/useUploadImage';
 import { accountStore } from 'stores/AccountStore';
 import { Content, Header, Img, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
+import CloseIcon from '@mui/icons-material/Close';
 
 function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps) {
   const { selectedImg, setSelectedImg } = useUploadImage();
@@ -21,7 +22,14 @@ function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps)
       <Title>리뷰 작성하기</Title>
       <Content>
         <ImgWrap>
-          {selectedImg ? <Img width="100%" height="100%" src={URL.createObjectURL(selectedImg)} alt={TEXT.ALT.PHOTOGRAPH} /> : <ImgUpload setSelectedImg={setSelectedImg} />}
+          {selectedImg ? (
+            <>
+              <Img width="90%" height="90%" src={URL.createObjectURL(selectedImg)} alt={TEXT.ALT.PHOTOGRAPH} />
+              <CloseIcon onClick={handleRemoveSelectedImg} sx={{ position: 'absolute', top: '20px', right: '15px', cursor: 'pointer' }} />
+            </>
+          ) : (
+            <ImgUpload setSelectedImg={setSelectedImg} />
+          )}
         </ImgWrap>
         <InputWrap>
           <Header>
@@ -38,6 +46,10 @@ function ReviewWrite({ toggleIsReviewWrite, dispatchReviews }: ReviewWriteProps)
       </Content>
     </Wrap>
   );
+
+  function handleRemoveSelectedImg() {
+    setSelectedImg(null);
+  }
 }
 
 export default ReviewWrite;
