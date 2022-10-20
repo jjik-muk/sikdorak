@@ -3,6 +3,7 @@ import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRig
 import { DispatchReviewWriteContext } from 'context/ReviewWriteProvider';
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { CalendarHead, Day, DayWrapper, Title, Wrap } from './Calendar.styled';
+import { openWarningToast } from 'utils/toast';
 
 const MONTH_LIST = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 const dayList = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -37,7 +38,7 @@ export default function Calendar({ setIsCalendarOpen }: CalendarProps) {
     const isSelectedDateAfterToday = curDate < selectedDate;
 
     if (isSelectedDateAfterToday) {
-      alert('오늘 이전의 날짜를 선택해주세요.');
+      openWarningToast('오늘 이전의 날짜를 선택해주세요');
       return;
     }
 

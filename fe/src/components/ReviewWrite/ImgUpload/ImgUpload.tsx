@@ -2,6 +2,7 @@ import { Button } from '@mui/material';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import useUploadImage from 'hooks/useUploadImage';
 import { Dispatch } from 'react';
+import { openErrorToast } from 'utils/toast';
 import { ImgUploadWrapper } from './ImgUpload.styled';
 
 function ImgUpload({ setSelectedImg }: ImgUploadProps) {
@@ -23,7 +24,7 @@ function ImgUpload({ setSelectedImg }: ImgUploadProps) {
     const allowedExtensions = ['png', 'jpg', 'jpeg'];
 
     if (!allowedExtensions.includes(extension)) {
-      alert('허용된 확장자(png, jpg, jpeg)가 아닙니다.');
+      openErrorToast('허용된 확장자(png, jpg, jpeg)가 아닙니다.');
       return;
     }
 

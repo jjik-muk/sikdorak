@@ -2,6 +2,7 @@ import { Button } from '@mui/material';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import useUploadImage from 'hooks/useUploadImage';
 import { fetchData } from 'utils/fetch';
+import { openWarningToast } from 'utils/toast';
 
 function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: any) {
   const [reviewWriteState] = useReviewWrite();
@@ -24,12 +25,12 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
   }
 
   async function registerPost() {
-    if (!store) {
-      alert('식당을 선택해주세요.');
+    if (!store.placeId) {
+      openWarningToast('식당을 선택해주세요.');
       return;
     }
     if (year === 0 && month === 0 && date === 0) {
-      alert('방문일을 선택해주세요.');
+      openWarningToast('방문일을 선택해주세요.');
       return;
     }
     const storeValidationRes = await fetchData({
