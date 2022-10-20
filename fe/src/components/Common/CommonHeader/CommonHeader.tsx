@@ -4,7 +4,7 @@ import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
 import { observer } from 'mobx-react';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { accountStore } from 'stores/AccountStore';
 import { createKey } from 'utils/utils';
@@ -32,6 +32,10 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
 
   useOutsideClick(reviewWriteModalRef, toggleIsReviewWrite);
   useOutsideClick(userDetailModalRef, toggleIsUserProfile);
+
+  useEffect(() => {
+    accountStore.setMyInfo();
+  }, []);
 
   return (
     <Wrap>
