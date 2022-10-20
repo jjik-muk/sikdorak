@@ -9,11 +9,11 @@ const INIT_STATE = {
   content: '',
   rating: 0,
   tags: [],
-  scope: 'public',
+  scope: 'PUBLIC',
   id: 0,
   address: '',
   images: [],
-  store: {},
+  store: { placeId: 0, storeName: '', x: 0, y: 0 },
 };
 
 const reducer = (state, action: ActionType) => {
@@ -42,10 +42,15 @@ const reducer = (state, action: ActionType) => {
         ...state,
         scope,
       };
-    case 'SET_TAGS':
+    case 'ADD_TAG':
       return {
         ...state,
         tags: [...state.tags, action.tags],
+      };
+    case 'SET_TAGS':
+      return {
+        ...state,
+        tags: action.tags,
       };
     case 'REMOVE_TAG':
       return {
@@ -67,6 +72,8 @@ const reducer = (state, action: ActionType) => {
         ...state,
         store,
       };
+    case 'RESET_STATE':
+      return INIT_STATE;
     default:
       return state;
   }

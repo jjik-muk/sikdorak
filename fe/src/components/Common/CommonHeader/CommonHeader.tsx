@@ -15,7 +15,6 @@ import Logo from '../Logo/Logo';
 import Portal from '../Portal/Portal';
 import { ButtonWrap, Header, ProfileImageWrap, Wrap } from './CommonHeader.styled';
 import styled from 'styled-components';
-import { ROUTE_PATH } from 'constants/routePath';
 import { COLOR } from 'styles/color';
 
 const CommonHeader = observer(({ dispatchReviews }: any) => {
@@ -67,7 +66,7 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
                       <Link to={`/user/${accountStore.id}`}>내 프로필</Link>
                     </MenuItem>
                     <MenuItem onClick={handleLogout}>
-                      <Link to={ROUTE_PATH.LOGIN}>로그아웃</Link>
+                      <Link to="/">로그아웃</Link>
                     </MenuItem>
                   </MenuWrap>
                 )}
@@ -91,6 +90,7 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
 
 function handleLogout() {
   localStorage.removeItem('accessToken');
+  window.location.reload();
 }
 
 type IconInfoProps = {

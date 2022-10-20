@@ -1,8 +1,11 @@
+import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { useState } from 'react';
 import { fetchData } from 'utils/fetch';
 
 function useUploadImage() {
-  const [selectedImg, setSelectedImg] = useState(null);
+  const [reviewWrite] = useReviewWrite();
+  const [selectedImg, setSelectedImg] = useState();
+  const [selectedImgUrl, setSelectedImgUrl] = useState(reviewWrite.images[0]);
 
   async function fetchPresignedUrl({ extension }) {
     const res = await fetchData({ path: `api/images/url`, method: 'PUT', bodyData: { extension }, withAccessToken: true });
@@ -20,7 +23,7 @@ function useUploadImage() {
     return res;
   }
 
-  return { selectedImg, setSelectedImg, fetchPresignedUrl, uploadImageToS3 };
+  return { selectedImg, setSelectedImg, fetchPresignedUrl, uploadImageToS3, selectedImgUrl, setSelectedImgUrl };
 }
 
 export default useUploadImage;
