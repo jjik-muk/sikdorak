@@ -9,17 +9,13 @@ import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/Restaurant
 import Rating from 'components/ReviewDetail/TotalRating/Rating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
 import { observer } from 'mobx-react';
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { accountStore } from 'stores/AccountStore';
 import { openSuccessToast } from 'utils/toast';
 
 const FeedCard = observer(({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal, postUnlike }: any) => {
   const { user, images, reviewId, reviewScore, reviewContent, store } = review;
-  const [copyText, setCopyText] = useState('');
   const myUserId = accountStore.id;
   const isMyFeed = user?.userId === myUserId;
-  const location = useLocation();
   const hasPicture = images.length > 0;
 
   return (
@@ -61,9 +57,9 @@ const FeedCard = observer(({ review, isActiveHeart, likeCnt, postLike, toggleIsC
 
   function handleCopyURL(e) {
     const { clipboard } = navigator;
-    const hostUrl = window.location.href.replace(location.pathname, '');
-    setCopyText(`${hostUrl}/review/${reviewId}`);
-    clipboard.writeText(copyText);
+    const locationOrigin = window.location.origin;
+    const reviewUrl = `${locationOrigin}/review/${reviewId}`;
+    clipboard.writeText(reviewUrl);
     openSuccessToast(MESSAGE.SUCCESS.SHARE_REVIEW);
     e.stopPropagation();
   }
