@@ -38,6 +38,10 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
       openWarningToast('방문일을 선택해주세요.');
       return;
     }
+    if (!rating) {
+      openWarningToast('평점을 입력해주세요.');
+      return;
+    }
     const storeValidationRes = await fetchData({
       path: `api/stores`,
       method: 'PUT',
