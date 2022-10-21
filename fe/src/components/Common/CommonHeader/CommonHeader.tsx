@@ -25,16 +25,11 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const menuRef = useRef(null);
 
-  const iconInfo: IconInfoProps[] = accountStore.id
-    ? [
-        { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
-        { icon: 'Map', to: '/map' },
-        { icon: 'PostBtn', handler: toggleIsReviewWrite, to: '' },
-      ]
-    : [
-        { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
-        { icon: 'Map', to: '/map' },
-      ];
+  const iconInfo: IconInfoProps[] = [
+    { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
+    { icon: 'Map', to: '/map' },
+    { icon: 'PostBtn', handler: toggleIsReviewWrite, to: '' },
+  ];
 
   useOutsideClick(reviewWriteModalRef, toggleIsReviewWrite);
   useOutsideClick(userDetailModalRef, toggleIsUserProfile);

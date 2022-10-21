@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import useUploadImage from 'hooks/useUploadImage';
+import { accountStore } from 'stores/AccountStore';
 import { fetchData } from 'utils/fetch';
 import { openWarningToast } from 'utils/toast';
 
@@ -18,6 +19,10 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
 
   async function handleRegistration() {
     const hasImageThatNeedToUpload = presignedUrl;
+    if (!accountStore.id) {
+      openWarningToast('로그인이 필요한 서비스입니다. 로그인 해 주세요.');
+      return;
+    }
     if (hasImageThatNeedToUpload) {
       await uploadImageToS3(presignedUrl, selectedImg);
     }

@@ -7,7 +7,6 @@ import TagList from 'components/ReviewDetail/TagList/TagList';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import useAuth from 'hooks/useAuth';
 import { useEffect, useRef, useState } from 'react';
-import { accountStore } from 'stores/AccountStore';
 import { fetchData } from 'utils/fetch';
 import { ContentsWrap, Wrap } from './ReviewDetail.styled';
 
@@ -35,7 +34,7 @@ function ReviewDetail({ review, isActiveHeart, likeCnt, postLike, postUnlike }: 
           {Boolean(tags.length) && <TagList tags={tags} imgUrl={user.userProfileImage} />}
           {comments && comments.map(({ author, content, id }) => <Comment key={id} authorId={author.id} title={author.nickname} content={content} imgUrl={author.profileImage} />)}
           {hasNextComments && <Button onClick={fetchNextComment}>댓글 더보기</Button>}
-          {accountStore.id && <WriteComment commentRef={commentRef} reviewId={reviewId} comments={comments} setComments={setComments} />}
+          <WriteComment commentRef={commentRef} reviewId={reviewId} comments={comments} setComments={setComments} />
         </div>
       </ContentsWrap>
     </Wrap>

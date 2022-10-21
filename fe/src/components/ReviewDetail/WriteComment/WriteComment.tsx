@@ -2,10 +2,12 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { accountStore } from 'stores/AccountStore';
 import { fetchData } from 'utils/fetch';
+import { openWarningToast } from 'utils/toast';
 
 export default function WriteComment({ commentRef, reviewId, comments, setComments }: WriteCommentProps) {
   const [commentValue, setComment] = useState('');
   const { id, nickname, profileImage } = accountStore;
+
   return (
     <TextField
       fullWidth
@@ -24,6 +26,11 @@ export default function WriteComment({ commentRef, reviewId, comments, setCommen
     const hasInputValue = commentValue.length > 0;
     if (!isPressedEnter) return;
     if (!hasInputValue) return;
+
+    if (!accountStore.id) {
+      openWarningToast('로그인이 필요한 서비스입니다. 로그인 해 주세요.');
+      return;
+    }
 
     postWrittingComment();
     setComment('');
