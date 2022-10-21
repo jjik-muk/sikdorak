@@ -1,11 +1,20 @@
 import CommonHeader from 'components/Common/CommonHeader/CommonHeader';
-import Feed from 'components/Common/Feed/Feed';
+import Feed, { ReviewType } from 'components/Common/Feed/Feed';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchData } from 'utils/fetch';
 
-const INIT_STATE: any = {};
+const INIT_STATE: ReviewType = {
+  images: [],
+  like: { count: 0, userLikeStatus: false },
+  reviewContent: '',
+  reviewId: 0,
+  reviewScore: 0,
+  store: { storeId: 0, storeName: '', storeAddress: '' },
+  user: { userId: 0, userNickname: '', userProfileImage: '' },
+  tags: [],
+};
 
 function ReviewShare() {
   const { pathname } = useLocation();
@@ -39,6 +48,6 @@ const Wrap = styled.div`
 `;
 
 const FeedWrap = styled.div`
-  width: fit-content;
-  margin: 10px auto;
+  max-width: 600px;
+  margin: 20px auto 0 auto;
 `;
