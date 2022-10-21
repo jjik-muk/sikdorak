@@ -9,7 +9,7 @@ import Stores from 'components/Map/Stores/Stores';
 import useAuth from 'hooks/useAuth';
 import useReviews from 'hooks/useReviews';
 import useSearchBar from 'hooks/useSearchBar';
-import useStores from 'hooks/useStores';
+import { useStores, MAP_POS_DEFAULT } from 'hooks/useStores';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Z_INDEX } from 'styles/zIndex';
@@ -21,12 +21,28 @@ const TABS = [{ label: '가게 목록' }, { label: '유저 리뷰' }];
 function Map() {
   const [activeTabIdx, setActiveTabIdx] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMovedMap, setIsMovedMap] = useState(false);
   const { stores, mapPos, setMapPos, fetchAndSetStores } = useStores();
   const { inputValue, searchResults, setInputValue, debouncedSearch } = useSearchBar();
   const { dispatchReviews } = useReviews();
   useAuth();
   const isSelectedRestaurantList = activeTabIdx === 0;
   const isSelectedUserReviews = activeTabIdx === 1;
+
+  useEffect(
+    function handleIsMovedState() {
+      const isInitLocation = mapPos.x === MAP_POS_DEFAULT.x && mapPos.y === MAP_POS_DEFAULT.y;
+      if (isInitLocation) {
+        return;
+      }
+      setIsMovedMap(true);
+    },
+    [mapPos],
+  );
+
+  useEffect(() => {
+    fetchAndSetStores();
+  }, []);
 
   useEffect(() => {
     const hasInputValue = inputValue.length > 0;
@@ -82,13 +98,20 @@ function Map() {
         </FeedsArea>
         <MapArea>
           <MapComponent stores={stores} mapPos={mapPos} setMapPos={setMapPos} />
-          <Button variant="contained" onClick={fetchAndSetStores} sx={{ position: 'absolute', top: '80%', left: '50%', zIndex: Z_INDEX.MAP_SEARCH_BTN }}>
-            현 지도에서 재검색
-          </Button>
+          {isMovedMap && (
+            <Button variant="contained" onClick={handleSearchMap} sx={{ position: 'absolute', top: '16px', left: '48%', zIndex: Z_INDEX.MAP_SEARCH_BTN }}>
+              현 지도에서 재검색
+            </Button>
+          )}
         </MapArea>
       </ContentArea>
     </>
   );
+
+  function handleSearchMap() {
+    fetchAndSetStores();
+    setIsMovedMap(false);
+  }
 
   function closeModal() {
     setIsModalOpen(false);

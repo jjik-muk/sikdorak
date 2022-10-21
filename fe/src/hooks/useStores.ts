@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { fetchData } from 'utils/fetch';
 
-const MAP_POS_DEFAULT = { x: 37.509389, y: 127.105143 };
+export const MAP_POS_DEFAULT = { x: 37.509389, y: 127.105143 };
 const PAGING_SIZE = 5;
 const RADIUS = 2000;
 
-function useStores() {
+export function useStores() {
   const [stores, setStores] = useState([]);
   const [mapPos, setMapPos] = useState(MAP_POS_DEFAULT);
   const [afterParam, setAfterParam] = useState(0);
@@ -21,5 +21,3 @@ function useStores() {
 
   return { stores, setStores, mapPos, setMapPos, fetchAndSetStores };
 }
-
-export default useStores;
