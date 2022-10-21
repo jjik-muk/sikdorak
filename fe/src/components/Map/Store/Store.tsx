@@ -2,9 +2,27 @@ import { STYLE } from 'styles/style';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { fetchData } from 'utils/fetch';
+import { useEffect, useState } from 'react';
+import { ICON } from 'styles/size';
+import Icon from 'components/Common/Icon/Icon';
+import { COLOR } from 'styles/color';
 
-function Store({ id, storeName, contactNumber, roadAddressName, reviewCounts, reviewScoreAverage }: any) {
+function Store({ id, storeName, contactNumber, roadAddressName }: any) {
   const navigate = useNavigate();
+  const [storeDetail, setStoreDetail] = useState({ reviewScoreAverage: 0, reviewCounts: 0 });
+
+  useEffect(() => {
+    requestStoreDetail();
+
+    async function requestStoreDetail() {
+      const res = await fetchData({
+        path: `api/stores/${id}`,
+      });
+      setStoreDetail(res.data);
+    }
+  }, []);
+
   return (
     <Wrap
       onClick={() => {
@@ -14,11 +32,17 @@ function Store({ id, storeName, contactNumber, roadAddressName, reviewCounts, re
       <Title>{storeName}</Title>
       <Rate>
         <StarRateIcon color="warning" />
-        <Average>{reviewScoreAverage}</Average>
-        <div>({reviewCounts})</div>
+        <Average>{storeDetail.reviewScoreAverage}</Average>
+        <div>({storeDetail.reviewCounts})</div>
       </Rate>
-      <div>{contactNumber}</div>
-      <div>{roadAddressName}</div>
+      <Row>
+        <Icon icon="Phone" width={ICON.MEDIUM} height={ICON.MEDIUM} fill={COLOR.BLACK} />
+        <div>{contactNumber}</div>
+      </Row>
+      <Row>
+        <Icon icon="Location" width={ICON.MEDIUM} height={ICON.MEDIUM} fill={COLOR.BLACK} />
+        <div>{roadAddressName}</div>
+      </Row>
     </Wrap>
   );
 }
@@ -35,16 +59,22 @@ const Wrap = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: large;
+  font-size: 18px;
   font-weight: 700;
 `;
 
 const Rate = styled.div`
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 5px;
 `;
 
 const Average = styled.div`
   font-weight: 700;
+`;
+
+const Row = styled.div`
+  display: flex;
+  gap: 5px;
+  align-items: center;
 `;

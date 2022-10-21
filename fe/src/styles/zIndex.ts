@@ -7,4 +7,5 @@ export const Z_INDEX = {
   REVIEW_WRITE: {
     HEADER: 10,
   },
+  MAP_SEARCH_BTN: 20,
 };
