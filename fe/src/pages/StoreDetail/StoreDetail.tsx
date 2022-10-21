@@ -32,12 +32,12 @@ function StoreDetail() {
       const res = await fetchData({ path: `api/stores/${targetId}` });
       setStoreInfo(res.data);
     }
-  }, [targetId]);
+  }, []);
 
   useEffect(() => {
     const INIT_AFTER_PARAM = 0;
     fetchNextReviews(getUrl(INIT_AFTER_PARAM, REVIEW_SIZE, targetId));
-  }, [fetchNextReviews, targetId]);
+  }, []);
 
   return (
     <Wrap
