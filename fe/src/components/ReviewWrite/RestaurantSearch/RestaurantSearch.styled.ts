@@ -23,4 +23,5 @@ export const RestaurantSearchInput = styled.input.attrs<RestaurantSearchWrapperP
 export const Wrap = styled.div`
   width: 100%;
   padding: 12px;
+  position: relative;
 `;
