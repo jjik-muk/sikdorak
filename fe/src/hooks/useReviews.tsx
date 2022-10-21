@@ -1,5 +1,4 @@
-import { useCallback, useReducer, useState } from 'react';
-import { accountStore } from 'stores/AccountStore';
+import { useReducer, useState } from 'react';
 import { fetchData } from 'utils/fetch';
 
 function useReviews() {
@@ -15,8 +14,8 @@ function useReviews() {
       fetchNextReviews(url);
     }
   }
-  const fetchNextReviews = useCallback(async (url) => {
-    const res = accountStore.id ? await fetchData({ path: url, withAccessToken: true }) : await fetchData({ path: url });
+  const fetchNextReviews = async (url) => {
+    const res = await fetchData({ path: url, withAccessToken: true });
     const nextReviews = res.data.reviews;
     const nextAfterParam = res.data.page.next;
 
@@ -27,9 +26,8 @@ function useReviews() {
     if (isLastPage) {
       setHasNextPage(false);
     }
-  }, []);
-
-  return { reviews, dispatchReviews, handleScroll, fetchNextReviews, afterParam };
+  };
+  return { reviews, dispatchReviews, handleScroll, fetchNextReviews, afterParam, setAfterParam };
 }
 
 export default useReviews;
@@ -42,6 +40,8 @@ function reducer(state, action: ActionType) {
       return [...state, ...action.reviews];
     case 'DELETE_REVIEW':
       return state.filter((review) => review.reviewId !== action.reviewId);
+    case 'RESET_REVIEWS':
+      return [];
     default:
       return state;
   }

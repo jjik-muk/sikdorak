@@ -22,12 +22,12 @@ const UserDetail = observer(() => {
 
   useEffect(() => {
     userStore.fetchUserProfile(targetId);
-  }, [targetId]);
+  }, []);
 
   useEffect(() => {
     const INIT_AFTER_PARAM = 0;
     fetchNextReviews(getUrl(INIT_AFTER_PARAM, REVIEW_SIZE, targetId));
-  }, [fetchNextReviews, targetId]);
+  }, []);
 
   return (
     <Wrap
