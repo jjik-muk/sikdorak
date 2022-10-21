@@ -32,7 +32,10 @@ function ReviewDetail({ review, isActiveHeart, likeCnt, postLike, postUnlike }: 
         <FeedCard review={review} isActiveHeart={isActiveHeart} likeCnt={likeCnt} postLike={postLike} postUnlike={postUnlike} isUsedModal />
         <div style={{ padding: '0 10px 10px 10px' }}>
           {Boolean(tags.length) && <TagList tags={tags} imgUrl={user.userProfileImage} />}
-          {comments && comments.map(({ author, content, id }) => <Comment key={id} authorId={author.id} title={author.nickname} content={content} imgUrl={author.profileImage} />)}
+          {comments &&
+            comments.map(({ author, content, id }) => (
+              <Comment key={id} commentId={id} reviewId={reviewId} authorId={author.id} title={author.nickname} content={content} imgUrl={author.profileImage} />
+            ))}
           {hasNextComments && <Button onClick={fetchNextComment}>댓글 더보기</Button>}
           <WriteComment commentRef={commentRef} reviewId={reviewId} comments={comments} setComments={setComments} />
         </div>
