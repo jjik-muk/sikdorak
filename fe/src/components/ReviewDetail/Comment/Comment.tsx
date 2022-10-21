@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Wrap, Picture, Title, Content, ContentWrapper, CommentWrapper } from './Comment.styled';
 
@@ -23,6 +24,8 @@ function Comment({ imgUrl, title, content, authorId }: CommentProps) {
           </Title>
           <Content>{content}</Content>
         </ContentWrapper>
+        <Button variant="text">수정</Button>
+        <Button variant="text">삭제</Button>
       </CommentWrapper>
     </Wrap>
   );
