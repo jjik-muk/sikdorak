@@ -6,7 +6,7 @@ import { Wrap } from './Textarea.styled';
 function Textarea() {
   const [reviewWriteContext, dispatchReviewWriteState] = useReviewWrite();
   const [inputValue, setInputValue] = useState(reviewWriteContext.content);
-  const MIN_ROWS = 5;
+  const MIN_ROWS = 6;
 
   return (
     <Wrap>
