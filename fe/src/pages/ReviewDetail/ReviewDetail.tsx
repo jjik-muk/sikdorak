@@ -34,7 +34,17 @@ function ReviewDetail({ review, isActiveHeart, likeCnt, postLike, postUnlike }: 
           {Boolean(tags.length) && <TagList tags={tags} imgUrl={user.userProfileImage} />}
           {comments &&
             comments.map(({ author, content, id }) => (
-              <Comment key={id} commentId={id} reviewId={reviewId} authorId={author.id} title={author.nickname} content={content} imgUrl={author.profileImage} />
+              <Comment
+                key={id}
+                commentId={id}
+                reviewId={reviewId}
+                authorId={author.id}
+                title={author.nickname}
+                content={content}
+                imgUrl={author.profileImage}
+                comments={comments}
+                setComments={setComments}
+              />
             ))}
           {hasNextComments && <Button onClick={fetchNextComment}>댓글 더보기</Button>}
           <WriteComment commentRef={commentRef} reviewId={reviewId} comments={comments} setComments={setComments} />

@@ -6,7 +6,7 @@ import { accountStore } from 'stores/AccountStore';
 import { fetchData } from 'utils/fetch';
 import { Wrap, Picture, Title, Content, ContentWrapper, CommentWrapper } from './Comment.styled';
 
-function Comment({ imgUrl, commentId, reviewId, title, content, authorId }: CommentProps) {
+function Comment({ imgUrl, commentId, reviewId, title, content, authorId, comments, setComments }: CommentProps) {
   const navigate = useNavigate();
   const isMyComment = accountStore.id === authorId;
   const [modificationComment, setModificationComment] = useState(content);
@@ -36,7 +36,11 @@ function Comment({ imgUrl, commentId, reviewId, title, content, authorId }: Comm
             수정
           </Button>
         )}
-        {!isModificationMode && isMyComment && <Button variant="text">삭제</Button>}
+        {!isModificationMode && isMyComment && (
+          <Button variant="text" onClick={handleRemoveComment}>
+            삭제
+          </Button>
+        )}
         {isModificationMode && (
           <Button variant="text" onClick={handleModifyComment}>
             완료
@@ -50,6 +54,16 @@ function Comment({ imgUrl, commentId, reviewId, title, content, authorId }: Comm
       </CommentWrapper>
     </Wrap>
   );
+
+  function handleRemoveComment() {
+    fetchData({
+      path: `api/reviews/${reviewId}/comments/${commentId}`,
+      method: 'DELETE',
+      withAccessToken: true,
+    });
+    const newComments = comments.filter((comment) => comment.id !== commentId);
+    setComments(newComments);
+  }
 
   function handleChangeModificationInput(e) {
     setModificationComment(e.target.value);
@@ -77,4 +91,6 @@ type CommentProps = {
   title?: string;
   content?: string;
   authorId?: number;
+  comments: any[];
+  setComments: any;
 };
