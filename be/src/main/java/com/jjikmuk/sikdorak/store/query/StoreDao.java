@@ -19,6 +19,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,15 +74,15 @@ public class StoreDao {
 			userLocationInfoRequest.y(), userLocationInfoRequest.radius());
 		UserLocationBasedMaxRange coordinates = new UserLocationBasedMaxRange(userLocationInfo);
 
-		List<Store> stores = storeRepository.findStoresByRadius(coordinates.getMaxX(),
+		Slice<Store> stores = storeRepository.findStoresByRadius(coordinates.getMaxX(),
 			coordinates.getMaxY(),
 			coordinates.getMinX(),
 			coordinates.getMinY(),
 			cursorPageRequest.getAfter(),
 			Pageable.ofSize(cursorPageRequest.getSize()));
 
-		List<StoreRadiusSearchResponse> storeListResponse = getStoreListResponse(stores);
-		CursorPageResponse cursorPageResponse = getCursorPageResponse(storeListResponse, cursorPageRequest);
+		List<StoreRadiusSearchResponse> storeListResponse = getStoreListResponse(stores.getContent());
+		CursorPageResponse cursorPageResponse = getCursorPageResponse(storeListResponse, stores.isLast());
 
 		return StoreListByRadiusResponse.of(storeListResponse, cursorPageResponse);
 	}
@@ -93,16 +94,13 @@ public class StoreDao {
 	}
 
 	private CursorPageResponse getCursorPageResponse(List<StoreRadiusSearchResponse> storeListResponse,
-		CursorPageRequest cursorPageRequest) {
+		boolean isLast) {
 
-		if (storeListResponse.isEmpty()) {
-			return new CursorPageResponse(0, 0L, 0L, true);
-		}
-
-		boolean isLast = cursorPageRequest.getSize() > storeListResponse.size();
+		long afterTargetId = storeListResponse.isEmpty() ? 0L
+			: storeListResponse.get(storeListResponse.size() - 1).id();
 
 		return new CursorPageResponse(storeListResponse.size(), 0L,
-			storeListResponse.get(storeListResponse.size() - 1).id(), isLast);
+			afterTargetId, isLast);
 	}
 
 	private void validateCursorRequest(CursorPageRequest cursorPageRequest) {
