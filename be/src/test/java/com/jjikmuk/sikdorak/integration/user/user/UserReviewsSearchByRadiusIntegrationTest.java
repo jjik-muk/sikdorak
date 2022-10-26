@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayName("통합: 위치기반 유저의 리뷰목록 조회")
-public class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTest {
+class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTest {
 
     @Autowired
     private ReviewDao reviewDao;
@@ -32,7 +32,7 @@ public class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTes
             testData.hoi.getId(), loginUser,
             userLocationInfoRequest, cursorPageRequest);
 
-        assertThat(reviewListResponse.reviews().size()).isEqualTo(1);
+        assertThat(reviewListResponse.reviews()).hasSize(1);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTes
             testData.hoi.getId(), loginUser,
             userLocationInfoRequest, cursorPageRequest);
 
-        assertThat(reviewListResponse.reviews().size()).isEqualTo(1);
+        assertThat(reviewListResponse.reviews()).hasSize(1);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTes
             testData.hoi.getId(), loginUser,
             userLocationInfoRequest, cursorPageRequest);
 
-        assertThat(reviewListResponse.reviews().size()).isEqualTo(2);
+        assertThat(reviewListResponse.reviews()).hasSize(2);
     }
 
     @Test

@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
 @DisplayName("문서화: 위치기반 유저의 리뷰목록 조회")
-public class UserReviewsSearchByRadiusDocumentationTest extends InitDocumentationTest {
+class UserReviewsSearchByRadiusDocumentationTest extends InitDocumentationTest {
 
     @Test
     @DisplayName("위치기반 유저 리뷰목록 조회 요청이 올바른 경우 리뷰목록과 함께 성공 상태코드를 반환한다.")

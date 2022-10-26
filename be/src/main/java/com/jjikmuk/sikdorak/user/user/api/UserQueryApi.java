@@ -68,7 +68,7 @@ public class UserQueryApi {
         @CursorPageable CursorPageRequest cursorPageRequest) {
 
         ReviewListResponse userReviewResponses =
-            reviewDao.searchUserReviewsByRadius(userId, loginUser,userLocationInfoRequest,
+            reviewDao.searchUserReviewsByRadius(userId, loginUser, userLocationInfoRequest,
                 cursorPageRequest);
 
         return new CommonResponseEntity<>(
