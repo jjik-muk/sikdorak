@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.documentationtest.user.user;
 
 import static com.jjikmuk.sikdorak.documentationtest.user.user.UserSnippet.USER_REVIEW_SEARCH_BY_RADIUS_REQUEST;
 import static com.jjikmuk.sikdorak.documentationtest.user.user.UserSnippet.USER_REVIEW_SEARCH_BY_RADIUS_RESPONSE;
+import static com.jjikmuk.sikdorak.documentationtest.user.user.UserSnippet.USER_SEARCH_REVIEWS_REQUEST_PATH_PARAM_SNIPPET;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
@@ -21,6 +22,7 @@ public class UserReviewsSearchByRadiusDocumentationTest extends InitDocumentatio
         given(this.spec)
             .filter(document(
                 DEFAULT_RESTDOC_PATH,
+                USER_SEARCH_REVIEWS_REQUEST_PATH_PARAM_SNIPPET,
                 USER_REVIEW_SEARCH_BY_RADIUS_REQUEST,
                 USER_REVIEW_SEARCH_BY_RADIUS_RESPONSE
             ))
