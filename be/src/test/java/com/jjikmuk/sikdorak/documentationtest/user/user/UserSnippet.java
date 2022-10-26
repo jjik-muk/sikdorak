@@ -1,5 +1,8 @@
 package com.jjikmuk.sikdorak.documentationtest.user.user;
 
+import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.DEFAULT_PAGING_AFTER_REQUEST_PARAMETER;
+import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.DEFAULT_PAGING_BEFORE_REQUEST_PARAMETER;
+import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.DEFAULT_PAGING_SIZE_REQUEST_PARAMETER;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.createResponseSnippetWithFields;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.requestPagingFieldsOfCommon;
 import static com.jjikmuk.sikdorak.documentationtest.DocumentFormatGenerator.requestSnippetWithConstraintsAndFields;
@@ -149,6 +152,51 @@ public interface UserSnippet {
             fieldWithPath("nickname").type(JsonFieldType.STRING).description("유저 닉네임"),
             fieldWithPath("profileImage").type(JsonFieldType.STRING).description("유저 프로필 이미지")
         )
+    );
+
+    Snippet USER_REVIEW_SEARCH_BY_RADIUS_REQUEST = requestParameters(
+        parameterWithName("type").description("요청하는 페이지 타입 - feed | maps 로 나뉩니다."),
+        parameterWithName("x").description("경도(최대값: 180.0 / 최소값: -180.0)"),
+        parameterWithName("y").description("위도(최대값: 90.0 / 최소값: -90.0)"),
+        parameterWithName("radius").description("위치 반경(최대값: 100 / 최소값: 20000)"),
+        DEFAULT_PAGING_SIZE_REQUEST_PARAMETER,
+        DEFAULT_PAGING_BEFORE_REQUEST_PARAMETER,
+        DEFAULT_PAGING_AFTER_REQUEST_PARAMETER
+    );
+
+    Snippet USER_REVIEW_SEARCH_BY_RADIUS_RESPONSE = createResponseSnippetWithFields(
+        responseFieldsOfCommon(),
+
+        responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailUserResponse.class,
+            fieldWithPath("reviews[].user").type(JsonFieldType.OBJECT).description("유저 정보"),
+            fieldWithPath("reviews[].user.userId").type(JsonFieldType.NUMBER).description("유저 아이디"),
+            fieldWithPath("reviews[].user.userNickname").type(JsonFieldType.STRING).description("유저 이름"),
+            fieldWithPath("reviews[].user.userProfileImage").type(JsonFieldType.STRING)
+                .description("유저 프로필 이미지")),
+
+        responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailStoreResponse.class,
+            fieldWithPath("reviews[].store").type(JsonFieldType.OBJECT).description("가게 정보"),
+            fieldWithPath("reviews[].store.storeId").type(JsonFieldType.NUMBER).description("가게 아이디"),
+            fieldWithPath("reviews[].store.storeName").type(JsonFieldType.STRING).description("가게 이름"),
+            fieldWithPath("reviews[].store.addressName").type(JsonFieldType.STRING).description("지번 주소"),
+            fieldWithPath("reviews[].store.roadAddressName").type(JsonFieldType.STRING).description("도로명 주소")),
+
+        responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailLikeResponse.class,
+            fieldWithPath("reviews[].like.count").type(JsonFieldType.NUMBER).description("좋아요 개수"),
+            fieldWithPath("reviews[].like.userLikeStatus").type(JsonFieldType.BOOLEAN).description("유저의 좋아요 여부")),
+
+        responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailResponse.class,
+            fieldWithPath("reviews[].reviewId").type(JsonFieldType.NUMBER).description("리뷰 아이디"),
+            fieldWithPath("reviews[].reviewContent").type(JsonFieldType.STRING).description("리뷰 내용"),
+            fieldWithPath("reviews[].reviewScore").type(JsonFieldType.NUMBER).description("리뷰 점수"),
+            fieldWithPath("reviews[].reviewVisibility").type(JsonFieldType.STRING).description("리뷰 게시물의 공개 범위"),
+            fieldWithPath("reviews[].visitedDate").type(JsonFieldType.STRING).description("가게 방문일"),
+            fieldWithPath("reviews[].tags").type(JsonFieldType.ARRAY).description("리뷰를 표현하는 태그들"),
+            fieldWithPath("reviews[].images").type(JsonFieldType.ARRAY).description("리뷰를 위한 사진 URL"),
+            fieldWithPath("reviews[].createdAt").type(JsonFieldType.STRING).description("리뷰 생성 시간"),
+            fieldWithPath("reviews[].updatedAt").type(JsonFieldType.STRING).description("리뷰 수정 시간")),
+
+        responsePagingFieldsOfCommon()
     );
 
 
