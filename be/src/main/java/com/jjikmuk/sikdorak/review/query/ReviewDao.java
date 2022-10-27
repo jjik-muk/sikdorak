@@ -122,7 +122,7 @@ public class ReviewDao {
             pagingInfo, coordinates);
 
         List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews.getContent(), loginUser);
-        CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, cursorPageRequest);
+        CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, reviews.isLast());
 
         return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
     }
