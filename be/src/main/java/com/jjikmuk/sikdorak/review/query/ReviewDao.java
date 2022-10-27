@@ -10,8 +10,11 @@ import com.jjikmuk.sikdorak.review.query.dto.PagingInfo;
 import com.jjikmuk.sikdorak.review.query.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.store.command.domain.Store;
+import com.jjikmuk.sikdorak.store.command.domain.UserLocationInfo;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.command.domain.StoreRepository;
+import com.jjikmuk.sikdorak.store.query.dto.UserLocationBasedMaxRange;
+import com.jjikmuk.sikdorak.store.query.request.UserLocationInfoRequest;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
 import com.jjikmuk.sikdorak.user.user.command.domain.RelationType;
 import com.jjikmuk.sikdorak.user.user.command.domain.User;
@@ -93,6 +96,33 @@ public class ReviewDao {
 
         List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(userReviews.getContent(), loginUser);
         CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, userReviews.isLast());
+
+        return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
+    }
+
+    @Transactional
+    public ReviewListResponse searchUserReviewsByRadius(Long searchUserId, LoginUser loginUser,
+        UserLocationInfoRequest userLocationInfoRequest, CursorPageRequest cursorPageRequest) {
+
+        //조회 대상 검증 & 페이징 조건 검증
+        validateCursorPageSize(cursorPageRequest);
+        PagingInfo pagingInfo = convertToPagingInfo(cursorPageRequest);
+        User searchUser = userRepository.findById(searchUserId)
+            .orElseThrow(NotFoundUserException::new);
+
+        //클라이언트의 위치 정보 계산
+        UserLocationInfo userLocationInfo = new UserLocationInfo(userLocationInfoRequest.x(),
+            userLocationInfoRequest.y(), userLocationInfoRequest.radius());
+        UserLocationBasedMaxRange coordinates = new UserLocationBasedMaxRange(userLocationInfo);
+
+        //클라이언트와 조회대상의 관계 확인
+        //팔로우 관계면 protected 범위의 글까지 제공
+        //아니면 public만 제공
+        Slice<Review> reviews = getRecommendedReviewsByRadius(loginUser, searchUser,
+            pagingInfo, coordinates);
+
+        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews.getContent(), loginUser);
+        CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, reviews.isLast());
 
         return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
     }
@@ -182,6 +212,37 @@ public class ReviewDao {
             pagingInfo.cursor(),
             pagingInfo.pageable());
     }
+
+    private Slice<Review> getRecommendedReviewsByRadius(LoginUser loginUser, User searchUser,
+        PagingInfo pagingInfo,
+        UserLocationBasedMaxRange coordinates) {
+        if (loginUser.isAnonymous()
+            || !RelationType.CONNECTION.equals(searchUser.relationTypeTo(loginUser))) {
+            return reviewRepository.findPublicReviewsByRadius(
+                searchUser.getId(),
+                pagingInfo.cursor(),
+                pagingInfo.pageable(),
+                coordinates.getMaxX(),
+                coordinates.getMaxY(),
+                coordinates.getMinX(),
+                coordinates.getMinY()
+                );
+        }
+
+        if (!userRepository.existsById(loginUser.getId())) {
+            throw new NotFoundUserException();
+        }
+
+        return reviewRepository.findPublicAndProtectedReviewsByRadius(
+            searchUser.getId(),
+            pagingInfo.cursor(),
+            pagingInfo.pageable(),
+            coordinates.getMaxX(),
+            coordinates.getMaxY(),
+            coordinates.getMinX(),
+            coordinates.getMinY());
+    }
+
 
     private Map<Long, Store> getReviewStores(List<Long> storeIds) {
         return storeRepository.findAllById(storeIds).stream()

@@ -84,4 +84,38 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query(value = "select max(review_id) from review", nativeQuery = true)
     Optional<Long> findMaxId();
 
+
+    @Query(value = """
+        select * from review as r
+        join store as s on s.store_id = r.store_id
+        where r.review_id <= :targetId and r.user_id = :authorId
+        and r.review_visibility = 'PUBLIC'
+        and s.x between :minX and :maxX
+        and s.y between :minY and :maxY  
+        order by (select count(*) from likes as l where l.review_id = r.review_id) desc, r.review_id desc 
+        """,
+        nativeQuery = true)
+    Slice<Review> findPublicReviewsByRadius(
+        @Param("authorId") long authorId,
+        @Param("targetId") long targetId,
+        Pageable pageable,
+        double maxX, double maxY,
+        double minX, double minY);
+
+    @Query("""
+        select r from Review r
+        join Store as s on s.id = r.storeId
+        where r.id <= :targetId and r.userId = :authorId
+        and not r.reviewVisibility = 'PRIVATE'
+        and s.location.x between :minX and :maxX
+        and s.location.y between :minY and :maxY
+        order by r.id desc
+        """)
+    Slice<Review> findPublicAndProtectedReviewsByRadius(
+        @Param("authorId") long authorId,
+        @Param("targetId") long targetId,
+        Pageable pageable,
+        double maxX, double maxY,
+        double minX, double minY);
+
 }

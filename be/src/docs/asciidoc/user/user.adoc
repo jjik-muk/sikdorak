@@ -6,6 +6,7 @@
 
 | <<유저 검색>> | GET /api/users?nickname={value}
 | <<유저가 작성한 리뷰들 조회>> | GET /api/users/{userId}/reviews?after={value}&size={value}
+| <<위치기반 유저가 작성한 리뷰들 조회>> | GET /api/users/{userId}/reviews?type=maps&y={value}&x={value}&after={value}&size={value}
 | <<유저 본인 프로필 조회>> | GET /api/users/me
 | <<유저 프로필 조회>> | GET /api/users/{userId}
 | <<유저 프로필 수정 요청>> | PUT /api/users
@@ -66,6 +67,24 @@ operation::user_reviews_search_by_user_id_documentation_test/self_user_search_us
 ===== Response
 
 operation::user_reviews_search_by_user_id_documentation_test/self_user_search_user_reviews_success[snippets='http-response']
+
+=== 위치기반 유저가 작성한 리뷰들 조회
+
+API : `GET /api/users/{userId}/reviews?type=maps&y={value}&x={value}&after={value}&size={value}`
+
+사용자의 위치를 기반으로 특정유저의 리뷰 목록을 조회합니다.
+(팔로우 관계의 유저면 public|protected 공개범위, 아니면 public 공개범위의 데이터를 반환합니다.)
+
+=== `200 OK`
+
+=== Request
+
+operation::user_reviews_search_by_radius_documentation_test/reviews_radius_success[snippets='http-request,path-parameters,request-parameters']
+
+=== Response
+
+operation::user_reviews_search_by_radius_documentation_test/reviews_radius_success[snippets='http-response,response-fields']
+
 
 === 유저 본인 프로필 조회
 

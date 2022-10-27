@@ -20,10 +20,10 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
     STORE_CREATE_SUCCESS("T-S002", "가게 등록에 성공했습니다."),
     STORE_MODIFY_SUCCESS("T-S003", "가게 수정에 성공했습니다."),
     STORE_REMOVE_SUCCESS("T-S004", "가게 삭제에 성공했습니다."),
-    STORE_SEARCH_BY_RADIUS_SUCCESS("T-S005", "위치기반 가게 목록 조회에 성공했습니다"),
-    STORE_VERIFY_OR_SAVE_RESPONSE("T-S006", "가게 등록 검증에 성공했습니다"),
-    STORE_SEARCH_DETAIL_SUCCESS("T-S007", "가게 상세 조회에 성공했습니다"),
-    STORE_SEARCH_REVIEW_SUCCESS("T-S008", "가게 리뷰 조회에 성공했습니다"),
+    STORE_SEARCH_BY_RADIUS_SUCCESS("T-S005", "위치기반 가게 목록 조회에 성공했습니다."),
+    STORE_VERIFY_OR_SAVE_RESPONSE("T-S006", "가게 등록 검증에 성공했습니다."),
+    STORE_SEARCH_DETAIL_SUCCESS("T-S007", "가게 상세 조회에 성공했습니다."),
+    STORE_SEARCH_REVIEW_SUCCESS("T-S008", "가게 리뷰 조회에 성공했습니다."),
 
     //User
     USER_MODIFY_SUCCESS("T-U001", "유저 프로필 수정에 성공했습니다."),
@@ -32,9 +32,10 @@ public enum ResponseCodeAndMessages implements CodeAndMessages {
     USER_SEARCH_REVIEWS_SUCCESS("T-U004", "유저 리뷰 검색 성공했습니다."),
     USER_SEARCH_PROFILE_SUCCESS("T-U005", "유저 프로필 조회에 성공했습니다."),
     USER_DELETE_SUCCESS("T-U006", "유저 정보 삭제에 성공했습니다."),
-    USER_SEARCH_FOLLOWERS_SUCCESS("T-007", "유저 팔로워 목록 조회에 성공했습니다."),
-    USER_SEARCH_FOLLOWINGS_SUCCESS("T-008", "유저 팔로잉 목록 조회에 성공했습니다."),
-    USER_SEARCH_SUCCESS("T-009", "유저 검색에 성공했습니다."),
+    USER_SEARCH_FOLLOWERS_SUCCESS("T-U007", "유저 팔로워 목록 조회에 성공했습니다."),
+    USER_SEARCH_FOLLOWINGS_SUCCESS("T-U008", "유저 팔로잉 목록 조회에 성공했습니다."),
+    USER_SEARCH_SUCCESS("T-U009", "유저 검색에 성공했습니다."),
+    USER_REVIEW_SEARCH_BY_RADIUS_SUCCESS("T-U010", "위치기반 유저 리뷰목록 조회에 성공했습니다"),
 
     // Comment
     COMMENT_CREATE_SUCCESS("T-C001", "댓글 작성에 성공했습니다."),
