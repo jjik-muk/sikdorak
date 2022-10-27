@@ -3,6 +3,7 @@ package com.jjikmuk.sikdorak.store.command.domain;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,7 +22,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
         and s.id > :targetId
         order by s.id
         """)
-    List<Store> findStoresByRadius(@Param("maxX") double maxX,
+    Slice<Store> findStoresByRadius(@Param("maxX") double maxX,
         @Param("maxY")double maxY,
         @Param("minX")double minX,
         @Param("minY")double minY,

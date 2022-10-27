@@ -25,6 +25,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,8 +35,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class ReviewDao {
 
-    private static final long FIRST_CURSOR_ID = 0L;
-    private static final long LAST_CURSOR_ID = 0L;
     private static final int PAGING_LIMIT_SIZE = 15;
 
     private final StoreRepository storeRepository;
@@ -66,11 +65,11 @@ public class ReviewDao {
 
         validateCursorPageSize(cursorPageRequest);
         PagingInfo pagingInfo = convertToPagingInfo(cursorPageRequest);
-        List<Review> reviews = getRecommendedReviews(loginUser, pagingInfo);
+        Slice<Review> reviews = getRecommendedReviews(loginUser, pagingInfo);
 
-        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews, loginUser);
+        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews.getContent(), loginUser);
         CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse,
-            cursorPageRequest);
+            reviews.isLast());
 
         return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
 
@@ -90,10 +89,10 @@ public class ReviewDao {
         User searchUser = userRepository.findById(searchUserId)
             .orElseThrow(NotFoundUserException::new);
 
-        List<Review> userReviews = findUserReviews(loginUser, searchUser, pagingInfo);
+        Slice<Review> userReviews = findUserReviews(loginUser, searchUser, pagingInfo);
 
-        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(userReviews, loginUser);
-        CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, cursorPageRequest);
+        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(userReviews.getContent(), loginUser);
+        CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, userReviews.isLast());
 
         return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
     }
@@ -109,16 +108,16 @@ public class ReviewDao {
 
         PagingInfo pagingInfo = convertToPagingInfo(cursorPageRequest);
 
-        List<Review> reviews = getStoreReviews(store.getId(), pagingInfo);
+        Slice<Review> reviews = getStoreReviews(store.getId(), pagingInfo);
 
-        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews, loginUser);
+        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews.getContent(), loginUser);
         CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse,
-            cursorPageRequest);
+            reviews.isLast());
 
         return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
     }
 
-    private List<Review> getStoreReviews(long storeId, PagingInfo pagingInfo) {
+    private Slice<Review> getStoreReviews(long storeId, PagingInfo pagingInfo) {
         return reviewRepository.findPublicReviewsOfStore(storeId, pagingInfo.cursor(),
             pagingInfo.pageable());
     }
@@ -147,16 +146,12 @@ public class ReviewDao {
     }
 
     private CursorPageResponse getCursorResponse(List<ReviewDetailResponse> reviewResponses,
-        CursorPageRequest cursorPageRequest) {
-        if (reviewResponses.isEmpty()) {
-            return new CursorPageResponse(0, FIRST_CURSOR_ID, LAST_CURSOR_ID, true);
-        }
+        boolean isLast) {
 
         int lastIndex = reviewResponses.size() - 1;
-        long nextCursorId = reviewResponses.get(lastIndex).reviewId() - 1;
-        boolean isLast = nextCursorId == 0L;
+        long nextCursorId = reviewResponses.isEmpty() ? 0L : reviewResponses.get(lastIndex).reviewId() - 1;
 
-        return new CursorPageResponse(cursorPageRequest.getSize(), FIRST_CURSOR_ID, nextCursorId, isLast);
+        return new CursorPageResponse(reviewResponses.size(), 0L, nextCursorId, isLast);
     }
 
     private void validateCursorPageSize(CursorPageRequest cursorPageRequest) {
@@ -172,7 +167,7 @@ public class ReviewDao {
         return PagingInfo.from(cursor, size);
     }
 
-    private List<Review> getRecommendedReviews(LoginUser loginUser, PagingInfo pagingInfo) {
+    private Slice<Review> getRecommendedReviews(LoginUser loginUser, PagingInfo pagingInfo) {
         if (loginUser.isAnonymous()) {
             return reviewRepository.findPublicRecommendedReviewsInRecentOrder(pagingInfo.cursor(),
                 pagingInfo.pageable());
@@ -210,7 +205,7 @@ public class ReviewDao {
             .toList();
     }
 
-    private List<Review> findUserReviews(LoginUser loginUser, User searchUser, PagingInfo pagingInfo) {
+    private Slice<Review> findUserReviews(LoginUser loginUser, User searchUser, PagingInfo pagingInfo) {
         return switch (searchUser.relationTypeTo(loginUser)) {
             case SELF -> reviewRepository.findByUserIdWithPageable(searchUser.getId(),
                 pagingInfo.cursor(), pagingInfo.pageable());
