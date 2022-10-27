@@ -6,7 +6,7 @@
 
 | <<유저 검색>> | GET /api/users?nickname={value}
 | <<유저가 작성한 리뷰들 조회>> | GET /api/users/{userId}/reviews?after={value}&size={value}
-| <<위치기반 유저가 작성한 리뷰들 조회>> | GET /api/users/{userId}/reviews?type=maps&latitude={value}&longitude={value}&after={value}&size={value}
+| <<위치기반 유저가 작성한 리뷰들 조회>> | GET /api/users/{userId}/reviews?type=maps&y={value}&x={value}&after={value}&size={value}
 | <<유저 본인 프로필 조회>> | GET /api/users/me
 | <<유저 프로필 조회>> | GET /api/users/{userId}
 | <<유저 프로필 수정 요청>> | PUT /api/users
