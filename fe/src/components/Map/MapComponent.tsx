@@ -18,7 +18,7 @@ export default function MapComponent({ stores, mapPos, setMapPos }: any) {
   useEffect(handleOverlay, [mapPos, stores]);
 
   function initMap() {
-    const center = new kakao.maps.LatLng(mapPos.x, mapPos.y);
+    const center = new kakao.maps.LatLng(mapPos.lat, mapPos.lng);
     const mapOption = { center, level: 3 };
     const map = new kakao.maps.Map(mapRef.current, mapOption);
 
@@ -27,7 +27,7 @@ export default function MapComponent({ stores, mapPos, setMapPos }: any) {
 
     function updateCenterPosition() {
       const latlng = map.getCenter();
-      const newMapPos = { x: latlng.getLat(), y: latlng.getLng() };
+      const newMapPos = { lat: latlng.getLat(), lng: latlng.getLng() };
       setMapPos(newMapPos);
     }
   }

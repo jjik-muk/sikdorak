@@ -8,12 +8,13 @@ import MapComponent from 'components/Map/MapComponent';
 import Stores from 'components/Map/Stores/Stores';
 import useAuth from 'hooks/useAuth';
 import useReviews from 'hooks/useReviews';
+import { useReviewsBasedLocation } from 'hooks/useReviewsBasedLocation';
 import useSearchBar from 'hooks/useSearchBar';
 import { useStores, MAP_POS_DEFAULT } from 'hooks/useStores';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Z_INDEX } from 'styles/zIndex';
-import { createKey } from 'utils/utils';
+import { compareTwoObjects, createKey } from 'utils/utils';
 import { ContentArea, FeedsArea, MapArea } from './Map.styled';
 
 const TABS = [{ label: '가게 목록' }, { label: '유저 리뷰' }];
@@ -22,26 +23,31 @@ function Map() {
   const [activeTabIdx, setActiveTabIdx] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMovedMap, setIsMovedMap] = useState(false);
-  const { stores, mapPos, setMapPos, fetchAndSetStores } = useStores();
+  const { stores, mapPos, setMapPos, fetchAndSetStores, isLastPage } = useStores();
   const { inputValue, searchResults, setInputValue, debouncedSearch } = useSearchBar();
   const { dispatchReviews } = useReviews();
   useAuth();
+
+  const { reviews, fetchAndSetReviews, userId, setUserId, isLastPageReview } = useReviewsBasedLocation();
+
   const isSelectedRestaurantList = activeTabIdx === 0;
   const isSelectedUserReviews = activeTabIdx === 1;
 
   useEffect(
     function handleIsMovedState() {
-      const isInitLocation = mapPos.x === MAP_POS_DEFAULT.x && mapPos.y === MAP_POS_DEFAULT.y;
-      if (isInitLocation) {
-        return;
+      if (!compareTwoObjects(mapPos, MAP_POS_DEFAULT)) {
+        setIsMovedMap(true);
       }
-      setIsMovedMap(true);
     },
     [mapPos],
   );
 
   useEffect(() => {
-    fetchAndSetStores();
+    fetchAndSetReviews({ saveMethod: 'OVERWRITE' });
+  }, [userId]);
+
+  useEffect(() => {
+    fetchAndSetStores({ saveMethod: 'OVERWRITE' });
   }, []);
 
   useEffect(() => {
@@ -73,33 +79,49 @@ function Map() {
           ))}
         </Tabs>
         <FeedsArea>
-          <UserSearchBarWrap>
-            {isSelectedUserReviews && (
-              <TextField
-                fullWidth
-                label="유저 검색"
-                variant="outlined"
-                value={inputValue}
-                onChange={handleChangeSearchBar}
-                onClick={handleClickSearchBar}
-                onFocus={openModal}
-                onBlur={closeModal}
-              />
-            )}
-            {isModalOpen && (
-              <Modal fullWidth>
-                {searchResults?.data?.map(({ id, nickname, profileImage }) => (
-                  <UserSearchResultList id={id} nickname={nickname} profileImage={profileImage} />
-                ))}
-              </Modal>
-            )}
-          </UserSearchBarWrap>
-          {isSelectedRestaurantList ? <Stores stores={stores} /> : <Feeds reviews={[]} />}
+          {/* 유저 리뷰 */}
+          {isSelectedUserReviews && (
+            <>
+              <UserSearchBarWrap>
+                <TextField
+                  fullWidth
+                  label="유저 검색"
+                  variant="outlined"
+                  value={inputValue}
+                  onChange={handleChangeSearchBar}
+                  onClick={handleClickSearchBar}
+                  onFocus={openModal}
+                  onBlur={closeModal}
+                />
+                {isModalOpen && (
+                  <Modal fullWidth>
+                    {searchResults?.data?.map(({ id, nickname, profileImage }) => (
+                      <UserSearchResultList id={id} nickname={nickname} profileImage={profileImage} setUserId={setUserId} setInputValue={setInputValue} />
+                    ))}
+                  </Modal>
+                )}
+              </UserSearchBarWrap>
+              <Feeds reviews={reviews} />
+              {!isLastPageReview && (
+                <Button variant="text" onClick={handleMoreSearchReviews}>
+                  검색결과 더 보기
+                </Button>
+              )}
+            </>
+          )}
+
+          {/* 가게 목록 */}
+          {isSelectedRestaurantList && <Stores stores={stores} />}
+          {isSelectedRestaurantList && !isLastPage && (
+            <Button variant="text" onClick={handleMoreSearch}>
+              검색결과 더 보기
+            </Button>
+          )}
         </FeedsArea>
         <MapArea>
           <MapComponent stores={stores} mapPos={mapPos} setMapPos={setMapPos} />
           {isMovedMap && (
-            <Button variant="contained" onClick={handleSearchMap} sx={{ position: 'absolute', top: '16px', left: '48%', zIndex: Z_INDEX.MAP_SEARCH_BTN }}>
+            <Button variant="contained" onClick={handleSearchAgain} sx={{ position: 'absolute', top: '16px', left: '48%', zIndex: Z_INDEX.MAP_SEARCH_BTN }}>
               현 지도에서 재검색
             </Button>
           )}
@@ -108,11 +130,16 @@ function Map() {
     </>
   );
 
-  function handleSearchMap() {
-    fetchAndSetStores();
+  function handleMoreSearchReviews() {
+    fetchAndSetReviews({ saveMethod: 'ACCUMULATE' });
+  }
+  function handleMoreSearch() {
+    fetchAndSetStores({ saveMethod: 'ACCUMULATE' });
+  }
+  function handleSearchAgain() {
+    fetchAndSetStores({ saveMethod: 'OVERWRITE' });
     setIsMovedMap(false);
   }
-
   function closeModal() {
     setIsModalOpen(false);
   }
@@ -132,16 +159,21 @@ function Map() {
   }
 }
 
-function UserSearchResultList({ id, nickname, profileImage }: any) {
+function UserSearchResultList({ id, nickname, profileImage, setUserId, setInputValue }: any, idx: number) {
   return (
-    <Wrap key={id}>
+    <Wrap key={createKey(id, idx)} onMouseDown={handleUserId}>
       <Profile src={profileImage} alt="profile" width={30} height={30} />
-      <Nickname>{nickname}</Nickname>
+      <span>{nickname}</span>
     </Wrap>
   );
+
+  function handleUserId() {
+    setUserId(id);
+    setInputValue(nickname);
+  }
 }
 
-const Wrap = styled.li`
+const Wrap = styled.div`
   display: flex;
   flex-direction: row;
   padding: 10px;
@@ -157,8 +189,6 @@ const Wrap = styled.li`
 const Profile = styled.img`
   border-radius: 50%;
 `;
-
-const Nickname = styled.span``;
 
 const UserSearchBarWrap = styled.div`
   position: relative;

@@ -17,7 +17,7 @@ export const ContentArea = styled.div`
 
 export const FeedsArea = styled.div`
   flex: 2;
-  padding: 20px;
+  padding: 20px 20px 60px 20px;
   overflow-y: auto;
   height: 910px;
   display: flex;
