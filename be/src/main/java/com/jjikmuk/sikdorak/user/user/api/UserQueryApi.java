@@ -6,6 +6,7 @@ import com.jjikmuk.sikdorak.common.controller.CursorPageable;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.review.query.ReviewDao;
+import com.jjikmuk.sikdorak.review.query.response.ReviewListForMapResponse;
 import com.jjikmuk.sikdorak.review.query.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.store.query.request.UserLocationInfoRequest;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
@@ -61,13 +62,13 @@ public class UserQueryApi {
     }
 
     @GetMapping(path = "/{userId}/reviews", params = {"type=maps"})
-    public CommonResponseEntity<ReviewListResponse> searchReviewsByRadius(
+    public CommonResponseEntity<ReviewListForMapResponse> searchReviewsByRadius(
         @PathVariable Long userId,
         @AuthenticatedUser LoginUser loginUser,
         UserLocationInfoRequest userLocationInfoRequest,
         @CursorPageable CursorPageRequest cursorPageRequest) {
 
-        ReviewListResponse userReviewResponses =
+        ReviewListForMapResponse userReviewResponses =
             reviewDao.searchUserReviewsByRadius(userId, loginUser, userLocationInfoRequest,
                 cursorPageRequest);
 
