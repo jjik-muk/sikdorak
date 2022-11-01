@@ -20,7 +20,7 @@ export const FeedsArea = styled.div`
   padding: 20px;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 910px;
+  height: 92vh;
   display: flex;
   flex-direction: column;
 `;
