@@ -1,5 +1,5 @@
 import { STATUS_CODE } from 'constants/statusCode';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchData } from 'utils/fetch';
 
 export const MAP_POS_DEFAULT = { lat: 37.509389, lng: 127.105143 };
@@ -8,10 +8,16 @@ const RADIUS_METER = 2000;
 
 export function useReviewsBasedLocation() {
   const [reviews, setReviews] = useState([]);
+  const [storesOfReviews, setStoresOfReviews] = useState([]);
   const [mapPos, setMapPos] = useState(MAP_POS_DEFAULT);
   const [afterParam, setAfterParam] = useState(0);
-  const [isLastPageReview, setIsLastPageReview] = useState(false);
+  const [isLastPageReview, setIsLastPageReview] = useState(true);
   const [userId, setUserId] = useState(0);
+
+  useEffect(() => {
+    const stores = reviews.map((review) => review.store);
+    setStoresOfReviews(stores);
+  }, [reviews]);
 
   async function fetchAndSetReviews({ saveMethod }: FetchAndSetReviewsParamType) {
     const { lat, lng } = mapPos;
@@ -42,7 +48,7 @@ export function useReviewsBasedLocation() {
     return res;
   }
 
-  return { reviews, setReviews, mapPos, setMapPos, fetchAndSetReviews, setAfterParam, isLastPageReview, userId, setUserId };
+  return { reviews, setReviews, mapPos, setMapPos, fetchAndSetReviews, setAfterParam, isLastPageReview, userId, setUserId, storesOfReviews };
 }
 
 type FetchAndSetReviewsParamType = {
