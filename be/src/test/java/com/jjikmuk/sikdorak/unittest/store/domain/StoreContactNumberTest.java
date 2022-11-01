@@ -50,11 +50,25 @@ class StoreContactNumberTest {
         }
 
         @Nested
+        @DisplayName("만약 empty, blank 인 contactNumber 가 주어져도")
+        class Context_with_empty_contactNumber {
+
+            @ParameterizedTest
+            @ValueSource(strings = {"", " "})
+            @DisplayName("전화번호가 null 인 ContactNumber 객체를 반환한다")
+            void It_returns_a_object(String number) {
+                StoreContactNumber contactNumber = new StoreContactNumber(number);
+
+                assertThat(contactNumber.getContactNumber()).isNull();
+            }
+        }
+
+        @Nested
         @DisplayName("만약 유효하지 않은 contactNumber 이 주어진다면")
         class Context_with_invaild_contactNumber {
 
             @ParameterizedTest
-            @ValueSource(strings = {"", "1234", "123456789_123456789_", "가나다라", "abc-abcd-abcd"})
+            @ValueSource(strings = {"1234", "123456789_123456789_", "가나다라", "abc-abcd-abcd"})
             @DisplayName("예외를 발생시킨다")
             void It_returns_a_object(String number) {
                 assertThatThrownBy(() -> new StoreContactNumber(number))

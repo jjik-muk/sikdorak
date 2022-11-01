@@ -24,13 +24,28 @@ public class StoreContactNumber {
 	 * 허용되는 전화번호 형식 <br> - 00-000-0000 <br> - 00-0000-0000 <br> - 000-000-0000 <br> - 000-0000-0000
 	 */
 	public StoreContactNumber(String contactNumber) {
-		if (Objects.nonNull(contactNumber) && (contactNumber.isBlank()
-			|| contactNumber.length() > LIMIT_LENGTH
-			|| !isPatternMatches(contactNumber, numberPattern))) {
+
+		if (notEmptyContactNumber(contactNumber)
+			&& invalidContactNumber(contactNumber)) {
 			throw new InvalidContactNumberException();
 		}
 
+		// 전화번호가 공백이면, 공백 문자열 대신 null 로 저장되도록 함
+		// (전화번호 없는 가게들의 통일성을 위해서)
+		if (Objects.nonNull(contactNumber) && contactNumber.isBlank()) {
+			contactNumber = null;
+		}
+
 		this.contactNumber = contactNumber;
+	}
+
+	private boolean invalidContactNumber(String contactNumber) {
+		return contactNumber.length() > LIMIT_LENGTH
+			|| !isPatternMatches(contactNumber, numberPattern);
+	}
+
+	private static boolean notEmptyContactNumber(String contactNumber) {
+		return Objects.nonNull(contactNumber) && !contactNumber.isBlank();
 	}
 
 	private boolean isPatternMatches(String contactNumber, Pattern pattern) {
