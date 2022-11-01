@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.jjikmuk.sikdorak.common.controller.request.CursorPageRequest;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.review.query.ReviewDao;
-import com.jjikmuk.sikdorak.review.query.response.ReviewListResponse;
+import com.jjikmuk.sikdorak.review.query.response.ReviewListForMapResponse;
 import com.jjikmuk.sikdorak.store.query.request.UserLocationInfoRequest;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
 import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
@@ -28,7 +28,7 @@ class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTest {
         UserLocationInfoRequest userLocationInfoRequest = new UserLocationInfoRequest(127.067, 37.6557, 1000);
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
-        ReviewListResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
+        ReviewListForMapResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
             testData.hoi.getId(), loginUser,
             userLocationInfoRequest, cursorPageRequest);
 
@@ -44,7 +44,7 @@ class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTest {
         UserLocationInfoRequest userLocationInfoRequest = new UserLocationInfoRequest(127.067, 37.6557, 1000);
         LoginUser loginUser = new LoginUser(testData.jay.getId(), Authority.USER);
 
-        ReviewListResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
+        ReviewListForMapResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
             testData.hoi.getId(), loginUser,
             userLocationInfoRequest, cursorPageRequest);
 
@@ -60,7 +60,7 @@ class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTest {
         UserLocationInfoRequest userLocationInfoRequest = new UserLocationInfoRequest(127.067, 37.6557, 1000);
         LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
 
-        ReviewListResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
+        ReviewListForMapResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
             testData.hoi.getId(), loginUser,
             userLocationInfoRequest, cursorPageRequest);
 
@@ -76,7 +76,7 @@ class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTest {
         UserLocationInfoRequest userLocationInfoRequest = new UserLocationInfoRequest(127.067, 37.6557, 100);
         LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
 
-        ReviewListResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
+        ReviewListForMapResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
             testData.hoi.getId(), loginUser,
             userLocationInfoRequest, cursorPageRequest);
 

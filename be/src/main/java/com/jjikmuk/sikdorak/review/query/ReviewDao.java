@@ -7,8 +7,10 @@ import com.jjikmuk.sikdorak.review.command.domain.Review;
 import com.jjikmuk.sikdorak.review.command.domain.ReviewRepository;
 import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.query.dto.PagingInfo;
+import com.jjikmuk.sikdorak.review.query.response.ReviewListForMapResponse;
 import com.jjikmuk.sikdorak.review.query.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailResponse;
+import com.jjikmuk.sikdorak.review.query.response.reviewdetail.map.ReviewDetailForMapResponse;
 import com.jjikmuk.sikdorak.store.command.domain.Store;
 import com.jjikmuk.sikdorak.store.command.domain.UserLocationInfo;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
@@ -101,7 +103,7 @@ public class ReviewDao {
     }
 
     @Transactional
-    public ReviewListResponse searchUserReviewsByRadius(Long searchUserId, LoginUser loginUser,
+    public ReviewListForMapResponse searchUserReviewsByRadius(Long searchUserId, LoginUser loginUser,
         UserLocationInfoRequest userLocationInfoRequest, CursorPageRequest cursorPageRequest) {
 
         //조회 대상 검증 & 페이징 조건 검증
@@ -121,10 +123,10 @@ public class ReviewDao {
         Slice<Review> reviews = getRecommendedReviewsByRadius(loginUser, searchUser,
             pagingInfo, coordinates);
 
-        List<ReviewDetailResponse> reviewsResponse = getReviewsResponse(reviews.getContent(), loginUser);
-        CursorPageResponse cursorPageResponse = getCursorResponse(reviewsResponse, reviews.isLast());
+        List<ReviewDetailForMapResponse> reviewsResponse = getMapReviewsResponse(reviews.getContent(), loginUser);
+        CursorPageResponse cursorPageResponse = getCursorForMapResponse(reviewsResponse, reviews.isLast());
 
-        return ReviewListResponse.of(reviewsResponse, cursorPageResponse);
+        return ReviewListForMapResponse.of(reviewsResponse, cursorPageResponse);
     }
 
     @Transactional(readOnly = true)
@@ -175,7 +177,33 @@ public class ReviewDao {
             .toList();
     }
 
+    private List<ReviewDetailForMapResponse> getMapReviewsResponse(List<Review> reviews, LoginUser loginUser) {
+
+        Map<Long, User> authors = getReviewAuthors(getAuthorIds(reviews));
+        Map<Long, Store> stores = getReviewStores(getStoreIds(reviews));
+
+        if (reviews.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return reviews.stream()
+            .map(review -> ReviewDetailForMapResponse.of(review,
+                stores.get(review.getStoreId()),
+                authors.get(review.getUserId()),
+                loginUser))
+            .toList();
+    }
+
     private CursorPageResponse getCursorResponse(List<ReviewDetailResponse> reviewResponses,
+        boolean isLast) {
+
+        int lastIndex = reviewResponses.size() - 1;
+        long nextCursorId = reviewResponses.isEmpty() ? 0L : reviewResponses.get(lastIndex).reviewId() - 1;
+
+        return new CursorPageResponse(reviewResponses.size(), 0L, nextCursorId, isLast);
+    }
+
+    private CursorPageResponse getCursorForMapResponse(List<ReviewDetailForMapResponse> reviewResponses,
         boolean isLast) {
 
         int lastIndex = reviewResponses.size() - 1;

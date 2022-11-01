@@ -179,7 +179,9 @@ public interface UserSnippet {
             fieldWithPath("reviews[].store.storeId").type(JsonFieldType.NUMBER).description("가게 아이디"),
             fieldWithPath("reviews[].store.storeName").type(JsonFieldType.STRING).description("가게 이름"),
             fieldWithPath("reviews[].store.addressName").type(JsonFieldType.STRING).description("지번 주소"),
-            fieldWithPath("reviews[].store.roadAddressName").type(JsonFieldType.STRING).description("도로명 주소")),
+            fieldWithPath("reviews[].store.roadAddressName").type(JsonFieldType.STRING).description("도로명 주소"),
+            fieldWithPath("reviews[].store.x").type(JsonFieldType.NUMBER).description("경도(최대값: 180.0 / 최소값: -180.0)"),
+            fieldWithPath("reviews[].store.y").type(JsonFieldType.NUMBER).description("위도(최대값: 90.0 / 최소값: -90.0)")),
 
         responseFieldsOfObjectWithConstraintsAndFields(ReviewDetailLikeResponse.class,
             fieldWithPath("reviews[].like.count").type(JsonFieldType.NUMBER).description("좋아요 개수"),
