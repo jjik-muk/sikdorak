@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { KakaoMap, overlayStyle } from './MapComponent.styled';
 
 declare global {
@@ -13,6 +14,7 @@ export default function MapComponent({ stores, mapPos, setMapPos }: any) {
   const [mapState, setMapState] = useState(null);
   const [overlays, setOverlays] = useState([]);
   const mapRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(initMap, []);
   useEffect(handleOverlay, [mapPos, stores]);
@@ -45,12 +47,33 @@ export default function MapComponent({ stores, mapPos, setMapPos }: any) {
     function removeOverlay(overlay) {
       return overlay.setMap(null);
     }
-    function createPosition({ storeName, x, y }, idx) {
+    function createPosition({ id, storeName, x, y, storeId }) {
       return {
-        content: `<div class="custom-overay" key=${idx} style="${overlayStyle}">${storeName}</div>`,
+        content: createMarkerEl({ text: storeName, id: id || storeId }),
         position: new kakao.maps.LatLng(y + 0.00005, x - 0.00003),
         map: mapState,
       };
+    }
+    function createMarkerEl({ text, id }) {
+      const markerEl = document.createElement('div');
+      markerEl.innerText = text;
+      markerEl.setAttribute('style', overlayStyle);
+      markerEl.setAttribute('class', 'custom-overlay');
+      markerEl.addEventListener('click', handleMarkerClick);
+      markerEl.addEventListener('mouseover', handleMouseOver);
+      markerEl.addEventListener('mouseleave', handleMouseLeave);
+      return markerEl;
+
+      function handleMouseOver() {
+        this.style.transform = 'scale(1.1)';
+      }
+      function handleMouseLeave() {
+        this.style.transform = 'scale(1)';
+      }
+
+      function handleMarkerClick() {
+        navigate(`/store/${id}`);
+      }
     }
     function createCustomOverlay(position) {
       return new kakao.maps.CustomOverlay(position);

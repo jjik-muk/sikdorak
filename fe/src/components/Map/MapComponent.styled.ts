@@ -6,16 +6,16 @@ export const KakaoMap = styled.div`
   width: 100%;
   height: 100%;
 
-  .custom-overay {
+  .custom-overlay {
     :after {
-      border-top: 10px solid black;
+      border-top: 10px solid ${COLOR.BLUE};
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
       border-bottom: 0px solid transparent;
       content: '';
       position: absolute;
       top: 38px;
-      left: 50%;
+      left: 47%;
     }
   }
 `;
@@ -24,11 +24,11 @@ export const overlayStyle = `
   position: relative;
   padding: 10px;
   height: 40px;
-  background-color: ${COLOR.WHITE};
-  border-radius: 50%;
   font-weight: 700;
-  font-size: 20px;
-  background-color: black;
+  font-size: 18px;
+  background-color: ${COLOR.BLUE};
   color: ${COLOR.WHITE};
+  cursor: pointer;
+  transition: transform 0.1s ease 0s;
   ${STYLE.BOX_CONTAINER}
 `;

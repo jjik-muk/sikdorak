@@ -6,6 +6,7 @@ export const COLOR: ColorType = {
     500: '#BDC3C7',
   },
   YELLOW: '#F1C40F',
+  BLUE: '#1565C0',
 };
 
 type ColorType = {
@@ -16,4 +17,5 @@ type ColorType = {
     500: '#BDC3C7';
   };
   YELLOW: '#F1C40F';
+  BLUE: '#1565C0';
 };
