@@ -20,3 +20,8 @@ export const debounce = (fnc, delay: number = 1000) => {
 export function createErrorMessage(code: string, message: string) {
   return `${code} : ${message}`;
 }
+
+export function compareTwoObjects(obj1, obj2) {
+  const isEqual = JSON.stringify(obj1) === JSON.stringify(obj2);
+  return isEqual;
+}

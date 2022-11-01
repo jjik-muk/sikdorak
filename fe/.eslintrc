@@ -20,6 +20,8 @@
     "exceptAfterSingleLine": 0,
     "import/order": 0,
     "prefer-object-spread": 0,
-    "react-hooks/exhaustive-deps": 0
+    "react-hooks/exhaustive-deps": 0,
+    "@typescript-eslint/no-shadow": 0,
+    "react/no-this-in-sfc": 0
   }
 }
