@@ -55,8 +55,7 @@ class AccountStore {
   @action
   async reissueAccessToken() {
     const res = await fetchData({ path: API_PATH.LOGIN.REISSUE_ACCESS_TOKEN, customHeaders: { credentials: 'include' } });
-    const resJson = await res.json();
-    this.updateAccessToken(resJson.data.accessToken);
+    this.updateAccessToken(res.data.accessToken);
   }
 
   @action
