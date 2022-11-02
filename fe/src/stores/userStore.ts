@@ -12,7 +12,7 @@ class UserStore {
 
   @action
   async fetchUserProfile(id: number) {
-    const res = await fetchData({ path: `api/users/${id}` });
+    const res = await fetchData({ path: `api/users/${id}`, withAccessToken: true });
     runInAction(() => {
       this.userProfile = res.data;
       this.followStatus = res.data?.relationStatus?.followStatus;
