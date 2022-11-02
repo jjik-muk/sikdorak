@@ -3,6 +3,7 @@ import { COLOR } from 'styles/color';
 
 export const Wrap = styled.div`
   position: absolute;
+  right: 0;
   width: 100px;
   height: fit-content;
   display: flex;
