@@ -3,7 +3,7 @@ export const Z_INDEX = {
     DIM: 20,
     CONTENTS: 100,
   },
-  COMMON_HEADER: 0,
+  COMMON_HEADER: 1,
   REVIEW_WRITE: {
     HEADER: 10,
   },
