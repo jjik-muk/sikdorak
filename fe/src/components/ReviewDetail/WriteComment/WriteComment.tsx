@@ -1,12 +1,12 @@
 import TextField from '@mui/material/TextField';
+import useComment from 'hooks/useComment';
 import { useState } from 'react';
 import { accountStore } from 'stores/AccountStore';
-import { fetchData } from 'utils/fetch';
 import { openWarningToast } from 'utils/toast';
 
-export default function WriteComment({ commentRef, reviewId, comments, setComments }: WriteCommentProps) {
+export default function WriteComment({ commentRef, reviewId, fetchAndSetComments }: WriteCommentProps) {
   const [commentValue, setComment] = useState('');
-  const { id, nickname, profileImage } = accountStore;
+  const { requestAddComment } = useComment({ reviewId });
 
   return (
     <TextField
@@ -21,44 +21,25 @@ export default function WriteComment({ commentRef, reviewId, comments, setCommen
     />
   );
 
-  function handleRegisterComment(e) {
+  async function handleRegisterComment(e) {
     const isPressedEnter = e.key === 'Enter';
     const hasInputValue = commentValue.length > 0;
     if (!isPressedEnter) return;
-    if (!hasInputValue) return;
-
+    if (!hasInputValue) {
+      openWarningToast('댓글 내용을 입력해주세요.');
+      return;
+    }
     if (!accountStore.id) {
       openWarningToast('로그인이 필요한 서비스입니다. 로그인 해 주세요.');
       return;
     }
 
-    postWrittingComment();
+    requestAddComment({ commentValue });
     setComment('');
-
-    // TODO: 서버에서 200 응답 보냈을 경우에만 클라이언트에 상태 추가
-
-    const newComment = {
-      id: reviewId,
-      content: commentValue,
-      author: {
-        id,
-        nickname,
-        profileImage,
-      },
-    };
-
-    setComments([...comments, newComment]);
-  }
-
-  async function postWrittingComment() {
-    fetchData({
-      path: `api/reviews/${reviewId}/comments`,
-      method: 'POST',
-      bodyData: {
-        content: commentValue,
-      },
-      withAccessToken: true,
-    });
+    const DELAY_MS = 100;
+    setTimeout(() => {
+      fetchAndSetComments({ saveMethod: 'OVERWRITE' });
+    }, DELAY_MS);
   }
 
   function handleChange(e) {
@@ -71,6 +52,15 @@ export default function WriteComment({ commentRef, reviewId, comments, setCommen
 type WriteCommentProps = {
   commentRef?: React.Ref<HTMLInputElement>;
   reviewId: number;
-  comments: string[];
-  setComments: any;
+  fetchAndSetComments: Function;
 };
+
+// type Comment = {
+//   id: number;
+//   content: string;
+//   author: {
+//     id: number;
+//     nickname: string;
+//     profileImage: string;
+//   };
+// };
