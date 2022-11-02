@@ -15,6 +15,9 @@ export async function fetchData({ path, method = 'GET', customHeaders = {}, body
   const body = JSON.stringify(bodyData);
   const res = await fetch(`${BASE_URL}/${path}`, { method, headers, body });
   const resJson = await res.json();
+  if (resJson.code === STATUS_CODE.FAILURE.EXPIRED_ACCESS_TOKEN) {
+    localStorage.removeItem('accessToken');
+  }
   return resJson;
 }
 
