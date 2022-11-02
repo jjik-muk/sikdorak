@@ -245,7 +245,7 @@ public class ReviewDao {
         PagingInfo pagingInfo,
         UserLocationBasedMaxRange coordinates) {
         if (loginUser.isAnonymous()
-            || !RelationType.CONNECTION.equals(searchUser.relationTypeTo(loginUser))) {
+            || RelationType.DISCONNECTION.equals(searchUser.relationTypeTo(loginUser))) {
             return reviewRepository.findPublicReviewsByRadius(
                 searchUser.getId(),
                 pagingInfo.cursor(),
@@ -259,6 +259,17 @@ public class ReviewDao {
 
         if (!userRepository.existsById(loginUser.getId())) {
             throw new NotFoundUserException();
+        }
+
+        if (RelationType.SELF.equals(searchUser.relationTypeTo(loginUser))) {
+            return reviewRepository.findAllReviewsByRadius(
+                searchUser.getId(),
+                pagingInfo.cursor(),
+                pagingInfo.pageable(),
+                coordinates.getMaxX(),
+                coordinates.getMaxY(),
+                coordinates.getMinX(),
+                coordinates.getMinY());
         }
 
         return reviewRepository.findPublicAndProtectedReviewsByRadius(
