@@ -36,6 +36,22 @@ class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTest {
     }
 
     @Test
+    @DisplayName("회원이 위치기반 자신의 리뷰목록 조회 요청을 한다면 public 리뷰 목록을 제공한다.")
+    void search_self_reviews_by_radius() {
+        long cursorPage = 0;
+        int size = 5;
+        CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
+        UserLocationInfoRequest userLocationInfoRequest = new UserLocationInfoRequest(127.067, 37.6557, 1000);
+        LoginUser loginUser = new LoginUser(testData.hoi.getId(), Authority.USER);
+
+        ReviewListForMapResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
+            testData.hoi.getId(), loginUser,
+            userLocationInfoRequest, cursorPageRequest);
+
+        assertThat(reviewListResponse.reviews()).hasSize(3);
+    }
+
+    @Test
     @DisplayName("회원이 위치기반 팔로우하지 않은 유저 리뷰목록 조회 요청을 한다면 public 리뷰 목록을 제공한다.")
     void search_unfollowing_user_reviews_by_radius() {
         long cursorPage = 0;
