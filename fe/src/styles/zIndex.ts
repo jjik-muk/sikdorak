@@ -1,5 +1,6 @@
 export const Z_INDEX = {
   MODAL: {
+    WRAP: 10,
     DIM: 20,
     CONTENTS: 100,
   },
