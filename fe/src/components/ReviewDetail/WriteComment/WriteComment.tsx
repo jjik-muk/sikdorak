@@ -1,12 +1,19 @@
 import TextField from '@mui/material/TextField';
 import useComment from 'hooks/useComment';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { accountStore } from 'stores/AccountStore';
 import { openWarningToast } from 'utils/toast';
 
 export default function WriteComment({ commentRef, reviewId, fetchAndSetComments }: WriteCommentProps) {
   const [commentValue, setComment] = useState('');
-  const { requestAddComment } = useComment({ reviewId });
+  const { requestAddComment, isSubmitted, setIsSubmitted } = useComment({ reviewId });
+
+  useEffect(() => {
+    if (isSubmitted) {
+      fetchAndSetComments({ saveMethod: 'OVERWRITE' });
+      setIsSubmitted(false);
+    }
+  }, [isSubmitted]);
 
   return (
     <TextField
@@ -36,10 +43,6 @@ export default function WriteComment({ commentRef, reviewId, fetchAndSetComments
 
     requestAddComment({ commentValue });
     setComment('');
-    const DELAY_MS = 100;
-    setTimeout(() => {
-      fetchAndSetComments({ saveMethod: 'OVERWRITE' });
-    }, DELAY_MS);
   }
 
   function handleChange(e) {
@@ -47,20 +50,8 @@ export default function WriteComment({ commentRef, reviewId, fetchAndSetComments
   }
 }
 
-// TODO: Dispatch 타입 정의
-
 type WriteCommentProps = {
   commentRef?: React.Ref<HTMLInputElement>;
   reviewId: number;
   fetchAndSetComments: Function;
 };
-
-// type Comment = {
-//   id: number;
-//   content: string;
-//   author: {
-//     id: number;
-//     nickname: string;
-//     profileImage: string;
-//   };
-// };
