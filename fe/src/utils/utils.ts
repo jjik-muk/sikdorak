@@ -25,3 +25,7 @@ export function compareTwoObjects(obj1, obj2) {
   const isEqual = JSON.stringify(obj1) === JSON.stringify(obj2);
   return isEqual;
 }
+
+export function reloadBrowser() {
+  window.location.reload();
+}

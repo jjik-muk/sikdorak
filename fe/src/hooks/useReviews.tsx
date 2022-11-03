@@ -27,7 +27,21 @@ function useReviews() {
       setHasNextPage(false);
     }
   };
-  return { reviews, dispatchReviews, handleScroll, fetchNextReviews, afterParam, setAfterParam };
+  async function initReviews(url) {
+    setAfterParam(0);
+    const res = await fetchData({ path: url, withAccessToken: true });
+    const nextReviews = res.data.reviews;
+    const nextAfterParam = res.data.page.next;
+
+    dispatchReviews({ type: 'ADD_REVIEWS', reviews: nextReviews });
+    setAfterParam(nextAfterParam);
+
+    const isLastPage = res.data.page.last;
+    if (isLastPage) {
+      setHasNextPage(false);
+    }
+  }
+  return { reviews, dispatchReviews, handleScroll, fetchNextReviews, afterParam, setAfterParam, initReviews };
 }
 
 export default useReviews;

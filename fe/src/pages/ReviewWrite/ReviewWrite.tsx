@@ -15,6 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Button } from '@mui/material';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { requestReviewModification } from 'request/request';
+import { reloadBrowser } from 'utils/utils';
 
 function ReviewWrite({ toggleIsReviewWrite, dispatchReviews, isModify, reviewId }: ReviewWriteProps) {
   const [reviewWrite, dispatchReviewWrite] = useReviewWrite();
@@ -80,6 +81,7 @@ function ReviewWrite({ toggleIsReviewWrite, dispatchReviews, isModify, reviewId 
     });
     dispatchReviewWrite({ type: 'RESET_STATE' });
     toggleIsReviewWrite();
+    reloadBrowser();
   }
 
   function handleRemoveSelectedImg() {
