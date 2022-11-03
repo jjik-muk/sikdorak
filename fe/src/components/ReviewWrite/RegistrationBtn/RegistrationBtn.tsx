@@ -62,7 +62,7 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
       tags,
       images,
     };
-    fetchData({ path: `api/reviews`, method: 'POST', bodyData, withAccessToken: true });
+    await fetchData({ path: `api/reviews`, method: 'POST', bodyData, withAccessToken: true });
     const newReview = {
       reviewContent: content,
       reviewScore: rating,

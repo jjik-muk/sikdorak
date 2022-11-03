@@ -67,7 +67,7 @@ function ReviewWrite({ toggleIsReviewWrite, dispatchReviews, isModify, reviewId 
       await uploadImageToS3(reviewWrite.presignedUrl, selectedImg);
     }
 
-    requestReviewModification({
+    await requestReviewModification({
       reviewId,
       body: {
         reviewContent: reviewWrite.content,
