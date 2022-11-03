@@ -9,7 +9,7 @@ import { useRef, useEffect } from 'react';
 import { MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { accountStore } from 'stores/AccountStore';
-import { createKey } from 'utils/utils';
+import { createKey, reloadBrowser } from 'utils/utils';
 import Icon, { IconComponentsKeys } from '../Icon/Icon';
 import Logo from '../Logo/Logo';
 import Portal from '../Portal/Portal';
@@ -85,7 +85,7 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
 
 function handleLogout() {
   localStorage.removeItem('accessToken');
-  window.location.reload();
+  reloadBrowser();
 }
 
 type IconInfoProps = {

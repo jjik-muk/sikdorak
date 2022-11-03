@@ -4,6 +4,7 @@ import useUploadImage from 'hooks/useUploadImage';
 import { accountStore } from 'stores/AccountStore';
 import { fetchData } from 'utils/fetch';
 import { openWarningToast } from 'utils/toast';
+import { reloadBrowser } from 'utils/utils';
 
 function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: any) {
   const [reviewWriteState, dispatchReviewWriteState] = useReviewWrite();
@@ -73,6 +74,7 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
     dispatchReviews({ type: 'ADD_REVIEW', review: newReview });
     dispatchReviewWriteState({ type: 'RESET_STATE' });
     toggleIsReviewWrite();
+    reloadBrowser();
   }
 }
 

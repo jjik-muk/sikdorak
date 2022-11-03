@@ -6,6 +6,7 @@ function useComment({ reviewId }) {
   const [afterParam, setAfterParam] = useState(0);
   const COMMENT_SIZE = 5;
   const [hasNextComments, setHasNextComments] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   async function fetchAndSetComments({ saveMethod }) {
     const after = saveMethod === 'OVERWRITE' ? 0 : afterParam;
@@ -34,7 +35,7 @@ function useComment({ reviewId }) {
   }
 
   async function requestAddComment({ commentValue }) {
-    fetchData({
+    const res = await fetchData({
       path: `api/reviews/${reviewId}/comments`,
       method: 'POST',
       bodyData: {
@@ -42,9 +43,11 @@ function useComment({ reviewId }) {
       },
       withAccessToken: true,
     });
+    setIsSubmitted(true);
+    return res;
   }
 
-  return { fetchAndSetComments, hasNextComments, comments, setComments, requestAddComment };
+  return { fetchAndSetComments, hasNextComments, comments, setComments, requestAddComment, isSubmitted, setIsSubmitted };
 }
 
 export default useComment;

@@ -13,6 +13,7 @@ import { Wrap } from './KebabMenu.styled';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import Portal from '../Portal/Portal';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
+import { reloadBrowser } from 'utils/utils';
 
 function KebabMenu({ reviewId, isMyFeed }: MenuProps) {
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
@@ -85,6 +86,7 @@ function KebabMenu({ reviewId, isMyFeed }: MenuProps) {
   function handleDeleteReview() {
     fetchData({ path: API_PATH.REVIEW.DELETE(reviewId), method: 'DELETE', withAccessToken: true });
     dispatchReviews({ type: 'DELETE_REVIEW', reviewId });
+    reloadBrowser();
   }
 
   function handleMenu(e) {
