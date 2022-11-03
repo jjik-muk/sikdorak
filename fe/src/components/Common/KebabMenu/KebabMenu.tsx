@@ -83,8 +83,9 @@ function KebabMenu({ reviewId, isMyFeed }: MenuProps) {
     }
   }
 
-  function handleDeleteReview() {
-    fetchData({ path: API_PATH.REVIEW.DELETE(reviewId), method: 'DELETE', withAccessToken: true });
+  async function handleDeleteReview() {
+    await fetchData({ path: API_PATH.REVIEW.DELETE(reviewId), method: 'DELETE', withAccessToken: true });
+
     dispatchReviews({ type: 'DELETE_REVIEW', reviewId });
     reloadBrowser();
   }
