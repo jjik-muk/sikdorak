@@ -9,7 +9,7 @@ export default {
 const Template: ComponentStory<typeof Icon> = (args) => <Icon {...args} />;
 
 export const Default = Template.bind({});
-Default.props = {
+Default.args = {
   type: 'CreateIcon',
   color: 'inherit',
 };
