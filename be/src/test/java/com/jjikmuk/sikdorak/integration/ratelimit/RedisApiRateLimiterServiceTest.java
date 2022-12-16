@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
+import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.ratelimit.command.app.ApiRateLimiterService;
+import com.jjikmuk.sikdorak.ratelimit.exception.ApiLimitExceededException;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -14,26 +16,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.containers.GenericContainer;
 
 @DisplayName("통합 테스트 : 특정 api에 대한 RateLimit 확인")
-@SpringBootTest // 임시
-@ActiveProfiles("test") // 임시
-class RedisApiRateLimiterServiceTest {
-
-	static final GenericContainer redis;
-
-	static {
-		redis = new GenericContainer("redis:7.0.5")
-			.withExposedPorts(6379);
-		redis.start();
-		System.setProperty("spring.redis.host", redis.getHost());
-		System.setProperty("spring.redis.port", redis.getMappedPort(6379).toString());
-	}
+class RedisApiRateLimiterServiceTest extends InitIntegrationTest {
 
 	@Autowired
 	private ApiRateLimiterService apiRateLimiterService;
@@ -52,7 +39,7 @@ class RedisApiRateLimiterServiceTest {
 		// given
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setServletPath("/api/images/url");
-		int threadCount = 8;
+		int threadCount = 10;
 		ExecutorService executorService = Executors.newFixedThreadPool(16);
 		CountDownLatch latch = new CountDownLatch(threadCount);
 
@@ -60,7 +47,7 @@ class RedisApiRateLimiterServiceTest {
 		for (int i = 0; i < threadCount; i++) {
 			executorService.submit(() -> {
 				try {
-					apiRateLimiterService.checkRateLimit(request, 60 * 5L, threadCount + 1L);
+					apiRateLimiterService.checkRateLimit(request, 5L, threadCount + 1L);
 				} finally {
 					latch.countDown();
 				}
@@ -68,7 +55,7 @@ class RedisApiRateLimiterServiceTest {
 		}
 		latch.await();
 
-		Boolean result = apiRateLimiterService.checkRateLimit(request, 60 * 5L, threadCount + 1L);
+		Boolean result = apiRateLimiterService.checkRateLimit(request, 5L, threadCount + 1L);
 
 		// then
 		assertThat(result).isTrue();
@@ -80,7 +67,7 @@ class RedisApiRateLimiterServiceTest {
 		// given
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setServletPath("/api/images/url");
-		int threadCount = 8;
+		int threadCount = 10;
 		ExecutorService executorService = Executors.newFixedThreadPool(16);
 		CountDownLatch latch = new CountDownLatch(threadCount);
 
@@ -88,7 +75,7 @@ class RedisApiRateLimiterServiceTest {
 		for (int i = 0; i < threadCount; i++) {
 			executorService.submit(() -> {
 				try {
-					apiRateLimiterService.checkRateLimit(request, 60 * 5L, threadCount + 1L);
+					apiRateLimiterService.checkRateLimit(request, 1L, threadCount + 1L);
 				} finally {
 					latch.countDown();
 				}
@@ -96,8 +83,8 @@ class RedisApiRateLimiterServiceTest {
 		}
 		latch.await();
 
-		await().atMost(10, TimeUnit.SECONDS).until(() -> true); // 10초 대기
-		Boolean result = apiRateLimiterService.checkRateLimit(request, 60 * 5L, threadCount + 1L);
+		await().atMost(1, TimeUnit.MINUTES).until(() -> true); // 10초 대기
+		Boolean result = apiRateLimiterService.checkRateLimit(request, 1L, threadCount + 1L);
 
 		assertThat(result).isTrue();
 	}
@@ -108,7 +95,7 @@ class RedisApiRateLimiterServiceTest {
 		// given
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setServletPath("/api/images/url");
-		int threadCount = 9;
+		int threadCount = 10;
 		ExecutorService executorService = Executors.newFixedThreadPool(16);
 		CountDownLatch latch = new CountDownLatch(threadCount);
 
@@ -116,7 +103,7 @@ class RedisApiRateLimiterServiceTest {
 		for (int i = 0; i < threadCount; i++) {
 			executorService.submit(() -> {
 				try {
-					apiRateLimiterService.checkRateLimit(request, 60 * 5L, threadCount + 1L);
+					apiRateLimiterService.checkRateLimit(request, 5L, threadCount);
 				} finally {
 					latch.countDown();
 				}
@@ -124,8 +111,9 @@ class RedisApiRateLimiterServiceTest {
 		}
 		latch.await();
 
-		assertThatThrownBy(() -> apiRateLimiterService.checkRateLimit(request, 60 * 5L, threadCount + 1L))
-			.isInstanceOf(ApiRateLimiterService.class);
+		assertThatThrownBy(
+			() -> apiRateLimiterService.checkRateLimit(request, 5L, threadCount))
+			.isInstanceOf(ApiLimitExceededException.class);
 	}
 
 }

@@ -4,6 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface ApiRateLimiterService {
 
-	Boolean checkRateLimit(HttpServletRequest request, Long rangeSeconds, Long apiMaximumNumber);
+	Boolean checkRateLimit(HttpServletRequest request, long rangeMinutes, long apiMaximumNumber);
 
 }
