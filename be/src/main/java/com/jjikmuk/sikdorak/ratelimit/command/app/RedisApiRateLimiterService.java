@@ -126,7 +126,7 @@ public class RedisApiRateLimiterService implements ApiRateLimiterService {
 	 * @param currentDate - 현재 시간의 Date 객체
 	 * @param rangeMinutes - api 사용 빈도 검색 시간 범위 & Redis Key expire time
 	 */
-	public void upsertApiCount(String apiPathAndIpKey, Date currentDate, long rangeMinutes) {
+	private void upsertApiCount(String apiPathAndIpKey, Date currentDate, long rangeMinutes) {
 		String currentRateLimitKey =
 			apiPathAndIpKey + new SimpleDateFormat("yyyyMMddHHmm").format(currentDate);
 
