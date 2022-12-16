@@ -32,7 +32,7 @@ public class RedisConfig {
 		return stringRedisTemplate;
 	}
 
-	@Bean // 만약 PlatformTransactionManager 등록이 안되어 있다면 해야함, 되어있다면 할 필요 없음
+	@Bean
 	public PlatformTransactionManager transactionManager()  {
 		return new JpaTransactionManager();
 	}

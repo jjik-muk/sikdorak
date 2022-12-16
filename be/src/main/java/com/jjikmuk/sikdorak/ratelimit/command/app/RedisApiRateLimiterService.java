@@ -51,7 +51,6 @@ public class RedisApiRateLimiterService implements ApiRateLimiterService {
 	}
 
 	private String getApiPathAndIpKey(HttpServletRequest request) {
-		// 클라 정보 뽑기 (ip, request uri)
 		String servletPath = request.getServletPath();
 		String clientIp = getClientIp(request); // ip 가져올 때 ipv4 vs ipv6
 
@@ -62,8 +61,8 @@ public class RedisApiRateLimiterService implements ApiRateLimiterService {
 	}
 
 	/**
-	 * 	클라이언트의 ip 주소를 추출한다.
-	 * 	ref : <a href="https://www.lesstif.com/software-architect/proxy-client-ip-x-forwarded-for-xff-http-header-20775886.html">...</a>.
+	 * 클라이언트의 ip 주소를 추출한다.
+	 * ref : <a href="https://www.lesstif.com/software-architect/proxy-client-ip-x-forwarded-for-xff-http-header-20775886.html">...</a>.
 	 *
 	 * @param request Client의 HttpServletRequest
 	 * @return Client Ip
