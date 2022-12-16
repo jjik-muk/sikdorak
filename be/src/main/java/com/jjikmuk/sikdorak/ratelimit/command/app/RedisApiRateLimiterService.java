@@ -28,22 +28,23 @@ public class RedisApiRateLimiterService implements ApiRateLimiterService {
 	 * Redis Key Format - API:ip:yyyyMMddHHmm , e.g. /api/images/url:127.0.0.1:202212161449
 	 * API 사용 가능한 경우 해당 key의 값을 1 증가시킨다.
 	 * 불가능한 경우 Exception을 발생시킨다.
+	 * 알고리즘 : Sliding Window Counter
 	 *
-	 * @param request          클라이언트의 ip, servlet path를 사용한다.
-	 * @param rangeMinutes     api 사용 빈도 검색 시간 범위 & Redis Key expire time
-	 * @param apiMaximumNumber rangeMinutes 내 최대 api 요청수
+	 * @param request 클라이언트의 ip, servlet path를 사용한다.
+	 * @param windowSize api 사용 빈도 검색 시간 범위 & Redis Key expire time, 단위는 '분(minute)'이다.
+	 * @param apiMaximumNumber windowSize 내 최대 api 요청수
 	 * @return true : api 사용 가능
 	 */
 	@Override
-	public Boolean checkRateLimit(HttpServletRequest request, long rangeMinutes, long apiMaximumNumber) {
+	public Boolean checkRateLimit(HttpServletRequest request, long windowSize, long apiMaximumNumber) {
 		Date currentDate = new Date();
 		String apiPathAndIpKey = getApiPathAndIpKey(request);
 
-		long totalApiCounts = findTotalApiCounts(apiPathAndIpKey, currentDate, rangeMinutes);
+		long totalApiCounts = findTotalApiCounts(apiPathAndIpKey, currentDate, windowSize);
 
 		// 검증
 		if (totalApiCounts < apiMaximumNumber) {
-			upsertApiCount(apiPathAndIpKey, currentDate, rangeMinutes);
+			upsertApiCount(apiPathAndIpKey, currentDate, windowSize);
 			return true;
 		}
 
@@ -69,19 +70,20 @@ public class RedisApiRateLimiterService implements ApiRateLimiterService {
 	 */
 	private String getClientIp(HttpServletRequest request) {
 		String ip = request.getHeader("X-Forwarded-For");
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+		String unknown = "unknown";
+		if (ip == null || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
 		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+		if (ip == null || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("WL-Proxy-Client-IP");
 		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+		if (ip == null || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("HTTP_CLIENT_IP");
 		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+		if (ip == null || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
 		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+		if (ip == null || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
 		}
 
@@ -89,19 +91,19 @@ public class RedisApiRateLimiterService implements ApiRateLimiterService {
 	}
 
 	/**
-	 * 현재 시간부터 rangeMinutes 이전까지의 시간의 api counts 총합을 리턴합니다.
+	 * 현재 시간부터 windowSize 이전까지의 시간의 api counts 총합을 리턴합니다.
 	 *
 	 * @param apiPathAndIpKey - /api/images/url:127.0.0.1
 	 * @param currentDate - 현재 시간의 Date 객체
-	 * @param rangeMinutes - api 사용 빈도 검색 시간 범위
+	 * @param windowSize - api 사용 빈도 검색 시간 범위
 	 * @return totalApiCounts
 	 */
-	private long findTotalApiCounts(String apiPathAndIpKey, Date currentDate, long rangeMinutes) {
+	private long findTotalApiCounts(String apiPathAndIpKey, Date currentDate, long windowSize) {
 		// 현재 시간 key 기준 검색할 key List e.g. 202212161449, 202212161448, 202212161447 ...
 		List<String> searchRateLimitKeys = new ArrayList<>();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(currentDate);
-		for (int i = 0; i < rangeMinutes; i++) {
+		for (int i = 0; i < windowSize; i++) {
 			searchRateLimitKeys.add(apiPathAndIpKey + new SimpleDateFormat("yyyyMMddHHmm").format(calendar.getTime()));
 			calendar.add(Calendar.MINUTE, -1);
 		}
@@ -124,9 +126,9 @@ public class RedisApiRateLimiterService implements ApiRateLimiterService {
 	 *
 	 * @param apiPathAndIpKey - /api/images/url:127.0.0.1
 	 * @param currentDate - 현재 시간의 Date 객체
-	 * @param rangeMinutes - api 사용 빈도 검색 시간 범위 & Redis Key expire time
+	 * @param windowSize - api 사용 빈도 검색 시간 범위 & Redis Key expire time
 	 */
-	private void upsertApiCount(String apiPathAndIpKey, Date currentDate, long rangeMinutes) {
+	private void upsertApiCount(String apiPathAndIpKey, Date currentDate, long windowSize) {
 		String currentRateLimitKey =
 			apiPathAndIpKey + new SimpleDateFormat("yyyyMMddHHmm").format(currentDate);
 
@@ -137,7 +139,7 @@ public class RedisApiRateLimiterService implements ApiRateLimiterService {
 
 				operations.multi();
 				operations.opsForValue().increment((K) currentRateLimitKey);
-				operations.expire((K) currentRateLimitKey, rangeMinutes, TimeUnit.MINUTES);
+				operations.expire((K) currentRateLimitKey, windowSize, TimeUnit.MINUTES);
 				return operations.exec();
 			}
 		});
