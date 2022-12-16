@@ -9,6 +9,7 @@ import com.jjikmuk.sikdorak.image.exception.InvalidImageSizeException;
 import com.jjikmuk.sikdorak.image.exception.InvalidImagesExtensionException;
 import com.jjikmuk.sikdorak.image.exception.NotFoundImageException;
 import com.jjikmuk.sikdorak.image.exception.NotFoundImageMetaDataException;
+import com.jjikmuk.sikdorak.ratelimit.exception.ApiLimitExceededException;
 import com.jjikmuk.sikdorak.review.exception.DuplicateLikeUserException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewContentException;
 import com.jjikmuk.sikdorak.review.exception.InvalidReviewImageException;
@@ -53,6 +54,7 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     NOT_FOUND_ERROR_CODE("F-G001", "에러 코드를 찾을 수 없습니다.", NotFoundErrorCodeException.class),
     INVALID_PAGE_PARAMETER("F-G002", "유효하지 않은 페이징 값 입니다.", InvalidPageParameterException.class),
     INTERNAL_SERVER_ERROR("F-G003", "서버 에러입니다.(관리자에게 문의하세요)", SikdorakServerError.class),
+    API_LIMIT_EXCEEDED("F-G004", "너무 많은 요청을 하였습니다.", ApiLimitExceededException.class),
 
     // Review
     INVALID_REVIEW_CONTENT("F-R001", "유효하지 않은 리뷰 컨텐츠 입니다.", InvalidReviewContentException.class),
