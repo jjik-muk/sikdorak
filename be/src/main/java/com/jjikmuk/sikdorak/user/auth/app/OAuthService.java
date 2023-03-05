@@ -1,12 +1,14 @@
 package com.jjikmuk.sikdorak.user.auth.app;
 
 import com.jjikmuk.sikdorak.common.properties.KakaoProperties;
+import com.jjikmuk.sikdorak.common.properties.oauth.ClientRegistrationRepository;
+import com.jjikmuk.sikdorak.common.properties.oauth.OAuthClientRegistration;
+import com.jjikmuk.sikdorak.user.auth.app.dto.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.auth.app.response.KakaoAccountResponse;
 import com.jjikmuk.sikdorak.user.auth.app.response.OAuthTokenResponse;
-import com.jjikmuk.sikdorak.user.auth.app.dto.JwtTokenPair;
+import com.jjikmuk.sikdorak.user.user.command.app.UserService;
 import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
-import com.jjikmuk.sikdorak.user.user.command.app.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,9 +25,13 @@ public class OAuthService {
     private final KakaoProperties kakaoProperties;
     private final UserService userService;
     private final JwtProvider jwtProvider;
+    private final ClientRegistrationRepository registrationRepository;
 
-    public String getLoginPageUrl() {
-        return kakaoProperties.getLoginPageUrl();
+    public String getLoginPageUrl(String registrationId) {
+        OAuthClientRegistration registration = registrationRepository.findRegistrationByName(
+            registrationId);
+
+        return registration.getAuthorizationUri();
     }
 
     @Transactional

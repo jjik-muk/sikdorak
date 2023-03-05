@@ -39,7 +39,7 @@ class OAuthLoginDocumentationTest extends InitDocumentationTest {
 
         .when()
             .redirects().follow(false)
-            .get("/api/oauth/login")
+            .get("/api/oauth/{registrationId}/login", "kakao")
 
         .then()
             .statusCode(HttpStatus.MOVED_PERMANENTLY.value())

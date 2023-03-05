@@ -16,6 +16,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,10 +27,10 @@ public class OAuthCommandApi {
     private final OAuthService oAuthService;
     private final JwtProperties jwtProperties;
 
-    @GetMapping("/api/oauth/login")
-    public ResponseEntity<Void> loginPageUrl() {
+    @GetMapping("/api/oauth/{registrationId}/login")
+    public ResponseEntity<Void> loginPageUrl(@PathVariable String registrationId) {
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
-            .header("Location", oAuthService.getLoginPageUrl())
+            .header("Location", oAuthService.getLoginPageUrl(registrationId))
             .build();
     }
 
