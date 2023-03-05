@@ -18,41 +18,41 @@ public class OAuthClientRegistration {
     private final String clientId;
     private final String clientSecret;
     @NotEmpty
-    private final String redirectUri;
+    private final String redirectUrl;
     @NotEmpty
     private final String grantType;
     private final String responseType;
     @NotEmpty
     private final String scope;
     @NotEmpty
-    private final String authorizationUri;
+    private final String authorizationUrl;
     @NotEmpty
-    private final String tokenUri;
+    private final String tokenUrl;
     @NotEmpty
-    private final String userInfoUri;
+    private final String userInfoUrl;
     @NotEmpty
     private final String userNameAttribute;
 
-    public OAuthClientRegistration(String clientId, String clientSecret, String redirectUri,
-        String grantType, String scope, String authorizationUri, String tokenUri, String userInfoUri,
+    public OAuthClientRegistration(String clientId, String clientSecret, String redirectUrl,
+        String grantType, String scope, String authorizationUrl, String tokenUrl, String userInfoUrl,
         String userNameAttribute) {
         this.clientId = clientId;
         this.clientSecret = Objects.nonNull(clientSecret) ? clientSecret : "";
-        this.redirectUri = redirectUri;
+        this.redirectUrl = redirectUrl;
         this.grantType = grantType;
         this.responseType = AUTHORIZATION_CODE.equals(grantType) ? "code" : "token";
         this.scope = scope;
-        this.authorizationUri = authorizationUri;
-        this.tokenUri = tokenUri;
-        this.userInfoUri = userInfoUri;
+        this.authorizationUrl = authorizationUrl;
+        this.tokenUrl = tokenUrl;
+        this.userInfoUrl = userInfoUrl;
         this.userNameAttribute = userNameAttribute;
     }
 
-    public String getAuthorizationUri() {
-        return UriComponentsBuilder.fromHttpUrl(this.authorizationUri)
+    public String getAuthorizationUrl() {
+        return UriComponentsBuilder.fromHttpUrl(this.authorizationUrl)
             .queryParam("client_id", this.clientId)
             .queryParam("client_secret", this.clientSecret)
-            .queryParam("redirect_uri", this.redirectUri)
+            .queryParam("redirect_uri", this.redirectUrl)
             .queryParam("response_type", this.responseType)
             .build().toString();
     }
