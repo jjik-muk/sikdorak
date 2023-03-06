@@ -1,6 +1,5 @@
 package com.jjikmuk.sikdorak.common.properties.oauth;
 
-import com.jjikmuk.sikdorak.user.auth.exception.ClientRegistrationNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -11,21 +10,13 @@ import org.springframework.util.StringUtils;
 
 @Getter
 @ConfigurationProperties("oauth")
-public class InMemoryClientRegistrationRepository implements InitializingBean, ClientRegistrationRepository {
+public class OAuthRegistrationProperties implements InitializingBean {
 
-    private final Map<String, OAuthClientRegistration> registrations = new HashMap<>();
+    private final Map<String, OAuthRegistrationProperty> registrations = new HashMap<>();
 
     @Override
     public void afterPropertiesSet() throws Exception {
         validate();
-    }
-    
-    @Override
-    public OAuthClientRegistration findRegistrationByName(String registrationId){
-        if(Objects.isNull(registrations.get(registrationId.toLowerCase()))){
-            throw new ClientRegistrationNotFoundException();
-        }
-        return registrations.get(registrationId.toLowerCase());
     }
 
     private void validate() {
