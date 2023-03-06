@@ -1,41 +1,31 @@
-package com.jjikmuk.sikdorak.common.properties.oauth;
+package com.jjikmuk.sikdorak.user.auth.app.domain;
 
+import com.jjikmuk.sikdorak.common.properties.oauth.OAuthRegistrationProperty;
 import java.util.Objects;
-import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
-import org.springframework.boot.context.properties.ConstructorBinding;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Validated
 @Getter
-@ConstructorBinding
 public class OAuthClientRegistration {
 
     private static final String AUTHORIZATION_CODE = "authorization_code";
 
-    @NotEmpty
+    private final String registrationId;
     private final String clientId;
     private final String clientSecret;
-    @NotEmpty
     private final String redirectUrl;
-    @NotEmpty
     private final String grantType;
     private final String responseType;
-    @NotEmpty
     private final String scope;
-    @NotEmpty
     private final String authorizationUrl;
-    @NotEmpty
     private final String tokenUrl;
-    @NotEmpty
     private final String userInfoUrl;
-    @NotEmpty
     private final String userNameAttribute;
 
-    public OAuthClientRegistration(String clientId, String clientSecret, String redirectUrl,
+    private OAuthClientRegistration(String registrationId,String clientId, String clientSecret, String redirectUrl,
         String grantType, String scope, String authorizationUrl, String tokenUrl, String userInfoUrl,
         String userNameAttribute) {
+        this.registrationId = registrationId;
         this.clientId = clientId;
         this.clientSecret = Objects.nonNull(clientSecret) ? clientSecret : "";
         this.redirectUrl = redirectUrl;
@@ -46,6 +36,21 @@ public class OAuthClientRegistration {
         this.tokenUrl = tokenUrl;
         this.userInfoUrl = userInfoUrl;
         this.userNameAttribute = userNameAttribute;
+    }
+
+    public static OAuthClientRegistration of(String registrationId,
+        OAuthRegistrationProperty oAuthRegistrationProperty) {
+        return new OAuthClientRegistration(
+            registrationId,
+            oAuthRegistrationProperty.getClientId(),
+            oAuthRegistrationProperty.getClientSecret(),
+            oAuthRegistrationProperty.getRedirectUrl(),
+            oAuthRegistrationProperty.getGrantType(),
+            oAuthRegistrationProperty.getScope(),
+            oAuthRegistrationProperty.getAuthorizationUrl(),
+            oAuthRegistrationProperty.getTokenUrl(),
+            oAuthRegistrationProperty.getUserInfoUrl(),
+            oAuthRegistrationProperty.getUserNameAttribute());
     }
 
     public String getAuthorizationUrl() {
