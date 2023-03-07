@@ -1,9 +1,11 @@
-package com.jjikmuk.sikdorak.user.auth.app.domain;
+package com.jjikmuk.sikdorak.common.oauth;
 
+import com.jjikmuk.sikdorak.common.oauth.converter.OAuthUserAttributesConverter;
 import com.jjikmuk.sikdorak.common.properties.oauth.OAuthRegistrationProperty;
+import com.jjikmuk.sikdorak.user.auth.app.dto.OAuthUserProfile;
+import java.util.Map;
 import java.util.Objects;
 import lombok.Getter;
-import lombok.ToString;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Getter
@@ -22,10 +24,11 @@ public class OAuthClientRegistration {
     private final String tokenUrl;
     private final String userInfoUrl;
     private final String userNameAttribute;
+    private final OAuthUserAttributesConverter attributesConverter;
 
     private OAuthClientRegistration(String registrationId,String clientId, String clientSecret, String redirectUrl,
         String grantType, String scope, String authorizationUrl, String tokenUrl, String userInfoUrl,
-        String userNameAttribute) {
+        String userNameAttribute, OAuthUserAttributesConverter attributesConverter) {
         this.registrationId = registrationId;
         this.clientId = clientId;
         this.clientSecret = Objects.nonNull(clientSecret) ? clientSecret : "";
@@ -37,10 +40,12 @@ public class OAuthClientRegistration {
         this.tokenUrl = tokenUrl;
         this.userInfoUrl = userInfoUrl;
         this.userNameAttribute = userNameAttribute;
+        this.attributesConverter = attributesConverter;
     }
 
     public static OAuthClientRegistration of(String registrationId,
-        OAuthRegistrationProperty oAuthRegistrationProperty) {
+        OAuthRegistrationProperty oAuthRegistrationProperty,
+        OAuthUserAttributesConverter attributesConverter) {
         return new OAuthClientRegistration(
             registrationId,
             oAuthRegistrationProperty.getClientId(),
@@ -51,7 +56,8 @@ public class OAuthClientRegistration {
             oAuthRegistrationProperty.getAuthorizationUrl(),
             oAuthRegistrationProperty.getTokenUrl(),
             oAuthRegistrationProperty.getUserInfoUrl(),
-            oAuthRegistrationProperty.getUserNameAttribute());
+            oAuthRegistrationProperty.getUserNameAttribute(),
+            attributesConverter);
     }
 
     public String getAuthorizationUrl() {
@@ -63,4 +69,7 @@ public class OAuthClientRegistration {
             .build().toString();
     }
 
+    public OAuthUserProfile convert(Map<String, Object> attributes) {
+        return attributesConverter.convert(this.userNameAttribute, attributes);
+    }
 }

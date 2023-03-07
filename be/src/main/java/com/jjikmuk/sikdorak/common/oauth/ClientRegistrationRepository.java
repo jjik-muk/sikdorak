@@ -1,4 +1,4 @@
-package com.jjikmuk.sikdorak.user.auth.app.domain;
+package com.jjikmuk.sikdorak.common.oauth;
 
 public interface ClientRegistrationRepository {
 

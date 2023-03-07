@@ -1,6 +1,6 @@
 package com.jjikmuk.sikdorak.user.auth.app.dto;
 
-import com.jjikmuk.sikdorak.user.auth.app.domain.OAuthClientRegistration;
+import com.jjikmuk.sikdorak.common.oauth.OAuthClientRegistration;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidAuthorizationCodeException;
 import java.util.Objects;
 import lombok.Getter;

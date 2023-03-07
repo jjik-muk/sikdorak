@@ -29,7 +29,7 @@ import com.jjikmuk.sikdorak.store.exception.InvalidXYException;
 import com.jjikmuk.sikdorak.store.exception.NotFoundApiAddressException;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.store.exception.PlaceApiServerException;
-import com.jjikmuk.sikdorak.user.auth.exception.ClientRegistrationNotFoundException;
+import com.jjikmuk.sikdorak.user.auth.exception.NotFoundClientRegistrationException;
 import com.jjikmuk.sikdorak.user.auth.exception.ExpiredTokenException;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidAuthorizationCodeException;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
@@ -113,7 +113,7 @@ public enum ExceptionCodeAndMessages implements CodeAndMessages {
     INVALID_TOKEN("F-O002", "유효하지 않은 토큰입니다.", InvalidTokenException.class),
     EXPIRED_TOKEN("F-O003", "만료된 토큰입니다.", ExpiredTokenException.class),
     NEED_LOGIN("F-O004", "로그인이 필요한 서비스입니다.", NeedLoginException.class),
-    CLIENT_REGISTRATION_NOT_FOUND("F-O005", "등록되지 않은 로그인 플랫폼입니다.", ClientRegistrationNotFoundException.class),
+    CLIENT_REGISTRATION_NOT_FOUND("F-O005", "등록되지 않은 로그인 플랫폼입니다.", NotFoundClientRegistrationException.class),
     INVALID_AUTHORIZATION_CODE("F-O006", "올바르지 않은 authorizationCode 입니다.", InvalidAuthorizationCodeException.class),
 
     // Comment

@@ -2,8 +2,8 @@ package com.jjikmuk.sikdorak.user.auth.api;
 
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.properties.JwtProperties;
-import com.jjikmuk.sikdorak.user.auth.app.domain.ClientRegistrationRepository;
-import com.jjikmuk.sikdorak.user.auth.app.domain.OAuthClientRegistration;
+import com.jjikmuk.sikdorak.common.oauth.ClientRegistrationRepository;
+import com.jjikmuk.sikdorak.common.oauth.OAuthClientRegistration;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
 import com.jjikmuk.sikdorak.user.auth.app.dto.OAuthAuthenticationRequest;
 import com.jjikmuk.sikdorak.user.auth.app.dto.JwtTokenPair;
