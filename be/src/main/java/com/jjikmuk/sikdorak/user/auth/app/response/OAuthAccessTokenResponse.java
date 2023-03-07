@@ -6,15 +6,10 @@ import lombok.Getter;
 
 @Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class OAuthTokenResponse {
+public class OAuthAccessTokenResponse {
 
     private String tokenType;
 
     private String accessToken;
 
-    private int expiresIn;
-
-    private String refreshToken;
-
-    private int refreshTokenExpiresIn;
 }
