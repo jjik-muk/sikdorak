@@ -20,8 +20,8 @@ import org.springframework.test.context.TestPropertySource;
 
 @AutoConfigureWireMock(port = 0)
 @TestPropertySource(properties = {
-    "oauth.kakao.service.token_url=http://localhost:${wiremock.server.port}",
-    "oauth.kakao.service.api_url=http://localhost:${wiremock.server.port}"
+    "oauth.registrations.kakao.token_url=http://localhost:${wiremock.server.port}/oauth/token",
+    "oauth.registrations.kakao.user-info-url=http://localhost:${wiremock.server.port}/v2/user/me"
 })
 @DisplayName("문서화 : OAuth 로그인 기능")
 class OAuthLoginDocumentationTest extends InitDocumentationTest {
@@ -57,7 +57,7 @@ class OAuthLoginDocumentationTest extends InitDocumentationTest {
             .accept(MediaType.APPLICATION_JSON_VALUE)
 
         .when()
-            .get("/api/oauth/callback")
+            .get("/api/oauth/{registrationId}/callback", "kakao")
 
         .then()
             .log().all()
