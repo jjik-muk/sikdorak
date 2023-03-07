@@ -9,7 +9,7 @@ public class GoogleUserAttributesConverter extends OAuthUserAttributesConverter{
 
     @Override
     public OAuthUserProfile convert(String userNameAttribute, Map<String, Object> attributes) {
-        long uniqueId = 12345678L;
+        String uniqueId = (String) attributes.get(userNameAttribute);
         String nickname = (String) attributes.get("name");
         String profileImage = (String) attributes.get("picture");
         String email = (String) attributes.get("email");

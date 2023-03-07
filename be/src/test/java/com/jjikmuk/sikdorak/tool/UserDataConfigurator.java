@@ -24,7 +24,7 @@ public class UserDataConfigurator {
     @Autowired
     private JwtProvider jwtProvider;
 
-    public TUser createTUser(Long uniqueId, String nickname, String profileImage, String email) {
+    public TUser createTUser(String uniqueId, String nickname, String profileImage, String email) {
         return new TUser(uniqueId, nickname, profileImage, email);
     }
 
@@ -34,7 +34,7 @@ public class UserDataConfigurator {
         String accessToken;
         String refreshToken;
 
-        public TUser(Long uniqueId, String nickname, String profileImage, String email) {
+        public TUser(String uniqueId, String nickname, String profileImage, String email) {
             this.user = userRepository.save(new User(uniqueId, nickname, profileImage, email));
             this.accessToken = jwtProvider.createAccessToken(String.valueOf(user.getId()),
                 new Date(new Date().getTime() + 1800000));
@@ -73,7 +73,7 @@ public class UserDataConfigurator {
             return this.user.getId().intValue();
         }
 
-        public long getUniqueId() {
+        public String getUniqueId() {
             return this.user.getUniqueId();
         }
 

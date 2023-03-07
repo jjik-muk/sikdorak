@@ -9,8 +9,7 @@ public class GithubUserAttributesConverter extends OAuthUserAttributesConverter{
 
     @Override
     public OAuthUserProfile convert(String userNameAttribute, Map<String, Object> attributes) {
-        long uniqueId = 123456L;
-//        String uniqueId = (String) attributes.get(userNameAttribute);
+        String uniqueId = (String) attributes.get(userNameAttribute);
         String nickname = (String) attributes.get("name");
         String profileImage = (String) attributes.get("avatar_url");
         String email = (String) attributes.get("email");

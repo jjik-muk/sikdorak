@@ -24,21 +24,7 @@ public class OAuthMocks {
     }
 
     public static void setupMockTokenResponse() throws IOException {
-        String grantType = "authorization_code";
-        String clientId = "1234";
-        String clientSecret = "12341234";
-        String redirect_uri = "redirectUri";
-        String code = "code";
-
-        String url = String.format(
-            "/oauth/token?grant_type=%s&client_id=%s&client_secret=%s&redirect_uri=%s&code=%s",
-            grantType,
-            clientId,
-            clientSecret,
-            redirect_uri,
-            code);
-
-        stubFor(post(urlEqualTo(url))
+        stubFor(post(urlEqualTo("/oauth/token"))
                 .willReturn(aResponse()
                         .withStatus(HttpStatus.OK.value())
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)

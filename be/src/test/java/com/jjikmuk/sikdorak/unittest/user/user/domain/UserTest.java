@@ -28,7 +28,7 @@ public class UserTest {
             void createUser() {
 
                 Long id = 1L;
-                Long kakaoId = 232323243242L;
+                String kakaoId = "232323243242";
                 String nickname = "Forky_Ham";
                 String profileImageUrl = "https://k.kakaocdn.net/dn/RKydg/btrIGzx2qYz/IHPrmTbYBOqqbH1/img_640x640.jpg";
                 String email = "forky@sikdorak.com";
@@ -52,7 +52,7 @@ public class UserTest {
             @DisplayName("정상적인 권한이면 성공한다.")
             void createUser(String authorityName) {
                 Long id = 1L;
-                Long kakaoId = 232323243242L;
+                String kakaoId = "232323243242";
                 String nickname = "Forky_Ham";
                 String profileImageUrl = "https://k.kakaocdn.net/dn/RKydg/btrIGzx2qYz/IHPrmTbYBOqqbH1/img_640x640.jpg";
                 String email = "forky@sikdorak.com";
@@ -68,7 +68,7 @@ public class UserTest {
             @DisplayName("ANONYMOUS 권한이면 예외를 발생시킨다.")
             void createUserFailed() {
                 Long id = 1L;
-                Long kakaoId = 232323243242L;
+                String kakaoId = "232323243242";
                 String nickname = "Forky_Ham";
                 String profileImageUrl = "https://k.kakaocdn.net/dn/RKydg/btrIGzx2qYz/IHPrmTbYBOqqbH1/img_640x640.jpg";
                 String email = "forky@sikdorak.com";
@@ -87,7 +87,7 @@ public class UserTest {
             @DisplayName("유저 권한을 가진 유저 객체를 반환한다.")
             void createUser() {
                 Long id = 1L;
-                Long kakaoId = 232323243242L;
+                String kakaoId = "232323243242";
                 String nickname = "Forky_Ham";
                 String profileImageUrl = "https://k.kakaocdn.net/dn/RKydg/btrIGzx2qYz/IHPrmTbYBOqqbH1/img_640x640.jpg";
                 String email = "forky@sikdorak.com";

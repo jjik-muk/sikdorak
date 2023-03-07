@@ -5,16 +5,16 @@ import lombok.Getter;
 
 @Getter
 public class OAuthUserProfile {
-    private final long uniqueId;
+    private final String uniqueId;
     private final String nickname;
     private final String profileImage;
     private final String email;
 
-    public OAuthUserProfile(long uniqueId, String nickname, String profileImage) {
+    public OAuthUserProfile(String uniqueId, String nickname, String profileImage) {
         this(uniqueId, nickname, profileImage, null);
     }
 
-    public OAuthUserProfile(long uniqueId, String nickname, String profileImage, String email) {
+    public OAuthUserProfile(String uniqueId, String nickname, String profileImage, String email) {
         this.uniqueId = uniqueId;
         this.nickname = nickname;
         this.profileImage = profileImage;

@@ -23,8 +23,8 @@ import org.springframework.test.context.TestPropertySource;
 
 @AutoConfigureWireMock(port = 0)
 @TestPropertySource(properties = {
-    "oauth.kakao.service.token_url=http://localhost:${wiremock.server.port}",
-    "oauth.kakao.service.api_url=http://localhost:${wiremock.server.port}"
+    "oauth.registrations.kakao.token_url=http://localhost:${wiremock.server.port}/oauth/token",
+    "oauth.registrations.kakao.user-info-url=http://localhost:${wiremock.server.port}/v2/user/me"
 })
 @DisplayName("통합 : OAuth 로그인")
 class OAuthLoginIntegrationTest extends InitIntegrationTest {

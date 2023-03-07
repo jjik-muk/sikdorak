@@ -9,7 +9,7 @@ public class KakaoUserAttributesConverter extends OAuthUserAttributesConverter {
 
     @Override
     public OAuthUserProfile convert(String userNameAttribute, Map<String, Object> attributes) {
-        long uniqueId = Long.parseLong((String)attributes.get(userNameAttribute));
+        String uniqueId = (String)attributes.get(userNameAttribute);
         String nickname = (String) attributes.get("nickname");
         String profileImage = (String) attributes.get("profile_image_url");
         boolean hasEmail = Boolean.parseBoolean((String)attributes.get("has_email"));
