@@ -1,29 +1,26 @@
 package com.jjikmuk.sikdorak.user.auth.app;
 
-import com.jjikmuk.sikdorak.common.config.feignclient.FeignClientHeaderConfiguration;
+import com.jjikmuk.sikdorak.common.config.feignclient.FeignClientOAuthHeaderConfiguration;
 import com.jjikmuk.sikdorak.common.config.feignclient.FeignClientOAuthErrorConfiguration;
-import com.jjikmuk.sikdorak.user.auth.app.response.KakaoAccountResponse;
-import com.jjikmuk.sikdorak.user.auth.app.response.OAuthTokenResponse;
+import com.jjikmuk.sikdorak.user.auth.app.response.OAuthAccessTokenResponse;
+import com.jjikmuk.sikdorak.user.auth.app.response.OAuthUserResponse;
 import java.net.URI;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "token-client", configuration = {
-    FeignClientHeaderConfiguration.class,
+@FeignClient(name = "token-client", url = "https://placeholder-url",configuration = {
+    FeignClientOAuthHeaderConfiguration.class,
     FeignClientOAuthErrorConfiguration.class})
 public interface OAuthClient {
 
     @PostMapping
-    OAuthTokenResponse getAccessToken(URI tokenUrl,
-        @RequestParam(value = "grant_type") String grantType,
-        @RequestParam(value = "client_id") String clientId,
-        @RequestParam(value = "client_secret") String clientSecret,
-        @RequestParam(value = "redirect_uri") String redirectUri,
-        @RequestParam(value = "code") String code);
+    OAuthAccessTokenResponse getAccessToken(URI tokenUrl, @RequestBody MultiValueMap<String, String> body);
+
 
     @GetMapping
-    KakaoAccountResponse getUserInfo(@RequestHeader("Authorization") String accessToken);
+    OAuthUserResponse getUserInfo(URI userInfoUrl, @RequestHeader("Authorization") String accessToken);
 }
