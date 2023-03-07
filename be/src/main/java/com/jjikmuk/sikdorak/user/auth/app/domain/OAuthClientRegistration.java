@@ -3,6 +3,7 @@ package com.jjikmuk.sikdorak.user.auth.app.domain;
 import com.jjikmuk.sikdorak.common.properties.oauth.OAuthRegistrationProperty;
 import java.util.Objects;
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Getter
@@ -56,9 +57,9 @@ public class OAuthClientRegistration {
     public String getAuthorizationUrl() {
         return UriComponentsBuilder.fromHttpUrl(this.authorizationUrl)
             .queryParam("client_id", this.clientId)
-            .queryParam("client_secret", this.clientSecret)
             .queryParam("redirect_uri", this.redirectUrl)
             .queryParam("response_type", this.responseType)
+            .queryParam("scope", this.scope)
             .build().toString();
     }
 
