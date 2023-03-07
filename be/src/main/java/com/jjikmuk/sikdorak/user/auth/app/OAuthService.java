@@ -1,18 +1,22 @@
 package com.jjikmuk.sikdorak.user.auth.app;
 
-import com.jjikmuk.sikdorak.common.properties.KakaoProperties;
-import com.jjikmuk.sikdorak.common.properties.oauth.ClientRegistrationRepository;
-import com.jjikmuk.sikdorak.common.properties.oauth.OAuthClientRegistration;
+import com.jjikmuk.sikdorak.user.auth.app.domain.OAuthClientRegistration;
+import com.jjikmuk.sikdorak.user.auth.app.domain.OAuthUserAttributes;
+import com.jjikmuk.sikdorak.user.auth.app.dto.OAuthAuthenticationRequest;
 import com.jjikmuk.sikdorak.user.auth.app.dto.JwtTokenPair;
-import com.jjikmuk.sikdorak.user.auth.app.response.KakaoAccountResponse;
-import com.jjikmuk.sikdorak.user.auth.app.response.OAuthTokenResponse;
+import com.jjikmuk.sikdorak.user.auth.app.dto.OAuthUserProfile;
+import com.jjikmuk.sikdorak.user.auth.app.response.OAuthAccessTokenResponse;
+import com.jjikmuk.sikdorak.user.auth.app.response.OAuthUserResponse;
 import com.jjikmuk.sikdorak.user.user.command.app.UserService;
 import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 
 @Slf4j
@@ -20,33 +24,27 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OAuthService {
 
-    private final OAuthTokenClient oAuthTokenClient;
-    private final OAuthApiClient oAuthApiClient;
-    private final KakaoProperties kakaoProperties;
+    private final OAuthClient oAuthClient;
     private final UserService userService;
     private final JwtProvider jwtProvider;
-    private final ClientRegistrationRepository registrationRepository;
-
-    public String getLoginPageUrl(String registrationId) {
-        OAuthClientRegistration registration = registrationRepository.findRegistrationByName(
-            registrationId);
-
-        return registration.getAuthorizationUri();
-    }
 
     @Transactional
-    public JwtTokenPair login(String code) {
-        OAuthTokenResponse oAuthTokenResponse = getOAuthAccessToken(code);
-        KakaoAccountResponse userInfo = getOAuthUserInformation(oAuthTokenResponse);
+    public JwtTokenPair login(OAuthAuthenticationRequest authenticationRequest) {
 
-        User user;
-        if (!userService.isExistingByUniqueId(userInfo.getUniqueId())) {
-            user = new User(userInfo.getUniqueId(), userInfo.getNickname(),
-                userInfo.getProfileImage(), userInfo.getEmail());
+        OAuthAccessTokenResponse oAuthAccessTokenResponse = getOAuthAccessToken(authenticationRequest);
+        OAuthUserResponse oAuthUserResponse = getOAuthUserInformation(authenticationRequest,
+            oAuthAccessTokenResponse);
+        OAuthUserProfile oAuthUserProfile = OAuthUserAttributes.convertToOAuthUserProfile(
+            authenticationRequest.getRegistration(),
+            oAuthUserResponse.getUserInfo());
+
+        if (!userService.isExistingByUniqueId(oAuthUserProfile.getUniqueId())) {
+            User user = oAuthUserProfile.toEntity();
             userService.createUser(user);
             return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
         }
-        user = userService.searchByUniqueId(userInfo.getUniqueId());
+
+        User user = userService.searchByUniqueId(oAuthUserProfile.getUniqueId());
         return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
     }
 
@@ -63,17 +61,27 @@ public class OAuthService {
         return jwtProvider.createTokenResponse(userId);
     }
 
-    private OAuthTokenResponse getOAuthAccessToken(String code) {
-        return oAuthTokenClient.getAccessToken(
-            kakaoProperties.getGrantType(),
-            kakaoProperties.getClientId(),
-            kakaoProperties.getRedirectUri(),
-            code);
+    private OAuthAccessTokenResponse getOAuthAccessToken(OAuthAuthenticationRequest authenticationRequest) {
+        OAuthClientRegistration registration = authenticationRequest.getRegistration();
+        URI tokenUrl = URI.create(registration.getTokenUrl());
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("grant_type", registration.getGrantType());
+        body.add("client_id", registration.getClientId());
+        body.add("client_secret", registration.getClientSecret());
+        body.add("redirect_uri", registration.getRedirectUrl());
+        body.add("code", authenticationRequest.getAuthorizationCode());
+
+        return oAuthClient.getAccessToken(tokenUrl, body);
     }
 
-    private KakaoAccountResponse getOAuthUserInformation(OAuthTokenResponse oAuthTokenResponse) {
-        String authorizationHeader = String.format("%s %s", oAuthTokenResponse.getTokenType(),
-            oAuthTokenResponse.getAccessToken());
-        return oAuthApiClient.getUserInfo(authorizationHeader);
+    private OAuthUserResponse getOAuthUserInformation(OAuthAuthenticationRequest oAuthAuthenticationRequest,
+        OAuthAccessTokenResponse oAuthAccessTokenResponse) {
+
+        URI userInfoUrl = URI.create(oAuthAuthenticationRequest.getRegistration().getUserInfoUrl());
+        String authorizationHeader = String.format("%s %s",
+            oAuthAccessTokenResponse.getTokenType(),
+            oAuthAccessTokenResponse.getAccessToken());
+
+        return oAuthClient.getUserInfo(userInfoUrl, authorizationHeader);
     }
 }
