@@ -1,7 +1,6 @@
 package com.jjikmuk.sikdorak.user.auth.app;
 
-import com.jjikmuk.sikdorak.user.auth.app.domain.OAuthClientRegistration;
-import com.jjikmuk.sikdorak.user.auth.app.domain.OAuthUserAttributes;
+import com.jjikmuk.sikdorak.common.oauth.OAuthClientRegistration;
 import com.jjikmuk.sikdorak.user.auth.app.dto.OAuthAuthenticationRequest;
 import com.jjikmuk.sikdorak.user.auth.app.dto.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.auth.app.dto.OAuthUserProfile;
@@ -34,9 +33,8 @@ public class OAuthService {
         OAuthAccessTokenResponse oAuthAccessTokenResponse = getOAuthAccessToken(authenticationRequest);
         OAuthUserResponse oAuthUserResponse = getOAuthUserInformation(authenticationRequest,
             oAuthAccessTokenResponse);
-        OAuthUserProfile oAuthUserProfile = OAuthUserAttributes.convertToOAuthUserProfile(
-            authenticationRequest.getRegistration(),
-            oAuthUserResponse.getUserInfo());
+        OAuthClientRegistration registration = authenticationRequest.getRegistration();
+        OAuthUserProfile oAuthUserProfile = registration.convert(oAuthUserResponse.getUserInfo());
 
         if (!userService.isExistingByUniqueId(oAuthUserProfile.getUniqueId())) {
             User user = oAuthUserProfile.toEntity();
