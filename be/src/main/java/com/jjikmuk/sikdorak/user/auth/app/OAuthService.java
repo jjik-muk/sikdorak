@@ -4,11 +4,10 @@ import com.jjikmuk.sikdorak.common.oauth.OAuthClientRegistration;
 import com.jjikmuk.sikdorak.user.auth.app.dto.OAuthAuthenticationRequest;
 import com.jjikmuk.sikdorak.user.auth.app.dto.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.auth.app.dto.OAuthUserProfile;
-import com.jjikmuk.sikdorak.user.auth.app.response.OAuthAccessTokenResponse;
+import com.jjikmuk.sikdorak.user.auth.app.response.OAuthTokenResponse;
 import com.jjikmuk.sikdorak.user.auth.app.response.OAuthUserResponse;
 import com.jjikmuk.sikdorak.user.user.command.app.UserService;
 import com.jjikmuk.sikdorak.user.user.command.domain.User;
-import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +27,11 @@ public class OAuthService {
     private final JwtProvider jwtProvider;
 
     @Transactional
-    public JwtTokenPair login(OAuthAuthenticationRequest authenticationRequest) {
+    public JwtTokenPair authenticate(OAuthAuthenticationRequest authenticationRequest) {
 
-        OAuthAccessTokenResponse oAuthAccessTokenResponse = getOAuthAccessToken(authenticationRequest);
+        OAuthTokenResponse oAuthTokenResponse = getOAuthAccessToken(authenticationRequest);
         OAuthUserResponse oAuthUserResponse = getOAuthUserInformation(authenticationRequest,
-            oAuthAccessTokenResponse);
+            oAuthTokenResponse);
         OAuthClientRegistration registration = authenticationRequest.getRegistration();
         OAuthUserProfile oAuthUserProfile = registration.convert(oAuthUserResponse.getUserInfo());
 
@@ -46,20 +45,7 @@ public class OAuthService {
         return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
     }
 
-    @Transactional(readOnly = true)
-    public JwtTokenPair updateAccessAndRefreshToken(String refreshToken) {
-
-        jwtProvider.validateToken(refreshToken);
-        String userId = jwtProvider.decodeToken(refreshToken);
-
-        if (!userService.isExistingById(Long.parseLong(userId))) {
-            throw new NotFoundUserException();
-        }
-
-        return jwtProvider.createTokenResponse(userId);
-    }
-
-    private OAuthAccessTokenResponse getOAuthAccessToken(OAuthAuthenticationRequest authenticationRequest) {
+    private OAuthTokenResponse getOAuthAccessToken(OAuthAuthenticationRequest authenticationRequest) {
         OAuthClientRegistration registration = authenticationRequest.getRegistration();
         URI tokenUrl = URI.create(registration.getTokenUrl());
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
@@ -73,12 +59,12 @@ public class OAuthService {
     }
 
     private OAuthUserResponse getOAuthUserInformation(OAuthAuthenticationRequest oAuthAuthenticationRequest,
-        OAuthAccessTokenResponse oAuthAccessTokenResponse) {
+        OAuthTokenResponse oAuthTokenResponse) {
 
         URI userInfoUrl = URI.create(oAuthAuthenticationRequest.getRegistration().getUserInfoUrl());
         String authorizationHeader = String.format("%s %s",
-            oAuthAccessTokenResponse.getTokenType(),
-            oAuthAccessTokenResponse.getAccessToken());
+            oAuthTokenResponse.getTokenType(),
+            oAuthTokenResponse.getAccessToken());
 
         return oAuthClient.getUserInfo(userInfoUrl, authorizationHeader);
     }

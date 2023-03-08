@@ -55,7 +55,7 @@ class OAuthLoginIntegrationTest extends InitIntegrationTest {
         OAuthClientRegistration registration = registrationRepository.findRegistrationByName(
             registrationId);
 
-        JwtTokenPair code = oAuthService.login(OAuthAuthenticationRequest.of(registration,authorizationCode));
+        JwtTokenPair code = oAuthService.authenticate(OAuthAuthenticationRequest.of(registration,authorizationCode));
         String userId = jwtProvider.decodeToken(code.getAccessToken());
         User user = userRepository.findById(Long.parseLong(userId)).orElseThrow();
 
@@ -73,7 +73,7 @@ class OAuthLoginIntegrationTest extends InitIntegrationTest {
         OAuthClientRegistration registration = registrationRepository.findRegistrationByName(
             registrationId);
 
-        JwtTokenPair code = oAuthService.login(OAuthAuthenticationRequest.of(registration,authorizationCode));
+        JwtTokenPair code = oAuthService.authenticate(OAuthAuthenticationRequest.of(registration,authorizationCode));
         String userId = jwtProvider.decodeToken(code.getAccessToken());
 
         User user = userRepository.findById(Long.parseLong(userId)).orElseThrow();

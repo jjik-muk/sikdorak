@@ -1,7 +1,7 @@
 package com.jjikmuk.sikdorak.common.config;
 
 import com.jjikmuk.sikdorak.common.controller.CursorPageableArgumentResolver;
-import com.jjikmuk.sikdorak.user.auth.api.OAuthUserArgumentResolver;
+import com.jjikmuk.sikdorak.user.auth.api.AuthUserArgumentResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Value("${webconfig.cors.allowedOrigins}")
 	private String[] allowedOrigins;
 
-	private final OAuthUserArgumentResolver oAuthUserArgumentResolver;
+	private final AuthUserArgumentResolver authUserArgumentResolver;
 
 	private final CursorPageableArgumentResolver cursorPageableArgumentResolver;
 
@@ -38,7 +38,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-		resolvers.add(oAuthUserArgumentResolver);
+		resolvers.add(authUserArgumentResolver);
 		resolvers.add(cursorPageableArgumentResolver);
 	}
 }

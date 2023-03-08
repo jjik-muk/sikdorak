@@ -5,6 +5,7 @@ import com.jjikmuk.sikdorak.common.properties.JwtProperties;
 import com.jjikmuk.sikdorak.common.oauth.ClientRegistrationRepository;
 import com.jjikmuk.sikdorak.common.oauth.OAuthClientRegistration;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
+import com.jjikmuk.sikdorak.user.auth.app.AuthService;
 import com.jjikmuk.sikdorak.user.auth.app.dto.OAuthAuthenticationRequest;
 import com.jjikmuk.sikdorak.user.auth.app.dto.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.auth.app.OAuthService;
@@ -25,8 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-public class OAuthCommandApi {
+public class AuthCommandApi {
 
+    private final AuthService authService;
     private final OAuthService oAuthService;
     private final JwtProperties jwtProperties;
     private final ClientRegistrationRepository registrationRepository;
@@ -42,7 +44,7 @@ public class OAuthCommandApi {
     @GetMapping("/api/oauth/{registrationId}/callback")
     public CommonResponseEntity<AccessTokenResponse> loginCallback(@PathVariable String registrationId, @RequestParam String code, HttpServletResponse response) {
         OAuthClientRegistration registration = registrationRepository.findRegistrationByName(registrationId);
-        JwtTokenPair jwtTokenPair = oAuthService.login(OAuthAuthenticationRequest.of(registration, code));
+        JwtTokenPair jwtTokenPair = oAuthService.authenticate(OAuthAuthenticationRequest.of(registration, code));
         String refreshToken = jwtTokenPair.getRefreshToken();
         setCookie(response, refreshToken);
 
@@ -55,7 +57,7 @@ public class OAuthCommandApi {
         @CookieValue("refreshToken") Cookie cookie,
         HttpServletResponse response) {
         String refreshToken = cookie.getValue();
-        JwtTokenPair jwtTokenPair = oAuthService.updateAccessAndRefreshToken(refreshToken);
+        JwtTokenPair jwtTokenPair = authService.reassignAccessToken(refreshToken);
         setCookie(response, jwtTokenPair.getRefreshToken());
 
         return new CommonResponseEntity<>(ResponseCodeAndMessages.UPDATE_ACCESS_TOKEN_SUCCESS,

@@ -2,7 +2,7 @@ package com.jjikmuk.sikdorak.user.auth.app;
 
 import com.jjikmuk.sikdorak.common.config.feignclient.FeignClientOAuthHeaderConfiguration;
 import com.jjikmuk.sikdorak.common.config.feignclient.FeignClientOAuthErrorConfiguration;
-import com.jjikmuk.sikdorak.user.auth.app.response.OAuthAccessTokenResponse;
+import com.jjikmuk.sikdorak.user.auth.app.response.OAuthTokenResponse;
 import com.jjikmuk.sikdorak.user.auth.app.response.OAuthUserResponse;
 import java.net.URI;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface OAuthClient {
 
     @PostMapping
-    OAuthAccessTokenResponse getAccessToken(URI tokenUrl, @RequestBody MultiValueMap<String, String> body);
+    OAuthTokenResponse getAccessToken(URI tokenUrl, @RequestBody MultiValueMap<String, String> body);
 
 
     @GetMapping
