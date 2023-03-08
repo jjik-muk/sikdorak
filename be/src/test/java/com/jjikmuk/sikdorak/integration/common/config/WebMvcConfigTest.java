@@ -3,7 +3,7 @@ package com.jjikmuk.sikdorak.integration.common.config;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.jjikmuk.sikdorak.user.auth.api.AuthUserArgumentResolver;
+import com.jjikmuk.sikdorak.user.auth.api.LoginUserArgumentResolver;
 import com.jjikmuk.sikdorak.user.user.command.app.UserService;
 import java.net.URI;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +29,7 @@ class WebMvcConfigTest {
     private MockMvc mvc;
 
     @MockBean
-    private AuthUserArgumentResolver authUserArgumentResolver; // application context 용도로 필요
+    private LoginUserArgumentResolver loginUserArgumentResolver; // application context 용도로 필요
 
     @MockBean
     private UserService userService; // application context 용도로 필요
