@@ -31,7 +31,7 @@ class ReviewInsertDocumentationTest extends InitDocumentationTest {
 		amazonS3.putObject(awsProperties.getBucket(),
 			"origin/0035b726-890f-43ce-9cfd-cedf425763ff.png",
 			new File("src/test/resources/images/jjikmuk.png"));
-		LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+		LoginUser loginUser = LoginUser.user(testData.kukim.getId());
 		imageMetaDataService.initImageMetaData("0035b726-890f-43ce-9cfd-cedf425763ff.png", loginUser);
 		ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(
 			"Test review contents",

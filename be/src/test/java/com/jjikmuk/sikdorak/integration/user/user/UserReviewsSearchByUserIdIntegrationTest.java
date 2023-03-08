@@ -26,7 +26,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		long cursorPage = 10;
 		int size = 5;
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
-		LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+		LoginUser loginUser = LoginUser.anonymous();
 
 		ReviewListResponse reviews = reviewDao.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser, cursorPageRequest);
 
@@ -39,7 +39,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		long cursorPage = 10;
 		int size = 5;
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
-		LoginUser loginUser = new LoginUser(testData.jay.getId(), Authority.USER);
+		LoginUser loginUser = LoginUser.user(testData.jay.getId());
 
 		ReviewListResponse reviews = reviewDao.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser, cursorPageRequest);
 
@@ -52,7 +52,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		long cursorPage = 0;
 		int size = 5;
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
-		LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
+		LoginUser loginUser = LoginUser.user(testData.forky.getId());
 
 		ReviewListResponse reviews = reviewDao.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser, cursorPageRequest);
 
@@ -65,7 +65,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		long cursorPage = 10;
 		int size = 5;
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
-		LoginUser loginUser = new LoginUser(testData.hoi.getId(), Authority.USER);
+		LoginUser loginUser = LoginUser.user(testData.hoi.getId());
 
 		ReviewListResponse reviews = reviewDao.searchUserReviewsByUserIdAndRelationType(testData.hoi.getId(), loginUser, cursorPageRequest);
 
@@ -78,7 +78,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		long cursorPage = 10;
 		int size = 5;
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
-		LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+		LoginUser loginUser = LoginUser.anonymous();
 		long invalidUserId = Long.MAX_VALUE;
 
 		assertThatThrownBy(() ->
@@ -92,7 +92,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		long cursorPage = 10;
 		int size = 5;
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
-		LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+		LoginUser loginUser = LoginUser.anonymous();
 
 		ReviewListResponse reviews = reviewDao.searchUserReviewsByUserIdAndRelationType(
 			testData.jay.getId(), loginUser,cursorPageRequest);
@@ -106,7 +106,7 @@ class UserReviewsSearchByUserIdIntegrationTest extends InitIntegrationTest {
 		long cursorPage = 15;
 		int size = 5;
 		CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
-		LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+		LoginUser loginUser = LoginUser.anonymous();
 
 		ReviewListResponse reviews = reviewDao.searchUserReviewsByUserIdAndRelationType(
 			testData.forky.getId(), loginUser,cursorPageRequest);

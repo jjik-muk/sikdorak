@@ -84,6 +84,6 @@ public class DataGenerator {
 	}
 
 	public LoginUser createLoginUserWithUserId(long userId) {
-		return new LoginUser(userId, Authority.USER);
+		return LoginUser.user(userId);
 	}
 }

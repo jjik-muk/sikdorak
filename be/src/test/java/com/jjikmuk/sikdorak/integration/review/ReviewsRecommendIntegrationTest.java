@@ -26,7 +26,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
     void anonymous_user_get_recommended_reviews() {
         long cursorPage = 15;
         int size = 9;
-        LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+        LoginUser loginUser = LoginUser.anonymous();
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
         ReviewListResponse recommendedReviews = reviewDao.getRecentRecommendedReviews(
@@ -44,7 +44,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
     void user_get_recommended_reviews() {
         long cursorPage = 0;
         int size = 5;
-        LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+        LoginUser loginUser = LoginUser.user(testData.kukim.getId());
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
         ReviewListResponse recommendedReviews = reviewDao.getRecentRecommendedReviews(
@@ -59,7 +59,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
     void get_invalid_page_recommended_reviews() {
         long invalidPage = -1L;
         int size = 5;
-        LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+        LoginUser loginUser = LoginUser.anonymous();
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, invalidPage, size, true);
 
         ReviewListResponse recommendedReviews = reviewDao.getRecentRecommendedReviews(
@@ -73,7 +73,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
     void get_recommended_reviews_in_first_page() {
         long cursorPage = 0;
         int size = 10;
-        LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+        LoginUser loginUser = LoginUser.anonymous();
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
         ReviewListResponse recommendedReviews = reviewDao.getRecentRecommendedReviews(
@@ -87,7 +87,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
     void get_recommended_reviews_with_page_and_size() {
         long cursorPage = 20;
         int size = 7;
-        LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+        LoginUser loginUser = LoginUser.anonymous();
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
         ReviewListResponse recommendedReviews = reviewDao.getRecentRecommendedReviews(
@@ -102,7 +102,7 @@ class ReviewsRecommendIntegrationTest extends InitIntegrationTest {
     void invalid_page_size() {
         long cursorPage = 11;
         int size = Integer.MAX_VALUE;
-        LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+        LoginUser loginUser = LoginUser.anonymous();
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
 
         assertThatThrownBy(() -> reviewDao.getRecentRecommendedReviews(loginUser, cursorPageRequest))

@@ -37,7 +37,7 @@ class UserDeleteIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("올바른 유저 정보가 들어올 시 유저의 정보, 유저가 작성한 리뷰들, 댓글들을 soft delete 한다.")
     void delete_user_success() {
-        LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
+        LoginUser loginUser = LoginUser.user(testData.forky.getId());
 
         userService.deleteUser(loginUser);
 
@@ -54,7 +54,7 @@ class UserDeleteIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("올바른 유저 정보가 들어올 시 탈퇴한 유저의 팔로워/팔로잉 목록에 있는 유저들의 팔로워/팔로잉 목록에서 탈퇴한 유저의 아이디는 검색되지 않는다.")
     void delete_user_in_followers_followings() {
-        LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
+        LoginUser loginUser = LoginUser.user(testData.forky.getId());
 
         userService.deleteUser(loginUser);
 
@@ -68,7 +68,7 @@ class UserDeleteIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("존재하지 않는 유저의 정보가 들어오면 예외를 반환한다.")
     void delete_not_found_user() {
-        LoginUser loginUser = new LoginUser(9887656L, Authority.USER);
+        LoginUser loginUser = LoginUser.user(9887656L);
 
         assertThatThrownBy(() -> userService.deleteUser(loginUser))
             .isInstanceOf(NotFoundUserException.class);

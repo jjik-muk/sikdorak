@@ -28,7 +28,7 @@ class UserModifyIntegrationTest extends InitIntegrationTest {
     @DisplayName("올바른 입력값이 들어오면 유저의 정보를 수정한다.")
     void user_modify_success() {
 
-        LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+        LoginUser loginUser = LoginUser.user(testData.kukim.getId());
         UserModifyRequest userModifyRequest = new UserModifyRequest(
             "포키",
             "forkyy@gmail.com",
@@ -47,7 +47,7 @@ class UserModifyIntegrationTest extends InitIntegrationTest {
     @DisplayName("존재하지 않은 유저의 요청이 들어오면 예외가 발생한다.")
     void user_modify_with_wrong_id() {
 
-        LoginUser loginUser = new LoginUser(987654321L, Authority.USER);
+        LoginUser loginUser = LoginUser.user(987654321L);
         UserModifyRequest userModifyRequest = new UserModifyRequest(
             "",
             "forkyy@gmail.com",

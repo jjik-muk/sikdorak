@@ -36,7 +36,7 @@ class ReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
             // given
             Store store = testData.store;
             CursorPageRequest pageRequest = new CursorPageRequest(0L, 0L, 10, true);
-            LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+            LoginUser loginUser = LoginUser.anonymous();
 
             // when
             ReviewListResponse reviewResponse = reviewDao.searchReviewsByStoreId(
@@ -63,7 +63,7 @@ class ReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
             // given
             long notExistingStoreId = Long.MIN_VALUE;
             CursorPageRequest pageRequest = new CursorPageRequest(0L, 0L, 10, true);
-            LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+            LoginUser loginUser = LoginUser.anonymous();
 
             // then
             assertThatThrownBy(
@@ -78,7 +78,7 @@ class ReviewsSearchByStoreIdIntegrationTest extends InitIntegrationTest {
             // given
             Store store = testData.store;
             CursorPageRequest pageRequest = new CursorPageRequest(0L, 0L, 10, true);
-            LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+            LoginUser loginUser = LoginUser.anonymous();
 
             // when
             ReviewListResponse reviewResponse = reviewDao.searchReviewsByStoreId(

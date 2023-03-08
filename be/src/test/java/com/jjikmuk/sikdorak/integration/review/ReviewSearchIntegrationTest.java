@@ -24,8 +24,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("유저가 본인의 전체 공개 리뷰를 조회한 경우 디테일 리뷰응답 객체를 반환한다.")
 	void search_public_review_detail_with_owner_user() {
-		LoginUser reviewOwnerUser = new LoginUser(testData.hoi.getId(),
-			Authority.USER);
+		LoginUser reviewOwnerUser = LoginUser.user(testData.hoi.getId());
 		Long searchReviewId = testData.followAcceptUserPublicReview.getId();
 
 		ReviewDetailResponse reviewDetailResponse = reviewDao.searchReviewDetail(
@@ -39,8 +38,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("유저가 본인의 비공개 리뷰를 조회한 경우 디테일 리뷰응답 객체를 반환한다.")
 	void search_private_review_detail_with_owner_user() {
-		LoginUser reviewOwnerUser = new LoginUser(testData.hoi.getId(),
-			Authority.USER);
+		LoginUser reviewOwnerUser = LoginUser.user(testData.hoi.getId());
 		Long searchReviewId = testData.followAcceptUserPrivateReview.getId();
 
 		ReviewDetailResponse reviewDetailResponse = reviewDao.searchReviewDetail(
@@ -54,7 +52,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("유저가 친구의 친구 공개 리뷰를 조회한 경우 리뷰응답 객체를 반환한다")
 	void search_protected_review_detail_with_friend_User() {
-		LoginUser reviewFriendUser = new LoginUser(testData.forky.getId(), Authority.USER);
+		LoginUser reviewFriendUser = LoginUser.user(testData.forky.getId());
 		Long searchReviewId = testData.followAcceptUserProtectedReview.getId();
 
 		ReviewDetailResponse reviewDetailResponse = reviewDao.searchReviewDetail(
@@ -68,7 +66,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("존재하지않는 리뷰를 조회한 경우 예외를 발생시킨다")
 	void search_not_exist_review_with_guest() {
-		LoginUser guestUser = new LoginUser(Authority.ANONYMOUS);
+		LoginUser guestUser = LoginUser.anonymous();
 		Long searchReviewId = Long.MAX_VALUE;
 
 		assertThatThrownBy(() ->  reviewDao.searchReviewDetail(
@@ -79,7 +77,7 @@ class ReviewSearchIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("유저가 읽을 권한이 없는 리뷰를 조회한 경우 예외를 발생시킨다")
 	void search_private_review_detail_with_guest() {
-		LoginUser guestUser = new LoginUser(Authority.ANONYMOUS);
+		LoginUser guestUser = LoginUser.anonymous();
 		Long searchReviewId = testData.followAcceptUserPrivateReview.getId();
 
 		assertThatThrownBy(() ->  reviewDao.searchReviewDetail(
