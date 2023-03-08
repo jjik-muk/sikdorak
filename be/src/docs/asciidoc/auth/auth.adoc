@@ -3,8 +3,8 @@
 |===
 | 기능 | API
 
-| <<로그인 페이지 요청>> | GET /api/oauth/login
-| <<유저 로그인 콜백>> | GET /api/oauth/callback?code={value}
+| <<로그인 페이지 요청>> | GET /api/oauth/{registrationId}/login
+| <<유저 로그인 콜백>> | GET /api/oauth/{registrationId}/callback?code={value}
 | <<액세스 토큰 갱신>> | GET /api/oauth/refresh
 
 |===
