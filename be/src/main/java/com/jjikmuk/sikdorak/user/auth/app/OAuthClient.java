@@ -12,15 +12,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "token-client", url = "https://placeholder-url",configuration = {
+@FeignClient(name = "token-client", url = "https://placeholder-url", configuration = {
     FeignClientOAuthHeaderConfiguration.class,
     FeignClientOAuthErrorConfiguration.class})
 public interface OAuthClient {
 
     @PostMapping
-    OAuthTokenResponse getAccessToken(URI tokenUrl, @RequestBody MultiValueMap<String, String> body);
+    OAuthTokenResponse getAccessToken(URI tokenUrl,
+        @RequestBody MultiValueMap<String, String> body);
 
 
     @GetMapping
-    OAuthUserResponse getUserInfo(URI userInfoUrl, @RequestHeader("Authorization") String accessToken);
+    OAuthUserResponse getUserInfo(URI userInfoUrl,
+        @RequestHeader("Authorization") String accessToken);
 }
