@@ -2,7 +2,11 @@ package com.jjikmuk.sikdorak.user.auth.api;
 
 import com.jjikmuk.sikdorak.common.ResponseCodeAndMessages;
 import com.jjikmuk.sikdorak.common.properties.JwtProperties;
+import com.jjikmuk.sikdorak.common.oauth.ClientRegistrationRepository;
+import com.jjikmuk.sikdorak.common.oauth.OAuthClientRegistration;
 import com.jjikmuk.sikdorak.common.response.CommonResponseEntity;
+import com.jjikmuk.sikdorak.user.auth.app.AuthService;
+import com.jjikmuk.sikdorak.user.auth.app.dto.OAuthAuthenticationRequest;
 import com.jjikmuk.sikdorak.user.auth.app.dto.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.auth.app.OAuthService;
 import com.jjikmuk.sikdorak.user.auth.app.response.AccessTokenResponse;
@@ -16,26 +20,36 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-public class OAuthCommandApi {
+public class AuthCommandApi {
 
+    private final AuthService authService;
     private final OAuthService oAuthService;
     private final JwtProperties jwtProperties;
+    private final ClientRegistrationRepository registrationRepository;
 
-    @GetMapping("/api/oauth/login")
-    public ResponseEntity<Void> loginPageUrl() {
+    @GetMapping("/api/oauth/{registrationId}/login")
+    public ResponseEntity<Void> loginPageUrl(@PathVariable String registrationId) {
+        OAuthClientRegistration registration = registrationRepository.findRegistrationByName(
+            registrationId);
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
-            .header("Location", oAuthService.getLoginPageUrl())
+            .header("Location", registration.getAuthorizationUrl())
             .build();
     }
 
-    @GetMapping("/api/oauth/callback")
-    public CommonResponseEntity<AccessTokenResponse> loginCallback(@RequestParam String code, HttpServletResponse response) {
-        JwtTokenPair jwtTokenPair = oAuthService.login(code);
+    @GetMapping("/api/oauth/{registrationId}/callback")
+    public CommonResponseEntity<AccessTokenResponse> loginCallback(
+        @PathVariable String registrationId, @RequestParam String code,
+        HttpServletResponse response) {
+        OAuthClientRegistration registration = registrationRepository.findRegistrationByName(
+            registrationId);
+        JwtTokenPair jwtTokenPair = oAuthService.authenticate(
+            OAuthAuthenticationRequest.of(registration, code));
         String refreshToken = jwtTokenPair.getRefreshToken();
         setCookie(response, refreshToken);
 
@@ -48,7 +62,7 @@ public class OAuthCommandApi {
         @CookieValue("refreshToken") Cookie cookie,
         HttpServletResponse response) {
         String refreshToken = cookie.getValue();
-        JwtTokenPair jwtTokenPair = oAuthService.updateAccessAndRefreshToken(refreshToken);
+        JwtTokenPair jwtTokenPair = authService.reassignAccessToken(refreshToken);
         setCookie(response, jwtTokenPair.getRefreshToken());
 
         return new CommonResponseEntity<>(ResponseCodeAndMessages.UPDATE_ACCESS_TOKEN_SUCCESS,

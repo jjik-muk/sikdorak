@@ -25,7 +25,7 @@ class UserCreateIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("동일한 유저가 존재하지 않는다면 유저를 저장소에 저장한다.")
     void save() {
-        User user = new User(232323L, "Forky-Ham", "https://profile-img.com", "forky@sikdorak.com");
+        User user = new User("232323", "Forky-Ham", "https://profile-img.com", "forky@sikdorak.com");
 
         Long id = userService.createUser(user);
         User findUser = userRepository.findById(id).get();

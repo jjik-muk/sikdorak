@@ -147,22 +147,22 @@ public class DatabaseConfigurator implements InitializingBean {
 
 	private void initBasicUserData() {
 		this.kukim = userRepository.save(
-			new User(1000000L, "쿠킴", "https://s3.ap-northeast-2.amazonaws.com/user/kukim.jpg",
+			new User("1000000", "쿠킴", "https://s3.ap-northeast-2.amazonaws.com/user/kukim.jpg",
 				"kukim@gmail.com"));
 		this.jay = userRepository.save(
-			new User(2000000L, "제이", "https://s3.ap-northeast-2.amazonaws.com/user/jay.jpg",
+			new User("2000000", "제이", "https://s3.ap-northeast-2.amazonaws.com/user/jay.jpg",
 				"jay@gmail.com"));
 		this.forky = userRepository.save(
-			new User(3000000L, "포키", "https://s3.ap-northeast-2.amazonaws.com/user/forky.jpg",
+			new User("3000000", "포키", "https://s3.ap-northeast-2.amazonaws.com/user/forky.jpg",
 				"forky@gmail.com"));
 		this.hoi = userRepository.save(
-			new User(4000000L, "호이", "https://s3.ap-northeast-2.amazonaws.com/user/hoi.jpg",
+			new User("4000000", "호이", "https://s3.ap-northeast-2.amazonaws.com/user/hoi.jpg",
 				"hoi@gmail.com"));
 		this.rumka = userRepository.save(
-			new User(5000000L, "럼카", "https://s3.ap-northeast-2.amazonaws.com/user/rumka.jpg",
+			new User("5000000", "럼카", "https://s3.ap-northeast-2.amazonaws.com/user/rumka.jpg",
 				"rumka@gmail.com"));
 		this.admin = userRepository.save(
-			new User(6000000L, "관리자", "https://s3.ap-northeast-2.amazonaws.com/user/admin.jpg",
+			new User("6000000", "관리자", "https://s3.ap-northeast-2.amazonaws.com/user/admin.jpg",
 				"admin@gmail.com", Authority.ADMIN));
 	}
 

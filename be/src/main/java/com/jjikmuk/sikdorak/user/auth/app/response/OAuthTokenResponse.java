@@ -9,12 +9,6 @@ import lombok.Getter;
 public class OAuthTokenResponse {
 
     private String tokenType;
-
     private String accessToken;
 
-    private int expiresIn;
-
-    private String refreshToken;
-
-    private int refreshTokenExpiresIn;
 }

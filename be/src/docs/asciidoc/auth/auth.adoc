@@ -3,17 +3,17 @@
 |===
 | 기능 | API
 
-| <<로그인 페이지 요청>> | GET /api/oauth/login
-| <<유저 로그인 콜백>> | GET /api/oauth/callback?code={value}
+| <<로그인 페이지 요청>> | GET /api/oauth/{registrationId}/login
+| <<유저 로그인 콜백>> | GET /api/oauth/{registrationId}/callback?code={value}
 | <<액세스 토큰 갱신>> | GET /api/oauth/refresh
 
 |===
 
 === 로그인 페이지 요청
 
-API : `GET /api/oauth/login`
+API : `GET /api/oauth/{registrationId}/login`
 
-카카오 로그인 페이지를 리다이렉트합니다.
+로그인 페이지로 리다이렉트합니다.
 
 ==== `301 MOVED_PERMANENTLY`
 
@@ -28,9 +28,9 @@ operation::o_auth_login_documentation_test/redirect_to_social_login_page[snippet
 
 === 유저 로그인 콜백
 
-API : `GET /api/oauth/callback?code={value}`
+API : `GET /api/{registrationId}/oauth/callback?code={value}`
 
-카카오톡 OAuth 로그인 후, 카카오에서 리다이렉트/콜백 응답받는 API 입니다.
+OAuth 로그인 후, 리소스서버에서 리다이렉트/콜백 응답받는 API 입니다.
 
 code를 가지고 회원가입/로그인을 합니다.
 

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
-import com.jjikmuk.sikdorak.user.auth.api.OAuthUserArgumentResolver;
+import com.jjikmuk.sikdorak.user.auth.api.AuthUserArgumentResolver;
 import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +17,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 class OAuthArgumentResolverIntegrationTest extends InitIntegrationTest {
 
 	@Autowired
-	private OAuthUserArgumentResolver oAuthUserArgumentResolver;
+	private AuthUserArgumentResolver authUserArgumentResolver;
 
 	private MockHttpServletRequest mockHttpServletRequest;
 
@@ -31,7 +31,7 @@ class OAuthArgumentResolverIntegrationTest extends InitIntegrationTest {
 	void oAuth_argument_resolver_success() {
 		mockHttpServletRequest.addHeader("Authorization", testData.kukimValidAuthorizationHeader);
 
-		LoginUser loginUser = (LoginUser) oAuthUserArgumentResolver.resolveArgument(null, null,
+		LoginUser loginUser = (LoginUser) authUserArgumentResolver.resolveArgument(null, null,
 			new ServletWebRequest(mockHttpServletRequest), null);
 
 		assertThat(loginUser.getId()).isEqualTo(testData.kukim.getId());
@@ -41,7 +41,7 @@ class OAuthArgumentResolverIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("토큰이 존재하지 않는 경우 Anonymous 로그인 유저 객체를 반환한다.")
 	void oAuth_argument_resolver_fail() {
-		LoginUser loginUser = (LoginUser) oAuthUserArgumentResolver.resolveArgument(null, null,
+		LoginUser loginUser = (LoginUser) authUserArgumentResolver.resolveArgument(null, null,
 			new ServletWebRequest(mockHttpServletRequest), null);
 
 		assertThat(loginUser.getAuthority()).isEqualTo(Authority.ANONYMOUS);

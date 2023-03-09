@@ -24,7 +24,7 @@ public class OAuthMocks {
     }
 
     public static void setupMockTokenResponse() throws IOException {
-        stubFor(post(urlEqualTo("/oauth/token?grant_type=authorization_code&client_id=1234&redirect_uri=redirectUri&code=code"))
+        stubFor(post(urlEqualTo("/oauth/token"))
                 .willReturn(aResponse()
                         .withStatus(HttpStatus.OK.value())
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)

@@ -8,11 +8,11 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByUniqueId(long uniqueId);
+    Optional<User> findByUniqueId(String uniqueId);
 
     boolean existsById(long id);
 
-    boolean existsByUniqueId(long uniqueId);
+    boolean existsByUniqueId(String uniqueId);
 
     @Query(value = "select u.* "
         + "from (select uf.follower_id from user_followers as uf where uf.user_id = :userId) as f "

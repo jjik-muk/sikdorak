@@ -82,7 +82,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User searchByUniqueId(long uniqueId) {
+    public User searchByUniqueId(String uniqueId) {
         return userRepository.findByUniqueId(uniqueId)
             .orElseThrow(NotFoundUserException::new);
     }
@@ -93,7 +93,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public boolean isExistingByUniqueId(long userUniqueId) {
+    public boolean isExistingByUniqueId(String userUniqueId) {
         return userRepository.existsByUniqueId(userUniqueId);
     }
 

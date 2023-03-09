@@ -30,7 +30,7 @@ public class User extends BaseTimeEntity {
     private Long id;
 
     @Column(name = "unique_id")
-    private Long uniqueId;
+    private String uniqueId;
 
     @Embedded
     private UserNickname nickname;
@@ -52,15 +52,15 @@ public class User extends BaseTimeEntity {
 
     private boolean deleted = false;
 
-    public User(Long uniqueId, String nickname, String profileImage, String email) {
+    public User(String uniqueId, String nickname, String profileImage, String email) {
         this(null, uniqueId, nickname, profileImage, email);
     }
 
-    public User(Long uniqueId, String nickname, String profileImage, String email, Authority authority) {
+    public User(String uniqueId, String nickname, String profileImage, String email, Authority authority) {
         this(null, uniqueId, nickname, profileImage, email, authority);
     }
 
-    public User(Long id, Long uniqueId, String nickname, String profileImage, String email) {
+    public User(Long id, String uniqueId, String nickname, String profileImage, String email) {
         this(id, uniqueId, nickname, profileImage, email, Authority.USER);
     }
 
@@ -68,7 +68,7 @@ public class User extends BaseTimeEntity {
         검증 로직이 여기 있기 때문에 다른 생성자를 추가할 경우
         최종적으로 이 생성자를 호출하도록 유도 해야함
      */
-    public User(Long id, Long uniqueId, String nickname, String profileImage, String email, Authority authority) {
+    public User(Long id, String uniqueId, String nickname, String profileImage, String email, Authority authority) {
         validateAuthority(authority);
 
         this.id = id;
@@ -82,7 +82,7 @@ public class User extends BaseTimeEntity {
     }
 
     private void validateAuthority(Authority authority) {
-        if (authority.equals(Authority.ANONYMOUS)) {
+        if (Authority.ANONYMOUS.equals(authority)) {
             throw new InvalidAuthorityException();
         }
     }
@@ -91,7 +91,7 @@ public class User extends BaseTimeEntity {
         return id;
     }
 
-    public Long getUniqueId() {
+    public String getUniqueId() {
         return uniqueId;
     }
 

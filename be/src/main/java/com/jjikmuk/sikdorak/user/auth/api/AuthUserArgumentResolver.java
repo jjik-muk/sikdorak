@@ -18,7 +18,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
 @RequiredArgsConstructor
-public class OAuthUserArgumentResolver implements HandlerMethodArgumentResolver {
+public class AuthUserArgumentResolver implements HandlerMethodArgumentResolver {
 
 	private static final String AUTHORIZATION_HEADER = "Authorization";
 	private static final String TOKEN_TYPE = "Bearer ";

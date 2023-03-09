@@ -17,7 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 @DisplayName("문서화 : OAuth 엑세스 토큰 갱신")
-class OAuthUpdateTokenDocumentationTest extends InitDocumentationTest {
+class AuthUpdateTokenDocumentationTest extends InitDocumentationTest {
 
     @Test
     @DisplayName("유저로부터 액세스 토큰 갱신 요청이 올 경우 새로운 액세스 토큰을 발급한다")
