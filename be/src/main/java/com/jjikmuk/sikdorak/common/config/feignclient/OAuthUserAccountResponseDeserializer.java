@@ -15,7 +15,7 @@ public class OAuthUserAccountResponseDeserializer extends JsonDeserializer<OAuth
 
     @Override
     public OAuthUserResponse deserialize(JsonParser p, DeserializationContext ctxt)
-        throws IOException, JacksonException {
+        throws IOException {
         JsonNode jsonNode = p.getCodec().readTree(p);
 
         Map<String, Object> attributes = new HashMap<>();

@@ -32,7 +32,7 @@ public class OAuthAttributesConverters {
     private Map<String, OAuthUserAttributesConverter> getConverterMap() {
         return oAuthUserAttributesConverterList.stream()
             .collect(Collectors.toMap(OAuthUserAttributesConverter::getConverterId,
-                (converter) -> converter));
+                converter -> converter));
     }
 
 }

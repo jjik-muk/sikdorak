@@ -5,7 +5,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GithubUserAttributesConverter extends OAuthUserAttributesConverter{
+public class GithubUserAttributesConverter extends OAuthUserAttributesConverter {
 
     @Override
     public OAuthUserProfile convert(String userNameAttribute, Map<String, Object> attributes) {

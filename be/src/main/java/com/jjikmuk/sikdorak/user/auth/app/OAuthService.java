@@ -47,13 +47,13 @@ public class OAuthService {
 
     private OAuthTokenResponse getOAuthAccessToken(OAuthAuthenticationRequest authenticationRequest) {
         OAuthClientRegistration registration = authenticationRequest.getRegistration();
-        URI tokenUrl = URI.create(registration.getTokenUrl());
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", registration.getGrantType());
         body.add("client_id", registration.getClientId());
         body.add("client_secret", registration.getClientSecret());
         body.add("redirect_uri", registration.getRedirectUrl());
         body.add("code", authenticationRequest.getAuthorizationCode());
+        URI tokenUrl = URI.create(registration.getTokenUrl());
 
         return oAuthClient.getAccessToken(tokenUrl, body);
     }

@@ -35,16 +35,21 @@ public class AuthCommandApi {
 
     @GetMapping("/api/oauth/{registrationId}/login")
     public ResponseEntity<Void> loginPageUrl(@PathVariable String registrationId) {
-        OAuthClientRegistration registration = registrationRepository.findRegistrationByName(registrationId);
+        OAuthClientRegistration registration = registrationRepository.findRegistrationByName(
+            registrationId);
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
             .header("Location", registration.getAuthorizationUrl())
             .build();
     }
 
     @GetMapping("/api/oauth/{registrationId}/callback")
-    public CommonResponseEntity<AccessTokenResponse> loginCallback(@PathVariable String registrationId, @RequestParam String code, HttpServletResponse response) {
-        OAuthClientRegistration registration = registrationRepository.findRegistrationByName(registrationId);
-        JwtTokenPair jwtTokenPair = oAuthService.authenticate(OAuthAuthenticationRequest.of(registration, code));
+    public CommonResponseEntity<AccessTokenResponse> loginCallback(
+        @PathVariable String registrationId, @RequestParam String code,
+        HttpServletResponse response) {
+        OAuthClientRegistration registration = registrationRepository.findRegistrationByName(
+            registrationId);
+        JwtTokenPair jwtTokenPair = oAuthService.authenticate(
+            OAuthAuthenticationRequest.of(registration, code));
         String refreshToken = jwtTokenPair.getRefreshToken();
         setCookie(response, refreshToken);
 

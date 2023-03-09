@@ -26,8 +26,10 @@ public class OAuthClientRegistration {
     private final String userNameAttribute;
     private final OAuthUserAttributesConverter attributesConverter;
 
-    private OAuthClientRegistration(String registrationId,String clientId, String clientSecret, String redirectUrl,
-        String grantType, String scope, String authorizationUrl, String tokenUrl, String userInfoUrl,
+    private OAuthClientRegistration(String registrationId, String clientId, String clientSecret,
+        String redirectUrl,
+        String grantType, String scope, String authorizationUrl, String tokenUrl,
+        String userInfoUrl,
         String userNameAttribute, OAuthUserAttributesConverter attributesConverter) {
         this.registrationId = registrationId;
         this.clientId = clientId;
