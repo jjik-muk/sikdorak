@@ -2,7 +2,6 @@ package com.jjikmuk.sikdorak.common.aop;
 
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.exception.NeedLoginException;
-import com.jjikmuk.sikdorak.user.user.command.app.UserService;
 import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import com.jjikmuk.sikdorak.user.user.command.domain.UserRepository;
@@ -10,10 +9,7 @@ import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
