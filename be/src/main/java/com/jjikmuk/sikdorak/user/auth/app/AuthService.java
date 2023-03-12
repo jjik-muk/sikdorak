@@ -4,7 +4,11 @@ import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
 import com.jjikmuk.sikdorak.user.auth.app.dto.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.auth.exception.InvalidTokenException;
 import com.jjikmuk.sikdorak.user.user.command.app.UserService;
+import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
+import com.jjikmuk.sikdorak.user.user.command.domain.User;
+import com.jjikmuk.sikdorak.user.user.command.domain.UserRepository;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
+import java.util.Map;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +21,7 @@ public class AuthService {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String TOKEN_TYPE = "Bearer ";
+    private final UserRepository userRepository;
     private final UserService userService;
     private final JwtProvider jwtProvider;
 
@@ -24,13 +29,11 @@ public class AuthService {
     public JwtTokenPair reassignAccessToken(String refreshToken) {
 
         jwtProvider.validateToken(refreshToken);
-        String userId = jwtProvider.decodeToken(refreshToken);
+        Map<String, String> payloads = jwtProvider.decodeToken(refreshToken);
+        User user = userRepository.findById(Long.parseLong(payloads.get("id")))
+            .orElseThrow(NotFoundUserException::new);
 
-        if (!userService.isExistingById(Long.parseLong(userId))) {
-            throw new NotFoundUserException();
-        }
-
-        return jwtProvider.createTokenResponse(userId);
+        return jwtProvider.createTokenResponse(user);
     }
 
     public LoginUser authenticate(HttpServletRequest request) {
@@ -38,9 +41,15 @@ public class AuthService {
         try {
             String token = parseAuthorizationHeader(request);
             jwtProvider.validateToken(token);
-            Long userId = Long.valueOf(jwtProvider.decodeToken(token));
+            Map<String, String> payloads = jwtProvider.decodeToken(token);
 
-            return LoginUser.user(userId);
+            Long id = Long.parseLong(payloads.get("id"));
+            String authority = payloads.get("authority");
+
+            if (Authority.ADMIN.name().equals(authority)) {
+                return LoginUser.admin(id);
+            }
+            return LoginUser.user(id);
         }  catch (InvalidTokenException e) {
             return LoginUser.anonymous();
         }
