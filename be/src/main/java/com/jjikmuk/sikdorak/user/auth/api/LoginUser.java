@@ -2,6 +2,7 @@ package com.jjikmuk.sikdorak.user.auth.api;
 
 import com.jjikmuk.sikdorak.user.auth.exception.NeedLoginException;
 import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
+import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import lombok.Getter;
 
 @Getter
@@ -39,6 +40,12 @@ public class LoginUser {
 	public void ifAnonymousThrowException() {
 		if (authority.equals(Authority.ANONYMOUS)) {
 			throw new NeedLoginException();
+		}
+	}
+
+	public void ifNotAdminThrowException() {
+		if (!authority.equals(Authority.ADMIN)) {
+			throw new UnauthorizedUserException();
 		}
 	}
 }
