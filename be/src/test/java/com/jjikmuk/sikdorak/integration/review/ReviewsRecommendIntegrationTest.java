@@ -10,7 +10,6 @@ import com.jjikmuk.sikdorak.review.command.domain.ReviewVisibility;
 import com.jjikmuk.sikdorak.review.query.ReviewDao;
 import com.jjikmuk.sikdorak.review.query.response.ReviewListResponse;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
-import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -35,16 +35,15 @@ public class AuthService {
 
     public LoginUser authenticate(HttpServletRequest request) {
 
-        String token;
         try {
-            token = parseAuthorizationHeader(request);
+            String token = parseAuthorizationHeader(request);
             jwtProvider.validateToken(token);
+            Long userId = Long.valueOf(jwtProvider.decodeToken(token));
+
+            return LoginUser.user(userId);
         }  catch (InvalidTokenException e) {
             return LoginUser.anonymous();
         }
-
-        Long userId = Long.valueOf(jwtProvider.decodeToken(token));
-        return LoginUser.user(userId);
     }
 
     private String parseAuthorizationHeader(HttpServletRequest request) {

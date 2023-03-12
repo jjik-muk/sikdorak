@@ -9,7 +9,6 @@ import com.jjikmuk.sikdorak.review.command.domain.Review;
 import com.jjikmuk.sikdorak.review.exception.DuplicateLikeUserException;
 import com.jjikmuk.sikdorak.review.exception.NotFoundLikeUserException;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
-import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -13,7 +13,6 @@ import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailRespo
 import com.jjikmuk.sikdorak.store.command.domain.Store;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
-import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

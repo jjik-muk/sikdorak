@@ -9,7 +9,6 @@ import com.jjikmuk.sikdorak.review.exception.NotFoundReviewException;
 import com.jjikmuk.sikdorak.review.query.ReviewDao;
 import com.jjikmuk.sikdorak.review.query.response.reviewdetail.ReviewDetailResponse;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
-import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

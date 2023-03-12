@@ -9,7 +9,6 @@ import com.jjikmuk.sikdorak.review.command.app.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.command.domain.Review;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
-import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import java.time.LocalDate;
 import java.util.List;
