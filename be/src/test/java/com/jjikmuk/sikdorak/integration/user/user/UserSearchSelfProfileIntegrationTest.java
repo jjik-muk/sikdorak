@@ -5,10 +5,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
-import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
-import com.jjikmuk.sikdorak.user.user.query.response.UserSimpleProfileResponse;
 import com.jjikmuk.sikdorak.user.user.query.UserDao;
+import com.jjikmuk.sikdorak.user.user.query.response.UserSimpleProfileResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ class UserSearchSelfProfileIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("유저 본인의 프로필 정보를 요청할 경우 유저 프로필 정보를 반환한다.")
     void search_user_self_profile() {
-        LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+        LoginUser loginUser = LoginUser.user(testData.kukim.getId());
 
         UserSimpleProfileResponse userSimpleProfileResponse = userDao.searchSelfProfile(
             loginUser);
@@ -35,7 +34,7 @@ class UserSearchSelfProfileIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("존재하지 않는 유저의 프로필 정보를 요청할 경우 예외를 반환한다.")
     void search_not_found_user_self_profile() {
-        LoginUser loginUser = new LoginUser(989898989L, Authority.USER);
+        LoginUser loginUser = LoginUser.user(989898989L);
 
         assertThatThrownBy(() -> userDao.searchSelfProfile(loginUser))
             .isInstanceOf(NotFoundUserException.class);

@@ -9,7 +9,6 @@ import com.jjikmuk.sikdorak.review.command.app.request.ReviewCreateRequest;
 import com.jjikmuk.sikdorak.review.command.domain.Review;
 import com.jjikmuk.sikdorak.store.exception.NotFoundStoreException;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
-import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import java.time.LocalDate;
 import java.util.List;
@@ -31,7 +30,7 @@ class ReviewInsertIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("만약 회원이 정상적인 리뷰 생성 요청이 주어진다면 리뷰를 등록할 수 있다.")
 	void create_review_valid_user_store() {
-		LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+		LoginUser loginUser = LoginUser.user(testData.kukim.getId());
 		ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(
 			"Test review contents",
 			testData.store.getId(),
@@ -50,7 +49,7 @@ class ReviewInsertIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("만약 회원이 존재하지 않은 상점 id의 리뷰 생성 요청이 주어진다면 예외를 발생시킨다.")
 	void create_review_valid_user_invalid_store() {
-		LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+		LoginUser loginUser = LoginUser.user(testData.kukim.getId());
 		Long invalidStoreId = Long.MAX_VALUE;
 		ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(
 			"Test review contents",
@@ -68,7 +67,7 @@ class ReviewInsertIntegrationTest extends InitIntegrationTest {
 	@Test
 	@DisplayName("만약 비회원이 정상적인 리뷰 생성 요청을 한다면 예외를 발생시킨다.")
 	void create_review_invalid_user_valid_store() {
-		LoginUser loginUser = new LoginUser(Long.MAX_VALUE, Authority.USER);
+		LoginUser loginUser = LoginUser.user(Long.MAX_VALUE);
 		ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(
 			"Test review contents",
 			testData.store.getId(),

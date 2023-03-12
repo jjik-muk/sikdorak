@@ -14,7 +14,9 @@ import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,24 +36,23 @@ public class DataGenerator {
 	private StoreRepository storeRepository;
 
 	public String validAuthorizationHeader(User user) {
-		String userPayload = String.valueOf(user.getId());
-
+		Map<String, String> payloads = jwtProvider.getPayloads(user);
 		Date now = new Date();
 		Date expiredTime = new Date(now.getTime() + 1800000);
 
-		return "Bearer " + jwtProvider.createAccessToken(userPayload, expiredTime);
+		return "Bearer " + jwtProvider.createAccessToken(payloads, expiredTime);
 	}
 
 	public String validAuthorizationHeader(User user, Date expiredTime) {
-		String userPayload = String.valueOf(user.getId());
+		Map<String, String> payloads = jwtProvider.getPayloads(user);
 
-		return "Bearer " + jwtProvider.createAccessToken(userPayload, expiredTime);
+		return "Bearer " + jwtProvider.createAccessToken(payloads, expiredTime);
 	}
 
 	public String refreshToken(User user, Date expiredTime) {
-		String userPayload = String.valueOf(user.getId());
+		Map<String, String> payloads = jwtProvider.getPayloads(user);
 
-		return jwtProvider.createRefreshToken(userPayload, expiredTime);
+		return jwtProvider.createRefreshToken(payloads, expiredTime);
 	}
 
 	public Comment comment(Review review, User user, String content) {
@@ -84,6 +85,6 @@ public class DataGenerator {
 	}
 
 	public LoginUser createLoginUserWithUserId(long userId) {
-		return new LoginUser(userId, Authority.USER);
+		return LoginUser.user(userId);
 	}
 }

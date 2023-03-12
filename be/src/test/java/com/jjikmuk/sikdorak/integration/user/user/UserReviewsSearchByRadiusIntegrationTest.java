@@ -8,7 +8,6 @@ import com.jjikmuk.sikdorak.review.query.ReviewDao;
 import com.jjikmuk.sikdorak.review.query.response.ReviewListForMapResponse;
 import com.jjikmuk.sikdorak.store.query.request.UserLocationInfoRequest;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
-import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTest {
         int size = 5;
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
         UserLocationInfoRequest userLocationInfoRequest = new UserLocationInfoRequest(127.067, 37.6557, 1000);
-        LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+        LoginUser loginUser = LoginUser.anonymous();
 
         ReviewListForMapResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
             testData.hoi.getId(), loginUser,
@@ -42,7 +41,7 @@ class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTest {
         int size = 5;
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
         UserLocationInfoRequest userLocationInfoRequest = new UserLocationInfoRequest(127.067, 37.6557, 1000);
-        LoginUser loginUser = new LoginUser(testData.hoi.getId(), Authority.USER);
+        LoginUser loginUser = LoginUser.user(testData.hoi.getId());
 
         ReviewListForMapResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
             testData.hoi.getId(), loginUser,
@@ -58,7 +57,7 @@ class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTest {
         int size = 5;
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
         UserLocationInfoRequest userLocationInfoRequest = new UserLocationInfoRequest(127.067, 37.6557, 1000);
-        LoginUser loginUser = new LoginUser(testData.jay.getId(), Authority.USER);
+        LoginUser loginUser = LoginUser.user(testData.jay.getId());
 
         ReviewListForMapResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
             testData.hoi.getId(), loginUser,
@@ -74,7 +73,7 @@ class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTest {
         int size = 5;
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
         UserLocationInfoRequest userLocationInfoRequest = new UserLocationInfoRequest(127.067, 37.6557, 1000);
-        LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
+        LoginUser loginUser = LoginUser.user(testData.forky.getId());
 
         ReviewListForMapResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
             testData.hoi.getId(), loginUser,
@@ -90,7 +89,7 @@ class UserReviewsSearchByRadiusIntegrationTest extends InitIntegrationTest {
         int size = 5;
         CursorPageRequest cursorPageRequest = new CursorPageRequest(0L, cursorPage, size, true);
         UserLocationInfoRequest userLocationInfoRequest = new UserLocationInfoRequest(127.067, 37.6557, 100);
-        LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+        LoginUser loginUser = LoginUser.anonymous();
 
         ReviewListForMapResponse reviewListResponse = reviewDao.searchUserReviewsByRadius(
             testData.hoi.getId(), loginUser,

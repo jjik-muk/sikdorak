@@ -3,17 +3,18 @@ package com.jjikmuk.sikdorak.integration.user.auth;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
+import com.jjikmuk.sikdorak.common.oauth.ClientRegistrationRepository;
+import com.jjikmuk.sikdorak.common.oauth.OAuthClientRegistration;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.tool.mock.OAuthMocks;
 import com.jjikmuk.sikdorak.user.auth.app.JwtProvider;
-import com.jjikmuk.sikdorak.common.oauth.ClientRegistrationRepository;
-import com.jjikmuk.sikdorak.common.oauth.OAuthClientRegistration;
-import com.jjikmuk.sikdorak.user.auth.app.dto.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.auth.app.OAuthService;
+import com.jjikmuk.sikdorak.user.auth.app.dto.JwtTokenPair;
 import com.jjikmuk.sikdorak.user.auth.app.dto.OAuthAuthenticationRequest;
 import com.jjikmuk.sikdorak.user.user.command.domain.User;
 import com.jjikmuk.sikdorak.user.user.command.domain.UserRepository;
 import java.io.IOException;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,8 +57,8 @@ class OAuthLoginIntegrationTest extends InitIntegrationTest {
             registrationId);
 
         JwtTokenPair code = oAuthService.authenticate(OAuthAuthenticationRequest.of(registration,authorizationCode));
-        String userId = jwtProvider.decodeToken(code.getAccessToken());
-        User user = userRepository.findById(Long.parseLong(userId)).orElseThrow();
+        Map<String, String> payloads = jwtProvider.decodeToken(code.getAccessToken());
+        User user = userRepository.findById(Long.parseLong(payloads.get("id"))).orElseThrow();
 
         assertThat(code.getAccessToken()).isNotNull();
         assertThat(user).isNotNull();
@@ -74,9 +75,9 @@ class OAuthLoginIntegrationTest extends InitIntegrationTest {
             registrationId);
 
         JwtTokenPair code = oAuthService.authenticate(OAuthAuthenticationRequest.of(registration,authorizationCode));
-        String userId = jwtProvider.decodeToken(code.getAccessToken());
+        Map<String, String> payloads = jwtProvider.decodeToken(code.getAccessToken());
 
-        User user = userRepository.findById(Long.parseLong(userId)).orElseThrow();
+        User user = userRepository.findById(Long.parseLong(payloads.get("id"))).orElseThrow();
 
         assertThat(code.getAccessToken()).isNotNull();
         assertThat(user).isNotNull();

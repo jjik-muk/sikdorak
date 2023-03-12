@@ -38,11 +38,11 @@ public class OAuthService {
         if (!userService.isExistingByUniqueId(oAuthUserProfile.getUniqueId())) {
             User user = oAuthUserProfile.toEntity();
             userService.createUser(user);
-            return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
+            return jwtProvider.createTokenResponse(user);
         }
 
         User user = userService.searchByUniqueId(oAuthUserProfile.getUniqueId());
-        return jwtProvider.createTokenResponse(String.valueOf(user.getId()));
+        return jwtProvider.createTokenResponse(user);
     }
 
     private OAuthTokenResponse getOAuthAccessToken(OAuthAuthenticationRequest authenticationRequest) {

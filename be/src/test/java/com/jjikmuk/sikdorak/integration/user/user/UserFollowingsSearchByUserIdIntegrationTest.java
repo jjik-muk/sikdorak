@@ -6,10 +6,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
-import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
-import com.jjikmuk.sikdorak.user.user.query.response.FollowUserProfile;
 import com.jjikmuk.sikdorak.user.user.query.UserDao;
+import com.jjikmuk.sikdorak.user.user.query.response.FollowUserProfile;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ class UserFollowingsSearchByUserIdIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("회원의 특정 유저에 대한 팔로잉 목록 요청이 올바를 경우 팔로잉 목록을 반환한다.")
     void search_followings_by_user() {
-        LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+        LoginUser loginUser = LoginUser.user(testData.kukim.getId());
 
         List<FollowUserProfile> followings = userDao.searchFollowingsByUserId(testData.hoi.getId(), loginUser);
 
@@ -34,7 +33,7 @@ class UserFollowingsSearchByUserIdIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("특정 유저의 팔로잉 목록이 존재하지 않을 경우 비어있는 목록을 반환한다.")
     void search_followers_is_empty() {
-        LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+        LoginUser loginUser = LoginUser.anonymous();
 
         List<FollowUserProfile> followings = userDao.searchFollowingsByUserId(testData.kukim.getId(), loginUser);
 
@@ -43,7 +42,7 @@ class UserFollowingsSearchByUserIdIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("존재하지 않는 유저에 대한 팔로잉 목록 요청일 경우 예외를 반환한다.")
     void search_not_found_user_followings() {
-        LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+        LoginUser loginUser = LoginUser.anonymous();
 
         assertThatThrownBy(() -> userDao.searchFollowingsByUserId(98989898L, loginUser))
             .isInstanceOf(NotFoundUserException.class);

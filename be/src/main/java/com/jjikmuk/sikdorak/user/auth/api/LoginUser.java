@@ -12,30 +12,40 @@ public class LoginUser {
 
 	private final Authority authority;
 
-	public LoginUser(Long id, Authority authority) {
+	private LoginUser(Authority authority) {
+		this(null, authority);
+	}
+
+	private LoginUser(Long id, Authority authority) {
 		this.id = id;
 		this.authority = authority;
 	}
 
-	public LoginUser(Authority authority) {
-		this(null, authority);
+	public static LoginUser anonymous() {
+		return new LoginUser(Authority.ANONYMOUS);
+	}
+
+	public static LoginUser user(Long id) {
+		return new LoginUser(id, Authority.USER);
+	}
+
+	public static LoginUser admin(Long id) {
+		return new LoginUser(id, Authority.ADMIN);
 	}
 
 	public boolean isAnonymous() {
 		return authority.equals(Authority.ANONYMOUS);
 	}
 
-	public void ifNotAdminThrowException() {
-		ifAnonymousThrowException();
-
-		if (!authority.equals(Authority.ADMIN)) {
-			throw new UnauthorizedUserException();
-		}
-	}
-
 	public void ifAnonymousThrowException() {
 		if (authority.equals(Authority.ANONYMOUS)) {
 			throw new NeedLoginException();
+		}
+	}
+
+	public void ifNotAdminThrowException() {
+		if (!authority.equals(Authority.ADMIN)) {
+			throw new UnauthorizedUserException();
 		}
 	}
 }

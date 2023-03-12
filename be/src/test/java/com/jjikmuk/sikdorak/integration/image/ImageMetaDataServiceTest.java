@@ -10,7 +10,6 @@ import com.jjikmuk.sikdorak.image.exception.DuplicateImageMetaDataException;
 import com.jjikmuk.sikdorak.image.exception.NotFoundImageMetaDataException;
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
-import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
 import com.jjikmuk.sikdorak.user.user.exception.UnauthorizedUserException;
 import java.io.File;
@@ -51,7 +50,7 @@ class ImageMetaDataServiceTest extends InitIntegrationTest {
 			@DisplayName("ImageMetaData 객체를 생성한다")
 			void It_returns_a_valid_object() {
 				String fileName = "0f755dc8-739b-44e7-9c83-4569ze2a7e36.png";
-				LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+				LoginUser loginUser = LoginUser.user(testData.kukim.getId());
 
 				ImageMetaData initImageMetaData = imageMetaDataService.initImageMetaData(fileName,
 					loginUser);
@@ -73,7 +72,7 @@ class ImageMetaDataServiceTest extends InitIntegrationTest {
 			void It_throws_NotFoundUserException() {
 				String fileName = "0f755dc8-739b-44e7-9c83-4569ze2a7e36.png";
 				long invalidUserId = Long.MAX_VALUE;
-				LoginUser loginUser = new LoginUser(invalidUserId, Authority.USER);
+				LoginUser loginUser = LoginUser.user(invalidUserId);
 
 				assertThatThrownBy(() ->
 					imageMetaDataService.initImageMetaData(fileName, loginUser))
@@ -89,7 +88,7 @@ class ImageMetaDataServiceTest extends InitIntegrationTest {
 			@DisplayName("DuplicateImageMetaDataException 예외를 던진다")
 			void It_throws_DuplicateImageMetaDataException() {
 				String fileName = "0f755dc8-739b-44e7-9c83-abcde.png";
-				LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+				LoginUser loginUser = LoginUser.user(testData.kukim.getId());
 				imageMetaDataService.initImageMetaData(fileName, loginUser);
 
 				assertThatThrownBy(() ->
@@ -125,7 +124,7 @@ class ImageMetaDataServiceTest extends InitIntegrationTest {
 			@Test
 			@DisplayName("ImageMetaData 파일 크기 업데이트를 하고 ImageMetaData 객체 리스트를 반환한다")
 			void It_returns_a_valid_Object_list() {
-				LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+				LoginUser loginUser = LoginUser.user(testData.kukim.getId());
 				imageMetaDataService.initImageMetaData(testData.kukimImageFileName, loginUser);
 				List<String> images = List.of("https://sikdorak-images.s3.ap-northeast-2.amazonaws.com/origin/abcde-1234-testimage-jjikmuk.png");
 
@@ -146,10 +145,10 @@ class ImageMetaDataServiceTest extends InitIntegrationTest {
 			@Test
 			@DisplayName("UnauthorizedUserException 예외를 던진다")
 			void It_throws_exception() {
-				LoginUser ownerUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+				LoginUser ownerUser = LoginUser.user(testData.kukim.getId());
 				imageMetaDataService.initImageMetaData(testData.kukimImageFileName, ownerUser);
 				List<String> images = List.of("https://sikdorak-images.s3.ap-northeast-2.amazonaws.com/origin/" + testData.kukimImageFileName);
-				LoginUser otherUser = new LoginUser(testData.jay.getId(), Authority.USER);
+				LoginUser otherUser = LoginUser.user(testData.jay.getId());
 
 				assertThatThrownBy(() -> imageMetaDataService.updateImageMetaData(images, otherUser))
 					.isInstanceOf(UnauthorizedUserException.class);
@@ -163,7 +162,7 @@ class ImageMetaDataServiceTest extends InitIntegrationTest {
 			@Test
 			@DisplayName("NotFoundImageMetaDataException 예외를 던진다")
 			void It_throws_exception() {
-				LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+				LoginUser loginUser = LoginUser.user(testData.kukim.getId());
 				List<String> images = List.of("https://sikdorak-images.s3.ap-northeast-2.amazonaws.com/origin/not-exist-image.png");
 
 				assertThatThrownBy(() -> imageMetaDataService.updateImageMetaData(images, loginUser))

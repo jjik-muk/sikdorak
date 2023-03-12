@@ -6,10 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.jjikmuk.sikdorak.integration.InitIntegrationTest;
 import com.jjikmuk.sikdorak.user.auth.api.LoginUser;
-import com.jjikmuk.sikdorak.user.user.command.domain.Authority;
 import com.jjikmuk.sikdorak.user.user.exception.NotFoundUserException;
-import com.jjikmuk.sikdorak.user.user.query.response.UserDetailProfileResponse;
 import com.jjikmuk.sikdorak.user.user.query.UserDao;
+import com.jjikmuk.sikdorak.user.user.query.response.UserDetailProfileResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("유저 본인의 정보를 조회할 경우 유저 정보를 반환한다.")
     void user_search_self_profile() {
-        LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+        LoginUser loginUser = LoginUser.user(testData.kukim.getId());
 
         UserDetailProfileResponse userDetailProfileResponse = userDao.searchUserDetailProfile(
             testData.kukim.getId(), loginUser);
@@ -46,7 +45,7 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("비회원이 유저의 정보를 조회할 경우 유저 정보를 반환한다.")
     void anonymous_user_search_user_profile() {
-        LoginUser loginUser = new LoginUser(Authority.ANONYMOUS);
+        LoginUser loginUser = LoginUser.anonymous();
 
         UserDetailProfileResponse userDetailProfileResponse = userDao.searchUserDetailProfile(
             testData.kukim.getId(), loginUser);
@@ -65,7 +64,7 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("팔로우 되어 있는 회원이 유저의 정보를 조회할 경우 유저 정보를 반환한다.")
     void user_search_following_user_profile() {
-        LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
+        LoginUser loginUser = LoginUser.user(testData.forky.getId());
 
         UserDetailProfileResponse userDetailProfileResponse = userDao.searchUserDetailProfile(
             testData.hoi.getId(), loginUser);
@@ -85,7 +84,7 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("팔로우 되어있지 않은 회원이 유저의 정보를 조회할 경우 유저 정보를 반환한다.")
     void user_search_unfollowing_user_profile() {
-        LoginUser loginUser = new LoginUser(testData.forky.getId(), Authority.USER);
+        LoginUser loginUser = LoginUser.user(testData.forky.getId());
 
         UserDetailProfileResponse userDetailProfileResponse = userDao.searchUserDetailProfile(
             testData.jay.getId(), loginUser);
@@ -104,7 +103,7 @@ class UserSearchProfileIntegrationTest extends InitIntegrationTest {
     @Test
     @DisplayName("존재하지 않는 유저의 정보를 조회할 경우 예외를 반환한다.")
     void not_found_user_search_another_user_profile() {
-        LoginUser loginUser = new LoginUser(testData.kukim.getId(), Authority.USER);
+        LoginUser loginUser = LoginUser.user(testData.kukim.getId());
 
         assertThatThrownBy(() -> userDao.searchUserDetailProfile(
             9999L, loginUser))
