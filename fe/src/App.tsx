@@ -1,7 +1,7 @@
 import ReviewDetailProvider from 'context/ReviewDetailProvider';
 import ReviewsProvider from 'context/ReviewsProvider';
 import ReviewWriteProvider from 'context/ReviewWriteProvider';
-import Callback from 'pages/Callback/Callback';
+import Callback from 'pages/KakaoOAuthCallback/KakaoOAuthCallback';
 import Login from 'pages/Login/Login';
 import Map from 'pages/Map/Map';
 import ReviewShare from 'pages/ReivewShare/ReviewShare';
@@ -44,7 +44,7 @@ function App() {
                 <Route path="/review">
                   <Route path=":reviewId" element={<ReviewShare />} />
                 </Route>
-                <Route path="/api/oauth/callback" element={<Callback />} />
+                <Route path="/api/oauth/kakao/callback" element={<Callback />} />
               </Routes>
             </BrowserRouter>
           </ReviewWriteProvider>

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { Navigate, useSearchParams } from 'react-router-dom';
 import { accountStore } from 'stores/AccountStore';
 
-const Callback = observer(() => {
+const KakaoOAuthCallback = observer(() => {
   const [searchParams] = useSearchParams();
   const kakaoAuthorizationCode = searchParams.get('code');
 
@@ -20,4 +20,4 @@ const Callback = observer(() => {
   return <Navigate to="/" />;
 });
 
-export default Callback;
+export default KakaoOAuthCallback;
