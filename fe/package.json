@@ -34,7 +34,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll",
     "coverage": "react-scripts test --env=jsdom --watchAll=false --coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "browserslist": {
     "production": [
@@ -49,12 +51,37 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^6.5.14",
+    "@storybook/addon-essentials": "^6.5.14",
+    "@storybook/addon-interactions": "^6.5.14",
+    "@storybook/addon-links": "^6.5.14",
+    "@storybook/builder-webpack5": "^6.5.14",
+    "@storybook/manager-webpack5": "^6.5.14",
+    "@storybook/node-logger": "^6.5.14",
+    "@storybook/preset-create-react-app": "^4.1.2",
+    "@storybook/testing-library": "^0.0.13",
+    "@storybook/react": "^6.5.14",
     "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
+    "babel-plugin-named-exports-order": "^0.0.2",
     "eslint": "^8.20.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.26.0"
+    "eslint-plugin-import": "^2.26.0",
+    "prop-types": "^15.8.1",
+    "webpack": "^5.75.0"
+  },
+  "eslintConfig": {
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
   }
 }
