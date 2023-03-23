@@ -1,5 +1,5 @@
 import { MESSAGE } from 'constants/message';
-import { ROUTE_PATH } from 'constants/routePath';
+import { ROUTE_PATH } from 'constants/route';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { validateAccessToken } from 'utils/fetch';
