@@ -15,8 +15,9 @@ import { ButtonWrap, Header, ProfileImageWrap, Wrap } from './CommonHeader.style
 import styled from 'styled-components';
 import { COLOR } from 'styles/color';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMyInfo } from 'store/modules/account';
+import { AccountAction, fetchMyInfo } from 'store/modules/account';
 import { RootState } from 'store/modules/store';
+import { ThunkDispatch } from 'redux-thunk';
 
 function CommonHeader({ dispatchReviews }: any) {
   const [isReviewWrite, toggleIsReviewWrite] = useToggle(false);
@@ -25,7 +26,7 @@ function CommonHeader({ dispatchReviews }: any) {
   const userDetailModalRef = useRef(null);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const menuRef = useRef(null);
-  const dispatch = useDispatch();
+  const dispatch: ThunkDispatch<RootState, null, AccountAction> = useDispatch();
   const accountStore = useSelector((state: RootState) => state.account);
 
   const iconInfo: IconInfoProps[] = [

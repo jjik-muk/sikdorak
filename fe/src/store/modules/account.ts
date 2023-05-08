@@ -4,7 +4,7 @@ import { fetchData } from 'utils/fetch';
 import { openErrorToast } from 'utils/toast';
 import { createErrorMessage } from 'utils/utils';
 import { AccountStore, RootState } from './store';
-import { ThunkAction } from 'redux-thunk';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 enum AccountActionTypes {
   SET_MY_INFO = 'SET_MY_INFO',
@@ -62,7 +62,7 @@ function accountReducer(state: AccountStore = initialState, action: AccountActio
 }
 
 function fetchAccessToken(kakaoAuthCode: KakaoAuthCode): ThunkAction<void, RootState, null, AccountAction> {
-  return async (dispatch) => {
+  return async (dispatch: ThunkDispatch<RootState, null, AccountAction>) => {
     const res = await fetchData({ path: `api/oauth/kakao/callback?code=${kakaoAuthCode}`, customHeaders: { credentials: 'include' } });
     const { code, data, message } = res;
     if (code === STATUS_CODE.FAILURE.COMMUNICATION_WITH_OAUTH_SERVER) {
@@ -75,8 +75,8 @@ function fetchAccessToken(kakaoAuthCode: KakaoAuthCode): ThunkAction<void, RootS
   };
 }
 
-function fetchMyInfo(): any {
-  return async (dispatch) => {
+function fetchMyInfo(): ThunkAction<void, RootState, null, AccountAction> {
+  return async (dispatch: ThunkDispatch<RootState, null, AccountAction>) => {
     const myInfo = await fetchData({ path: API_PATH.USER.MY_PROFILE, withAccessToken: true });
     if (!myInfo.data) return;
     const { id, nickname, profileImage } = myInfo.data;
