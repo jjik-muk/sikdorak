@@ -4,14 +4,13 @@ import FollowButton from 'components/UserDetail/FollowButton/FollowButton';
 import UserProfilePhoto from 'components/UserDetail/UserProfilePhoto/UserProfilePhoto';
 import useAuth from 'hooks/useAuth';
 import useReviews from 'hooks/useReviews';
-import { observer } from 'mobx-react';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { accountStore } from 'stores/AccountStore';
-import { userStore } from 'stores/userStore';
+import { accountStore } from 'store/AccountStore';
+import { userStore } from 'store/userStore';
 import { ActivityInfoWrap, UserDetailWrap, UserInfoHeader, UserInfoWrap, Wrap } from './UserDetail.styled';
 
-const UserDetail = observer(() => {
+function UserDetail() {
   const { reviews, dispatchReviews, fetchNextReviews, afterParam, handleScroll } = useReviews();
   const myUserId = accountStore.id;
   const { pathname } = useLocation();
@@ -53,7 +52,7 @@ const UserDetail = observer(() => {
       <Feeds reviews={reviews} />
     </Wrap>
   );
-});
+}
 
 function getUrl(after, reviewSize, targetId) {
   return `api/users/${targetId}/reviews?after=${after}&size=${reviewSize}`;

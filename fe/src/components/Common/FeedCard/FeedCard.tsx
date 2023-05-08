@@ -8,11 +8,10 @@ import KebabMenu from 'components/Common/KebabMenu/KebabMenu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
 import Rating from 'components/ReviewDetail/TotalRating/Rating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
-import { observer } from 'mobx-react';
-import { accountStore } from 'stores/AccountStore';
+import { accountStore } from 'store/AccountStore';
 import { openSuccessToast } from 'utils/toast';
 
-const FeedCard = observer(({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal, postUnlike }: any) => {
+function FeedCard({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal, postUnlike }: any) {
   const { user, images, reviewId, reviewScore, reviewContent, store } = review;
   const myUserId = accountStore.id;
   const isMyFeed = user?.userId === myUserId;
@@ -63,7 +62,7 @@ const FeedCard = observer(({ review, isActiveHeart, likeCnt, postLike, toggleIsC
     openSuccessToast(MESSAGE.SUCCESS.SHARE_REVIEW);
     e.stopPropagation();
   }
-});
+}
 
 export default FeedCard;
 

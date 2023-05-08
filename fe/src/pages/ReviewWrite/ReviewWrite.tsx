@@ -9,7 +9,7 @@ import Textarea from 'components/ReviewWrite/Textarea/Textarea';
 import WriteRating from 'components/ReviewWrite/WriteRating/WriteRating';
 import { TEXT } from 'constants/text';
 import useUploadImage from 'hooks/useUploadImage';
-import { accountStore } from 'stores/AccountStore';
+import { accountStore } from 'store/AccountStore';
 import { Content, Header, Img, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
 import CloseIcon from '@mui/icons-material/Close';
 import { Button } from '@mui/material';

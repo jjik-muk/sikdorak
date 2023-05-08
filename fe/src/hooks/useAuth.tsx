@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { validateAccessToken } from 'utils/fetch';
 import { openErrorToast } from 'utils/toast';
-import { accountStore } from '../stores/AccountStore';
+import { accountStore } from '../store/AccountStore';
 
 function useAuth() {
   const navigate = useNavigate();

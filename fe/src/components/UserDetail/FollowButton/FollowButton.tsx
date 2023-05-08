@@ -1,11 +1,10 @@
 import Button from '@mui/material/Button';
-import { observer } from 'mobx-react';
 import { useLocation } from 'react-router-dom';
-import { accountStore } from 'stores/AccountStore';
-import { userStore } from 'stores/userStore';
+import { accountStore } from 'store/AccountStore';
+import { userStore } from 'store/userStore';
 import { openWarningToast } from 'utils/toast';
 
-const FollowButton = observer(() => {
+function FollowButton() {
   const { pathname } = useLocation();
   const IDtoFollow = Number(pathname.split('/').at(-1));
 
@@ -34,6 +33,6 @@ const FollowButton = observer(() => {
       팔로우
     </Button>
   );
-});
+}
 
 export default FollowButton;

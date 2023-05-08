@@ -2,7 +2,7 @@ import { Button, Input } from '@mui/material';
 import useToggle from 'hooks/useToggle';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { accountStore } from 'stores/AccountStore';
+import { accountStore } from 'store/AccountStore';
 import { fetchData } from 'utils/fetch';
 import { Wrap, Picture, Title, Content, ContentWrapper, CommentWrapper } from './Comment.styled';
 

@@ -1,7 +1,7 @@
 import TextField from '@mui/material/TextField';
 import useComment from 'hooks/useComment';
 import { useState, useEffect } from 'react';
-import { accountStore } from 'stores/AccountStore';
+import { accountStore } from 'store/AccountStore';
 import { openWarningToast } from 'utils/toast';
 
 export default function WriteComment({ commentRef, reviewId, fetchAndSetComments }: WriteCommentProps) {

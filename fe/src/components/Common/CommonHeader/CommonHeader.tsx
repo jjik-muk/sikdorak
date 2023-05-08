@@ -3,12 +3,10 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
-import { observer } from 'mobx-react';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import { useRef, useEffect } from 'react';
 import { MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { accountStore } from 'stores/AccountStore';
 import { createKey, reloadBrowser } from 'utils/utils';
 import Icon, { IconComponentsKeys } from '../Icon/Icon';
 import Logo from '../Logo/Logo';
@@ -16,14 +14,19 @@ import Portal from '../Portal/Portal';
 import { ButtonWrap, Header, ProfileImageWrap, Wrap } from './CommonHeader.styled';
 import styled from 'styled-components';
 import { COLOR } from 'styles/color';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMyInfo } from 'store/modules/account';
+import { RootState } from 'store/modules/store';
 
-const CommonHeader = observer(({ dispatchReviews }: any) => {
+function CommonHeader({ dispatchReviews }: any) {
   const [isReviewWrite, toggleIsReviewWrite] = useToggle(false);
   const [, toggleIsUserProfile] = useToggle(false);
   const reviewWriteModalRef = useRef(null);
   const userDetailModalRef = useRef(null);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const menuRef = useRef(null);
+  const dispatch = useDispatch();
+  const accountStore = useSelector((state: RootState) => state.account);
 
   const iconInfo: IconInfoProps[] = [
     { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
@@ -36,8 +39,8 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
   useOutsideClick(menuRef, toggleIsActiveMenu);
 
   useEffect(() => {
-    accountStore.setMyInfo();
-  }, []);
+    dispatch(fetchMyInfo());
+  }, [accountStore.accessToken]);
 
   return (
     <Wrap>
@@ -81,7 +84,7 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
       </Header>
     </Wrap>
   );
-});
+}
 
 function handleLogout() {
   localStorage.removeItem('accessToken');
