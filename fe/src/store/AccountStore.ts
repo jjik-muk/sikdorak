@@ -26,7 +26,6 @@ class AccountStore {
   @action
   async setMyInfo() {
     const myInfo = await fetchData({ path: API_PATH.USER.MY_PROFILE, withAccessToken: true });
-
     if (!myInfo.data) {
       return;
     }
@@ -40,8 +39,8 @@ class AccountStore {
   }
 
   @action
-  async setAccessToken(kakaoAuthorizationCode: string) {
-    const res = await fetchData({ path: `api/oauth/callback?code=${kakaoAuthorizationCode}`, customHeaders: { credentials: 'include' } });
+  async setAccessToken(kakaoAuthCode: string) {
+    const res = await fetchData({ path: `api/oauth/callback?code=${kakaoAuthCode}`, customHeaders: { credentials: 'include' } });
     const { code, data, message } = res;
 
     if (code === STATUS_CODE.FAILURE.COMMUNICATION_WITH_OAUTH_SERVER) {
