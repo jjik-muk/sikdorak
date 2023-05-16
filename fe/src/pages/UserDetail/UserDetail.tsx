@@ -7,8 +7,11 @@ import useReviews from 'hooks/useReviews';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { accountStore } from 'store/AccountStore';
-import { userStore } from 'store/userStore';
 import { ActivityInfoWrap, UserDetailWrap, UserInfoHeader, UserInfoWrap, Wrap } from './UserDetail.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store/modules/store';
+import { UserAction, fetchUserProfile } from 'store/modules/user';
+import { ThunkDispatch } from 'redux-thunk';
 
 function UserDetail() {
   const { reviews, dispatchReviews, fetchNextReviews, afterParam, handleScroll } = useReviews();
@@ -17,10 +20,12 @@ function UserDetail() {
   const targetId = Number(pathname.split('/').at(-1));
   const isMyUserDetailPage = myUserId === targetId;
   const REVIEW_SIZE = 5;
+  const userStore = useSelector((state: RootState) => state.user);
+  const dispatch: ThunkDispatch<RootState, null, UserAction> = useDispatch();
   useAuth();
 
   useEffect(() => {
-    userStore.fetchUserProfile(targetId);
+    dispatch(fetchUserProfile(targetId));
   }, []);
 
   useEffect(() => {
@@ -36,16 +41,16 @@ function UserDetail() {
     >
       <CommonHeader dispatchReviews={dispatchReviews} />
       <UserDetailWrap>
-        <UserProfilePhoto src={userStore?.userProfile?.profileImage} />
+        <UserProfilePhoto src={userStore?.profileImage} />
         <UserInfoWrap>
           <UserInfoHeader>
-            {userStore?.userProfile?.nickname}
+            {userStore?.nickname}
             {!isMyUserDetailPage && <FollowButton />}
           </UserInfoHeader>
           <ActivityInfoWrap>
-            <div>게시물 {userStore?.userProfile?.reviewCount}</div>
-            <div>팔로우 {userStore?.userProfile?.followingCount}</div>
-            <div>팔로워 {userStore?.userProfile?.followersCount}</div>
+            <div>게시물 {userStore?.reviewCount}</div>
+            <div>팔로우 {userStore?.followingCount}</div>
+            <div>팔로워 {userStore?.followersCount}</div>
           </ActivityInfoWrap>
         </UserInfoWrap>
       </UserDetailWrap>

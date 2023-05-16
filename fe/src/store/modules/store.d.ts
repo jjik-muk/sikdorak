@@ -1,5 +1,6 @@
 type RootState = {
-  account: accountStore;
+  account: AccountStore;
+  user: UserStore;
 };
 
 type AccountStore = {
@@ -9,4 +10,16 @@ type AccountStore = {
   accessToken: string;
 };
 
-export { RootState, AccountStore };
+type UserStore = {
+  profileImage: string;
+  nickname: string;
+  reviewCount: number;
+  followingCount: number;
+  followersCount: number;
+  relationStatus: {
+    isViewer: boolean;
+    followStatus: boolean;
+  };
+};
+
+export { RootState, AccountStore, UserStore };
