@@ -1,12 +1,14 @@
 import TextField from '@mui/material/TextField';
 import useComment from 'hooks/useComment';
 import { useState, useEffect } from 'react';
-import { accountStore } from 'store/AccountStore';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/modules/store';
 import { openWarningToast } from 'utils/toast';
 
 export default function WriteComment({ commentRef, reviewId, fetchAndSetComments }: WriteCommentProps) {
   const [commentValue, setComment] = useState('');
   const { requestAddComment, isSubmitted, setIsSubmitted } = useComment({ reviewId });
+  const accountStore = useSelector((state: RootState) => state.account);
 
   useEffect(() => {
     if (isSubmitted) {

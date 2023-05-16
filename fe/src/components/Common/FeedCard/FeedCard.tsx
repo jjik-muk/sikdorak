@@ -8,11 +8,13 @@ import KebabMenu from 'components/Common/KebabMenu/KebabMenu';
 import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
 import Rating from 'components/ReviewDetail/TotalRating/Rating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
-import { accountStore } from 'store/AccountStore';
 import { openSuccessToast } from 'utils/toast';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/modules/store';
 
 function FeedCard({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal, postUnlike }: any) {
   const { user, images, reviewId, reviewScore, reviewContent, store } = review;
+  const accountStore = useSelector((state: RootState) => state.account);
   const myUserId = accountStore.id;
   const isMyFeed = user?.userId === myUserId;
   const hasPicture = images.length > 0;

@@ -2,12 +2,14 @@ import { Button, Input } from '@mui/material';
 import useToggle from 'hooks/useToggle';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { accountStore } from 'store/AccountStore';
 import { fetchData } from 'utils/fetch';
 import { Wrap, Picture, Title, Content, ContentWrapper, CommentWrapper } from './Comment.styled';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/modules/store';
 
 function Comment({ imgUrl, commentId, reviewId, title, content, authorId, comments, setComments }: CommentProps) {
   const navigate = useNavigate();
+  const accountStore = useSelector((state: RootState) => state.account);
   const isMyComment = accountStore.id === authorId;
   const [modificationComment, setModificationComment] = useState(content);
   const [isModificationMode, toggleIsModification] = useToggle(false);

@@ -1,16 +1,17 @@
 import { Button } from '@mui/material';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import useUploadImage from 'hooks/useUploadImage';
-import { accountStore } from 'store/AccountStore';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/modules/store';
 import { fetchData } from 'utils/fetch';
 import { openWarningToast } from 'utils/toast';
-import { reloadBrowser } from 'utils/utils';
 
 function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: any) {
   const [reviewWriteState, dispatchReviewWriteState] = useReviewWrite();
   const { content, year, month, date, rating, scope, tags, images, store, presignedUrl } = reviewWriteState;
   const { placeId, storeName, x, y } = store;
   const { uploadImageToS3 } = useUploadImage();
+  const accountStore = useSelector((state: RootState) => state.account);
 
   return (
     <Button variant="contained" onClick={handleRegistration} sx={{ height: '40px' }}>
@@ -19,12 +20,12 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
   );
 
   async function handleRegistration() {
-    const hasImageThatNeedToUpload = presignedUrl;
+    const hasImage = !!presignedUrl;
     if (!accountStore.id) {
       openWarningToast('로그인이 필요한 서비스입니다. 로그인 해 주세요.');
       return;
     }
-    if (hasImageThatNeedToUpload) {
+    if (hasImage) {
       await uploadImageToS3(presignedUrl, selectedImg);
     }
     registerPost();

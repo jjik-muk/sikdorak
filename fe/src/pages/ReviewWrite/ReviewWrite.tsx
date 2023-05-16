@@ -9,17 +9,19 @@ import Textarea from 'components/ReviewWrite/Textarea/Textarea';
 import WriteRating from 'components/ReviewWrite/WriteRating/WriteRating';
 import { TEXT } from 'constants/text';
 import useUploadImage from 'hooks/useUploadImage';
-import { accountStore } from 'store/AccountStore';
 import { Content, Header, Img, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
 import CloseIcon from '@mui/icons-material/Close';
 import { Button } from '@mui/material';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { requestReviewModification } from 'request/request';
 import { reloadBrowser } from 'utils/utils';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/modules/store';
 
 function ReviewWrite({ toggleIsReviewWrite, dispatchReviews, isModify, reviewId }: ReviewWriteProps) {
   const [reviewWrite, dispatchReviewWrite] = useReviewWrite();
   const { selectedImg, setSelectedImg, selectedImgUrl, setSelectedImgUrl, uploadImageToS3 } = useUploadImage();
+  const accountStore = useSelector((state: RootState) => state.account);
   const { nickname, profileImage } = accountStore;
 
   return (

@@ -6,7 +6,6 @@ import useAuth from 'hooks/useAuth';
 import useReviews from 'hooks/useReviews';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { accountStore } from 'store/AccountStore';
 import { ActivityInfoWrap, UserDetailWrap, UserInfoHeader, UserInfoWrap, Wrap } from './UserDetail.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/modules/store';
@@ -15,6 +14,7 @@ import { ThunkDispatch } from 'redux-thunk';
 
 function UserDetail() {
   const { reviews, dispatchReviews, fetchNextReviews, afterParam, handleScroll } = useReviews();
+  const accountStore = useSelector((state: RootState) => state.account);
   const myUserId = accountStore.id;
   const { pathname } = useLocation();
   const targetId = Number(pathname.split('/').at(-1));

@@ -35,7 +35,7 @@ function setFollowStatus({ followStatus }: FollowStatus) {
   };
 }
 
-const initialState: UserStore = {
+export const initialState: UserStore = {
   profileImage: null,
   nickname: null,
   reviewCount: null,
@@ -94,4 +94,4 @@ function postUnfollow(id: number) {
   };
 }
 
-export { setUserProfile, userReducer, fetchUserProfile, postFollow, postUnfollow };
+export { setUserProfile, setFollowStatus, userReducer, fetchUserProfile, postFollow, postUnfollow };
