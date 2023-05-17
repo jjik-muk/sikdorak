@@ -8,7 +8,7 @@ import { openWarningToast } from 'utils/toast';
 
 function FollowButton() {
   const { pathname } = useLocation();
-  const IDtoFollow = Number(pathname.split('/').at(-1));
+  const targetID = Number(pathname.split('/').at(-1));
   const userStore = useSelector((state: RootState) => state.user);
   const accountStore = useSelector((state: RootState) => state.account);
   const dispatch: ThunkDispatch<RootState, null, UserAction> = useDispatch();
@@ -18,7 +18,7 @@ function FollowButton() {
       openWarningToast('로그인이 필요한 서비스입니다. 로그인 해 주세요.');
       return;
     }
-    dispatch(postUnfollow(IDtoFollow));
+    dispatch(postUnfollow(targetID));
   };
 
   const handleClickFollow = () => {
@@ -26,7 +26,7 @@ function FollowButton() {
       openWarningToast('로그인이 필요한 서비스입니다. 로그인 해 주세요.');
       return;
     }
-    dispatch(postFollow(IDtoFollow));
+    dispatch(postFollow(targetID));
   };
 
   return userStore?.relationStatus.followStatus ? (
