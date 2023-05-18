@@ -1,4 +1,5 @@
 import TextField from '@mui/material/TextField';
+import { MESSAGE } from 'constants/message';
 import useComment from 'hooks/useComment';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -39,7 +40,7 @@ export default function WriteComment({ commentRef, reviewId, fetchAndSetComments
       return;
     }
     if (!accountStore.id) {
-      openWarningToast('로그인이 필요한 서비스입니다. 로그인 해 주세요.');
+      openWarningToast(MESSAGE.ERROR.NEED_LOGIN);
       return;
     }
 

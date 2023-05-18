@@ -1,4 +1,5 @@
 import { Button } from '@mui/material';
+import { MESSAGE } from 'constants/message';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import useUploadImage from 'hooks/useUploadImage';
 import { useSelector } from 'react-redux';
@@ -22,7 +23,7 @@ function RegistrationBtn({ selectedImg, dispatchReviews, toggleIsReviewWrite }: 
   async function handleRegistration() {
     const hasImage = !!presignedUrl;
     if (!accountStore.id) {
-      openWarningToast('로그인이 필요한 서비스입니다. 로그인 해 주세요.');
+      openWarningToast(MESSAGE.ERROR.NEED_LOGIN);
       return;
     }
     if (hasImage) {

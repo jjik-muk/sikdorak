@@ -1,4 +1,5 @@
 import Button from '@mui/material/Button';
+import { MESSAGE } from 'constants/message';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
@@ -15,7 +16,7 @@ function FollowButton() {
 
   const handleClickUnFollow = () => {
     if (!accountStore.id) {
-      openWarningToast('로그인이 필요한 서비스입니다. 로그인 해 주세요.');
+      openWarningToast(MESSAGE.ERROR.NEED_LOGIN);
       return;
     }
     dispatch(postUnfollow(targetID));
@@ -23,7 +24,7 @@ function FollowButton() {
 
   const handleClickFollow = () => {
     if (!accountStore.id) {
-      openWarningToast('로그인이 필요한 서비스입니다. 로그인 해 주세요.');
+      openWarningToast(MESSAGE.ERROR.NEED_LOGIN);
       return;
     }
     dispatch(postFollow(targetID));

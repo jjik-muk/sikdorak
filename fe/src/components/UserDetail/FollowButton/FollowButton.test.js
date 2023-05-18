@@ -5,6 +5,7 @@ import store from 'store/modules';
 import { ToastContainer } from 'react-toastify';
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from 'utils/test';
+import { MESSAGE } from 'constants/message';
 
 describe('팔로우 버튼', () => {
   beforeEach(() => {
@@ -29,7 +30,7 @@ describe('팔로우 버튼', () => {
     );
     userEvent.click(screen.getByText('팔로우'));
     await waitFor(() => {
-      expect(screen.getByText('로그인이 필요한 서비스입니다. 로그인 해 주세요.')).toBeInTheDocument();
+      expect(screen.getByText(MESSAGE.ERROR.NEED_LOGIN)).toBeInTheDocument();
     });
   });
 });
