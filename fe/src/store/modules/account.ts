@@ -6,18 +6,18 @@ import { createErrorMessage } from 'utils/utils';
 import { AccountStore, RootState } from './store';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
-enum AccountActionTypes {
+enum AccountActions {
   SET_MY_INFO = 'SET_MY_INFO',
   SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN',
 }
 type MyInfo = Pick<AccountStore, 'id' | 'nickname' | 'profileImage'>;
 type AccessToken = Pick<AccountStore, 'accessToken'>;
-export type AccountAction = { type: AccountActionTypes.SET_MY_INFO; payload: MyInfo } | { type: AccountActionTypes.SET_ACCESS_TOKEN; payload: AccessToken };
+export type AccountAction = { type: AccountActions.SET_MY_INFO; payload: MyInfo } | { type: AccountActions.SET_ACCESS_TOKEN; payload: AccessToken };
 type KakaoAuthCode = string;
 
 function setMyInfo({ id, nickname, profileImage }: MyInfo): AccountAction {
   return {
-    type: AccountActionTypes.SET_MY_INFO,
+    type: AccountActions.SET_MY_INFO,
     payload: {
       id,
       nickname,
@@ -28,7 +28,7 @@ function setMyInfo({ id, nickname, profileImage }: MyInfo): AccountAction {
 
 function setAccessToken(accessToken: string): AccountAction {
   return {
-    type: AccountActionTypes.SET_ACCESS_TOKEN,
+    type: AccountActions.SET_ACCESS_TOKEN,
     payload: {
       accessToken,
     },
@@ -42,16 +42,16 @@ const initialState: AccountStore = {
   accessToken: null,
 };
 
-function accountReducer(state: AccountStore = initialState, action: AccountAction) {
+function accountReducer(state: AccountStore = initialState, action: AccountAction): AccountStore {
   switch (action.type) {
-    case AccountActionTypes.SET_MY_INFO:
+    case AccountActions.SET_MY_INFO:
       return {
         ...state,
         id: action.payload.id,
         nickname: action.payload.nickname,
         profileImage: action.payload.profileImage,
       };
-    case AccountActionTypes.SET_ACCESS_TOKEN:
+    case AccountActions.SET_ACCESS_TOKEN:
       return {
         ...state,
         accessToken: action.payload.accessToken,

@@ -1,20 +1,23 @@
 import { fetchData } from 'utils/fetch';
-import { UserStore } from './store';
+import { RootState, UserStore } from './store';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
-enum UserActionTypes {
+enum UserActions {
   SET_USER_PROFILE = 'SET_USER_PROFILE',
   SET_FOLLOW_STATUS = 'SET_FOLLOW_STATUS',
+  RESET_USER_STORE = 'RESET_USER_STORE',
 }
 type FollowStatus = {
   followStatus: boolean;
 };
-export type UserAction = { type: UserActionTypes.SET_USER_PROFILE; payload: UserStore } | { type: UserActionTypes.SET_FOLLOW_STATUS; payload: FollowStatus };
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_FOLLOW_STATUS = 'SET_FOLLOW_STATUS';
+export type UserAction =
+  | { type: UserActions.SET_USER_PROFILE; payload: UserStore }
+  | { type: UserActions.SET_FOLLOW_STATUS; payload: FollowStatus }
+  | { type: UserActions.RESET_USER_STORE };
 
-function setUserProfile({ profileImage, nickname, reviewCount, followingCount, followersCount, relationStatus }: UserStore) {
+function setUserProfile({ profileImage, nickname, reviewCount, followingCount, followersCount, relationStatus }: UserStore): UserAction {
   return {
-    type: SET_USER_PROFILE,
+    type: UserActions.SET_USER_PROFILE,
     payload: {
       profileImage,
       nickname,
@@ -26,12 +29,18 @@ function setUserProfile({ profileImage, nickname, reviewCount, followingCount, f
   };
 }
 
-function setFollowStatus({ followStatus }: FollowStatus) {
+function setFollowStatus({ followStatus }: FollowStatus): UserAction {
   return {
-    type: SET_FOLLOW_STATUS,
+    type: UserActions.SET_FOLLOW_STATUS,
     payload: {
       followStatus,
     },
+  };
+}
+
+function resetUserStore(): UserAction {
+  return {
+    type: UserActions.RESET_USER_STORE,
   };
 }
 
@@ -47,9 +56,9 @@ export const initialState: UserStore = {
   },
 };
 
-function userReducer(state: UserStore = initialState, action: UserAction) {
+function userReducer(state: UserStore = initialState, action: UserAction): UserStore {
   switch (action.type) {
-    case SET_USER_PROFILE:
+    case UserActions.SET_USER_PROFILE:
       return {
         ...state,
         profileImage: action.payload.profileImage,
@@ -59,39 +68,41 @@ function userReducer(state: UserStore = initialState, action: UserAction) {
         followersCount: action.payload.followersCount,
         relationStatus: action.payload.relationStatus,
       };
-    case SET_FOLLOW_STATUS:
+    case UserActions.SET_FOLLOW_STATUS:
       return {
         ...state,
         relationStatus: { ...state.relationStatus, followStatus: action.payload.followStatus },
       };
+    case UserActions.RESET_USER_STORE:
+      return initialState;
     default:
       return state;
   }
 }
 
-function fetchUserProfile(id: number) {
-  return async (dispatch) => {
+type UserThunkAction = ThunkAction<void, RootState, null, UserAction>;
+type UserThunkDispatch = ThunkDispatch<RootState, null, UserAction>;
+
+function fetchUserProfile(id: number): UserThunkAction {
+  return async (dispatch: UserThunkDispatch) => {
     const res = await fetchData({ path: `api/users/${id}`, withAccessToken: true });
     const { data } = res;
     dispatch(setUserProfile(data));
   };
 }
 
-function postFollow(id: number) {
-  return async (dispatch) => {
+function postFollow(id: number): UserThunkAction {
+  return async (dispatch: UserThunkDispatch) => {
     await fetchData({ path: `api/users/follow`, method: 'PUT', bodyData: { userId: id }, withAccessToken: true });
-    // TODO: 팔로우 실패시 분기 처리
-    // const { message, code, data } = res;
     dispatch(setFollowStatus({ followStatus: true }));
   };
 }
 
-function postUnfollow(id: number) {
-  return async (dispatch) => {
+function postUnfollow(id: number): UserThunkAction {
+  return async (dispatch: UserThunkDispatch) => {
     await fetchData({ path: `api/users/unfollow`, method: 'PUT', bodyData: { userId: id }, withAccessToken: true });
-    // const { message, code, data } = res;
     dispatch(setFollowStatus({ followStatus: false }));
   };
 }
 
-export { setUserProfile, setFollowStatus, userReducer, fetchUserProfile, postFollow, postUnfollow };
+export { setUserProfile, setFollowStatus, resetUserStore, userReducer, fetchUserProfile, postFollow, postUnfollow };
