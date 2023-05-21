@@ -1,26 +1,19 @@
 import { useState, useCallback } from 'react';
 import { debounce } from 'utils/utils';
 
-const INIT_STATE: any = {};
-
 function useSearchBar() {
   const [inputValue, setInputValue] = useState('');
-  const [searchResults, setSearchResults] = useState(INIT_STATE);
-  const DELAY_MS = 150;
+  const [searchResults, setSearchResults] = useState<any>({});
+  const DELAY_MS = 250;
+  const debouncedSearch = useCallback(debounce(fetchSearchResults, DELAY_MS), []);
 
-  const debouncedSearch = useCallback(({ url, headers }: any) => {
-    debounce(async function fetchSearchResults() {
-      const res = await fetch(url, { headers });
-      const resJson = await res.json();
-      setSearchResults(resJson);
-    }, DELAY_MS)();
-  }, []);
-
-  function clearSearchResults() {
-    setSearchResults({});
+  async function fetchSearchResults({ url, headers }) {
+    const res = await fetch(url, { headers });
+    const resJson = await res.json();
+    setSearchResults(resJson);
   }
 
-  return { inputValue, setInputValue, searchResults, debouncedSearch, clearSearchResults };
+  return { inputValue, setInputValue, searchResults, debouncedSearch };
 }
 
 export default useSearchBar;

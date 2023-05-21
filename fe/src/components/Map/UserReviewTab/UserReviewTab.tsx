@@ -29,6 +29,7 @@ function UserReviewTab() {
   useEffect(() => {
     fetchAndSetReviews({ saveMethod: 'OVERWRITE' });
   }, [userId]);
+
   useEffect(() => {
     const hasInputValue = inputValue.length > 0;
     if (!hasInputValue) {
