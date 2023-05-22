@@ -50,7 +50,7 @@ function CommonHeader({ dispatchReviews }: any) {
         <ButtonWrap>
           {iconInfo.map(({ icon, handler, to }, idx) => (
             <Link key={createKey(icon, idx)} to={to}>
-              <div onClick={handler}>
+              <div onClick={handler} data-testid={`${icon}-icon`}>
                 <Icon icon={icon} width={ICON.MEDIUM} height={ICON.MEDIUM} />
               </div>
             </Link>
@@ -58,7 +58,7 @@ function CommonHeader({ dispatchReviews }: any) {
           <ProfileImageWrap>
             {accountStore.profileImage ? (
               <div onClick={toggleIsActiveMenu}>
-                <Avatar src={accountStore.profileImage} alt="profile" sx={{ width: ICON.MEDIUM, height: ICON.MEDIUM }} />
+                <Avatar src={accountStore.profileImage} alt="profile picture" sx={{ width: ICON.MEDIUM, height: ICON.MEDIUM }} />
                 {isActiveMenu && (
                   <MenuWrap ref={menuRef}>
                     <MenuItem>

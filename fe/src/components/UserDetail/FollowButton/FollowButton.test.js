@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from 'utils/test';
 import { MESSAGE } from 'constants/message';
 
-describe('팔로우 버튼', () => {
+describe('Follow button', () => {
   beforeEach(() => {
     store.dispatch(resetUserStore());
   });
