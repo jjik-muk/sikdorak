@@ -13,7 +13,7 @@ function UserProfile({ imgUrl = DEFAULT_IMG_URL, nickname, userId }: UserProfile
         navigate(`/user/${userId}`);
       }}
     >
-      <Picture src={imgUrl} />
+      <Picture src={imgUrl} alt="Reviewer profile picture" />
       <Nickname>{nickname}</Nickname>
     </Wrap>
   );

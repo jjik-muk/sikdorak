@@ -10,7 +10,7 @@ function Rating({ rating }: TotalRatingProps) {
   const greyStarLen = 5 - rating;
 
   return (
-    <Wrap>
+    <Wrap data-testid="rating">
       <Star length={yellowStarLen} color={COLOR.YELLOW} />
       <Star length={greyStarLen} color={COLOR.GREY[500]} />
     </Wrap>

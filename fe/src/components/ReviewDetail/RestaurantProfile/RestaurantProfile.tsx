@@ -13,6 +13,7 @@ function RestaurantProfile({ company, region, storeId }: RestaurantProfileProps)
         e.stopPropagation();
         navigate(`/store/${storeId}`);
       }}
+      data-testid="restaurant-profile"
     >
       <RestaurantMenuIcon style={{ border: `1px solid ${COLOR.GREY[100]}`, borderRadius: '50%', width: `${ICON.MEDIUM}px`, height: `${ICON.MEDIUM}px` }} />
       <div>

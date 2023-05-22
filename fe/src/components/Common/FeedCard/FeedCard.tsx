@@ -34,11 +34,9 @@ function FeedCard({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed
           <FavoriteIcon color={isActiveHeart ? 'warning' : 'action'} />
           <Typography>{likeCnt}</Typography>
         </IconButton>
-        {accountStore.id && (
-          <IconButton aria-label="comment">
-            <ModeCommentIcon />
-          </IconButton>
-        )}
+        <IconButton aria-label="comment">
+          <ModeCommentIcon />
+        </IconButton>
         <IconButton aria-label="share" onClick={handleCopyURL}>
           <ShareIcon />
         </IconButton>

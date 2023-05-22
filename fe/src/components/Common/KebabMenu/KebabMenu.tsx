@@ -32,7 +32,7 @@ function KebabMenu({ reviewId, isMyFeed }: MenuProps) {
   return (
     <div onClick={(e) => e.stopPropagation()}>
       {isMyFeed && (
-        <div onClick={handleMenu} style={{ position: 'relative' }}>
+        <div onClick={handleMenu} style={{ position: 'relative' }} data-testid="kebab-menu">
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
