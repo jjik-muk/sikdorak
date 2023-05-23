@@ -16,6 +16,7 @@ import { ReactComponent as ShareArrow } from 'assets/ShareArrow.svg';
 import { ReactComponent as Star } from 'assets/Star.svg';
 import { ReactComponent as TalkBubble } from 'assets/TalkBubble.svg';
 import { ReactComponent as UpArrow } from 'assets/UpArrow.svg';
+import { MESSAGE } from 'constants/message';
 
 export const iconComponents = {
   Photo,
@@ -39,7 +40,7 @@ export const iconComponents = {
 function Icon({ icon, width = ICON.MEDIUM, height = ICON.MEDIUM, fill = 'none', stroke = COLOR.BLACK, onClick }: IconProps) {
   const SelectedIcon = iconComponents[icon];
   if (!SelectedIcon) {
-    throw new Error(`${icon} 컴포넌트를 찾을 수 없습니다. `);
+    throw new Error(`${icon} ${MESSAGE.ERROR.CANT_FIND_ICON}`);
   }
   return <SelectedIcon width={width} height={height} fill={fill} stroke={stroke} onClick={onClick} />;
 }
