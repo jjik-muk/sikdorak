@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AccountAction, fetchMyInfo } from 'store/modules/account';
 import { RootState } from 'store/modules/store';
 import { ThunkDispatch } from 'redux-thunk';
+import { GET_ALT } from 'constants/alt';
 
 function CommonHeader({ dispatchReviews }: any) {
   const [isReviewWrite, toggleIsReviewWrite] = useToggle(false);
@@ -28,6 +29,7 @@ function CommonHeader({ dispatchReviews }: any) {
   const menuRef = useRef(null);
   const dispatch: ThunkDispatch<RootState, null, AccountAction> = useDispatch();
   const accountStore = useSelector((state: RootState) => state.account);
+  const { accessToken, id, nickname, profileImage } = accountStore;
 
   const iconInfo: IconInfoProps[] = [
     { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
@@ -41,7 +43,7 @@ function CommonHeader({ dispatchReviews }: any) {
 
   useEffect(() => {
     dispatch(fetchMyInfo());
-  }, [accountStore.accessToken]);
+  }, [accessToken]);
 
   return (
     <Wrap>
@@ -56,13 +58,13 @@ function CommonHeader({ dispatchReviews }: any) {
             </Link>
           ))}
           <ProfileImageWrap>
-            {accountStore.profileImage ? (
+            {profileImage ? (
               <div onClick={toggleIsActiveMenu}>
-                <Avatar src={accountStore.profileImage} alt="profile picture" sx={{ width: ICON.MEDIUM, height: ICON.MEDIUM }} />
+                <Avatar src={profileImage} alt={GET_ALT.PROFILE(nickname)} sx={{ width: ICON.MEDIUM, height: ICON.MEDIUM }} />
                 {isActiveMenu && (
                   <MenuWrap ref={menuRef}>
                     <MenuItem>
-                      <Link to={`/user/${accountStore.id}`}>내 프로필</Link>
+                      <Link to={`/user/${id}`}>내 프로필</Link>
                     </MenuItem>
                     <MenuItem onClick={handleLogout}>
                       <Link to="/">로그아웃</Link>

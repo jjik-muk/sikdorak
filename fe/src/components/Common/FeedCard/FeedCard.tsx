@@ -11,6 +11,7 @@ import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
 import { openSuccessToast } from 'utils/toast';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/modules/store';
+import { GET_ALT } from 'constants/alt';
 
 function FeedCard({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal, postUnlike }: any) {
   const { user, images, reviewId, reviewScore, reviewContent, store } = review;
@@ -25,7 +26,7 @@ function FeedCard({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed
         avatar={<UserProfile nickname={user?.userNickname} imgUrl={user?.userProfileImage} userId={user?.userId} />}
         action={<KebabMenu reviewId={reviewId} isMyFeed={isMyFeed} />}
       />
-      {hasPicture && !isUsedModal && <CardMedia component="img" height={FEED.IMG.HEIGHT} image={images[0]} alt="User profile" />}
+      {hasPicture && !isUsedModal && <CardMedia component="img" height={FEED.IMG.HEIGHT} image={images[0]} alt={GET_ALT.FOOD(user.userNickname)} />}
       <Rating rating={reviewScore} />
       <CardContent>{reviewContent}</CardContent>
       <CompnayProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
