@@ -13,11 +13,26 @@ export const STORE = {
 
 export const DEFAULT_IMG = 'http://www.mth.co.kr/wp-content/uploads/2014/12/default-placeholder-300x300.png';
 
+export const REVIEW = {
+  createdAt: '2023-05-22T06:20:00.413584',
+  images: [],
+  like: { count: 0, userLikeStatus: false },
+  reviewContent: '리뷰 내용',
+  reviewId: 2,
+  reviewScore: 5,
+  reviewVisibility: 'PUBLIC',
+  store: { storeId: 337, storeName: '모구모구', addressName: '경기 김포시 무슨동', roadAddressName: '경기 김포시 무슨로' },
+  tags: ['태그 1'],
+  updatedAt: '2023-05-22T06:20:00.413584',
+  user: { userId: 1, userNickname: '럼카', userProfileImage: 'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg' },
+  visitedDate: '2023-05-03',
+};
+
 export const REVIEWS = [
   {
     user: {
       userId: 1,
-      userNickname: '전용성',
+      userNickname: '럼카',
       userProfileImage: 'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg',
     },
     store: {
@@ -43,8 +58,8 @@ export const REVIEWS = [
   },
   {
     user: {
-      userId: 1,
-      userNickname: '전용성',
+      userId: 2,
+      userNickname: '깐',
       userProfileImage: 'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg',
     },
     store: {
@@ -58,7 +73,7 @@ export const REVIEWS = [
       count: 1,
       userLikeStatus: true,
     },
-    reviewId: 1,
+    reviewId: 2,
     reviewContent: `동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세`,
     reviewScore: 5,
     reviewVisibility: 'PUBLIC',
@@ -70,8 +85,8 @@ export const REVIEWS = [
   },
   {
     user: {
-      userId: 1,
-      userNickname: '전용성',
+      userId: 3,
+      userNickname: '홍길동',
       userProfileImage: 'http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg',
     },
     store: {
@@ -83,7 +98,7 @@ export const REVIEWS = [
       count: 1,
       userLikeStatus: true,
     },
-    reviewId: 1,
+    reviewId: 3,
     reviewContent: 'asdfasfd',
     reviewScore: 5,
     reviewVisibility: 'PUBLIC',
