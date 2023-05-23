@@ -4,11 +4,12 @@ import { screen } from '@testing-library/react';
 import store from 'store/modules';
 import { setMyInfo } from 'store/modules/account';
 import { REVIEW } from 'constants/dummyData';
+import { ALT, GET_ALT } from 'constants/alt';
 
 describe('Feed card', () => {
   it('리뷰 작성자의 프로필 사진을 표시한다.', () => {
     renderWithProviders(<FeedCard review={REVIEW} />);
-    expect(screen.getByAltText('Reviewer profile picture')).toBeInTheDocument();
+    expect(screen.getByAltText(GET_ALT.PROFILE(REVIEW.user.userNickname))).toBeInTheDocument();
   });
   it('리뷰 작성자의 이름을 표시한다.', () => {
     renderWithProviders(<FeedCard review={REVIEW} />);

@@ -3,7 +3,7 @@ import CommonHeader from './CommonHeader';
 import { renderWithProviders } from 'utils/test';
 import store from 'store/modules';
 import { setMyInfo } from 'store/modules/account';
-import { ALT } from 'constants/alt';
+import { ALT, GET_ALT } from 'constants/alt';
 
 describe('Common header', () => {
   it('로고를 표시한다.', () => {
@@ -27,8 +27,9 @@ describe('Common header', () => {
     expect(screen.getByText('로그인')).toBeInTheDocument();
   });
   it('로그인 한 경우 본인의 프로필 사진을 표시한다.', () => {
-    store.dispatch(setMyInfo({ id: 1, nickname: '럼카', profileImage: 'Image URL' }));
+    const nickname = '럼카';
+    store.dispatch(setMyInfo({ id: 1, nickname, profileImage: 'Image URL' }));
     renderWithProviders(<CommonHeader />);
-    expect(screen.getByAltText('profile picture')).toBeInTheDocument();
+    expect(screen.getByAltText(GET_ALT.PROFILE(nickname))).toBeInTheDocument();
   });
 });
