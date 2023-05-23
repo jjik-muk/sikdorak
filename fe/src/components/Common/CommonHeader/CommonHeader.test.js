@@ -3,11 +3,12 @@ import CommonHeader from './CommonHeader';
 import { renderWithProviders } from 'utils/test';
 import store from 'store/modules';
 import { setMyInfo } from 'store/modules/account';
+import { ALT } from 'constants/alt';
 
 describe('Common header', () => {
   it('로고를 표시한다.', () => {
     renderWithProviders(<CommonHeader />);
-    expect(screen.getByAltText('logo')).toBeInTheDocument();
+    expect(screen.getByAltText(ALT.LOGO)).toBeInTheDocument();
   });
   it('홈 아이콘을 표시한다.', () => {
     renderWithProviders(<CommonHeader />);
