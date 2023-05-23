@@ -41,7 +41,7 @@ describe('Feed card', () => {
   it('내가 작성한 리뷰가 아닌 경우 케밥 메뉴를 표시하지 않는다.', () => {
     renderWithProviders(<FeedCard review={REVIEW} />);
     const kebabMenu = screen.queryByTestId('kebab-menu');
-    expect(kebabMenu).toBeNull();
+    expect(kebabMenu).not.toBeInTheDocument();
   });
   it('내가 작성한 리뷰인 경우 케밥 메뉴를 표시한다.', () => {
     store.dispatch(setMyInfo({ id: 1, nickname: '럼카', profileImage: 'Image URL' }));
