@@ -12,6 +12,7 @@ export const TEXT = {
     PRIVATE: '친구에게만 공개합니다.',
   },
   ALT: {
-    PHOTOGRAPH: '유저가 업로드한 음식 또는 가게 사진',
+    PHOTOGRAPH: '유저가 업로드 한 음식 또는 가게 사진',
   },
+  NO_REVIEWS: '리뷰가 없습니다.',
 };
