@@ -14,6 +14,7 @@ import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import Portal from '../Portal/Portal';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { reloadBrowser } from 'utils/utils';
+import { TEST_ID } from 'constants/testID';
 
 function KebabMenu({ reviewId, isMyFeed }: MenuProps) {
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
@@ -32,7 +33,7 @@ function KebabMenu({ reviewId, isMyFeed }: MenuProps) {
   return (
     <div onClick={(e) => e.stopPropagation()}>
       {isMyFeed && (
-        <div onClick={handleMenu} style={{ position: 'relative' }} data-testid="kebab-menu">
+        <div onClick={handleMenu} style={{ position: 'relative' }} data-testid={TEST_ID.KEBAB_MENU}>
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>

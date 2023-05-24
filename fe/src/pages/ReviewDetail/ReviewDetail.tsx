@@ -9,6 +9,7 @@ import useAuth from 'hooks/useAuth';
 import { useEffect, useRef } from 'react';
 import { ContentsWrap, Wrap } from './ReviewDetail.styled';
 import useComment from 'hooks/useComment';
+import { TEST_ID } from 'constants/testID';
 
 function ReviewDetail({ review, isActiveHeart, likeCnt, postLike, postUnlike }: any) {
   const { images, reviewId, user, tags } = review;
@@ -23,7 +24,7 @@ function ReviewDetail({ review, isActiveHeart, likeCnt, postLike, postUnlike }: 
   }, []);
 
   return (
-    <Wrap>
+    <Wrap data-testid={TEST_ID.REVIEW_DETAIL}>
       {hasPicture && <Carousel urls={images} />}
       <ContentsWrap wrapWidth={wrapWidth}>
         <FeedCard review={review} isActiveHeart={isActiveHeart} likeCnt={likeCnt} postLike={postLike} postUnlike={postUnlike} isUsedModal />

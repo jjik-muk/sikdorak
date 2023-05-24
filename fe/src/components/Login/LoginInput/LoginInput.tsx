@@ -1,9 +1,10 @@
 import { TEXT } from 'constants/text';
 import { Wrap } from './LoginInput.styled';
 import { MESSAGE } from 'constants/message';
+import { TEST_ID } from 'constants/testID';
 
 function LoginInput({ type }: { type: string }) {
-  return <Wrap data-testid="login-input" type={getLoginInputType(type)} placeholder={type} />;
+  return <Wrap data-testid={TEST_ID.LOGIN_INPUT} type={getLoginInputType(type)} placeholder={type} />;
 }
 
 function getLoginInputType(type: string) {

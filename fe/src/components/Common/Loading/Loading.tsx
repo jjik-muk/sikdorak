@@ -1,8 +1,9 @@
+import { TEST_ID } from 'constants/testID';
 import { Spinner, Wrap } from './Loading.styled';
 
 function Loading() {
   return (
-    <Wrap data-testid="spinner-wrap">
+    <Wrap data-testid={TEST_ID.LOADING}>
       <Spinner />
     </Wrap>
   );

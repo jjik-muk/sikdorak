@@ -4,13 +4,14 @@ import { COLOR } from 'styles/color';
 import { ICON } from 'styles/size';
 import { createKey } from 'utils/utils';
 import { Wrap } from './Rating.styled';
+import { TEST_ID } from 'constants/testID';
 
 function Rating({ rating }: TotalRatingProps) {
   const yellowStarLen = rating;
   const greyStarLen = 5 - rating;
 
   return (
-    <Wrap data-testid="rating">
+    <Wrap data-testid={TEST_ID.RATING}>
       <Star length={yellowStarLen} color={COLOR.YELLOW} />
       <Star length={greyStarLen} color={COLOR.GREY[500]} />
     </Wrap>

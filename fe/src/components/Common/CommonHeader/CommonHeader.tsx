@@ -19,6 +19,7 @@ import { AccountAction, fetchMyInfo } from 'store/modules/account';
 import { RootState } from 'store/modules/store';
 import { ThunkDispatch } from 'redux-thunk';
 import { GET_ALT } from 'constants/alt';
+import { GET_TEST_ID } from 'constants/testID';
 
 function CommonHeader({ dispatchReviews }: any) {
   const [isReviewWrite, toggleIsReviewWrite] = useToggle(false);
@@ -52,7 +53,7 @@ function CommonHeader({ dispatchReviews }: any) {
         <ButtonWrap>
           {iconInfo.map(({ icon, handler, to }, idx) => (
             <Link key={createKey(icon, idx)} to={to}>
-              <div onClick={handler} data-testid={`${icon}-icon`}>
+              <div onClick={handler} data-testid={GET_TEST_ID.ICON(icon)}>
                 <Icon icon={icon} width={ICON.MEDIUM} height={ICON.MEDIUM} />
               </div>
             </Link>
