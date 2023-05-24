@@ -12,6 +12,7 @@ import { openSuccessToast } from 'utils/toast';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/modules/store';
 import { GET_ALT } from 'constants/alt';
+import { TEST_ID } from 'constants/testID';
 
 function FeedCard({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal, postUnlike }: any) {
   const { user, images, reviewId, reviewScore, reviewContent, store } = review;
@@ -21,7 +22,7 @@ function FeedCard({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed
   const hasPicture = images.length > 0;
 
   return (
-    <Card onClick={toggleIsClikedFeed} sx={CARD_STYLE}>
+    <Card onClick={toggleIsClikedFeed} sx={CARD_STYLE} data-testid={TEST_ID.FEED_CARD}>
       <CardHeader
         avatar={<UserProfile nickname={user?.userNickname} imgUrl={user?.userProfileImage} userId={user?.userId} />}
         action={<KebabMenu reviewId={reviewId} isMyFeed={isMyFeed} />}
