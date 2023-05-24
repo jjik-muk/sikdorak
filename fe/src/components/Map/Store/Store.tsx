@@ -7,10 +7,12 @@ import { useEffect, useState } from 'react';
 import { ICON } from 'styles/size';
 import Icon from 'components/Common/Icon/Icon';
 import { COLOR } from 'styles/color';
+import { TEST_ID } from 'constants/testID';
 
-function Store({ id, storeName, contactNumber, roadAddressName }: any) {
+function Store({ store }: any) {
   const navigate = useNavigate();
-  const [storeDetail, setStoreDetail] = useState({ reviewScoreAverage: 0, reviewCounts: 0 });
+  const [storeDetail, setStoreDetail] = useState({ reviewScoreAverage: store.reviewScoreAverage, reviewCounts: store.reviewCounts });
+  const { id, storeName, contactNumber, roadAddressName } = store;
 
   useEffect(() => {
     requestStoreDetail();
@@ -28,6 +30,7 @@ function Store({ id, storeName, contactNumber, roadAddressName }: any) {
       onClick={() => {
         navigate(`/store/${id}`);
       }}
+      data-testid={TEST_ID.STORE}
     >
       <Title>{storeName}</Title>
       <Rate>

@@ -6,16 +6,9 @@ function Stores({ stores }: any) {
   return (
     <Wrap>
       {hasStores &&
-        stores.map(({ id, storeName, contactNumber, roadAddressName, reviewCounts, reviewScoreAverage }) => (
-          <div key={id}>
-            <Store
-              id={id}
-              storeName={storeName}
-              contactNumber={contactNumber}
-              roadAddressName={roadAddressName}
-              reviewCounts={reviewCounts}
-              reviewScoreAverage={reviewScoreAverage}
-            />
+        stores.map((store) => (
+          <div key={store.id}>
+            <Store store={store} />
           </div>
         ))}
     </Wrap>

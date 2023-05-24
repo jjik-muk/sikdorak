@@ -6,8 +6,7 @@ import { flexLayoutMixin } from 'utils/utils';
 import { COLOR } from 'styles/color';
 
 function StorePictures() {
-  const { storePictures } = STORE;
-  const [firstImg, ...otherImg] = getImagesOfStore({ pictures: storePictures, defaultImg: DEFAULT_IMG });
+  const [firstImg, ...otherImg] = getImagesOfStore({ pictures: '', defaultImg: DEFAULT_IMG });
 
   return (
     <PictureWrap>

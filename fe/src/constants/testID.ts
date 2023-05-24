@@ -9,6 +9,7 @@ const TEST_ID = {
   RESTAURANT_PROFILE: 'restaurant-profile',
   RATING: 'rating',
   REVIEW_DETAIL: 'review-detail',
+  STORE: 'store',
 };
 
 const GET_TEST_ID = {

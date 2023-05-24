@@ -15,4 +15,5 @@ export const TEXT = {
     PHOTOGRAPH: '유저가 업로드 한 음식 또는 가게 사진',
   },
   NO_REVIEWS: '리뷰가 없습니다.',
+  NO_STORES: '식당이 없습니다.',
 };

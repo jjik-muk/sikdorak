@@ -6,10 +6,13 @@ import { MAP_POS_DEFAULT, useStores } from 'hooks/useStores';
 import { compareTwoObjects } from 'utils/utils';
 import { useEffect, useState } from 'react';
 import { Z_INDEX } from 'styles/zIndex';
+import GuideText from 'components/Common/GuideText/GuideText';
+import { TEXT } from 'constants/text';
 
 function RestaurantListTab({ activeTabIdx }: { activeTabIdx: number }) {
   const [isMovedMap, setIsMovedMap] = useState(false);
   const { stores, mapPos, setMapPos, fetchAndSetStores, isLastPage } = useStores();
+  const hasStores = stores.length > 0;
 
   useEffect(
     function handleIsMovedState() {
@@ -29,7 +32,7 @@ function RestaurantListTab({ activeTabIdx }: { activeTabIdx: number }) {
   return (
     <>
       <FeedsArea>
-        <Stores stores={stores} />
+        {hasStores ? <Stores stores={stores} /> : <GuideText text={TEXT.NO_STORES} />}
         {!isLastPage && (
           <Button variant="text" onClick={handleMoreSearch}>
             검색결과 더 보기
