@@ -1,8 +1,6 @@
 import { screen } from '@testing-library/react';
 import CommonHeader from './CommonHeader';
-import { renderWithProviders } from 'utils/test';
-import store from 'store/modules';
-import { setMyInfo } from 'store/modules/account';
+import { login, renderWithProviders } from 'utils/test';
 import { ALT, GET_ALT } from 'constants/alt';
 
 describe('Common header', () => {
@@ -28,7 +26,7 @@ describe('Common header', () => {
   });
   it('로그인 한 경우 본인의 프로필 사진을 표시한다.', () => {
     const nickname = '럼카';
-    store.dispatch(setMyInfo({ id: 1, nickname, profileImage: 'Image URL' }));
+    login({ id: 1, nickname });
     renderWithProviders(<CommonHeader />);
     expect(screen.getByAltText(GET_ALT.PROFILE(nickname))).toBeInTheDocument();
   });
