@@ -1,5 +1,6 @@
 const ALT = {
   LOGO: 'sikdorak 글자 로고',
+  PHOTOGRAPH: '유저가 업로드 한 음식 또는 가게 사진',
 };
 
 const GET_ALT = {
