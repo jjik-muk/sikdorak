@@ -1,6 +1,6 @@
 import { REVIEW } from 'constants/dummyData';
 import Feed from './Feed';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { renderWithProviders } from 'utils/test';
 import { TEST_ID } from 'constants/testID';
 import userEvent from '@testing-library/user-event';

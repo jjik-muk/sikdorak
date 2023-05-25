@@ -10,6 +10,8 @@ const TEST_ID = {
   RATING: 'rating',
   REVIEW_DETAIL: 'review-detail',
   STORE: 'store',
+  PREV_BTN: 'prev-btn',
+  NEXT_BTN: 'next-btn',
 };
 
 const GET_TEST_ID = {
