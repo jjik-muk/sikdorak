@@ -5,7 +5,7 @@ import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import ShareIcon from '@mui/icons-material/Share';
 import { Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material';
 import KebabMenu from 'components/Common/KebabMenu/KebabMenu';
-import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
+import RestaurantProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
 import Rating from 'components/ReviewDetail/TotalRating/Rating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
 import { openSuccessToast } from 'utils/toast';
@@ -30,7 +30,7 @@ function FeedCard({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed
       {hasPicture && !isUsedModal && <CardMedia component="img" height={FEED.IMG.HEIGHT} image={images[0]} alt={GET_ALT.FOOD(user.userNickname)} />}
       <Rating rating={reviewScore} />
       <CardContent>{reviewContent}</CardContent>
-      <CompnayProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
+      <RestaurantProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
       <CardActions>
         <IconButton aria-label="like" onClick={isActiveHeart ? handleUnlike : handleLike}>
           <FavoriteIcon color={isActiveHeart ? 'warning' : 'action'} />
