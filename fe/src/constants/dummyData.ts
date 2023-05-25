@@ -17,6 +17,7 @@ export const STORE = {
 };
 
 export const DEFAULT_IMG = 'http://www.mth.co.kr/wp-content/uploads/2014/12/default-placeholder-300x300.png';
+export const DEFAULT_USER_IMG = 'https://flyclipart.com/thumb2/profile-user-png-icon-free-download-196388.png';
 
 export const REVIEW = {
   createdAt: '2023-05-22T06:20:00.413584',
