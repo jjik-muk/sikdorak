@@ -24,7 +24,9 @@ function Star({ length, color }: StarProps) {
   return (
     <>
       {Array.from({ length }).map((_, idx) => (
-        <Icon key={createKey(id, idx)} icon="Star" stroke={COLOR.WHITE} fill={color} width={ICON.SMALL} height={ICON.SMALL} />
+        <div data-testid={color === COLOR.YELLOW ? TEST_ID.YELLOW_STAR : TEST_ID.GREY_STAR}>
+          <Icon key={createKey(id, idx)} icon="Star" stroke={COLOR.WHITE} fill={color} width={ICON.SMALL} height={ICON.SMALL} />
+        </div>
       ))}
     </>
   );

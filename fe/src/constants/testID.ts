@@ -12,6 +12,8 @@ const TEST_ID = {
   STORE: 'store',
   PREV_BTN: 'prev-btn',
   NEXT_BTN: 'next-btn',
+  YELLOW_STAR: 'yellow-star',
+  GREY_STAR: 'grey-star',
 };
 
 const GET_TEST_ID = {
