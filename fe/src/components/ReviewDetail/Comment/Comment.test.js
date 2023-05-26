@@ -1,5 +1,4 @@
 import { screen, waitFor } from '@testing-library/react';
-import { URLS } from 'constants/dummyData';
 import { login, renderWithProviders } from 'utils/test';
 import Comment from './Comment';
 import userEvent from '@testing-library/user-event';

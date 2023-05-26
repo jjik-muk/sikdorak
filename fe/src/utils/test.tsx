@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import store from 'store/modules';
@@ -13,6 +13,10 @@ export function renderWithProviders(children: ReactNode) {
   );
 }
 
-export function login({ id, nickname }) {
+export function login({ id, nickname }: { id: number; nickname: string }) {
   return store.dispatch(setMyInfo({ id, nickname, profileImage: 'Image URL' }));
+}
+
+export function pressEnter(element: HTMLElement) {
+  return fireEvent.keyDown(element, { key: 'Enter', code: 'Enter', charCode: 13 });
 }

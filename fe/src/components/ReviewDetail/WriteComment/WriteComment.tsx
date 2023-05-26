@@ -29,6 +29,7 @@ export default function WriteComment({ reviewId, fetchAndSetComments }: WriteCom
       label="댓글 입력"
       variant="outlined"
       sx={{ marginTop: '20px' }}
+      data-testid="comment-input"
     />
   );
 
@@ -37,7 +38,7 @@ export default function WriteComment({ reviewId, fetchAndSetComments }: WriteCom
     const hasInputValue = commentValue.length > 0;
     if (!isPressedEnter) return;
     if (!hasInputValue) {
-      openWarningToast('댓글 내용을 입력해주세요.');
+      openWarningToast(MESSAGE.ERROR.ENTER_YOUR_COMMENT);
       return;
     }
     if (!accountStore.id) {
