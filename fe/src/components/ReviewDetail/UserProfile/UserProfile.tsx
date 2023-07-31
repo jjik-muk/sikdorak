@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { Nickname, Picture, Wrap } from './UserProfile.styled';
+import { GET_ALT } from 'constants/alt';
+import { DEFAULT_USER_IMG } from 'constants/dummyData';
 
-const DEFAULT_IMG_URL = 'https://flyclipart.com/thumb2/profile-user-png-icon-free-download-196388.png';
-
-function UserProfile({ imgUrl = DEFAULT_IMG_URL, nickname, userId }: UserProfileProps) {
+function UserProfile({ imgUrl = DEFAULT_USER_IMG, nickname, userId }: UserProfileProps) {
   const navigate = useNavigate();
 
   return (
@@ -13,7 +13,7 @@ function UserProfile({ imgUrl = DEFAULT_IMG_URL, nickname, userId }: UserProfile
         navigate(`/user/${userId}`);
       }}
     >
-      <Picture src={imgUrl} />
+      <Picture src={imgUrl} alt={GET_ALT.PROFILE(nickname)} />
       <Nickname>{nickname}</Nickname>
     </Wrap>
   );

@@ -1,12 +1,16 @@
 import TextField from '@mui/material/TextField';
+import { MESSAGE } from 'constants/message';
 import useComment from 'hooks/useComment';
-import { useState, useEffect } from 'react';
-import { accountStore } from 'stores/AccountStore';
+import { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/modules/store';
 import { openWarningToast } from 'utils/toast';
 
-export default function WriteComment({ commentRef, reviewId, fetchAndSetComments }: WriteCommentProps) {
+export default function WriteComment({ reviewId, fetchAndSetComments }: WriteCommentProps) {
   const [commentValue, setComment] = useState('');
   const { requestAddComment, isSubmitted, setIsSubmitted } = useComment({ reviewId });
+  const accountStore = useSelector((state: RootState) => state.account);
+  const commentRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (isSubmitted) {
@@ -25,6 +29,7 @@ export default function WriteComment({ commentRef, reviewId, fetchAndSetComments
       label="댓글 입력"
       variant="outlined"
       sx={{ marginTop: '20px' }}
+      data-testid="comment-input"
     />
   );
 
@@ -33,11 +38,11 @@ export default function WriteComment({ commentRef, reviewId, fetchAndSetComments
     const hasInputValue = commentValue.length > 0;
     if (!isPressedEnter) return;
     if (!hasInputValue) {
-      openWarningToast('댓글 내용을 입력해주세요.');
+      openWarningToast(MESSAGE.ERROR.ENTER_YOUR_COMMENT);
       return;
     }
     if (!accountStore.id) {
-      openWarningToast('로그인이 필요한 서비스입니다. 로그인 해 주세요.');
+      openWarningToast(MESSAGE.ERROR.NEED_LOGIN);
       return;
     }
 
@@ -51,7 +56,6 @@ export default function WriteComment({ commentRef, reviewId, fetchAndSetComments
 }
 
 type WriteCommentProps = {
-  commentRef?: React.Ref<HTMLInputElement>;
   reviewId: number;
   fetchAndSetComments: Function;
 };

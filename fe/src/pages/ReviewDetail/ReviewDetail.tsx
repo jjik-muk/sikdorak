@@ -6,13 +6,13 @@ import Comment from 'components/ReviewDetail/Comment/Comment';
 import TagList from 'components/ReviewDetail/TagList/TagList';
 import WriteComment from 'components/ReviewDetail/WriteComment/WriteComment';
 import useAuth from 'hooks/useAuth';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { ContentsWrap, Wrap } from './ReviewDetail.styled';
 import useComment from 'hooks/useComment';
+import { TEST_ID } from 'constants/testID';
 
 function ReviewDetail({ review, isActiveHeart, likeCnt, postLike, postUnlike }: any) {
   const { images, reviewId, user, tags } = review;
-  const commentRef = useRef<HTMLInputElement>(null);
   const hasPicture = images.length > 0;
   const wrapWidth = hasPicture ? DETAIL.WRAP.WIDTH_WITH_IMG : DETAIL.WRAP.WIDTH_NO_IMG;
   useAuth();
@@ -23,7 +23,7 @@ function ReviewDetail({ review, isActiveHeart, likeCnt, postLike, postUnlike }: 
   }, []);
 
   return (
-    <Wrap>
+    <Wrap data-testid={TEST_ID.REVIEW_DETAIL}>
       {hasPicture && <Carousel urls={images} />}
       <ContentsWrap wrapWidth={wrapWidth}>
         <FeedCard review={review} isActiveHeart={isActiveHeart} likeCnt={likeCnt} postLike={postLike} postUnlike={postUnlike} isUsedModal />
@@ -44,7 +44,7 @@ function ReviewDetail({ review, isActiveHeart, likeCnt, postLike, postUnlike }: 
               />
             ))}
           {hasNextComments && <Button onClick={handleMoreBtn}>댓글 더보기</Button>}
-          <WriteComment commentRef={commentRef} reviewId={reviewId} fetchAndSetComments={fetchAndSetComments} />
+          <WriteComment reviewId={reviewId} fetchAndSetComments={fetchAndSetComments} />
         </div>
       </ContentsWrap>
     </Wrap>

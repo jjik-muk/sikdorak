@@ -10,6 +10,7 @@ import MapComponent from '../MapComponent';
 import useSearchBar from 'hooks/useSearchBar';
 import { Z_INDEX } from 'styles/zIndex';
 import { MAP_POS_DEFAULT } from 'hooks/useStores';
+import { GET_ALT } from 'constants/alt';
 
 function UserReviewTab() {
   const [isMovedMap, setIsMovedMap] = useState(false);
@@ -29,6 +30,7 @@ function UserReviewTab() {
   useEffect(() => {
     fetchAndSetReviews({ saveMethod: 'OVERWRITE' });
   }, [userId]);
+
   useEffect(() => {
     const hasInputValue = inputValue.length > 0;
     if (!hasInputValue) {
@@ -115,7 +117,7 @@ const UserSearchBarWrap = styled.div`
 function UserSearchResultList({ id, nickname, profileImage, setUserId, setInputValue }: any, idx: number) {
   return (
     <Wrap key={createKey(id, idx)} onMouseDown={handleUserId}>
-      <Profile src={profileImage} alt="profile" width={30} height={30} />
+      <Profile src={profileImage} alt={GET_ALT.PROFILE(nickname)} width={30} height={30} />
       <span>{nickname}</span>
     </Wrap>
   );

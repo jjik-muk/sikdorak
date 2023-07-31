@@ -1,39 +1,44 @@
 import Button from '@mui/material/Button';
-import { observer } from 'mobx-react';
+import { MESSAGE } from 'constants/message';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { accountStore } from 'stores/AccountStore';
-import { userStore } from 'stores/userStore';
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from 'store/modules/store';
+import { UserAction, postFollow, postUnfollow } from 'store/modules/user';
 import { openWarningToast } from 'utils/toast';
 
-const FollowButton = observer(() => {
+function FollowButton() {
   const { pathname } = useLocation();
-  const IDtoFollow = Number(pathname.split('/').at(-1));
+  const targetID = Number(pathname.split('/').at(-1));
+  const userStore = useSelector((state: RootState) => state.user);
+  const accountStore = useSelector((state: RootState) => state.account);
+  const dispatch: ThunkDispatch<RootState, null, UserAction> = useDispatch();
 
   const handleClickUnFollow = () => {
     if (!accountStore.id) {
-      openWarningToast('로그인이 필요한 서비스입니다. 로그인 해 주세요.');
+      openWarningToast(MESSAGE.ERROR.NEED_LOGIN);
       return;
     }
-    userStore.postUnFollow(IDtoFollow);
+    dispatch(postUnfollow(targetID));
   };
 
   const handleClickFollow = () => {
     if (!accountStore.id) {
-      openWarningToast('로그인이 필요한 서비스입니다. 로그인 해 주세요.');
+      openWarningToast(MESSAGE.ERROR.NEED_LOGIN);
       return;
     }
-    userStore.postFollow(IDtoFollow);
+    dispatch(postFollow(targetID));
   };
 
-  return userStore?.followStatus ? (
+  return userStore?.relationStatus.followStatus ? (
     <Button variant="contained" onClick={handleClickUnFollow}>
       언팔로우
     </Button>
   ) : (
-    <Button variant="contained" onClick={handleClickFollow}>
+    <Button variant="contained" onClick={handleClickFollow} role="button">
       팔로우
     </Button>
   );
-});
+}
 
 export default FollowButton;

@@ -5,39 +5,40 @@ import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import ShareIcon from '@mui/icons-material/Share';
 import { Card, CardActions, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@mui/material';
 import KebabMenu from 'components/Common/KebabMenu/KebabMenu';
-import CompnayProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
+import RestaurantProfile from 'components/ReviewDetail/RestaurantProfile/RestaurantProfile';
 import Rating from 'components/ReviewDetail/TotalRating/Rating';
 import UserProfile from 'components/ReviewDetail/UserProfile/UserProfile';
-import { observer } from 'mobx-react';
-import { accountStore } from 'stores/AccountStore';
 import { openSuccessToast } from 'utils/toast';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/modules/store';
+import { GET_ALT } from 'constants/alt';
+import { TEST_ID } from 'constants/testID';
 
-const FeedCard = observer(({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal, postUnlike }: any) => {
+function FeedCard({ review, isActiveHeart, likeCnt, postLike, toggleIsClikedFeed, isUsedModal, postUnlike }: any) {
   const { user, images, reviewId, reviewScore, reviewContent, store } = review;
+  const accountStore = useSelector((state: RootState) => state.account);
   const myUserId = accountStore.id;
   const isMyFeed = user?.userId === myUserId;
   const hasPicture = images.length > 0;
 
   return (
-    <Card onClick={toggleIsClikedFeed} sx={CARD_STYLE}>
+    <Card onClick={toggleIsClikedFeed} sx={CARD_STYLE} data-testid={TEST_ID.FEED_CARD}>
       <CardHeader
         avatar={<UserProfile nickname={user?.userNickname} imgUrl={user?.userProfileImage} userId={user?.userId} />}
         action={<KebabMenu reviewId={reviewId} isMyFeed={isMyFeed} />}
       />
-      {hasPicture && !isUsedModal && <CardMedia component="img" height={FEED.IMG.HEIGHT} image={images[0]} alt="User profile" />}
+      {hasPicture && !isUsedModal && <CardMedia component="img" height={FEED.IMG.HEIGHT} image={images[0]} alt={GET_ALT.FOOD(user.userNickname)} />}
       <Rating rating={reviewScore} />
       <CardContent>{reviewContent}</CardContent>
-      <CompnayProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
+      <RestaurantProfile company={store?.storeName} region={store?.storeAddress} storeId={store?.storeId} />
       <CardActions>
         <IconButton aria-label="like" onClick={isActiveHeart ? handleUnlike : handleLike}>
           <FavoriteIcon color={isActiveHeart ? 'warning' : 'action'} />
           <Typography>{likeCnt}</Typography>
         </IconButton>
-        {accountStore.id && (
-          <IconButton aria-label="comment">
-            <ModeCommentIcon />
-          </IconButton>
-        )}
+        <IconButton aria-label="comment">
+          <ModeCommentIcon />
+        </IconButton>
         <IconButton aria-label="share" onClick={handleCopyURL}>
           <ShareIcon />
         </IconButton>
@@ -63,7 +64,7 @@ const FeedCard = observer(({ review, isActiveHeart, likeCnt, postLike, toggleIsC
     openSuccessToast(MESSAGE.SUCCESS.SHARE_REVIEW);
     e.stopPropagation();
   }
-});
+}
 
 export default FeedCard;
 

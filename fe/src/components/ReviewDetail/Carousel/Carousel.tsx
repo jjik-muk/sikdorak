@@ -4,23 +4,24 @@ import { createKey } from 'utils/utils';
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeftOutlined';
 import { Btns, Container, PrevBtn, NextBtn, Wrap } from './Carousel.styled';
-import { TEXT } from 'constants/text';
+import { TEST_ID } from 'constants/testID';
+import { ALT } from 'constants/alt';
 
 function Carousel({ urls }: { urls: string[] }) {
   const [idx, setIdx] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
   const id = useId();
-  const IMAGE_CNT = urls.length;
+  const imagesLength = urls.length;
   const isFirstIdx = idx === 0;
-  const isLastIdx = idx === IMAGE_CNT - 1;
+  const isLastIdx = idx === imagesLength - 1;
 
   return (
     <Wrap>
       <Btns>
-        <PrevBtn onClick={handlePrevBtn} disabled={isMoving || isFirstIdx}>
+        <PrevBtn onClick={handlePrevBtn} disabled={isMoving || isFirstIdx} data-testid={TEST_ID.PREV_BTN}>
           <KeyboardArrowLeftOutlinedIcon />
         </PrevBtn>
-        <NextBtn onClick={handleNextBtn} disabled={isMoving || isLastIdx}>
+        <NextBtn onClick={handleNextBtn} disabled={isMoving || isLastIdx} data-testid={TEST_ID.NEXT_BTN}>
           <KeyboardArrowRightOutlinedIcon />
         </NextBtn>
       </Btns>
@@ -31,7 +32,7 @@ function Carousel({ urls }: { urls: string[] }) {
         }}
       >
         {urls.map((url, i) => (
-          <img key={createKey(id, i)} width={DETAIL.IMG.WIDTH} height={DETAIL.IMG.HEIGHT} src={url} alt={TEXT.ALT.PHOTOGRAPH} />
+          <img key={createKey(id, i)} width={DETAIL.IMG.WIDTH} height={DETAIL.IMG.HEIGHT} src={url} alt={ALT.PHOTOGRAPH} />
         ))}
       </Container>
     </Wrap>

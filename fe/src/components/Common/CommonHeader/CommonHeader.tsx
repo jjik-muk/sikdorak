@@ -3,12 +3,10 @@ import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import { useOutsideClick } from 'hooks/useOutsideClick';
 import useToggle from 'hooks/useToggle';
-import { observer } from 'mobx-react';
 import ReviewWrite from 'pages/ReviewWrite/ReviewWrite';
 import { useRef, useEffect } from 'react';
 import { MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { accountStore } from 'stores/AccountStore';
 import { createKey, reloadBrowser } from 'utils/utils';
 import Icon, { IconComponentsKeys } from '../Icon/Icon';
 import Logo from '../Logo/Logo';
@@ -16,14 +14,23 @@ import Portal from '../Portal/Portal';
 import { ButtonWrap, Header, ProfileImageWrap, Wrap } from './CommonHeader.styled';
 import styled from 'styled-components';
 import { COLOR } from 'styles/color';
+import { useDispatch, useSelector } from 'react-redux';
+import { AccountAction, fetchMyInfo } from 'store/modules/account';
+import { RootState } from 'store/modules/store';
+import { ThunkDispatch } from 'redux-thunk';
+import { GET_ALT } from 'constants/alt';
+import { GET_TEST_ID } from 'constants/testID';
 
-const CommonHeader = observer(({ dispatchReviews }: any) => {
+function CommonHeader({ dispatchReviews }: any) {
   const [isReviewWrite, toggleIsReviewWrite] = useToggle(false);
   const [, toggleIsUserProfile] = useToggle(false);
   const reviewWriteModalRef = useRef(null);
   const userDetailModalRef = useRef(null);
   const [isActiveMenu, toggleIsActiveMenu] = useToggle(false);
   const menuRef = useRef(null);
+  const dispatch: ThunkDispatch<RootState, null, AccountAction> = useDispatch();
+  const accountStore = useSelector((state: RootState) => state.account);
+  const { accessToken, id, nickname, profileImage } = accountStore;
 
   const iconInfo: IconInfoProps[] = [
     { icon: 'Home', handler: toggleIsUserProfile, to: '/' },
@@ -36,8 +43,8 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
   useOutsideClick(menuRef, toggleIsActiveMenu);
 
   useEffect(() => {
-    accountStore.setMyInfo();
-  }, []);
+    dispatch(fetchMyInfo());
+  }, [accessToken]);
 
   return (
     <Wrap>
@@ -46,19 +53,19 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
         <ButtonWrap>
           {iconInfo.map(({ icon, handler, to }, idx) => (
             <Link key={createKey(icon, idx)} to={to}>
-              <div onClick={handler}>
+              <div onClick={handler} data-testid={GET_TEST_ID.ICON(icon)}>
                 <Icon icon={icon} width={ICON.MEDIUM} height={ICON.MEDIUM} />
               </div>
             </Link>
           ))}
           <ProfileImageWrap>
-            {accountStore.profileImage ? (
+            {profileImage ? (
               <div onClick={toggleIsActiveMenu}>
-                <Avatar src={accountStore.profileImage} alt="profile" sx={{ width: ICON.MEDIUM, height: ICON.MEDIUM }} />
+                <Avatar src={profileImage} alt={GET_ALT.PROFILE(nickname)} sx={{ width: ICON.MEDIUM, height: ICON.MEDIUM }} />
                 {isActiveMenu && (
                   <MenuWrap ref={menuRef}>
                     <MenuItem>
-                      <Link to={`/user/${accountStore.id}`}>내 프로필</Link>
+                      <Link to={`/user/${id}`}>내 프로필</Link>
                     </MenuItem>
                     <MenuItem onClick={handleLogout}>
                       <Link to="/">로그아웃</Link>
@@ -81,7 +88,7 @@ const CommonHeader = observer(({ dispatchReviews }: any) => {
       </Header>
     </Wrap>
   );
-});
+}
 
 function handleLogout() {
   localStorage.removeItem('accessToken');

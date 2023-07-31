@@ -7,19 +7,21 @@ import SelectDay from 'components/ReviewWrite/SelectDay/SelectDay';
 import TagContainer from 'components/ReviewWrite/Tag/TagContainer/TagContainer';
 import Textarea from 'components/ReviewWrite/Textarea/Textarea';
 import WriteRating from 'components/ReviewWrite/WriteRating/WriteRating';
-import { TEXT } from 'constants/text';
 import useUploadImage from 'hooks/useUploadImage';
-import { accountStore } from 'stores/AccountStore';
 import { Content, Header, Img, ImgWrap, InputWrap, Title, Wrap } from './ReviewWrite.styled';
 import CloseIcon from '@mui/icons-material/Close';
 import { Button } from '@mui/material';
 import { useReviewWrite } from 'context/ReviewWriteProvider';
 import { requestReviewModification } from 'request/request';
 import { reloadBrowser } from 'utils/utils';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/modules/store';
+import { ALT } from 'constants/alt';
 
 function ReviewWrite({ toggleIsReviewWrite, dispatchReviews, isModify, reviewId }: ReviewWriteProps) {
   const [reviewWrite, dispatchReviewWrite] = useReviewWrite();
   const { selectedImg, setSelectedImg, selectedImgUrl, setSelectedImgUrl, uploadImageToS3 } = useUploadImage();
+  const accountStore = useSelector((state: RootState) => state.account);
   const { nickname, profileImage } = accountStore;
 
   return (
@@ -29,7 +31,7 @@ function ReviewWrite({ toggleIsReviewWrite, dispatchReviews, isModify, reviewId 
         <ImgWrap>
           {reviewWrite.images[0] ? (
             <>
-              <Img width="90%" height="90%" src={selectedImgUrl} alt={TEXT.ALT.PHOTOGRAPH} />
+              <Img width="90%" height="90%" src={selectedImgUrl} alt={ALT.PHOTOGRAPH} />
               <CloseIcon onClick={handleRemoveSelectedImg} sx={{ position: 'absolute', top: '20px', right: '15px', cursor: 'pointer' }} />
             </>
           ) : (
